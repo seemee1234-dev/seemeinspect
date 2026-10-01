@@ -466,6 +466,17 @@
       box-shadow: 0 0 10px rgba(255, 215, 0, 0.2);
     }
 
+    .cat-count-badge {
+      font-size: 11.5px;
+      color: #38bdf8;
+      margin-left: 3px;
+      font-weight: 400;
+    }
+    .cat-btn.selected .cat-count-badge {
+      color: #38bdf8;
+      font-weight: 500;
+    }
+
     /* Room Buttons Grid (Level 1: Inspection Room Selection) */
     .room-grid {
       display: grid;
@@ -2655,6 +2666,19 @@
       updateCurrentRoomDisplay();
     }
 
+    function getCategoryDefectCount(catName) {
+      if (!catName || !defectList || defectList.length === 0) return 0;
+      const target = catName.trim();
+      return defectList.filter(d => {
+        const cat = (d.category || "").trim();
+        if (cat === target) return true;
+        if (target.startsWith("ระบบไฟฟ้า") && cat.startsWith("ระบบไฟฟ้า")) return true;
+        if (target.startsWith("ระเบียง") && cat.startsWith("ระเบียง")) return true;
+        if (target.startsWith("ครัว") && cat.startsWith("ครัว")) return true;
+        return false;
+      }).length;
+    }
+
     function renderCategoryButtons() {
       const container = document.getElementById("cat-grid");
       if (!container) return;
@@ -2662,9 +2686,10 @@
       container.innerHTML = allCats.map(c => {
         const isSelected = c === currentSelectedCategory;
         const safeCat = c.replace(/'/g, "\\'");
+        const countInCat = getCategoryDefectCount(c);
         return `
         <button type="button" class="cat-btn ${isSelected ? 'selected' : ''}" data-cat="${c}" onclick="selectCat('${safeCat}')">
-          ${c}
+          <span>${c}</span>${countInCat > 0 ? `<span class="cat-count-badge">(${countInCat})</span>` : ''}
         </button>
         `;
       }).join("") + `
@@ -4556,6 +4581,8 @@
 
       updateNextDefectCode();
       updateCurrentRoomDisplay();
+      renderRoomButtons();
+      renderCategoryButtons();
       updateSummaryUI();
 
       if (navigator.vibrate) navigator.vibrate(50);
@@ -4839,6 +4866,8 @@
     }
 
     function updateSummaryUI() {
+      if (typeof renderRoomButtons === 'function') renderRoomButtons();
+      if (typeof renderCategoryButtons === 'function') renderCategoryButtons();
       updateRecentStrip();
       updateTab1RecordedList();
       // 1. Total Counter Badge
