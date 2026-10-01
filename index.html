@@ -4117,18 +4117,47 @@
       }
     }
 
-    function showToast(msg) {
+    let toastTimer = null;
+    function showToast(msg, duration = 0, isProcessing = false) {
       const toast = document.getElementById("processing-toast");
       const text = document.getElementById("processing-toast-text");
+      const icon = document.getElementById("processing-toast-icon");
       if (toast && text) {
         text.textContent = msg;
+        const isProc = isProcessing || msg.includes("กำลัง");
+        if (icon) {
+          if (isProc) {
+            icon.textContent = "⏳";
+            icon.style.animation = "spin 1s linear infinite";
+          } else {
+            icon.textContent = "✅";
+            icon.style.animation = "none";
+          }
+        }
         toast.style.display = "flex";
+        
+        if (toastTimer) {
+          clearTimeout(toastTimer);
+          toastTimer = null;
+        }
+
+        // If not a long-running processing spinner, auto-dismiss after 3.5s
+        const autoDuration = duration > 0 ? duration : (!isProc ? 3500 : 0);
+        if (autoDuration > 0) {
+          toastTimer = setTimeout(() => {
+            hideToast();
+          }, autoDuration);
+        }
       }
     }
 
     function hideToast() {
       const toast = document.getElementById("processing-toast");
       if (toast) toast.style.display = "none";
+      if (toastTimer) {
+        clearTimeout(toastTimer);
+        toastTimer = null;
+      }
     }
 
     /**
@@ -5892,10 +5921,11 @@
   <input type="file" id="after-camera-input" accept="image/*" capture="environment" style="display: none;" onchange="onAfterPhotoSelected(event)">
   <input type="file" id="after-gallery-input" accept="image/*" style="display: none;" onchange="onAfterPhotoSelected(event)">
 
-  <!-- Floating Processing Toast -->
-  <div id="processing-toast" style="display: none; position: fixed; top: 20px; left: 50%; transform: translateX(-50%); background: rgba(11,31,58,0.95); border: 1.5px solid #00adf2; color: #ffffff; padding: 12px 24px; border-radius: 30px; font-size: 13px; z-index: 99999; box-shadow: 0 8px 24px rgba(0,0,0,0.6); align-items: center; gap: 10px;">
-    <span style="font-size: 18px; animation: spin 1s linear infinite; display: inline-block;">⏳</span>
-    <span id="processing-toast-text">กำลังประมวลผลรูปภาพ...</span>
+  <!-- Floating Toast / Notification with Corner Close Button & Auto-Dismiss -->
+  <div id="processing-toast" style="display: none; position: fixed; top: 16px; left: 50%; transform: translateX(-50%); background: rgba(7, 13, 30, 0.96); border: 1.5px solid #00adf2; color: #ffffff; padding: 10px 14px 10px 16px; border-radius: 24px; font-size: 13px; font-family: 'Kanit', sans-serif; font-weight: 300; z-index: 99999999; box-shadow: 0 8px 24px rgba(0,0,0,0.75); align-items: center; gap: 10px; max-width: 92vw; width: max-content;">
+    <span id="processing-toast-icon" style="font-size: 18px; display: inline-block;">⏳</span>
+    <span id="processing-toast-text" style="line-height: 1.35; flex: 1; text-align: left;">กำลังประมวลผลรูปภาพ...</span>
+    <button type="button" onclick="hideToast()" style="background: rgba(255,255,255,0.18); border: 1px solid rgba(255,255,255,0.35); color: #ffffff; width: 24px; height: 24px; border-radius: 50%; font-size: 13px; line-height: 1; cursor: pointer; display: flex; align-items: center; justify-content: center; margin-left: 6px; flex-shrink: 0;" title="ปิด / ยกเลิก">✕</button>
   </div>
   <style>
     @keyframes spin { 0% { transform: rotate(0deg); } 100% { transform: rotate(360deg); } }
