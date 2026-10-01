@@ -1847,8 +1847,17 @@
           </div>
         </div>
 
+        <!-- Compact Voice Button (ย้ายขึ้นมาอยู่บนนี้ เหนือรูปที่ถ่ายไปแล้ว แตะพูดได้ทันทีหลังถ่ายรูป) -->
+        <div class="voice-control-box" style="margin-top: 12px; margin-bottom: 8px;">
+          <button type="button" class="voice-btn" id="voice-btn" onclick="toggleVoiceRecording()">
+            <span id="voice-icon">🎙️</span>
+            <span id="voice-label">แตะเพื่อพูดด้วยเสียง</span>
+          </button>
+          <span class="voice-status-text" id="voice-status">พูดไทยได้ทันที</span>
+        </div>
+
         <!-- Recent Captured Photos Carousel (เลื่อนดูรูปก่อนหน้านี้) -->
-        <div class="recent-strip-box no-print" id="recent-strip-box" style="display: none; margin-top: 10px;">
+        <div class="recent-strip-box no-print" id="recent-strip-box" style="display: none; margin-top: 8px; margin-bottom: 12px;">
           <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 6px;">
             <span style="font-size: 11px; color: #ffd700; font-weight: 400;">🎞️ รูปที่ถ่ายไปแล้ว (<span id="strip-count">0</span> จุด) - แตะดูหรือลบได้:</span>
             <span style="font-size: 10px; color: #64748b;">👈 ปัดซ้าย-ขวา 👉</span>
@@ -1856,15 +1865,6 @@
           <div class="recent-scroll-row" id="recent-scroll-row">
             <!-- Populated by JS -->
           </div>
-        </div>
-
-        <!-- Compact Voice Button -->
-        <div class="voice-control-box" style="margin-top: 10px;">
-          <button type="button" class="voice-btn" id="voice-btn" onclick="toggleVoiceRecording()">
-            <span id="voice-icon">🎙️</span>
-            <span id="voice-label">แตะเพื่อพูดด้วยเสียง</span>
-          </button>
-          <span class="voice-status-text" id="voice-status">พูดไทยได้ทันที</span>
         </div>
 
         <!-- รายละเอียดสิ่งที่พบ -->
@@ -2926,52 +2926,140 @@
     /**
      * DIRECT SHARE TO LINE OR GOOGLE DRIVE (WEB SHARE API)
      */
-    async function shareRoomFileToLineOrDrive() {
-      if (defectList.length === 0 && !projectConfig.projName && !projectConfig.roomNo) {
+    /**
+     * DIRECT SHARE REPORT MODAL (LINE / DRIVE / PDF / PPTX)
+     */
+    function shareRoomFileToLineOrDrive() {
+      openShareReportModal();
+    }
+
+    function openShareReportModal() {
+      const modal = document.getElementById('share-report-modal');
+      if (!modal) return;
+      
+      const preview = document.getElementById('line-summary-preview');
+      if (preview) {
+        preview.value = generateLineSummaryText();
+      }
+      
+      modal.style.display = 'flex';
+    }
+
+    function closeShareReportModal() {
+      const modal = document.getElementById('share-report-modal');
+      if (modal) modal.style.display = 'none';
+    }
+
+    function toggleLinePreview() {
+      const preview = document.getElementById('line-summary-preview');
+      const btn = document.getElementById('btn-toggle-preview');
+      if (!preview || !btn) return;
+      if (preview.style.height === '75px' || !preview.style.height) {
+        preview.style.height = '180px';
+        btn.textContent = 'ย่อข้อความ ▴';
+      } else {
+        preview.style.height = '75px';
+        btn.textContent = 'ดูข้อความเต็ม ▾';
+      }
+    }
+
+    function generateLineSummaryText() {
+      const pName = (projectConfig.projName || 'ไม่ระบุชื่อโครงการ').trim();
+      const rNo = (projectConfig.roomNo || 'ไม่ระบุห้อง/บ้านเลขที่').trim();
+      const cName = projectConfig.custName ? `คุณ${projectConfig.custName.trim()}` : '-';
+      const dateStr = projectConfig.inspectDate || new Date().toLocaleDateString('th-TH');
+      const inspName = (projectConfig.inspector || 'ทีมตรวจ SeeMe').trim();
+
+      let mustFix = 0;
+      let obs = 0;
+      let fixed = 0;
+      defectList.forEach(d => {
+        if (d.status === 'ควรแก้ไข') mustFix++;
+        else if (d.status === 'พบข้อสังเกต' || d.status === 'รอตรวจสอบร่วมกัน') obs++;
+        else if (d.status === 'ตรวจซ้ำแล้วผ่าน' || d.status === 'แก้ไขแล้ว') fixed++;
+        else mustFix++;
+      });
+
+      // Group by room
+      const roomGroups = {};
+      defectList.forEach(d => {
+        const rm = d.room || 'พื้นที่ทั่วไป';
+        if (!roomGroups[rm]) roomGroups[rm] = [];
+        roomGroups[rm].push(d);
+      });
+
+      let lines = [
+        `🏢 สรุปผลการตรวจรับคอนโด / บ้าน`,
+        `📌 โครงการ: ${pName}`,
+        `🚪 ห้อง/บ้านเลขที่: ${rNo}`,
+        `👤 ลูกค้า: ${cName}`,
+        `📅 วันที่ตรวจ: ${dateStr}`,
+        `👷 ผู้ตรวจ: ${inspName}`,
+        `───────────────────────`,
+        `📊 สรุปผล Defect รวม: ${defectList.length} จุด`,
+        `• ควรแก้ไข: ${mustFix} จุด`,
+        `• พบข้อสังเกต: ${obs} จุด`,
+        ...(fixed > 0 ? [`• แก้ไขเรียบร้อย (ตรวจรอบ 2): ${fixed} จุด`] : []),
+        `───────────────────────`,
+        `📋 รายการจุดบกพร่องแยกตามห้อง:`
+      ];
+
+      const roomNames = Object.keys(roomGroups);
+      if (roomNames.length === 0) {
+        lines.push(`(ยังไม่มีรายการ Defect ที่บันทึก)`);
+      } else {
+        roomNames.forEach((rm, i) => {
+          lines.push(`\n${i + 1}. ${rm} (${roomGroups[rm].length} จุด)`);
+          roomGroups[rm].forEach(d => {
+            lines.push(`   - [${d.code}] ${d.category}: ${d.desc}`);
+          });
+        });
+      }
+
+      lines.push(`\n───────────────────────`);
+      lines.push(`📄 ขอรับไฟล์รายงานฉบับเต็ม A4 แนวนอน (พร้อมรูป 2 ระยะ Before/After) ได้จากทีมตรวจครับ`);
+
+      return lines.join('\n');
+    }
+
+    function shareToLineApp() {
+      if (defectList.length === 0 && !projectConfig.projName) {
         alert("⚠️ ยังไม่มีข้อมูลโครงการหรือรายการ Defect ให้แชร์ครับ");
         return;
       }
+      const text = generateLineSummaryText();
+      const lineUrl = "https://line.me/R/msg/text/?" + encodeURIComponent(text);
+      window.open(lineUrl, '_blank');
+    }
 
-      const fileName = getFormattedBackupFileName("json");
-      const backupData = {
-        app: "condo_inspector",
-        version: "2.4",
-        exportedAt: new Date().toISOString(),
-        formattedDate: new Date().toLocaleDateString('th-TH') + ' ' + new Date().toLocaleTimeString('th-TH'),
-        projectConfig: projectConfig,
-        defectList: defectList
-      };
-
-      const jsonStr = JSON.stringify(backupData, null, 2);
-      const blob = new Blob([jsonStr], { type: "application/json" });
-      const file = new File([blob], fileName, { type: "application/json" });
-
-      // Try native Mobile Web Share API with file
-      if (navigator.canShare && navigator.canShare({ files: [file] })) {
-        try {
-          await navigator.share({
-            title: `ตรวจคอนโด ${projectConfig.projName || ''} ห้อง ${projectConfig.roomNo || ''}`,
-            text: `ไฟล์สำรองตรวจคอนโด ${projectConfig.projName || ''} ห้อง ${projectConfig.roomNo || ''} (${defectList.length} จุด) วันที่ ${backupData.formattedDate} เก็บไว้ตรวจรอบ 2 หลังแก้ไข (After)`,
-            files: [file]
-          });
-          return;
-        } catch (err) {
-          if (err.name === 'AbortError') return; // User closed share sheet
-          console.warn("Share API error, fallback to direct download:", err);
-        }
+    function copyLineSummaryText() {
+      const text = generateLineSummaryText();
+      if (navigator.clipboard && navigator.clipboard.writeText) {
+        navigator.clipboard.writeText(text).then(() => {
+          showToast("📋 คัดลอกข้อความสรุปแล้ว! นำไปวางในแชท LINE ได้ทันที");
+        }).catch(() => {
+          fallbackCopyText(text);
+        });
+      } else {
+        fallbackCopyText(text);
       }
+    }
 
-      // Fallback: Direct download file with searchable name
-      const url = URL.createObjectURL(blob);
-      const a = document.createElement("a");
-      a.href = url;
-      a.download = fileName;
-      document.body.appendChild(a);
-      a.click();
-      document.body.removeChild(a);
-      URL.revokeObjectURL(url);
-
-      alert(`📥 บันทึกไฟล์ "${fileName}" ลงเครื่องแล้วครับ!\n\nสามารถเปิดแอป LINE หรือ Google Drive แล้วเลือกส่งไฟล์นี้เก็บไว้ในแชทหรือไดรฟ์ได้ทันทีครับ`);
+    function fallbackCopyText(text) {
+      const ta = document.createElement("textarea");
+      ta.value = text;
+      ta.style.position = "fixed";
+      ta.style.opacity = "0";
+      document.body.appendChild(ta);
+      ta.focus();
+      ta.select();
+      try {
+        document.execCommand("copy");
+        showToast("📋 คัดลอกข้อความสรุปแล้ว! นำไปวางในแชท LINE ได้ทันที");
+      } catch (e) {
+        alert("ไม่สามารถคัดลอกอัตโนมัติได้ กรุณาคัดลอกจากกล่องพรีวิวครับ");
+      }
+      document.body.removeChild(ta);
     }
 
     function exportRoomBackup() {
@@ -5432,7 +5520,7 @@
     /**
      * POWERPOINT (.pptx) GENERATION (Kanit 300, 16:9, Slide 1 + Slide 2..N)
      */
-    function exportToPowerPoint() {
+    async function exportToPowerPoint() {
       if (typeof PptxGenJS === 'undefined') {
         alert("ระบบกำลังโหลดตัวแปลง PowerPoint กรุณารอสักครู่แล้วกดอีกครั้งครับ");
         return;
@@ -5729,9 +5817,26 @@
         });
       });
 
-      // Save PowerPoint File
+      // Save or Share PowerPoint File (LINE / Google Drive)
       const roomTag = projectConfig.roomNo ? `_ห้อง_${projectConfig.roomNo.replace(/[\/\\?%*:|"<>]/g, '-')}` : '';
       const fileName = `Condo_Report${roomTag}_${defectList.length}จุด.pptx`;
+      
+      try {
+        const blob = await pptx.write({ outputType: 'blob' });
+        const file = new File([blob], fileName, { type: 'application/vnd.openxmlformats-officedocument.presentationml.presentation' });
+        if (navigator.canShare && navigator.canShare({ files: [file] })) {
+          await navigator.share({
+            title: `รายงานตรวจ ${projectConfig.projName || ''} ห้อง ${projectConfig.roomNo || ''}`,
+            text: `สไลด์รายงานตรวจ Before/After ${projectConfig.projName || ''} (${defectList.length} จุด)`,
+            files: [file]
+          });
+          return;
+        }
+      } catch (err) {
+        if (err.name === 'AbortError') return;
+        console.warn("PPTX share fallback to writeFile:", err);
+      }
+
       pptx.writeFile({ fileName: fileName });
     }
 
@@ -5822,6 +5927,115 @@
       
       <!-- Open Gallery Fallback -->
       <button type="button" style="background: rgba(255,255,255,0.15); border: 1px solid rgba(255,255,255,0.3); color: #ffffff; border-radius: 50%; width: 44px; height: 44px; font-size: 18px; cursor: pointer; display: flex; align-items: center; justify-content: center;" onclick="closeLiveCamera(); if(liveCamMode==='before') triggerCameraInput('gallery'); else triggerAfterPhotoGallery(liveCamIndex);" title="เลือกจากคลังภาพ">🖼️</button>
+    </div>
+  </div>
+
+  <!-- Share Report Modal (LINE, Google Drive, PDF, PowerPoint) -->
+  <div id="share-report-modal" class="no-print" style="display: none; position: fixed; inset: 0; background: rgba(0,0,0,0.85); z-index: 9999999; align-items: center; justify-content: center; padding: 14px; overflow-y: auto;">
+    <div style="background: #0f172a; border: 1.5px solid #00adf2; border-radius: 16px; max-width: 440px; width: 100%; padding: 18px 16px; box-shadow: 0 10px 40px rgba(0,0,0,0.85); color: #ffffff; font-family: 'Kanit', sans-serif; font-weight: 300; max-height: 90vh; display: flex; flex-direction: column;">
+      
+      <!-- Modal Header -->
+      <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 12px; border-bottom: 1px solid #1e293b; padding-bottom: 8px;">
+        <div style="display: flex; align-items: center; gap: 8px;">
+          <span style="font-size: 24px;">📤</span>
+          <div>
+            <h3 style="margin: 0; font-size: 16px; font-weight: 400; color: #ffd700;">แชร์รายงานส่งงาน (LINE / Drive)</h3>
+            <div style="font-size: 11px; color: #94a3b8;">เลือกรูปแบบการส่งมอบงานให้ลูกค้าหรือช่าง</div>
+          </div>
+        </div>
+        <button type="button" onclick="closeShareReportModal()" style="background: none; border: none; color: #94a3b8; font-size: 22px; cursor: pointer; padding: 0 4px;">✕</button>
+      </div>
+
+      <!-- Modal Body (Scrollable) -->
+      <div style="overflow-y: auto; flex: 1; padding-right: 2px;">
+
+        <!-- 1. LINE INSTANT SUMMARY -->
+        <div style="background: #070d1e; border: 1.5px solid #06c755; border-radius: 12px; padding: 12px; margin-bottom: 12px;">
+          <div style="display: flex; align-items: center; justify-content: space-between; margin-bottom: 8px;">
+            <div style="font-size: 14px; color: #06c755; font-weight: 400; display: flex; align-items: center; gap: 6px;">
+              <span>💬 1. ส่งสรุปรายงานเข้าแอป LINE ทันที</span>
+            </div>
+            <span style="font-size: 10px; background: rgba(6,199,85,0.15); color: #4ade80; border: 1px solid #06c755; padding: 2px 6px; border-radius: 10px;">เปิดแอป LINE</span>
+          </div>
+          <p style="font-size: 12px; color: #cbd5e1; margin-bottom: 10px; line-height: 1.45;">
+            เปิดแอป LINE เลือกแชทลูกค้าหรือช่าง แล้วกดส่งข้อความสรุปได้ทันที อ่านรู้เรื่องใน 3 วินาที (ระบุโครงการ, ห้อง, สรุปจำนวนจุด และรายการตามห้อง)
+          </p>
+
+          <!-- Text Preview Box -->
+          <div style="margin-bottom: 10px;">
+            <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 4px;">
+              <span style="font-size: 11px; color: #94a3b8;">พรีวิวข้อความที่จะส่ง:</span>
+              <button type="button" onclick="toggleLinePreview()" id="btn-toggle-preview" style="background: none; border: none; color: #38bdf8; font-size: 11px; cursor: pointer; text-decoration: underline;">ดูข้อความเต็ม ▾</button>
+            </div>
+            <textarea id="line-summary-preview" readonly style="width: 100%; height: 75px; font-size: 11px; color: #94a3b8; background: #030712; border: 1px solid #1e2e54; border-radius: 6px; padding: 6px 8px; resize: none; font-family: 'Kanit', sans-serif;"></textarea>
+          </div>
+
+          <!-- LINE Action Buttons -->
+          <div style="display: flex; gap: 8px;">
+            <button type="button" class="btn-main" style="flex: 1.3; padding: 10px 8px; font-size: 13px; background: linear-gradient(135deg, #06c755, #059669); color: #ffffff; border: none; border-radius: 8px; display: flex; align-items: center; justify-content: center; gap: 6px; cursor: pointer; box-shadow: 0 4px 12px rgba(6,199,85,0.35);" onclick="shareToLineApp()">
+              <span>🟢 เปิดแอป LINE ส่งเข้าแชท</span>
+            </button>
+            <button type="button" class="btn-secondary" style="flex: 1; padding: 10px 8px; font-size: 12.5px; border-color: #38bdf8; color: #38bdf8; background: #0b1528; border-radius: 8px; cursor: pointer;" onclick="copyLineSummaryText()">
+              <span>📋 คัดลอกข้อความ</span>
+            </button>
+          </div>
+        </div>
+
+        <!-- 2. PDF REPORT TO DRIVE OR LINE -->
+        <div style="background: #070d1e; border: 1.5px solid #0284c7; border-radius: 12px; padding: 12px; margin-bottom: 12px;">
+          <div style="display: flex; align-items: center; justify-content: space-between; margin-bottom: 6px;">
+            <div style="font-size: 14px; color: #38bdf8; font-weight: 400; display: flex; align-items: center; gap: 6px;">
+              <span>📄 2. รายงาน PDF A4 แนวนอน (เซฟลง Drive)</span>
+            </div>
+            <span style="font-size: 10px; background: rgba(0,173,242,0.15); color: #38bdf8; border: 1px solid #00adf2; padding: 2px 6px; border-radius: 10px;">ยอดนิยม</span>
+          </div>
+          <p style="font-size: 12px; color: #cbd5e1; margin-bottom: 8px; line-height: 1.45;">
+            สร้างเอกสารรายงาน PDF สมบูรณ์แบบ (พร้อมรูปภาพ 2 ระยะ ก่อน-หลัง) สามารถเลือก <strong>"บันทึกไปยัง Google ไดรฟ์"</strong> หรือ <strong>"บันทึกเป็น PDF"</strong> แล้วส่งให้ลูกค้าใน LINE ได้ทันที
+          </p>
+          <div style="background: rgba(255,215,0,0.08); border-left: 3px solid #ffd700; padding: 6px 10px; border-radius: 4px; margin-bottom: 10px; font-size: 11.5px; color: #ffd700; line-height: 1.4;">
+            💡 <strong>วิธีเซฟลง Google Drive:</strong> ในหน้าพิมพ์ ให้แตะเลือกเมนูด้านบน แล้วเลือก <strong>"บันทึกไปยัง Google ไดรฟ์"</strong>
+          </div>
+          <button type="button" class="btn-main" style="width: 100%; padding: 10px; font-size: 13px; background: linear-gradient(135deg, #0284c7, #0369a1); color: #ffffff; border: none; border-radius: 8px; cursor: pointer; box-shadow: 0 4px 12px rgba(2,132,199,0.35);" onclick="closeShareReportModal(); proceedToPrintNow();">
+            📄 เปิดหน้าพิมพ์เพื่อเซฟ PDF / ส่งขึ้น Drive
+          </button>
+        </div>
+
+        <!-- 3. POWERPOINT SLIDES -->
+        <div style="background: #070d1e; border: 1.5px solid #d97706; border-radius: 12px; padding: 12px; margin-bottom: 12px;">
+          <div style="display: flex; align-items: center; justify-content: space-between; margin-bottom: 6px;">
+            <div style="font-size: 14px; color: #fbbf24; font-weight: 400; display: flex; align-items: center; gap: 6px;">
+              <span>📊 3. ไฟล์สไลด์ PowerPoint (.pptx)</span>
+            </div>
+            <span style="font-size: 10px; background: rgba(245,158,11,0.15); color: #fbbf24; border: 1px solid #d97706; padding: 2px 6px; border-radius: 10px;">แชร์ลง LINE / Drive</span>
+          </div>
+          <p style="font-size: 12px; color: #cbd5e1; margin-bottom: 10px; line-height: 1.45;">
+            ดาวน์โหลดหรือส่งไฟล์สไลด์นำเสนอ .pptx ไปที่แชท LINE หรือเก็บเข้าโฟลเดอร์ Google Drive พร้อมรูปถ่ายคมชัด
+          </p>
+          <button type="button" class="btn-main" style="width: 100%; padding: 10px; font-size: 13px; background: linear-gradient(135deg, #f59e0b, #d97706); color: #ffffff; border: none; border-radius: 8px; cursor: pointer;" onclick="exportToPowerPoint();">
+            📊 แชร์ไฟล์ PowerPoint (.pptx)
+          </button>
+        </div>
+
+        <!-- 4. SYSTEM BACKUP JSON (CLEARLY LABELED AS SYSTEM BACKUP NOT REPORT) -->
+        <div style="background: #070d1e; border: 1px dashed #475569; border-radius: 12px; padding: 10px 12px;">
+          <div style="font-size: 12.5px; color: #94a3b8; font-weight: 400; margin-bottom: 4px;">
+            💾 4. ไฟล์ระบบสำหรับตรวจรอบ 2 (JSON Backup)
+          </div>
+          <p style="font-size: 11px; color: #64748b; margin-bottom: 8px; line-height: 1.4;">
+            ⚠️ ไฟล์นี้เป็นรหัสข้อมูลระบบสำหรับใช้กับปุ่ม <strong>"ดึงไฟล์เดิมมาตรวจรอบ 2"</strong> ในเว็บนี้ (ไม่ใช่เอกสารรายงานสำหรับเปิดอ่าน)
+          </p>
+          <button type="button" class="btn-secondary" style="width: 100%; padding: 7px; font-size: 11.5px; border-color: #475569; color: #94a3b8; background: #0b1528;" onclick="exportRoomBackup()">
+            💾 เซฟไฟล์ระบบ JSON เก็บไว้ตรวจรอบ 2
+          </button>
+        </div>
+
+      </div>
+
+      <!-- Modal Footer -->
+      <div style="margin-top: 12px; padding-top: 8px; border-top: 1px solid #1e293b; text-align: center;">
+        <button type="button" class="btn-secondary" style="padding: 8px 24px; font-size: 12.5px;" onclick="closeShareReportModal()">✕ ปิดหน้าต่าง</button>
+      </div>
+
     </div>
   </div>
 
