@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-  <title>INSPECT Q • ระบบตรวจคอนโด Before/After (Mobile Inspector)</title>
+  <title>INSPECT Q • ระบบตรวจคอนโด / บ้าน Before/After (Mobile Inspector)</title>
   
   <!-- Universal Mandatory Typography: Kanit 300 only -->
   <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -288,27 +288,29 @@
       display: none;
     }
 
-    /* Dual Photo Capture Grid (2-Distance Photos: Overview + Close-up) */
+    /* Dual Photo Capture Grid (2-Distance Photos: Overview + Close-up - 1 รูปต่อแถวเต็มจอ แตะง่าย) */
     .photo-dual-grid {
       display: grid;
-      grid-template-columns: 1fr 1fr;
-      gap: 10px;
-      margin-bottom: 12px;
+      grid-template-columns: 1fr;
+      gap: 14px;
+      margin-bottom: 14px;
     }
     @media (max-width: 480px) {
       .photo-dual-grid {
-        grid-template-columns: 1fr 1fr;
-        gap: 8px;
+        grid-template-columns: 1fr;
+        gap: 12px;
       }
     }
 
     .dual-photo-box {
       border: 2px dashed #284178;
-      border-radius: 12px;
+      border-radius: 14px;
       background: #091024;
       position: relative;
       overflow: hidden;
-      aspect-ratio: 4 / 3;
+      aspect-ratio: 16 / 9;
+      min-height: 190px;
+      max-height: 250px;
       width: 100%;
       display: flex;
       flex-direction: column;
@@ -572,17 +574,17 @@
       transform: scale(0.96);
     }
 
-    /* Sticky Room Header Bar (ห้องที่กำลังตรวจลอยติดหน้าจอ) */
+    /* Sticky Room Header Bar (ห้องที่กำลังตรวจลอยติดหน้าจอ - ปรับระยะลงมาไม่ให้บังทับข้อความหัวเว็บ) */
     .sticky-room-bar {
       position: sticky;
-      top: 52px;
+      top: 68px;
       z-index: 80;
-      background: rgba(7, 13, 30, 0.96);
+      background: rgba(7, 13, 30, 0.98);
       backdrop-filter: blur(8px);
       -webkit-backdrop-filter: blur(8px);
       border-bottom: 1.5px solid #00adf2;
-      padding: 7px 12px;
-      margin: -10px -12px 10px -12px;
+      padding: 8px 12px;
+      margin: 6px 0 12px 0;
       display: flex;
       justify-content: space-between;
       align-items: center;
@@ -1698,7 +1700,7 @@
     <div class="app-title-box">
       <h1 style="margin: 0; font-size: 16px; font-weight: 400; color: #ffffff; white-space: nowrap; display: flex; align-items: center; gap: 6px;">
         <span>🏢 INSPECT Q</span>
-        <span style="font-size: 12px; color: #ffd700; font-weight: 300;">| ระบบตรวจคอนโด</span>
+        <span style="font-size: 12px; color: #ffd700; font-weight: 300;">| ระบบตรวจคอนโด / บ้าน</span>
       </h1>
       <div class="app-sub" style="font-size: 11px; color: #94a3b8; font-weight: 300; margin-top: 2px;">บันทึกจุดบกพร่อง & สรุปผลส่งมอบ</div>
     </div>
@@ -1804,43 +1806,43 @@
         <div class="photo-dual-grid">
           <!-- กล่องที่ 1: ภาพตำแหน่ง (Overview) -->
           <div class="dual-photo-box" id="photo-wide-box" onclick="openLiveCamera('wide')">
-            <div class="dual-photo-tag">📸 ภาพตำแหน่ง (Overview)</div>
+            <div class="dual-photo-tag">📸 1. ภาพตำแหน่ง (Overview)</div>
             <span id="wide-photo-check" class="photo-saved-check">✓ เก็บภาพแล้ว</span>
             <img id="photo-wide-preview" class="photo-preview-img" alt="ภาพกว้าง">
             
-            <div id="photo-wide-placeholder" class="photo-capture-placeholder" style="cursor: pointer; padding: 12px 6px;">
-              <span class="cam-icon" style="font-size: 28px; margin-bottom: 4px;">📸</span>
-              <strong style="color: #ffd700; font-size: 12px; display: block;">แตะถ่ายภาพกว้าง</strong>
-              <span style="font-size: 10px; color: #38bdf8; display: block;">(เห็นตำแหน่งบริบท)</span>
-              <div style="margin-top: 6px;">
-                <button type="button" class="btn-secondary" style="font-size: 10px; padding: 3px 8px; color: #10b981; border-color: #059669; background: #0b1426;" onclick="event.stopPropagation(); triggerCameraInput('gallery', 'wide');">🖼️ แกลเลอรี</button>
+            <div id="photo-wide-placeholder" class="photo-capture-placeholder" style="cursor: pointer; padding: 16px 10px;">
+              <span class="cam-icon" style="font-size: 38px; margin-bottom: 6px;">📸</span>
+              <strong style="color: #ffd700; font-size: 16px; display: block; margin-bottom: 2px;">แตะถ่ายภาพกว้าง</strong>
+              <span style="font-size: 12.5px; color: #38bdf8; display: block; margin-bottom: 8px;">(เห็นตำแหน่งบริบทโดยรวม)</span>
+              <div>
+                <button type="button" class="btn-secondary" style="font-size: 12.5px; padding: 6px 14px; color: #10b981; border-color: #059669; background: #0b1426;" onclick="event.stopPropagation(); triggerCameraInput('gallery', 'wide');">🖼️ เลือกจากแกลเลอรี</button>
               </div>
             </div>
 
-            <div id="retake-wide-group" style="display: none; position: absolute; bottom: 4px; left: 4px; right: 4px; gap: 4px; z-index: 5;">
-              <button class="photo-retake-btn" type="button" style="position: static; flex: 1; text-align: center; font-size: 10px; padding: 3px 0; display: block;" onclick="event.stopPropagation(); openLiveCamera('wide');">📷 ถ่ายใหม่</button>
-              <button class="photo-retake-btn" type="button" style="position: static; flex: 1; text-align: center; font-size: 10px; padding: 3px 0; background: rgba(239,68,68,0.9); border-color: #ef4444; color: #fff; display: block;" onclick="event.stopPropagation(); clearCurrentWidePhoto();">🗑️ ลบ</button>
+            <div id="retake-wide-group" style="display: none; position: absolute; bottom: 6px; left: 8px; right: 8px; gap: 8px; z-index: 5;">
+              <button class="photo-retake-btn" type="button" style="position: static; flex: 1; text-align: center; font-size: 12.5px; padding: 6px 0; display: block;" onclick="event.stopPropagation(); openLiveCamera('wide');">📷 ถ่ายใหม่</button>
+              <button class="photo-retake-btn" type="button" style="position: static; flex: 1; text-align: center; font-size: 12.5px; padding: 6px 0; background: rgba(239,68,68,0.9); border-color: #ef4444; color: #fff; display: block;" onclick="event.stopPropagation(); clearCurrentWidePhoto();">🗑️ ลบ</button>
             </div>
           </div>
 
-          <!-- กล่องที่ 2: ภาพรายละเอียด (Close-up) -->
+          <!-- กล่องที่ 2: ภาพรายละเอียด (Close-up - ย้ายลงมาเป็นหน้าละรูป แตะง่าย) -->
           <div class="dual-photo-box" id="photo-close-box" onclick="openLiveCamera('close')">
-            <div class="dual-photo-tag blue-tag">🔍 ภาพรายละเอียด (Close-up)</div>
+            <div class="dual-photo-tag blue-tag">🔍 2. ภาพรายละเอียด (Close-up)</div>
             <span id="close-photo-check" class="photo-saved-check">✓ เก็บภาพแล้ว</span>
             <img id="photo-close-preview" class="photo-preview-img" alt="ภาพใกล้">
             
-            <div id="photo-close-placeholder" class="photo-capture-placeholder" style="cursor: pointer; padding: 12px 6px;">
-              <span class="cam-icon" style="font-size: 28px; margin-bottom: 4px;">🔍</span>
-              <strong style="color: #00adf2; font-size: 12px; display: block;">แตะถ่ายภาพใกล้</strong>
-              <span style="font-size: 10px; color: #38bdf8; display: block;">(เจาะเห็นรอยชัดเจน)</span>
-              <div style="margin-top: 6px;">
-                <button type="button" class="btn-secondary" style="font-size: 10px; padding: 3px 8px; color: #10b981; border-color: #059669; background: #0b1426;" onclick="event.stopPropagation(); triggerCameraInput('gallery', 'close');">🖼️ แกลเลอรี</button>
+            <div id="photo-close-placeholder" class="photo-capture-placeholder" style="cursor: pointer; padding: 16px 10px;">
+              <span class="cam-icon" style="font-size: 38px; margin-bottom: 6px;">🔍</span>
+              <strong style="color: #00adf2; font-size: 16px; display: block; margin-bottom: 2px;">แตะถ่ายภาพใกล้</strong>
+              <span style="font-size: 12.5px; color: #38bdf8; display: block; margin-bottom: 8px;">(เจาะเห็นรอยตำหนิชัดเจน)</span>
+              <div>
+                <button type="button" class="btn-secondary" style="font-size: 12.5px; padding: 6px 14px; color: #10b981; border-color: #059669; background: #0b1426;" onclick="event.stopPropagation(); triggerCameraInput('gallery', 'close');">🖼️ เลือกจากแกลเลอรี</button>
               </div>
             </div>
 
-            <div id="retake-close-group" style="display: none; position: absolute; bottom: 4px; left: 4px; right: 4px; gap: 4px; z-index: 5;">
-              <button class="photo-retake-btn" type="button" style="position: static; flex: 1; text-align: center; font-size: 10px; padding: 3px 0; display: block;" onclick="event.stopPropagation(); openLiveCamera('close');">📷 ถ่ายใหม่</button>
-              <button class="photo-retake-btn" type="button" style="position: static; flex: 1; text-align: center; font-size: 10px; padding: 3px 0; background: rgba(239,68,68,0.9); border-color: #ef4444; color: #fff; display: block;" onclick="event.stopPropagation(); clearCurrentClosePhoto();">🗑️ ลบ</button>
+            <div id="retake-close-group" style="display: none; position: absolute; bottom: 6px; left: 8px; right: 8px; gap: 8px; z-index: 5;">
+              <button class="photo-retake-btn" type="button" style="position: static; flex: 1; text-align: center; font-size: 12.5px; padding: 6px 0; display: block;" onclick="event.stopPropagation(); openLiveCamera('close');">📷 ถ่ายใหม่</button>
+              <button class="photo-retake-btn" type="button" style="position: static; flex: 1; text-align: center; font-size: 12.5px; padding: 6px 0; background: rgba(239,68,68,0.9); border-color: #ef4444; color: #fff; display: block;" onclick="event.stopPropagation(); clearCurrentClosePhoto();">🗑️ ลบ</button>
             </div>
           </div>
         </div>
@@ -2183,7 +2185,7 @@
         <div class="slide-page-badge no-print">ตารางสรุปรายการเรียงตามห้อง (Executive Customer Summary Table)</div>
         <div class="slide-corner-num" id="s2-corner-num">หน้าที่ 2 / 2</div>
         <div class="slide-top-navy">
-          <h2>ตารางสรุปรายการตรวจคอนโดเรียงตามห้อง (Executive Summary)</h2>
+          <h2>ตารางสรุปรายการตรวจคอนโด / บ้านเรียงตามห้อง (Executive Summary)</h2>
           <p>สรุปรายการ Defect ทั้งหมดในภาพรวมหน้าเดียว เพื่อความสะดวกในการตรวจรับและติดตามงาน</p>
         </div>
         <div class="slide-gold-bar"></div>
@@ -2222,16 +2224,16 @@
          ======================================================== -->
     <div id="tab-project" class="tab-content">
       <div class="card">
-        <div class="card-title">🏢 ข้อมูลโครงการและห้อง (กรอกครั้งเดียว)</div>
+        <div class="card-title">🏢 ข้อมูลโครงการและห้อง / บ้าน (กรอกครั้งเดียว)</div>
         
         <div class="form-row-2">
           <div class="form-group">
-            <label>ชื่อโครงการ</label>
-            <input type="text" id="cfg-proj-name" placeholder="เช่น Ideo Sukhumvit" oninput="saveConfig()">
+            <label>ชื่อโครงการ (คอนโด / หมู่บ้าน)</label>
+            <input type="text" id="cfg-proj-name" placeholder="เช่น Ideo Sukhumvit หรือ มัณฑนา" oninput="saveConfig()">
           </div>
           <div class="form-group">
-            <label>เลขห้อง</label>
-            <input type="text" id="cfg-room-no" placeholder="เช่น 128/45" oninput="saveConfig()">
+            <label>เลขห้อง / เลขที่บ้าน</label>
+            <input type="text" id="cfg-room-no" placeholder="เช่น 128/45 หรือ 88/12" oninput="saveConfig()">
           </div>
         </div>
 
@@ -4951,8 +4953,8 @@
 
           <!-- Header Navy Banner -->
           <div class="slide-top-navy">
-            <h2>แบบฟอร์มรายงานตรวจคอนโด Before / After</h2>
-            <p>Customer Inspection Report — รายงานผลการตรวจรับคอนโดมิเนียม</p>
+            <h2>แบบฟอร์มรายงานตรวจคอนโด / บ้าน Before / After</h2>
+            <p>Customer Inspection Report — รายงานผลการตรวจรับคอนโด / บ้าน</p>
           </div>
           <div class="slide-gold-bar"></div>
 
@@ -5457,13 +5459,13 @@
         fill: { color: COLOR_NAVY },
         rectRadius: 0.1
       });
-      s1.addText("แบบฟอร์มรายงานตรวจคอนโด Before / After", {
+      s1.addText("แบบฟอร์มรายงานตรวจคอนโด / บ้าน Before / After", {
         x: 0.7, y: 0.45, w: 11.9, h: 0.5,
         fontFace: FONT_NAME, fontSize: 22, color: 'FFFFFF', bold: false
       });
 
       // Subtitle
-      s1.addText("Condominium Inspection Before–After Report Template", {
+      s1.addText("Property Inspection Before–After Report (Condo / House)", {
         x: 0.7, y: 1.35, w: 11.9, h: 0.35,
         fontFace: FONT_NAME, fontSize: 13, color: COLOR_MUTED
       });
@@ -5733,8 +5735,22 @@
       pptx.writeFile({ fileName: fileName });
     }
 
+    function adjustStickyRoomBar() {
+      const header = document.querySelector('.app-header');
+      const bar = document.getElementById('sticky-room-bar');
+      if (header && bar) {
+        const h = header.offsetHeight;
+        if (h > 0) {
+          bar.style.top = (h - 1) + 'px';
+        }
+      }
+    }
+    window.addEventListener('resize', adjustStickyRoomBar);
+    window.addEventListener('orientationchange', adjustStickyRoomBar);
+
     // Initialize on load
     window.addEventListener("DOMContentLoaded", () => {
+      adjustStickyRoomBar();
       loadSavedData();
       initSpeechRecognition();
       initLightboxGestures();
