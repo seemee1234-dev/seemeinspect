@@ -1734,6 +1734,147 @@
         color: #64748b !important;
         padding-left: 4px !important;
       }
+
+      /* ========================================================
+         PORTRAIT MODE SPECIFIC OVERRIDES (when user chooses PDF แนวตั้ง)
+         ======================================================== */
+      body.print-portrait-mode @page {
+        size: A4 portrait !important;
+        size: portrait !important;
+        margin: 6mm 8mm !important;
+      }
+      body.print-portrait-mode,
+      body.print-portrait-mode html {
+        width: 100% !important;
+        height: auto !important;
+      }
+      body.print-portrait-mode .container,
+      body.print-portrait-mode #tab-summary {
+        width: 100% !important;
+        max-width: 100% !important;
+      }
+      body.print-portrait-mode .slide-page {
+        width: 100% !important;
+        height: 280mm !important;
+        min-height: 280mm !important;
+        max-height: 280mm !important;
+        padding: 8mm 8mm !important;
+      }
+      body.print-portrait-mode .slide-top-navy {
+        padding: 10px 18px !important;
+        margin-bottom: 6px !important;
+        border-radius: 8px !important;
+      }
+      body.print-portrait-mode .slide-top-navy h2 {
+        font-size: 22px !important;
+        margin-bottom: 3px !important;
+      }
+      body.print-portrait-mode .slide-top-navy p {
+        font-size: 13.5px !important;
+      }
+      body.print-portrait-mode .slide-gold-bar {
+        height: 3px !important;
+        margin-bottom: 10px !important;
+      }
+      body.print-portrait-mode .slide-info-grid {
+        gap: 10px !important;
+        margin-bottom: 12px !important;
+      }
+      body.print-portrait-mode .info-card-box {
+        padding: 10px 16px !important;
+        font-size: 15px !important;
+        border-radius: 8px !important;
+      }
+      body.print-portrait-mode .info-card-box .f-lbl {
+        width: 130px !important;
+        font-size: 14.5px !important;
+      }
+      body.print-portrait-mode .info-card-box .f-val {
+        font-size: 16px !important;
+      }
+      body.print-portrait-mode .slide-table-wrap {
+        border-radius: 8px !important;
+      }
+      body.print-portrait-mode .slide-table-title {
+        font-size: 16px !important;
+        padding: 10px 16px !important;
+      }
+      body.print-portrait-mode .slide-table-wrap > div[style*="max-height"] {
+        max-height: none !important;
+        overflow: visible !important;
+      }
+      body.print-portrait-mode .slide-table td {
+        padding: 10px 16px !important;
+        font-size: 15px !important;
+      }
+      body.print-portrait-mode .slide-table .t-cat {
+        font-size: 15px !important;
+      }
+      body.print-portrait-mode .slide-table .t-cnt {
+        font-size: 17px !important;
+      }
+      body.print-portrait-mode .defect-meta-row {
+        gap: 12px !important;
+        margin-bottom: 10px !important;
+      }
+      body.print-portrait-mode .defect-meta-box {
+        padding: 10px 16px !important;
+        font-size: 15.5px !important;
+        border-radius: 8px !important;
+      }
+      body.print-portrait-mode .defect-meta-box .f-lbl {
+        width: 125px !important;
+        font-size: 15px !important;
+      }
+      body.print-portrait-mode .defect-meta-box .f-val {
+        font-size: 16px !important;
+      }
+      body.print-portrait-mode .d-code-badge {
+        font-size: 15.5px !important;
+        padding: 4px 14px !important;
+        border-radius: 6px !important;
+      }
+      body.print-portrait-mode .defect-photos-side-by-side {
+        height: 102mm !important;
+        min-height: 102mm !important;
+        max-height: 104mm !important;
+        gap: 10mm !important;
+        margin: 4mm 0 !important;
+      }
+      body.print-portrait-mode .photo-hdr-navy {
+        font-size: 14.5px !important;
+        padding: 8px 14px !important;
+      }
+      body.print-portrait-mode .defect-cat-bar {
+        padding: 8px 14px !important;
+        font-size: 15px !important;
+        gap: 10px !important;
+      }
+      body.print-portrait-mode .cat-pill-badge {
+        font-size: 14px !important;
+        padding: 4px 12px !important;
+      }
+      body.print-portrait-mode .defect-bottom-desc {
+        margin-top: 4mm !important;
+        padding: 12px 18px !important;
+        border-radius: 8px !important;
+        font-size: 15.5px !important;
+        gap: 8px !important;
+      }
+      body.print-portrait-mode .defect-bottom-desc .line-desc {
+        padding: 10px 14px !important;
+        font-size: 16px !important;
+        border-left: 5px solid #00adf2 !important;
+      }
+      body.print-portrait-mode .defect-bottom-desc .line-reinspect {
+        font-size: 14px !important;
+      }
+      body.print-portrait-mode .slide-corner-num {
+        bottom: 8mm !important;
+        right: 8mm !important;
+        font-size: 14px !important;
+        padding: 4px 14px !important;
+      }
     }
   </style>
   <!-- HEIC/HEIF Image Support (for Samsung / iPhone photos from Gallery) -->
@@ -1990,11 +2131,14 @@
       
       <!-- Clean Executive Toolbar: 2 Primary Buttons + Expandable More Options -->
       <div class="screen-toolbar no-print" style="display: flex; gap: 8px; flex-wrap: wrap;">
-        <button type="button" class="btn-main" style="flex: 1 1 45%; padding: 12px; background: #00adf2; color: #ffffff; border: none; font-size: 14px; box-shadow: 0 4px 14px rgba(0, 173, 242, 0.3);" onclick="printPDFLandscape()">
-          📄 สร้าง PDF (A4 แนวนอน)
+        <button type="button" class="btn-main" style="flex: 1 1 28%; min-width: 130px; padding: 11px 8px; background: #00adf2; color: #ffffff; border: none; font-size: 13.5px; box-shadow: 0 4px 14px rgba(0, 173, 242, 0.3);" onclick="exportPDFDefects('landscape', false)">
+          📄 PDF แนวนอน
         </button>
-        <button type="button" class="btn-main" style="flex: 1 1 45%; padding: 12px; background: linear-gradient(135deg, #06c755, #059669); color: #ffffff; border: none; font-size: 14px; box-shadow: 0 4px 14px rgba(6, 199, 85, 0.3);" onclick="shareRoomFileToLineOrDrive()">
-          📤 แชร์รายงาน (LINE / Drive)
+        <button type="button" class="btn-main" style="flex: 1 1 28%; min-width: 130px; padding: 11px 8px; background: linear-gradient(135deg, #2563eb, #1d4ed8); color: #ffffff; border: none; font-size: 13.5px; box-shadow: 0 4px 14px rgba(37, 99, 235, 0.3);" onclick="exportPDFDefects('portrait', false)">
+          📄 PDF แนวตั้ง
+        </button>
+        <button type="button" class="btn-main" style="flex: 1 1 28%; min-width: 130px; padding: 11px 8px; background: linear-gradient(135deg, #06c755, #059669); color: #ffffff; border: none; font-size: 13.5px; box-shadow: 0 4px 14px rgba(6, 199, 85, 0.3);" onclick="shareRoomFileToLineOrDrive()">
+          📤 แชร์ LINE/Drive
         </button>
         
         <!-- Toggle button for More Options -->
@@ -2003,8 +2147,11 @@
         </button>
         
         <div id="more-export-options" style="display: none; width: 100%; flex-direction: column; gap: 6px; padding: 10px; background: #070d1e; border: 1px solid #1e3a8a; border-radius: 8px;">
-          <button type="button" class="btn-secondary" style="width: 100%; padding: 8px; color: #38bdf8; border-color: #0284c7; background: #0b1f3a;" onclick="exportPDFDefectsLandscape(true)">
+          <button type="button" class="btn-secondary" style="width: 100%; padding: 8px; color: #38bdf8; border-color: #0284c7; background: #0b1f3a;" onclick="exportPDFDefects('landscape', true)">
             📑 สร้าง PDF รวมตารางสรุปหน้า 1-2 (A4 แนวนอน)
+          </button>
+          <button type="button" class="btn-secondary" style="width: 100%; padding: 8px; color: #93c5fd; border-color: #3b82f6; background: #0b1f3a;" onclick="exportPDFDefects('portrait', true)">
+            📑 สร้าง PDF รวมตารางสรุปหน้า 1-2 (A4 แนวตั้ง)
           </button>
           <button type="button" class="btn-secondary" style="width: 100%; padding: 8px; color: #ffd700; border-color: #ffd700; background: #0b1f3a;" onclick="exportToPowerPoint()">
             📊 ดาวน์โหลด PowerPoint (.pptx)
@@ -4833,22 +4980,37 @@
      * UPDATE SUMMARY & SLIDE 1 & SLIDE 2..N (1 SLIDE = 1 PAGE)
      */
     /**
-     * EXPORT DEFECT REPORT AS A4 LANDSCAPE (1 DEFECT CARD = 1 FULL A4 SHEET)
+     * UNIFIED EXPORT DEFECT REPORT (A4 LANDSCAPE & A4 PORTRAIT)
      */
-    function exportPDFDefectsLandscape(includeSummary) {
+    let currentPrintOrientation = "landscape";
+    let currentPrintIncludeSummary = false;
+
+    function exportPDFDefects(orientation, includeSummary) {
+      currentPrintOrientation = orientation || "landscape";
+      currentPrintIncludeSummary = !!includeSummary;
+
       if (includeSummary) {
-        document.body.classList.add('print-with-summary');
+        document.body.classList.add("print-with-summary");
       } else {
-        document.body.classList.remove('print-with-summary');
+        document.body.classList.remove("print-with-summary");
       }
-      
-      let s = document.getElementById("force-landscape-style");
+
+      let s = document.getElementById("force-dynamic-orientation-style");
       if (!s) {
         s = document.createElement("style");
-        s.id = "force-landscape-style";
+        s.id = "force-dynamic-orientation-style";
         document.head.appendChild(s);
       }
-      s.innerHTML = "@page { size: 297mm 210mm !important; size: landscape !important; margin: 0 !important; }";
+
+      if (currentPrintOrientation === "portrait") {
+        document.body.classList.add("print-portrait-mode");
+        document.body.classList.remove("print-landscape-mode");
+        s.innerHTML = `@page { size: A4 portrait !important; size: portrait !important; margin: 6mm 8mm !important; }`;
+      } else {
+        document.body.classList.add("print-landscape-mode");
+        document.body.classList.remove("print-portrait-mode");
+        s.innerHTML = `@page { size: 297mm 210mm !important; size: landscape !important; margin: 0 !important; }`;
+      }
 
       window._forceRenderSlides = true;
       updateSummaryUI();
@@ -4858,6 +5020,10 @@
       if (isMobile) {
         const guideModal = document.getElementById("print-guide-modal");
         if (guideModal) {
+          const orientTitle = document.getElementById("guide-orientation-title");
+          const orientText = document.getElementById("guide-orientation-text");
+          if (orientTitle) orientTitle.textContent = currentPrintOrientation === "portrait" ? "วิธีบันทึก PDF แนวตั้ง" : "วิธีบันทึก PDF แนวนอน";
+          if (orientText) orientText.textContent = currentPrintOrientation === "portrait" ? "\"แนวตั้ง\" (Portrait)" : "\"แนวนอน\" (Landscape)";
           guideModal.style.display = "flex";
           return;
         }
@@ -4866,13 +5032,13 @@
       setTimeout(() => {
         window.print();
         setTimeout(() => {
-          document.body.classList.remove('print-with-summary');
+          document.body.classList.remove("print-with-summary");
         }, 1500);
       }, 150);
     }
 
     function printPDFLandscape() {
-      exportPDFDefectsLandscape(false);
+      exportPDFDefects("landscape", false);
     }
 
     function proceedToPrintNow() {
@@ -4884,7 +5050,7 @@
       setTimeout(() => {
         window.print();
         setTimeout(() => {
-          document.body.classList.remove('print-with-summary');
+          document.body.classList.remove("print-with-summary");
         }, 1500);
       }, 100);
     }
@@ -6171,11 +6337,11 @@
     </div>
   </div>
 
-  <!-- Android Landscape PDF Print Guide Modal -->
+  <!-- Android Landscape / Portrait PDF Print Guide Modal -->
   <div id="print-guide-modal" class="no-print" style="display: none; position: fixed; inset: 0; background: rgba(0,0,0,0.85); z-index: 9999999; align-items: center; justify-content: center; padding: 20px;">
     <div style="background: #0f172a; border: 1.5px solid #00adf2; border-radius: 16px; max-width: 390px; width: 100%; padding: 20px; box-shadow: 0 10px 30px rgba(0,0,0,0.8); color: #ffffff; text-align: center; font-family: 'Kanit', sans-serif; font-weight: 300;">
       <div style="font-size: 38px; margin-bottom: 6px;">📄</div>
-      <h3 style="font-size: 17px; font-weight: 400; color: #ffd700; margin-bottom: 12px;">วิธีบันทึก PDF แนวนอน (Android)</h3>
+      <h3 id="guide-orientation-title" style="font-size: 17px; font-weight: 400; color: #ffd700; margin-bottom: 12px;">วิธีบันทึก PDF (Android)</h3>
       
       <div style="background: #070d1e; border: 1px solid #1e2e54; border-radius: 10px; padding: 12px 14px; text-align: left; font-size: 13px; line-height: 1.6; color: #e2e8f0; margin-bottom: 16px;">
         <p style="margin-bottom: 8px; color: #94a3b8; font-size: 12px;">ในหน้าต่างบันทึก PDF ของมือถือ ให้ทำตามนี้ครับ:</p>
@@ -6185,7 +6351,7 @@
         </div>
         
         <div style="background: rgba(255,215,0,0.1); border-left: 3px solid #ffd700; padding: 8px 10px; border-radius: 4px; margin-bottom: 8px;">
-          <strong>2. เปลี่ยน "การวางแนว"</strong> จากแนวตั้ง เป็น 👉 <strong style="color: #ffd700;">"แนวนอน" (Landscape)</strong>
+          <strong>2. ตรวจสอบ "การวางแนว"</strong> ให้ตรงกับที่คุณเลือก 👉 <strong id="guide-orientation-text" style="color: #ffd700;">"แนวนอน" (Landscape)</strong>
         </div>
         
         <div style="background: rgba(16,185,129,0.1); border-left: 3px solid #10b981; padding: 8px 10px; border-radius: 4px;">
