@@ -3302,24 +3302,26 @@
      * BACKUP & RESTORE ROOM DATA (FOR 10-DAY REINSPECTION)
      * ========================================================
      */
-        /**
-     * GENERATE SEARCHABLE FILE NAME WITH DATE, ROOM, AND DEFECT DETAILS
+    /**
+     * GENERATE CLEAN SEARCHABLE FILE NAME (FORMAT OPTION 1: โครงการ_ห้อง_วันที่)
      */
     function getFormattedBackupFileName(ext = "json") {
       const now = new Date();
       const year = now.getFullYear();
       const month = String(now.getMonth() + 1).padStart(2, '0');
       const day = String(now.getDate()).padStart(2, '0');
-      const hours = String(now.getHours()).padStart(2, '0');
-      const mins = String(now.getMinutes()).padStart(2, '0');
 
-      const dateStr = `${year}-${month}-${day}_${hours}${mins}`;
-      const projStr = (projectConfig.projName || "คอนโด").replace(/[/\\?%*:|"<> ]/g, '_');
-      const roomStr = (projectConfig.roomNo || "ห้อง").replace(/[/\\?%*:|"<> ]/g, '-');
-      const defectCount = defectList.length;
+      let dateStr = `${day}-${month}-${year}`;
+      if (projectConfig.inspectDate) {
+        // Normalize user date e.g. 02/10/2026 or 02-10-2569 to clean format
+        dateStr = projectConfig.inspectDate.replace(/[/ ]/g, '-');
+      }
 
-      // Descriptive naming for easy searching in LINE / Google Drive:
-      return `ตรวจคอนโด_${projStr}_ห้อง_${roomStr}_วันที่_${dateStr}_${defectCount}จุด_รอตรวจAfter.${ext}`;
+      const projStr = (projectConfig.projName || "โครงการ").trim().replace(/[/\\?%*:|"<> ]/g, '_');
+      const roomStr = (projectConfig.roomNo || "ห้อง").trim().replace(/[/\\?%*:|"<> ]/g, '-');
+
+      // Format Option 1: Origin_88-102_02-10-2569.ext
+      return `${projStr}_${roomStr}_${dateStr}.${ext}`;
     }
 
     /**
@@ -3995,9 +3997,7 @@
         showToast(`📦 กำลังสร้างไฟล์ ZIP (${count} รูป)...`);
 
         const blob = await zip.generateAsync({ type: "blob" });
-        const now = new Date();
-        const ymd = now.toISOString().slice(0, 10);
-        const zipFileName = `รูปตรวจคอนโด_${projectConfig.projName || 'โครงการ'}_ห้อง_${projectConfig.roomNo || 'room'}_${ymd}_(${count}รูป).zip`;
+        const zipFileName = getFormattedBackupFileName("zip");
 
         const link = document.createElement("a");
         link.href = URL.createObjectURL(blob);
@@ -5199,8 +5199,14 @@
         }
       }
 
+      // Format Option 1 dynamic title so browser PDF default filename is clean: โครงการ_ห้อง_วันที่.pdf
+      const origDocTitle = document.title;
+      const pdfFileName = getFormattedBackupFileName("pdf").replace(/\.pdf$/i, "");
+      document.title = pdfFileName;
+
       setTimeout(() => {
         window.print();
+        setTimeout(() => { document.title = origDocTitle; }, 3000);
       }, 150);
     }
 
@@ -5214,8 +5220,15 @@
       window._forceRenderSlides = true;
       updateSummaryUI();
       window._forceRenderSlides = false;
+
+      // Format Option 1 dynamic title for mobile print
+      const origDocTitle = document.title;
+      const pdfFileName = getFormattedBackupFileName("pdf").replace(/\.pdf$/i, "");
+      document.title = pdfFileName;
+
       setTimeout(() => {
         window.print();
+        setTimeout(() => { document.title = origDocTitle; }, 3000);
       }, 100);
     }
 
