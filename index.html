@@ -2262,7 +2262,7 @@
 
         <!-- รายละเอียดสิ่งที่พบ -->
         <div class="form-group" style="margin-bottom: 10px;">
-          <label style="font-size: 13px; color: #38bdf8; font-weight: 400; margin-bottom: 4px;">📝 สิ่งที่พบ (แตะคำศัพท์ด่วน หรือพิมพ์แก้ไข):</label>
+          <label style="font-size: 13px; color: #38bdf8; font-weight: 400; margin-bottom: 4px;">📝 พบข้อสังเกต (แตะคำศัพท์ด่วน หรือพิมพ์แก้ไข):</label>
           <div class="dynamic-pills-row" id="finding-pills">
             <!-- Populated dynamically based on category -->
           </div>
@@ -2276,31 +2276,6 @@
             <!-- Populated dynamically based on category -->
           </div>
           <textarea id="cur-recommend" rows="2" style="font-size: 14px; padding: 8px 10px; line-height: 1.4;" placeholder="เช่น ขัดปรับแต่งผิว ฉาบโป๊วและเก็บสีใหม่ให้เรียบร้อยตามมาตรฐาน..."></textarea>
-        </div>
-      </div>
-
-      <!-- กลุ่ม ④: ผลการตรวจจุดนี้ (Inspection Result - Tier 1 Defect Level) -->
-      <div class="card" style="padding: 12px 14px; border: 1.5px solid #1e3a8a; background: #070d1e;">
-        <div class="group-header">
-          <span>④ ผลการตรวจจุดนี้</span>
-          <span class="group-sub">Inspection Result</span>
-        </div>
-
-        <div class="status-pill-group" style="margin-bottom: 0;">
-          <button type="button" class="status-pill-btn active-notice" id="status-btn-notice" onclick="setDefectStatus('พบข้อสังเกต')">🟡 พบข้อสังเกต</button>
-          <button type="button" class="status-pill-btn" id="status-btn-discuss" onclick="setDefectStatus('รอตรวจสอบร่วมกัน')">🔵 รอตรวจสอบร่วมกัน</button>
-          <button type="button" class="status-pill-btn" id="status-btn-passed" onclick="setDefectStatus('ผ่านการตรวจ')">🟢 ผ่านการตรวจ</button>
-        </div>
-
-        <!-- กล่องบันทึกข้อเห็นต่าง/ข้อสังเกตร่วมกัน (แสดงเฉพาะเมื่อเลือก 'รอตรวจสอบร่วมกัน') -->
-        <div id="discuss-memo-container" style="display: none; margin-top: 10px; padding-top: 8px; border-top: 1px dashed #1e3a8a;">
-          <label style="font-size: 12px; color: #38bdf8; display: block; margin-bottom: 4px;">
-            💬 บันทึกข้อสังเกตร่วมกัน / ข้อเห็นต่าง (ถ้ามี):
-          </label>
-          <input type="text" id="cur-discuss-memo" placeholder="เช่น ผู้ส่งมอบขอตรวจสอบค่าระดับเพิ่มเติม หรือ รอแบบอ้างอิง..." style="width: 100%; font-size: 13px; padding: 7px 10px; background: #0b1528; border: 1px solid #00adf2; border-radius: 6px; color: #ffffff;">
-          <div style="font-size: 11px; color: #64748b; margin-top: 4px; line-height: 1.3;">
-            * สำหรับกรณีเห็นไม่ตรงกัน ไม่บังคับให้ใครยอมรับผิด แต่ใช้บันทึกเพื่อตรวจสอบร่วมกันรอบถัดไป
-          </div>
         </div>
       </div>
 
@@ -2399,22 +2374,18 @@
           </span>
         </div>
 
-        <div style="display: grid; grid-template-columns: repeat(4, 1fr); gap: 6px; margin-bottom: 10px;">
+        <div style="display: grid; grid-template-columns: repeat(3, 1fr); gap: 8px; margin-bottom: 10px;">
           <div style="background: #0b1528; border: 1px solid #1e2e54; border-radius: 6px; padding: 6px 8px; text-align: center;">
-            <div style="font-size: 10px; color: #94a3b8;">พื้นที่ที่ตรวจ</div>
-            <div style="font-size: 15px; color: #38bdf8; font-weight: 400;" id="final-summary-rooms">0 พื้นที่</div>
+            <div style="font-size: 10.5px; color: #94a3b8;">📋 ตรวจพบทั้งหมด</div>
+            <div style="font-size: 16px; color: #10b981; font-weight: 400;" id="final-summary-total">0 จุด</div>
           </div>
           <div style="background: rgba(245, 158, 11, 0.1); border: 1px solid #f59e0b; border-radius: 6px; padding: 6px 8px; text-align: center;">
-            <div style="font-size: 10px; color: #fcd34d;">พบข้อสังเกต</div>
-            <div style="font-size: 15px; color: #fbbf24; font-weight: 400;" id="final-summary-notices">0 จุด</div>
+            <div style="font-size: 10.5px; color: #fcd34d;">🟡 พบข้อสังเกต</div>
+            <div style="font-size: 16px; color: #fbbf24; font-weight: 400;" id="final-summary-notices">0 จุด</div>
           </div>
           <div style="background: rgba(0, 173, 242, 0.1); border: 1px solid #00adf2; border-radius: 6px; padding: 6px 8px; text-align: center;">
-            <div style="font-size: 10px; color: #7dd3fc;">รอตรวจร่วมกัน</div>
-            <div style="font-size: 15px; color: #00adf2; font-weight: 400;" id="final-summary-discuss">0 จุด</div>
-          </div>
-          <div style="background: rgba(16, 185, 129, 0.1); border: 1px solid #10b981; border-radius: 6px; padding: 6px 8px; text-align: center;">
-            <div style="font-size: 10px; color: #86efac;">ตรวจพบทั้งหมด</div>
-            <div style="font-size: 15px; color: #10b981; font-weight: 400;" id="final-summary-total">0 จุด</div>
+            <div style="font-size: 10.5px; color: #7dd3fc;">🏠 พื้นที่ที่ตรวจ</div>
+            <div style="font-size: 16px; color: #38bdf8; font-weight: 400;" id="final-summary-rooms">0 พื้นที่</div>
           </div>
         </div>
 
@@ -2490,27 +2461,22 @@
             </div>
           </div>
 
-          <!-- Executive Summary Header Bar (ตัวเลขภาพรวม 4 กล่อง คมชัด Kanit 300 - รวมยอดตรงกัน 100%) -->
-          <div style="display: grid; grid-template-columns: repeat(4, 1fr); gap: 6px; margin-bottom: 8px;">
-            <div style="background: #f8fafc; border: 1.5px solid #cbd5e1; border-radius: 6px; padding: 5px 6px; text-align: center;">
-              <div style="font-size: 10px; color: #475569;">📋 ตรวจพบทั้งหมด</div>
-              <div style="font-size: 16px; color: #0b1f3a; font-weight: 500;" id="exec-total-cnt">0 จุด</div>
-              <div style="font-size: 9.5px; color: #64748b; margin-top: 1px;" id="exec-rooms-cnt">0 พื้นที่</div>
+          <!-- Executive Summary Header Bar (ตัวเลขภาพรวม 3 กล่อง สมดุล คมชัด Kanit 300 - ยอดตรงกัน 100%) -->
+          <div style="display: grid; grid-template-columns: repeat(3, 1fr); gap: 8px; margin-bottom: 8px;">
+            <div style="background: #f8fafc; border: 1.5px solid #cbd5e1; border-radius: 6px; padding: 6px 8px; text-align: center;">
+              <div style="font-size: 10.5px; color: #475569;">📋 ตรวจพบทั้งหมด</div>
+              <div style="font-size: 17px; color: #0b1f3a; font-weight: 500;" id="exec-total-cnt">0 จุด</div>
+              <div style="font-size: 9.5px; color: #64748b; margin-top: 1px;">รายการบันทึกในเล่ม</div>
             </div>
-            <div style="background: #fff7ed; border: 1.5px solid #fed7aa; border-radius: 6px; padding: 5px 6px; text-align: center;">
-              <div style="font-size: 10px; color: #9a3412;">🟠 ควรแก้ไข</div>
-              <div style="font-size: 16px; color: #c2410c; font-weight: 500;" id="exec-mustfix-cnt">0 จุด</div>
-              <div style="font-size: 9.5px; color: #ea580c; margin-top: 1px;">รายการปรับปรุง</div>
+            <div style="background: #fefce8; border: 1.5px solid #fef08a; border-radius: 6px; padding: 6px 8px; text-align: center;">
+              <div style="font-size: 10.5px; color: #854d0e;">🟡 พบข้อสังเกตทั้งหมด</div>
+              <div style="font-size: 17px; color: #ca8a04; font-weight: 500;" id="exec-notice-cnt">0 จุด</div>
+              <div style="font-size: 9.5px; color: #a16207; margin-top: 1px;">จุดที่ต้องปรับปรุงแก้ไข</div>
             </div>
-            <div style="background: #fefce8; border: 1.5px solid #fef08a; border-radius: 6px; padding: 5px 6px; text-align: center;">
-              <div style="font-size: 10px; color: #854d0e;">🟡 พบข้อสังเกต</div>
-              <div style="font-size: 16px; color: #ca8a04; font-weight: 500;" id="exec-notice-cnt">0 จุด</div>
-              <div style="font-size: 9.5px; color: #a16207; margin-top: 1px;">จุดเฝ้าระวัง</div>
-            </div>
-            <div style="background: #f0f9ff; border: 1.5px solid #bae6fd; border-radius: 6px; padding: 5px 6px; text-align: center;">
-              <div style="font-size: 10px; color: #0369a1;">🔵 รอตรวจร่วมกัน</div>
-              <div style="font-size: 16px; color: #0284c7; font-weight: 500;" id="exec-discuss-cnt">0 จุด</div>
-              <div style="font-size: 9.5px; color: #0284c7; margin-top: 1px;">นัดดูหน้างาน</div>
+            <div style="background: #f0f9ff; border: 1.5px solid #bae6fd; border-radius: 6px; padding: 6px 8px; text-align: center;">
+              <div style="font-size: 10.5px; color: #0369a1;">🏠 พื้นที่ที่ตรวจ</div>
+              <div style="font-size: 17px; color: #0284c7; font-weight: 500;" id="exec-rooms-cnt">0 พื้นที่</div>
+              <div style="font-size: 9.5px; color: #0284c7; margin-top: 1px;">ตรวจครบถ้วนทุกห้อง</div>
             </div>
           </div>
 
@@ -5300,15 +5266,16 @@
       document.getElementById("p-phone").textContent = projectConfig.phone || "--";
 
       // 3. Executive Summary Metrics & Room breakdown
-      const mustFixCount = defectList.filter(d => d.status === 'ควรแก้ไข' || d.status === 'รอดำเนินการ' || d.status === 'ยังไม่แก้').length;
-      const noticeCount = defectList.filter(d => d.status === 'พบข้อสังเกต' || (!d.status && mustFixCount === 0)).length;
-      const discussCount = defectList.filter(d => d.status === 'รอตรวจสอบร่วมกัน').length;
+      // Unified status philosophy: All inspection items are recorded as 'พบข้อสังเกต' (needing rectification in polite terms)
       const passedCount = defectList.filter(d => d.status === 'ผ่านการตรวจ' || d.status === 'แก้แล้ว' || d.status === 'แก้ไขแล้ว' || d.status === 'ตรวจซ้ำแล้วผ่าน').length;
+      const noticeCount = defectList.length - passedCount;
+      const mustFixCount = 0;
+      const discussCount = 0;
       
       const distinctRooms = new Set(defectList.map(d => getDefectRoom(d)));
       const inspectedRoomsCount = Math.max(distinctRooms.size, Object.keys(completedRooms).length);
 
-      // Slide 1 executive boxes (Tier 3 - รวมยอดตรงกัน 100%)
+      // Slide 1 executive boxes (3 กล่อง สมดุล คมชัด Kanit 300 - รวมยอดตรงกัน 100%)
       const execTotal = document.getElementById("exec-total-cnt");
       if (execTotal) execTotal.textContent = `${defectList.length} จุด`;
       const execMustfix = document.getElementById("exec-mustfix-cnt");
@@ -5627,7 +5594,7 @@
 
             <!-- Finding -->
             <div class="line-desc" style="margin-bottom: 4px;">
-              <strong>3. สิ่งที่พบ:</strong> ${d.desc}
+              <strong>3. พบข้อสังเกต:</strong> ${d.desc}
             </div>
 
             ${d.discussMemo ? `
