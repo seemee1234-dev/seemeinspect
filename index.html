@@ -1769,24 +1769,24 @@
       }
 
       /* ========================================================
-         PORTRAIT MODE SPECIFIC OVERRIDES (when user chooses PDF แนวตั้ง)
+         PORTRAIT MODE SPECIFIC OVERRIDES (Option 2: Modern High-Contrast Tech)
          ======================================================== */
       body.print-portrait-mode,
       body.print-portrait-mode html {
-        width: 100% !important;
-        height: auto !important;
+        width: 210mm !important;
+        height: 297mm !important;
       }
       body.print-portrait-mode .container,
       body.print-portrait-mode #tab-summary {
-        width: 100% !important;
-        max-width: 100% !important;
+        width: 210mm !important;
+        max-width: 210mm !important;
       }
       body.print-portrait-mode .slide-page {
-        width: 100% !important;
-        height: 260mm !important;
-        min-height: 260mm !important;
-        max-height: 260mm !important;
-        padding: 5mm 6mm !important;
+        width: 210mm !important;
+        height: 282mm !important;
+        min-height: 282mm !important;
+        max-height: 282mm !important;
+        padding: 8mm 12mm 8mm 12mm !important;
         box-sizing: border-box !important;
         page-break-after: always !important;
         break-after: page !important;
@@ -1794,118 +1794,276 @@
         break-inside: avoid !important;
         overflow: hidden !important;
         justify-content: space-between !important;
+        background: #ffffff !important;
       }
       body.print-portrait-mode .slide-top-navy {
-        padding: 8px 14px !important;
+        padding: 10px 18px !important;
         margin-bottom: 4px !important;
-        border-radius: 6px !important;
+        border-radius: 8px !important;
+        background: #07172c !important;
       }
       body.print-portrait-mode .slide-top-navy h2 {
-        font-size: 19px !important;
+        font-size: 21.5px !important;
+        font-weight: 500 !important;
+        letter-spacing: 0.5px !important;
         margin-bottom: 2px !important;
+        color: #ffffff !important;
       }
       body.print-portrait-mode .slide-top-navy p {
-        font-size: 12px !important;
+        font-size: 13.5px !important;
+        color: #38bdf8 !important;
       }
       body.print-portrait-mode .slide-gold-bar {
-        height: 2.5px !important;
-        margin-bottom: 6px !important;
+        height: 3.5px !important;
+        margin-bottom: 8px !important;
+        background: linear-gradient(90deg, #00adf2, #0284c7) !important;
       }
+
+      /* Slide 1 Info Grid */
       body.print-portrait-mode .slide-info-grid {
-        gap: 6px !important;
+        gap: 8px !important;
         margin-bottom: 8px !important;
       }
       body.print-portrait-mode .info-card-box {
-        padding: 6px 12px !important;
-        font-size: 13.5px !important;
+        padding: 8px 14px !important;
+        font-size: 14px !important;
         border-radius: 6px !important;
       }
       body.print-portrait-mode .info-card-box .f-lbl {
-        width: 115px !important;
-        font-size: 13px !important;
+        width: 120px !important;
+        font-size: 13.5px !important;
       }
       body.print-portrait-mode .info-card-box .f-val {
-        font-size: 14.5px !important;
+        font-size: 15.5px !important;
       }
       body.print-portrait-mode .slide-table-wrap {
         border-radius: 6px !important;
       }
       body.print-portrait-mode .slide-table-title {
-        font-size: 14px !important;
-        padding: 6px 12px !important;
+        font-size: 14.5px !important;
+        padding: 7px 14px !important;
       }
       body.print-portrait-mode .slide-table td {
-        padding: 6px 12px !important;
-        font-size: 13.5px !important;
+        padding: 7px 14px !important;
+        font-size: 14px !important;
       }
       body.print-portrait-mode .slide-table .t-cat {
-        font-size: 13.5px !important;
+        font-size: 14px !important;
       }
       body.print-portrait-mode .slide-table .t-cnt {
-        font-size: 15px !important;
+        font-size: 16px !important;
       }
+
+      /* Defect Meta 4 Color-Coded Cards */
       body.print-portrait-mode .defect-meta-row {
-        gap: 8px !important;
-        margin-bottom: 6px !important;
+        display: grid !important;
+        grid-template-columns: 1fr 1fr !important;
+        gap: 10px !important;
+        margin-bottom: 8px !important;
       }
       body.print-portrait-mode .defect-meta-box {
-        padding: 6px 12px !important;
+        padding: 8px 16px !important;
+        border-radius: 8px !important;
+        display: flex !important;
+        align-items: center !important;
+        justify-content: flex-start !important;
+        gap: 8px !important;
+      }
+      body.print-portrait-mode .defect-meta-box:nth-child(1) {
+        background: #0b1f3a !important;
+        border: 2px solid #1e3a8a !important;
+      }
+      body.print-portrait-mode .defect-meta-box:nth-child(1) .f-lbl {
+        color: #93c5fd !important;
         font-size: 14px !important;
-        border-radius: 6px !important;
       }
-      body.print-portrait-mode .defect-meta-box .f-lbl {
-        width: 110px !important;
-        font-size: 13.5px !important;
+      body.print-portrait-mode .defect-meta-box:nth-child(1) .d-code-badge {
+        background: transparent !important;
+        color: #ffd700 !important;
+        font-size: 19px !important;
+        font-weight: 600 !important;
+        padding: 0 !important;
       }
-      body.print-portrait-mode .defect-meta-box .f-val {
-        font-size: 14.5px !important;
+
+      body.print-portrait-mode .defect-meta-box:nth-child(2) {
+        background: #e0f2fe !important;
+        border: 2px solid #0284c7 !important;
       }
-      body.print-portrait-mode .d-code-badge {
+      body.print-portrait-mode .defect-meta-box:nth-child(2) .f-lbl {
+        color: #0369a1 !important;
         font-size: 14px !important;
-        padding: 3px 12px !important;
-        border-radius: 5px !important;
       }
+      body.print-portrait-mode .defect-meta-box:nth-child(2) .f-val {
+        color: #0c4a6e !important;
+        font-size: 18.5px !important;
+        font-weight: 500 !important;
+      }
+
+      body.print-portrait-mode .defect-meta-box:nth-child(3) {
+        background: #fef3c7 !important;
+        border: 2px solid #f59e0b !important;
+      }
+      body.print-portrait-mode .defect-meta-box:nth-child(3) .f-lbl {
+        color: #b45309 !important;
+        font-size: 14px !important;
+      }
+      body.print-portrait-mode .defect-meta-box:nth-child(3) .f-val {
+        color: #78350f !important;
+        font-size: 18px !important;
+        font-weight: 500 !important;
+      }
+
+      body.print-portrait-mode .defect-meta-box:nth-child(4) {
+        background: #f1f5f9 !important;
+        border: 2px solid #64748b !important;
+      }
+      body.print-portrait-mode .defect-meta-box:nth-child(4) .f-lbl {
+        color: #475569 !important;
+        font-size: 14px !important;
+      }
+      body.print-portrait-mode .defect-meta-box:nth-child(4) .f-val {
+        color: #0f172a !important;
+        font-size: 18px !important;
+        font-weight: 500 !important;
+      }
+
+      /* Photos Section (High Contrast Split Colors) */
       body.print-portrait-mode .defect-photos-side-by-side {
-        height: 100mm !important;
-        min-height: 100mm !important;
-        max-height: 102mm !important;
+        height: 124mm !important;
+        min-height: 124mm !important;
+        max-height: 125mm !important;
+        display: grid !important;
+        grid-template-columns: 1fr 1fr !important;
         gap: 8mm !important;
         margin: 3mm 0 !important;
       }
-      body.print-portrait-mode .photo-hdr-navy {
-        font-size: 13.5px !important;
-        padding: 6px 12px !important;
+      body.print-portrait-mode .photo-col-frame:nth-child(1) {
+        height: 100% !important;
+        display: flex !important;
+        flex-direction: column !important;
+        border: 2.5px solid #0284c7 !important;
+        border-radius: 8px !important;
+        overflow: hidden !important;
+        background: #070d1e !important;
       }
-      body.print-portrait-mode .defect-cat-bar {
-        padding: 5px 10px !important;
-        font-size: 13.5px !important;
-        gap: 8px !important;
+      body.print-portrait-mode .photo-col-frame:nth-child(1) .photo-hdr-navy {
+        background: #0b1f3a !important;
+        color: #38bdf8 !important;
+        font-size: 15.5px !important;
+        font-weight: 500 !important;
+        padding: 8px 14px !important;
       }
-      body.print-portrait-mode .cat-pill-badge {
-        font-size: 13px !important;
-        padding: 3px 10px !important;
+      body.print-portrait-mode .photo-col-frame:nth-child(2) {
+        height: 100% !important;
+        display: flex !important;
+        flex-direction: column !important;
+        border: 2.5px solid #0369a1 !important;
+        border-radius: 8px !important;
+        overflow: hidden !important;
+        background: #070d1e !important;
       }
+      body.print-portrait-mode .photo-col-frame:nth-child(2) .photo-hdr-navy {
+        background: #0369a1 !important;
+        color: #ffffff !important;
+        font-size: 15.5px !important;
+        font-weight: 500 !important;
+        padding: 8px 14px !important;
+      }
+      body.print-portrait-mode .photo-img-wrap {
+        flex: 1 !important;
+        display: flex !important;
+        align-items: center !important;
+        justify-content: center !important;
+        overflow: hidden !important;
+        background: #070d1e !important;
+      }
+      body.print-portrait-mode .photo-img-contain {
+        width: 100% !important;
+        height: 100% !important;
+        object-fit: contain !important;
+      }
+      body.print-portrait-mode .photo-btn-bar {
+        display: flex !important;
+        padding: 4px 8px !important;
+        gap: 6px !important;
+        background: #0b1f3a !important;
+        border-top: 1px solid #1e2e54 !important;
+      }
+      body.print-portrait-mode .photo-btn-bar button {
+        display: block !important;
+        font-family: 'Kanit', sans-serif !important;
+        font-weight: 300 !important;
+        font-size: 12px !important;
+        padding: 4px 8px !important;
+        border-radius: 4px !important;
+      }
+
+      /* Bottom Descriptions (Distinct Double Box Style) */
       body.print-portrait-mode .defect-bottom-desc {
         margin-top: 3mm !important;
-        padding: 8px 14px !important;
+        padding: 10px 16px !important;
+        background: #ffffff !important;
+        border: 1.5px solid #cbd5e1 !important;
+        border-radius: 8px !important;
+        gap: 8px !important;
+        display: flex !important;
+        flex-direction: column !important;
+      }
+      body.print-portrait-mode .defect-cat-bar {
+        display: flex !important;
+        align-items: center !important;
+        gap: 10px !important;
+        padding: 0 !important;
+        background: transparent !important;
+        border: none !important;
+      }
+      body.print-portrait-mode .cat-pill-badge {
+        padding: 4px 14px !important;
         border-radius: 6px !important;
-        font-size: 14px !important;
-        gap: 5px !important;
-        padding-right: 120px !important;
+        font-size: 14.5px !important;
+        font-weight: 400 !important;
       }
       body.print-portrait-mode .defect-bottom-desc .line-desc {
-        padding: 6px 10px !important;
-        font-size: 14px !important;
-        border-left: 4px solid #00adf2 !important;
+        padding: 9px 14px !important;
+        font-size: 17.5px !important;
+        line-height: 1.45 !important;
+        border-radius: 6px !important;
+      }
+      body.print-portrait-mode .defect-bottom-desc > div:nth-child(2) {
+        background: #f0f9ff !important;
+        border: 1.5px solid #00adf2 !important;
+        border-left: 6px solid #00adf2 !important;
+        color: #0f172a !important;
+      }
+      body.print-portrait-mode .defect-bottom-desc > div:nth-child(2) strong {
+        color: #0284c7 !important;
+        font-size: 17.5px !important;
+      }
+      body.print-portrait-mode .defect-bottom-desc > div:nth-last-child(2) {
+        background: #f0fdf4 !important;
+        border: 1.5px solid #16a34a !important;
+        border-left: 6px solid #16a34a !important;
+        color: #0f172a !important;
+      }
+      body.print-portrait-mode .defect-bottom-desc > div:nth-last-child(2) strong {
+        color: #15803d !important;
+        font-size: 17.5px !important;
       }
       body.print-portrait-mode .defect-bottom-desc .line-reinspect {
-        font-size: 12.5px !important;
+        font-size: 14.5px !important;
+        font-weight: 500 !important;
+        color: #334155 !important;
+        padding-top: 4px !important;
       }
       body.print-portrait-mode .slide-corner-num {
-        bottom: 6mm !important;
-        right: 8mm !important;
-        font-size: 13px !important;
-        padding: 3px 12px !important;
+        bottom: 8mm !important;
+        right: 12mm !important;
+        font-size: 14px !important;
+        font-weight: 500 !important;
+        padding: 4px 14px !important;
+        background: #0284c7 !important;
+        color: #ffffff !important;
+        border-radius: 5px !important;
       }
       body.print-portrait-mode #slide-customer-summary {
         justify-content: flex-start !important;
