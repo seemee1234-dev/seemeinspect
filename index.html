@@ -1680,6 +1680,27 @@
         font-size: 13px !important;
       }
 
+      .photo-btn-bar {
+        display: flex !important;
+        padding: 3px 6px !important;
+        gap: 6px !important;
+        background: #0b1f3a !important;
+        border-top: 1px solid #1e2e54 !important;
+        -webkit-print-color-adjust: exact !important;
+        print-color-adjust: exact !important;
+      }
+
+      .photo-btn-bar button {
+        display: block !important;
+        font-family: 'Kanit', sans-serif !important;
+        font-weight: 300 !important;
+        font-size: 11px !important;
+        padding: 3px 6px !important;
+        border-radius: 4px !important;
+        -webkit-print-color-adjust: exact !important;
+        print-color-adjust: exact !important;
+      }
+
       .photo-after-placeholder .no-print {
         display: none !important;
       }
@@ -5389,7 +5410,7 @@
                 <div class="photo-img-wrap">
                   <img src="${photoWideSrc}" class="photo-img-contain" alt="ภาพกว้าง">
                 </div>
-                <div class="no-print" style="padding: 4px 6px; display: flex; gap: 4px; background: #0b1f3a; border-top: 1px solid #1e2e54;">
+                <div class="photo-btn-bar" style="padding: 4px 6px; display: flex; gap: 4px; background: #0b1f3a; border-top: 1px solid #1e2e54;">
                   <button type="button" class="btn-secondary" style="flex: 1; font-size: 11px; padding: 4px 0; text-align: center; white-space: nowrap; background: rgba(11,31,58,0.92); color: #00adf2; border-color: #00adf2;" onclick="openLiveCamera('edit_wide', ${origIdx >= 0 ? origIdx : index})">📷 ถ่ายใหม่</button>
                   <button type="button" class="btn-danger-sm" style="flex: 1; font-size: 11px; padding: 4px 0; text-align: center; white-space: nowrap;" onclick="removeWidePhoto(${origIdx >= 0 ? origIdx : index})">🗑️ ลบรูป</button>
                 </div>
@@ -5409,7 +5430,7 @@
                 <div class="photo-img-wrap">
                   <img src="${photoCloseSrc}" class="photo-img-contain" alt="ภาพใกล้">
                 </div>
-                <div class="no-print" style="padding: 4px 6px; display: flex; gap: 4px; background: #0b1f3a; border-top: 1px solid #1e2e54;">
+                <div class="photo-btn-bar" style="padding: 4px 6px; display: flex; gap: 4px; background: #0b1f3a; border-top: 1px solid #1e2e54;">
                   <button type="button" class="btn-secondary" style="flex: 1; font-size: 11px; padding: 4px 0; text-align: center; white-space: nowrap; background: rgba(11,31,58,0.92); color: #00adf2; border-color: #00adf2;" onclick="openLiveCamera('edit_close', ${origIdx >= 0 ? origIdx : index})">📷 ถ่ายใหม่</button>
                   <button type="button" class="btn-danger-sm" style="flex: 1; font-size: 11px; padding: 4px 0; text-align: center; white-space: nowrap;" onclick="removeClosePhoto(${origIdx >= 0 ? origIdx : index})">🗑️ ลบรูป</button>
                 </div>
