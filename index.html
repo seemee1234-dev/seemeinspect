@@ -29,10 +29,8 @@
   </script>
 
   <style>
-    /* Mandatory Page Orientation: Force Landscape A4 by Default */
+    /* Default Page Setup (overridden dynamically during PDF export) */
     @page {
-      size: 297mm 210mm;
-      size: landscape;
       margin: 0;
     }
 
@@ -1393,15 +1391,8 @@
        A4 LANDSCAPE DEFECT REPORT PRINT RULES (1 DEFECT CARD = 1 PAGE)
        ======================================================== */
     @media print {
-      @page {
-        size: 297mm 210mm !important;
-        size: landscape !important;
-        margin: 0 !important;
-      }
-
+      /* Dynamic @page is injected by exportPDFDefects() */
       html, body {
-        width: 297mm !important;
-        height: 210mm !important;
         margin: 0 !important;
         padding: 0 !important;
         background: #ffffff !important;
@@ -1412,31 +1403,26 @@
         print-color-adjust: exact !important;
       }
 
-      /* SUMMARY SLIDES VISIBILITY: Hidden by default, shown only if .print-with-summary */
-      #slide-page-1,
-      #slide-customer-summary,
-      .slide-summary-page {
+      /* SUMMARY SLIDES VISIBILITY: Slide 1 (Front Executive Cover) ALWAYS visible!
+         Customer Breakdown Table (#slide-customer-summary) shown only if .print-with-exec-table */
+      #slide-page-1 {
+        display: flex !important;
+      }
+      #slide-customer-summary {
         display: none !important;
       }
-
-      body.print-with-summary #slide-page-1,
-      body.print-with-summary #slide-customer-summary,
-      body.print-with-summary .slide-summary-page {
+      body.print-with-exec-table #slide-customer-summary {
         display: flex !important;
       }
 
       /* OVERRIDE CONTAINER */
       .container {
-        max-width: 297mm !important;
-        width: 297mm !important;
         margin: 0 !important;
         padding: 0 !important;
       }
 
       #tab-summary {
         display: block !important;
-        width: 297mm !important;
-        max-width: 297mm !important;
         margin: 0 !important;
         padding: 0 !important;
       }
@@ -1453,15 +1439,10 @@
         display: none !important;
       }
 
-      /* EXACT FULL-PAGE A4 LANDSCAPE SLIDE (297mm x 210mm) */
+      /* BASE PRINT SLIDE-PAGE RULES */
       .slide-page {
-        width: 297mm !important;
-        height: 210mm !important;
-        min-height: 210mm !important;
-        max-height: 210mm !important;
         box-sizing: border-box !important;
         margin: 0 !important;
-        padding: 7mm 12mm 7mm 12mm !important;
         border: none !important;
         border-radius: 0 !important;
         box-shadow: none !important;
@@ -1471,11 +1452,30 @@
         break-inside: avoid !important;
         display: flex !important;
         flex-direction: column !important;
-        justify-content: space-between !important;
         overflow: hidden !important;
         aspect-ratio: auto !important;
         position: relative !important;
         background: #ffffff !important;
+      }
+
+      /* EXACT FULL-PAGE A4 LANDSCAPE SLIDE (297mm x 210mm) */
+      body.print-landscape-mode html,
+      body.print-landscape-mode {
+        width: 297mm !important;
+        height: 210mm !important;
+      }
+      body.print-landscape-mode .container,
+      body.print-landscape-mode #tab-summary {
+        width: 297mm !important;
+        max-width: 297mm !important;
+      }
+      body.print-landscape-mode .slide-page {
+        width: 297mm !important;
+        height: 210mm !important;
+        min-height: 210mm !important;
+        max-height: 210mm !important;
+        padding: 7mm 12mm 7mm 12mm !important;
+        justify-content: space-between !important;
       }
 
       #slide-customer-summary {
@@ -1738,11 +1738,6 @@
       /* ========================================================
          PORTRAIT MODE SPECIFIC OVERRIDES (when user chooses PDF แนวตั้ง)
          ======================================================== */
-      body.print-portrait-mode @page {
-        size: A4 portrait !important;
-        size: portrait !important;
-        margin: 6mm 8mm !important;
-      }
       body.print-portrait-mode,
       body.print-portrait-mode html {
         width: 100% !important;
@@ -1755,126 +1750,131 @@
       }
       body.print-portrait-mode .slide-page {
         width: 100% !important;
-        height: 280mm !important;
-        min-height: 280mm !important;
-        max-height: 280mm !important;
-        padding: 8mm 8mm !important;
+        height: 260mm !important;
+        min-height: 260mm !important;
+        max-height: 260mm !important;
+        padding: 5mm 6mm !important;
+        box-sizing: border-box !important;
+        page-break-after: always !important;
+        break-after: page !important;
+        page-break-inside: avoid !important;
+        break-inside: avoid !important;
+        overflow: hidden !important;
+        justify-content: space-between !important;
       }
       body.print-portrait-mode .slide-top-navy {
-        padding: 10px 18px !important;
-        margin-bottom: 6px !important;
-        border-radius: 8px !important;
-      }
-      body.print-portrait-mode .slide-top-navy h2 {
-        font-size: 22px !important;
-        margin-bottom: 3px !important;
-      }
-      body.print-portrait-mode .slide-top-navy p {
-        font-size: 13.5px !important;
-      }
-      body.print-portrait-mode .slide-gold-bar {
-        height: 3px !important;
-        margin-bottom: 10px !important;
-      }
-      body.print-portrait-mode .slide-info-grid {
-        gap: 10px !important;
-        margin-bottom: 12px !important;
-      }
-      body.print-portrait-mode .info-card-box {
-        padding: 10px 16px !important;
-        font-size: 15px !important;
-        border-radius: 8px !important;
-      }
-      body.print-portrait-mode .info-card-box .f-lbl {
-        width: 130px !important;
-        font-size: 14.5px !important;
-      }
-      body.print-portrait-mode .info-card-box .f-val {
-        font-size: 16px !important;
-      }
-      body.print-portrait-mode .slide-table-wrap {
-        border-radius: 8px !important;
-      }
-      body.print-portrait-mode .slide-table-title {
-        font-size: 16px !important;
-        padding: 10px 16px !important;
-      }
-      body.print-portrait-mode .slide-table-wrap > div[style*="max-height"] {
-        max-height: none !important;
-        overflow: visible !important;
-      }
-      body.print-portrait-mode .slide-table td {
-        padding: 10px 16px !important;
-        font-size: 15px !important;
-      }
-      body.print-portrait-mode .slide-table .t-cat {
-        font-size: 15px !important;
-      }
-      body.print-portrait-mode .slide-table .t-cnt {
-        font-size: 17px !important;
-      }
-      body.print-portrait-mode .defect-meta-row {
-        gap: 12px !important;
-        margin-bottom: 10px !important;
-      }
-      body.print-portrait-mode .defect-meta-box {
-        padding: 10px 16px !important;
-        font-size: 15.5px !important;
-        border-radius: 8px !important;
-      }
-      body.print-portrait-mode .defect-meta-box .f-lbl {
-        width: 125px !important;
-        font-size: 15px !important;
-      }
-      body.print-portrait-mode .defect-meta-box .f-val {
-        font-size: 16px !important;
-      }
-      body.print-portrait-mode .d-code-badge {
-        font-size: 15.5px !important;
-        padding: 4px 14px !important;
+        padding: 8px 14px !important;
+        margin-bottom: 4px !important;
         border-radius: 6px !important;
       }
+      body.print-portrait-mode .slide-top-navy h2 {
+        font-size: 19px !important;
+        margin-bottom: 2px !important;
+      }
+      body.print-portrait-mode .slide-top-navy p {
+        font-size: 12px !important;
+      }
+      body.print-portrait-mode .slide-gold-bar {
+        height: 2.5px !important;
+        margin-bottom: 6px !important;
+      }
+      body.print-portrait-mode .slide-info-grid {
+        gap: 6px !important;
+        margin-bottom: 8px !important;
+      }
+      body.print-portrait-mode .info-card-box {
+        padding: 6px 12px !important;
+        font-size: 13.5px !important;
+        border-radius: 6px !important;
+      }
+      body.print-portrait-mode .info-card-box .f-lbl {
+        width: 115px !important;
+        font-size: 13px !important;
+      }
+      body.print-portrait-mode .info-card-box .f-val {
+        font-size: 14.5px !important;
+      }
+      body.print-portrait-mode .slide-table-wrap {
+        border-radius: 6px !important;
+      }
+      body.print-portrait-mode .slide-table-title {
+        font-size: 14px !important;
+        padding: 6px 12px !important;
+      }
+      body.print-portrait-mode .slide-table td {
+        padding: 6px 12px !important;
+        font-size: 13.5px !important;
+      }
+      body.print-portrait-mode .slide-table .t-cat {
+        font-size: 13.5px !important;
+      }
+      body.print-portrait-mode .slide-table .t-cnt {
+        font-size: 15px !important;
+      }
+      body.print-portrait-mode .defect-meta-row {
+        gap: 8px !important;
+        margin-bottom: 6px !important;
+      }
+      body.print-portrait-mode .defect-meta-box {
+        padding: 6px 12px !important;
+        font-size: 14px !important;
+        border-radius: 6px !important;
+      }
+      body.print-portrait-mode .defect-meta-box .f-lbl {
+        width: 110px !important;
+        font-size: 13.5px !important;
+      }
+      body.print-portrait-mode .defect-meta-box .f-val {
+        font-size: 14.5px !important;
+      }
+      body.print-portrait-mode .d-code-badge {
+        font-size: 14px !important;
+        padding: 3px 12px !important;
+        border-radius: 5px !important;
+      }
       body.print-portrait-mode .defect-photos-side-by-side {
-        height: 102mm !important;
-        min-height: 102mm !important;
-        max-height: 104mm !important;
-        gap: 10mm !important;
-        margin: 4mm 0 !important;
+        height: 100mm !important;
+        min-height: 100mm !important;
+        max-height: 102mm !important;
+        gap: 8mm !important;
+        margin: 3mm 0 !important;
       }
       body.print-portrait-mode .photo-hdr-navy {
-        font-size: 14.5px !important;
-        padding: 8px 14px !important;
+        font-size: 13.5px !important;
+        padding: 6px 12px !important;
       }
       body.print-portrait-mode .defect-cat-bar {
-        padding: 8px 14px !important;
-        font-size: 15px !important;
-        gap: 10px !important;
-      }
-      body.print-portrait-mode .cat-pill-badge {
-        font-size: 14px !important;
-        padding: 4px 12px !important;
-      }
-      body.print-portrait-mode .defect-bottom-desc {
-        margin-top: 4mm !important;
-        padding: 12px 18px !important;
-        border-radius: 8px !important;
-        font-size: 15.5px !important;
+        padding: 5px 10px !important;
+        font-size: 13.5px !important;
         gap: 8px !important;
       }
+      body.print-portrait-mode .cat-pill-badge {
+        font-size: 13px !important;
+        padding: 3px 10px !important;
+      }
+      body.print-portrait-mode .defect-bottom-desc {
+        margin-top: 3mm !important;
+        padding: 8px 14px !important;
+        border-radius: 6px !important;
+        font-size: 14px !important;
+        gap: 5px !important;
+        padding-right: 120px !important;
+      }
       body.print-portrait-mode .defect-bottom-desc .line-desc {
-        padding: 10px 14px !important;
-        font-size: 16px !important;
-        border-left: 5px solid #00adf2 !important;
+        padding: 6px 10px !important;
+        font-size: 14px !important;
+        border-left: 4px solid #00adf2 !important;
       }
       body.print-portrait-mode .defect-bottom-desc .line-reinspect {
-        font-size: 14px !important;
+        font-size: 12.5px !important;
       }
       body.print-portrait-mode .slide-corner-num {
-        bottom: 8mm !important;
+        bottom: 6mm !important;
         right: 8mm !important;
-        font-size: 14px !important;
-        padding: 4px 14px !important;
+        font-size: 13px !important;
+        padding: 3px 12px !important;
       }
+
     }
   </style>
   <!-- HEIC/HEIF Image Support (for Samsung / iPhone photos from Gallery) -->
@@ -4983,16 +4983,16 @@
      * UNIFIED EXPORT DEFECT REPORT (A4 LANDSCAPE & A4 PORTRAIT)
      */
     let currentPrintOrientation = "landscape";
-    let currentPrintIncludeSummary = false;
+    let currentPrintIncludeExecTable = false;
 
-    function exportPDFDefects(orientation, includeSummary) {
+    function exportPDFDefects(orientation, includeExecutiveTable) {
       currentPrintOrientation = orientation || "landscape";
-      currentPrintIncludeSummary = !!includeSummary;
+      currentPrintIncludeExecTable = !!includeExecutiveTable;
 
-      if (includeSummary) {
-        document.body.classList.add("print-with-summary");
+      if (currentPrintIncludeExecTable) {
+        document.body.classList.add("print-with-exec-table");
       } else {
-        document.body.classList.remove("print-with-summary");
+        document.body.classList.remove("print-with-exec-table");
       }
 
       let s = document.getElementById("force-dynamic-orientation-style");
@@ -5005,7 +5005,7 @@
       if (currentPrintOrientation === "portrait") {
         document.body.classList.add("print-portrait-mode");
         document.body.classList.remove("print-landscape-mode");
-        s.innerHTML = `@page { size: A4 portrait !important; size: portrait !important; margin: 6mm 8mm !important; }`;
+        s.innerHTML = `@page { size: A4 portrait !important; size: portrait !important; margin: 0 !important; }`;
       } else {
         document.body.classList.add("print-landscape-mode");
         document.body.classList.remove("print-portrait-mode");
@@ -5032,7 +5032,7 @@
       setTimeout(() => {
         window.print();
         setTimeout(() => {
-          document.body.classList.remove("print-with-summary");
+          document.body.classList.remove("print-with-exec-table");
         }, 1500);
       }, 150);
     }
@@ -5050,7 +5050,7 @@
       setTimeout(() => {
         window.print();
         setTimeout(() => {
-          document.body.classList.remove("print-with-summary");
+          document.body.classList.remove("print-with-exec-table");
         }, 1500);
       }, 100);
     }
@@ -5256,7 +5256,8 @@
       }
 
       // 6. Render Slide 2..N: Every single defect is its OWN standalone .slide-page
-      const totalSlides = defectList.length + 2; // Slide 1 + Customer Summary + Defect Slides
+      const hasExecTable = currentPrintIncludeExecTable;
+      const totalSlides = defectList.length + (hasExecTable ? 2 : 1); // Slide 1 (+ Customer Summary Table) + Defect Slides
       const s1Corner = document.getElementById("s1-corner-num");
       if (s1Corner) {
         s1Corner.textContent = `หน้าที่ 1 / ${totalSlides}`;
@@ -5309,6 +5310,7 @@
         const roomName = getDefectRoom(d);
         const photoWideSrc = d.photoWide || d.photoBefore;
         const photoCloseSrc = d.photoClose || d.photoBefore;
+        const pageNum = index + 1 + (hasExecTable ? 2 : 1);
 
         let statusStyle = 'background: #fef3c7; color: #b45309; border: 1px solid #fcd34d;';
         let statusIcon = '🟡';
@@ -5326,10 +5328,10 @@
 
         return `
         <div class="slide-page" id="slide-defect-${index + 1}">
-          <div class="slide-page-badge no-print">สไลด์ที่ ${index + 3}: Defect ${d.code} · ${roomName}</div>
+          <div class="slide-page-badge no-print">สไลด์ที่ ${pageNum}: Defect ${d.code} · ${roomName}</div>
 
           <!-- Corner Page Number -->
-          <div class="slide-corner-num">หน้าที่ ${index + 3} / ${totalSlides}</div>
+          <div class="slide-corner-num">หน้าที่ ${pageNum} / ${totalSlides}</div>
 
           <!-- Header Navy Banner -->
           <div class="slide-top-navy" style="display: flex; justify-content: space-between; align-items: center;">
