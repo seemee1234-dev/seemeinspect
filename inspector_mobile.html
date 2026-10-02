@@ -1390,38 +1390,51 @@
     }
 
     /* ========================================================
-       STRICT A4 LANDSCAPE PRINT RULES (1 SLIDE = 1 PAGE EXACTLY)
+       A4 PORTRAIT DEFECT REPORT PRINT RULES (1 DEFECT CARD = 1 PAGE)
        ======================================================== */
     @media print {
       @page {
-        size: 297mm 210mm !important;
-        size: landscape !important;
-        margin: 0 !important;
+        size: A4 portrait !important;
+        margin: 6mm 8mm !important;
       }
 
       html, body {
-        width: 297mm !important;
-        height: 210mm !important;
+        width: 100% !important;
+        height: auto !important;
         margin: 0 !important;
         padding: 0 !important;
         background: #ffffff !important;
         color: #1e293b !important;
         font-family: 'Kanit', sans-serif !important;
+        font-weight: 300 !important;
         -webkit-print-color-adjust: exact !important;
         print-color-adjust: exact !important;
       }
 
-      /* OVERRIDE CONTAINER - FULL BLEED A4 LANDSCAPE */
+      /* SUMMARY SLIDES VISIBILITY: Hidden by default, shown only if .print-with-summary */
+      #slide-page-1,
+      #slide-customer-summary,
+      .slide-summary-page {
+        display: none !important;
+      }
+
+      body.print-with-summary #slide-page-1,
+      body.print-with-summary #slide-customer-summary,
+      body.print-with-summary .slide-summary-page {
+        display: flex !important;
+      }
+
+      /* OVERRIDE CONTAINER */
       .container {
         max-width: 100% !important;
-        width: 297mm !important;
+        width: 100% !important;
         margin: 0 !important;
         padding: 0 !important;
       }
 
       #tab-summary {
         display: block !important;
-        width: 297mm !important;
+        width: 100% !important;
         margin: 0 !important;
         padding: 0 !important;
       }
@@ -1438,15 +1451,15 @@
         display: none !important;
       }
 
-      /* EXACT FULL-PAGE A4 LANDSCAPE SLIDE (1 SLIDE = 1 A4 PAGE EXACTLY) */
+      /* EXACT FULL-PAGE A4 PORTRAIT SLIDE */
       .slide-page {
-        width: 297mm !important;
-        height: 210mm !important;
-        min-height: 210mm !important;
-        max-height: 210mm !important;
+        width: 100% !important;
+        height: 278mm !important;
+        min-height: 278mm !important;
+        max-height: 278mm !important;
         box-sizing: border-box !important;
         margin: 0 !important;
-        padding: 9mm 16mm 7mm 16mm !important;
+        padding: 6mm 8mm !important;
         border: none !important;
         border-radius: 0 !important;
         box-shadow: none !important;
@@ -1471,129 +1484,129 @@
       /* SHEET CORNER PAGE NUMBER IN PRINT (หน้าที่ X / Y) */
       .slide-corner-num {
         position: absolute !important;
-        bottom: 6mm !important;
-        right: 16mm !important;
+        bottom: 5mm !important;
+        right: 8mm !important;
         font-family: 'Kanit', sans-serif !important;
-        font-size: 14px !important;
-        font-weight: 500 !important;
+        font-size: 13px !important;
+        font-weight: 400 !important;
         color: #1e293b !important;
         background: #f1f5f9 !important;
         border: 1.5px solid #94a3b8 !important;
         border-radius: 6px !important;
-        padding: 3px 14px !important;
+        padding: 3px 12px !important;
         letter-spacing: 0.5px !important;
         z-index: 50 !important;
       }
 
-      /* HEADER SECTION PROPORTIONS - ENLARGED & CRISP */
+      /* HEADER SECTION PROPORTIONS */
       .slide-top-navy {
-        padding: 10px 20px !important;
-        margin-bottom: 6px !important;
+        padding: 8px 16px !important;
+        margin-bottom: 4px !important;
         border-radius: 8px !important;
       }
       .slide-top-navy h2 {
-        font-size: 24px !important;
+        font-size: 20px !important;
         font-weight: 500 !important;
         letter-spacing: 0.5px !important;
         margin-bottom: 2px !important;
       }
       .slide-top-navy p {
-        font-size: 14px !important;
+        font-size: 12.5px !important;
         font-weight: 300 !important;
         opacity: 0.9 !important;
       }
       .slide-gold-bar {
-        height: 3px !important;
-        margin-bottom: 10px !important;
+        height: 2.5px !important;
+        margin-bottom: 8px !important;
       }
 
-      /* SLIDE 1 PROPORTIONS - ENLARGED FONTS */
+      /* SLIDE 1 PROPORTIONS */
       .slide-info-grid {
-        gap: 10px !important;
-        margin-bottom: 12px !important;
+        gap: 8px !important;
+        margin-bottom: 10px !important;
       }
       .info-card-box {
-        padding: 9px 16px !important;
-        font-size: 15px !important;
+        padding: 8px 14px !important;
+        font-size: 14px !important;
         border-radius: 8px !important;
         border: 1.5px solid #e2e8f0 !important;
       }
       .info-card-box .f-lbl {
-        width: 130px !important;
-        font-size: 14px !important;
+        width: 120px !important;
+        font-size: 13px !important;
         font-weight: 400 !important;
         color: #64748b !important;
       }
       .info-card-box .f-val {
-        font-size: 16px !important;
+        font-size: 15px !important;
         font-weight: 500 !important;
         color: #0b1f3a !important;
       }
 
       .slide-table-title {
-        font-size: 16px !important;
+        font-size: 15px !important;
         font-weight: 500 !important;
-        padding: 10px 16px !important;
+        padding: 8px 14px !important;
         border-radius: 8px 8px 0 0 !important;
       }
       .slide-table td {
-        padding: 12px 18px !important;
-        font-size: 15px !important;
+        padding: 10px 14px !important;
+        font-size: 14px !important;
       }
       .slide-table .t-cat {
-        font-size: 15px !important;
+        font-size: 14px !important;
         font-weight: 400 !important;
         color: #0b1f3a !important;
       }
       .slide-table .t-cnt {
-        font-size: 17px !important;
+        font-size: 16px !important;
         font-weight: 600 !important;
       }
       .slide-foot {
-        font-size: 12px !important;
+        font-size: 11px !important;
         color: #64748b !important;
         margin-top: 4px !important;
-        padding-right: 140px !important; /* Avoid overlap with corner badge */
+        padding-right: 140px !important;
       }
 
-      /* SLIDE 2..N DEFECT METADATA PROPORTIONS - ENLARGED */
+      /* DEFECT METADATA PROPORTIONS */
       .defect-meta-row {
-        gap: 10px !important;
-        margin-bottom: 8px !important;
+        gap: 8px !important;
+        margin-bottom: 6px !important;
       }
       .defect-meta-box {
-        padding: 8px 16px !important;
-        font-size: 15px !important;
+        padding: 8px 14px !important;
+        font-size: 14px !important;
         border-radius: 8px !important;
-        border: 1.5px solid #e2e8f0 !important;
+        border: 1.5px solid #cbd5e1 !important;
       }
       .defect-meta-box .f-lbl {
-        width: 115px !important;
-        font-size: 14px !important;
+        width: 110px !important;
+        font-size: 13px !important;
         font-weight: 400 !important;
         color: #64748b !important;
       }
       .defect-meta-box .f-val {
-        font-size: 15px !important;
+        font-size: 14px !important;
         font-weight: 500 !important;
         color: #0b1f3a !important;
       }
       .d-code-badge {
-        font-size: 15px !important;
+        font-size: 14px !important;
         padding: 3px 12px !important;
         font-weight: 500 !important;
         border-radius: 6px !important;
       }
 
-      /* SLIDE 2..N FULL-PAGE PHOTOS (FILL THE PAGE CLEANLY) */
+      /* FULL-PAGE DEFECT PHOTOS (HIGH HERO CARDS MATCHING USER IMAGE 3) */
       .defect-photos-side-by-side {
         flex: 1 !important;
-        height: 112mm !important;
-        min-height: 112mm !important;
-        max-height: 114mm !important;
+        height: 155mm !important;
+        min-height: 150mm !important;
+        max-height: 160mm !important;
         display: grid !important;
         grid-template-columns: 1fr 1fr !important;
-        gap: 10mm !important;
+        gap: 8mm !important;
         margin: 3mm 0 !important;
       }
 
@@ -1610,8 +1623,8 @@
 
       .photo-hdr-navy {
         font-size: 13px !important;
-        font-weight: 500 !important;
-        padding: 5px 14px !important;
+        font-weight: 400 !important;
+        padding: 6px 12px !important;
         letter-spacing: 0.3px !important;
         background: #0b1f3a !important;
         color: #ffffff !important;
@@ -1642,8 +1655,6 @@
         font-size: 14px !important;
       }
 
-      
-            /* FORMAL AFTER PLACEHOLDER ON PRINT */
       .photo-after-placeholder .no-print {
         display: none !important;
       }
@@ -1653,26 +1664,27 @@
         color: #64748b !important;
         text-align: center !important;
       }
-      /* SLIDE 2..N CATEGORY BANNER & DESCRIPTIONS - ENLARGED */
+
+      /* DEFECT CATEGORY BAR & DESCRIPTIONS */
       .defect-cat-bar {
         display: flex !important;
         align-items: center !important;
-        gap: 12px !important;
+        gap: 10px !important;
         background: #f1f5f9 !important;
         border: 1.5px solid #cbd5e1 !important;
         border-radius: 8px !important;
-        padding: 7px 14px !important;
-        margin-bottom: 6px !important;
-        font-size: 14px !important;
+        padding: 6px 12px !important;
+        margin-bottom: 4px !important;
+        font-size: 13.5px !important;
       }
 
       .cat-pill-badge {
         background: #0b1f3a !important;
         color: #ffd700 !important;
-        padding: 3px 12px !important;
+        padding: 3px 10px !important;
         border-radius: 6px !important;
-        font-weight: 500 !important;
-        font-size: 14px !important;
+        font-weight: 400 !important;
+        font-size: 13px !important;
         display: inline-flex !important;
         align-items: center !important;
         gap: 5px !important;
@@ -1680,25 +1692,25 @@
 
       .loc-pill-badge {
         color: #0b1f3a !important;
-        font-size: 14px !important;
+        font-size: 13px !important;
         font-weight: 400 !important;
       }
 
       .defect-bottom-desc {
-        font-size: 14px !important;
-        gap: 6px !important;
-        margin-top: 4px !important;
-        padding-right: 140px !important; /* Avoid overlap with corner badge */
+        font-size: 13.5px !important;
+        gap: 5px !important;
+        margin-top: 3px !important;
+        padding-right: 140px !important;
       }
       .defect-bottom-desc .line-desc {
-        padding: 7px 14px !important;
-        font-size: 15px !important;
+        padding: 7px 12px !important;
+        font-size: 14px !important;
         line-height: 1.4 !important;
         border-radius: 0 6px 6px 0 !important;
         border-left: 4px solid #00adf2 !important;
       }
       .defect-bottom-desc .line-reinspect {
-        font-size: 13px !important;
+        font-size: 12.5px !important;
         color: #475569 !important;
       }
     }
@@ -2052,7 +2064,7 @@
       <!-- ========================================================
            SLIDE 1: สรุปภาพรวมห้อง + ตารางนับจุด (Header & Checklist)
            ======================================================== -->
-      <div class="slide-page" id="slide-page-1">
+      <div class="slide-page slide-summary-page" id="slide-page-1">
         <div class="slide-page-badge no-print">สไลด์ที่ 1 (หน้าแรก)</div>
 
         <div class="slide-top-navy" style="display: flex; justify-content: space-between; align-items: center;">
@@ -2200,7 +2212,7 @@
       <!-- ========================================================
            EXECUTIVE CUSTOMER SUMMARY TABLE (ตารางแจกแจงตามห้องหน้าเดียว แบบภาพที่ 1)
            ======================================================== -->
-      <div class="slide-page" id="slide-customer-summary" style="margin-top: 20px; justify-content: flex-start !important; gap: 8px;">
+      <div class="slide-page slide-summary-page" id="slide-customer-summary" style="margin-top: 20px; justify-content: flex-start !important; gap: 8px;">
         <div class="slide-page-badge no-print">ตารางสรุปรายการเรียงตามห้อง (Executive Customer Summary Table)</div>
         <div class="slide-corner-num" id="s2-corner-num">หน้าที่ 2 / 2</div>
         <div class="slide-top-navy" style="display: flex; justify-content: space-between; align-items: center;">
@@ -2214,12 +2226,12 @@
         </div>
         <div class="slide-gold-bar"></div>
 
-        <div style="overflow-x: auto; margin-top: 6px;">
-          <table class="slide-table" style="width: 100%; border-collapse: collapse; font-size: 11px;">
+        <div style="overflow-x: auto; -webkit-overflow-scrolling: touch; margin-top: 6px;">
+          <table class="slide-table" style="width: 100%; min-width: 680px; border-collapse: collapse; font-size: 11px;">
             <thead>
               <tr style="background: #0b1f3a; color: #ffffff;">
                 <th style="padding: 6px 4px; border: 1px solid #cbd5e1; width: 36px; text-align: center;">No.</th>
-                <th style="padding: 6px 6px; border: 1px solid #cbd5e1; width: 85px; text-align: center;">รหัส Defect</th>
+                <th style="padding: 7px 10px; border: 1px solid #cbd5e1; min-width: 110px; text-align: center; white-space: nowrap;">รหัส Defect</th>
                 <th style="padding: 6px 8px; border: 1px solid #cbd5e1; width: 105px; text-align: left;">🏠 พื้นที่ / ห้อง</th>
                 <th style="padding: 6px 8px; border: 1px solid #cbd5e1; width: 85px; text-align: left;">🏷️ หมวดงาน</th>
                 <th style="padding: 6px 8px; border: 1px solid #cbd5e1; text-align: left;">📝 รายการที่พบ</th>
@@ -4799,6 +4811,46 @@
         /**
      * ENFORCE LANDSCAPE PDF PRINT WITHOUT MANUAL PROMPT
      */
+    
+    function exportPDFDefectsPortrait(includeSummary) {
+      if (includeSummary) {
+        document.body.classList.add('print-with-summary');
+      } else {
+        document.body.classList.remove('print-with-summary');
+      }
+      let s = document.getElementById('force-landscape-style');
+      if (s) s.remove();
+      window._forceRenderSlides = true;
+      updateSummaryUI();
+      window._forceRenderSlides = false;
+      setTimeout(() => {
+        window.print();
+        setTimeout(() => {
+          document.body.classList.remove('print-with-summary');
+        }, 1500);
+      }, 150);
+    }
+
+    
+    function exportPDFDefectsPortrait(includeSummary) {
+      if (includeSummary) {
+        document.body.classList.add('print-with-summary');
+      } else {
+        document.body.classList.remove('print-with-summary');
+      }
+      let s = document.getElementById('force-landscape-style');
+      if (s) s.remove();
+      window._forceRenderSlides = true;
+      updateSummaryUI();
+      window._forceRenderSlides = false;
+      setTimeout(() => {
+        window.print();
+        setTimeout(() => {
+          document.body.classList.remove('print-with-summary');
+        }, 1500);
+      }, 150);
+    }
+
     function printPDFLandscape() {
       let s = document.getElementById("force-landscape-style");
       if (!s) {
@@ -5021,7 +5073,7 @@
             return `
             <tr style="border-bottom: 1px solid #e2e8f0; ${i % 2 === 1 ? 'background: #f8fafc;' : ''}">
               <td style="padding: 6px 4px; border: 1px solid #cbd5e1; text-align: center; font-weight: 400; color: #0b1f3a;">${i + 1}</td>
-              <td style="padding: 6px 6px; border: 1px solid #cbd5e1; text-align: center; font-weight: 500; color: #b87a22; font-family: monospace;">${d.code}</td>
+              <td style="padding: 7px 10px; border: 1px solid #cbd5e1; text-align: center; font-weight: 500; color: #b87a22; font-family: 'Kanit', sans-serif; font-size: 13.5px; letter-spacing: 0.3px; white-space: nowrap;">${d.code}</td>
               <td style="padding: 6px 8px; border: 1px solid #cbd5e1; font-weight: 400; color: #0284c7;">${getDefectRoom(d)}</td>
               <td style="padding: 6px 8px; border: 1px solid #cbd5e1; color: #0b1f3a;">${d.category}</td>
               <td style="padding: 6px 8px; border: 1px solid #cbd5e1; color: #334155;">${d.desc}</td>
