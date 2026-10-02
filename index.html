@@ -1390,17 +1390,18 @@
     }
 
     /* ========================================================
-       A4 PORTRAIT DEFECT REPORT PRINT RULES (1 DEFECT CARD = 1 PAGE)
+       A4 LANDSCAPE DEFECT REPORT PRINT RULES (1 DEFECT CARD = 1 PAGE)
        ======================================================== */
     @media print {
       @page {
-        size: A4 portrait !important;
-        margin: 6mm 8mm !important;
+        size: 297mm 210mm !important;
+        size: landscape !important;
+        margin: 0 !important;
       }
 
       html, body {
-        width: 100% !important;
-        height: auto !important;
+        width: 297mm !important;
+        height: 210mm !important;
         margin: 0 !important;
         padding: 0 !important;
         background: #ffffff !important;
@@ -1426,15 +1427,16 @@
 
       /* OVERRIDE CONTAINER */
       .container {
-        max-width: 100% !important;
-        width: 100% !important;
+        max-width: 297mm !important;
+        width: 297mm !important;
         margin: 0 !important;
         padding: 0 !important;
       }
 
       #tab-summary {
         display: block !important;
-        width: 100% !important;
+        width: 297mm !important;
+        max-width: 297mm !important;
         margin: 0 !important;
         padding: 0 !important;
       }
@@ -1451,15 +1453,15 @@
         display: none !important;
       }
 
-      /* EXACT FULL-PAGE A4 PORTRAIT SLIDE */
+      /* EXACT FULL-PAGE A4 LANDSCAPE SLIDE (297mm x 210mm) */
       .slide-page {
-        width: 100% !important;
-        height: 278mm !important;
-        min-height: 278mm !important;
-        max-height: 278mm !important;
+        width: 297mm !important;
+        height: 210mm !important;
+        min-height: 210mm !important;
+        max-height: 210mm !important;
         box-sizing: border-box !important;
         margin: 0 !important;
-        padding: 6mm 8mm !important;
+        padding: 7mm 12mm 7mm 12mm !important;
         border: none !important;
         border-radius: 0 !important;
         box-shadow: none !important;
@@ -1478,18 +1480,18 @@
 
       #slide-customer-summary {
         justify-content: flex-start !important;
-        gap: 4mm !important;
+        gap: 3mm !important;
       }
 
       /* SHEET CORNER PAGE NUMBER IN PRINT (หน้าที่ X / Y) */
       .slide-corner-num {
         position: absolute !important;
-        bottom: 5mm !important;
-        right: 8mm !important;
+        bottom: 9mm !important;
+        right: 12mm !important;
         font-family: 'Kanit', sans-serif !important;
         font-size: 13px !important;
-        font-weight: 400 !important;
-        color: #1e293b !important;
+        font-weight: 500 !important;
+        color: #0b1f3a !important;
         background: #f1f5f9 !important;
         border: 1.5px solid #94a3b8 !important;
         border-radius: 6px !important;
@@ -1500,94 +1502,103 @@
 
       /* HEADER SECTION PROPORTIONS */
       .slide-top-navy {
-        padding: 8px 16px !important;
+        padding: 7px 16px !important;
         margin-bottom: 4px !important;
-        border-radius: 8px !important;
+        border-radius: 6px !important;
+        background: #0b1f3a !important;
       }
       .slide-top-navy h2 {
-        font-size: 20px !important;
+        font-size: 19px !important;
         font-weight: 500 !important;
         letter-spacing: 0.5px !important;
         margin-bottom: 2px !important;
+        color: #ffffff !important;
       }
       .slide-top-navy p {
-        font-size: 12.5px !important;
+        font-size: 12px !important;
         font-weight: 300 !important;
         opacity: 0.9 !important;
+        color: #e2e8f0 !important;
       }
       .slide-gold-bar {
         height: 2.5px !important;
-        margin-bottom: 8px !important;
+        margin-bottom: 6px !important;
+        background: linear-gradient(90deg, #ffd700, #b87a22) !important;
       }
 
       /* SLIDE 1 PROPORTIONS */
       .slide-info-grid {
         gap: 8px !important;
-        margin-bottom: 10px !important;
+        margin-bottom: 8px !important;
       }
       .info-card-box {
-        padding: 8px 14px !important;
-        font-size: 14px !important;
-        border-radius: 8px !important;
+        padding: 6px 14px !important;
+        font-size: 13.5px !important;
+        border-radius: 6px !important;
         border: 1.5px solid #e2e8f0 !important;
       }
       .info-card-box .f-lbl {
-        width: 120px !important;
-        font-size: 13px !important;
-        font-weight: 400 !important;
-        color: #64748b !important;
-      }
-      .info-card-box .f-val {
-        font-size: 15px !important;
-        font-weight: 500 !important;
-        color: #0b1f3a !important;
-      }
-
-      .slide-table-title {
-        font-size: 15px !important;
-        font-weight: 500 !important;
-        padding: 8px 14px !important;
-        border-radius: 8px 8px 0 0 !important;
-      }
-      .slide-table td {
-        padding: 10px 14px !important;
-        font-size: 14px !important;
-      }
-      .slide-table .t-cat {
-        font-size: 14px !important;
-        font-weight: 400 !important;
-        color: #0b1f3a !important;
-      }
-      .slide-table .t-cnt {
-        font-size: 16px !important;
-        font-weight: 600 !important;
-      }
-      .slide-foot {
-        font-size: 11px !important;
-        color: #64748b !important;
-        margin-top: 4px !important;
-        padding-right: 140px !important;
-      }
-
-      /* DEFECT METADATA PROPORTIONS */
-      .defect-meta-row {
-        gap: 8px !important;
-        margin-bottom: 6px !important;
-      }
-      .defect-meta-box {
-        padding: 8px 14px !important;
-        font-size: 14px !important;
-        border-radius: 8px !important;
-        border: 1.5px solid #cbd5e1 !important;
-      }
-      .defect-meta-box .f-lbl {
         width: 110px !important;
         font-size: 13px !important;
         font-weight: 400 !important;
         color: #64748b !important;
       }
-      .defect-meta-box .f-val {
+      .info-card-box .f-val {
+        font-size: 14.5px !important;
+        font-weight: 500 !important;
+        color: #0b1f3a !important;
+      }
+
+      .slide-table-title {
         font-size: 14px !important;
+        font-weight: 500 !important;
+        padding: 6px 14px !important;
+        border-radius: 6px 6px 0 0 !important;
+      }
+      .slide-table td {
+        padding: 7px 14px !important;
+        font-size: 13.5px !important;
+      }
+      .slide-table .t-cat {
+        font-size: 13.5px !important;
+        font-weight: 400 !important;
+        color: #0b1f3a !important;
+      }
+      .slide-table .t-cnt {
+        font-size: 15px !important;
+        font-weight: 600 !important;
+      }
+      .slide-foot {
+        font-size: 11px !important;
+        color: #64748b !important;
+        margin-top: 3px !important;
+        padding-right: 140px !important;
+      }
+
+      /* DEFECT METADATA PROPORTIONS (2 COLS x 2 ROWS) */
+      .defect-meta-row {
+        display: grid !important;
+        grid-template-columns: 1fr 1fr !important;
+        gap: 10px !important;
+        margin-bottom: 6px !important;
+      }
+      .defect-meta-box {
+        padding: 6px 14px !important;
+        font-size: 14px !important;
+        border-radius: 6px !important;
+        border: 1.5px solid #cbd5e1 !important;
+        background: #f8fafc !important;
+        display: flex !important;
+        align-items: center !important;
+      }
+      .defect-meta-box .f-lbl {
+        width: 105px !important;
+        font-size: 13.5px !important;
+        font-weight: 400 !important;
+        color: #64748b !important;
+      }
+      .defect-meta-box .f-val {
+        font-size: 14.5px !important;
         font-weight: 500 !important;
         color: #0b1f3a !important;
       }
@@ -1595,19 +1606,21 @@
         font-size: 14px !important;
         padding: 3px 12px !important;
         font-weight: 500 !important;
-        border-radius: 6px !important;
+        border-radius: 5px !important;
+        background: #0b1f3a !important;
+        color: #ffd700 !important;
       }
 
-      /* FULL-PAGE DEFECT PHOTOS (HIGH HERO CARDS MATCHING USER IMAGE 3) */
+      /* FULL-PAGE A4 LANDSCAPE DEFECT PHOTOS (SIDE-BY-SIDE 116mm) */
       .defect-photos-side-by-side {
         flex: 1 !important;
-        height: 155mm !important;
-        min-height: 150mm !important;
-        max-height: 160mm !important;
+        height: 116mm !important;
+        min-height: 116mm !important;
+        max-height: 118mm !important;
         display: grid !important;
         grid-template-columns: 1fr 1fr !important;
         gap: 8mm !important;
-        margin: 3mm 0 !important;
+        margin: 2mm 0 !important;
       }
 
       .photo-col-frame {
@@ -1615,16 +1628,16 @@
         display: flex !important;
         flex-direction: column !important;
         border: 1.5px solid #cbd5e1 !important;
-        border-radius: 8px !important;
+        border-radius: 6px !important;
         overflow: hidden !important;
         position: relative !important;
-        background: #000000 !important;
+        background: #0b1329 !important;
       }
 
       .photo-hdr-navy {
         font-size: 13px !important;
         font-weight: 400 !important;
-        padding: 6px 12px !important;
+        padding: 6px 14px !important;
         letter-spacing: 0.3px !important;
         background: #0b1f3a !important;
         color: #ffffff !important;
@@ -1635,10 +1648,11 @@
         width: 100% !important;
         height: 100% !important;
         aspect-ratio: auto !important;
-        background: #000000 !important;
+        background: #0b1329 !important;
         display: flex !important;
         align-items: center !important;
         justify-content: center !important;
+        overflow: hidden !important;
       }
 
       .photo-img-contain,
@@ -1646,13 +1660,12 @@
         flex: 1 !important;
         width: 100% !important;
         height: 100% !important;
-        object-fit: cover !important;
+        object-fit: contain !important;
         object-position: center !important;
-        background: #000000 !important;
       }
 
       .photo-after-placeholder {
-        font-size: 14px !important;
+        font-size: 13px !important;
       }
 
       .photo-after-placeholder .no-print {
@@ -1669,49 +1682,57 @@
       .defect-cat-bar {
         display: flex !important;
         align-items: center !important;
-        gap: 10px !important;
+        gap: 8px !important;
         background: #f1f5f9 !important;
-        border: 1.5px solid #cbd5e1 !important;
-        border-radius: 8px !important;
-        padding: 6px 12px !important;
-        margin-bottom: 4px !important;
-        font-size: 13.5px !important;
+        border: 1px solid #cbd5e1 !important;
+        border-radius: 6px !important;
+        padding: 4px 10px !important;
+        font-size: 13px !important;
       }
 
       .cat-pill-badge {
         background: #0b1f3a !important;
         color: #ffd700 !important;
-        padding: 3px 10px !important;
-        border-radius: 6px !important;
+        padding: 2px 10px !important;
+        border-radius: 5px !important;
         font-weight: 400 !important;
-        font-size: 13px !important;
+        font-size: 12.5px !important;
         display: inline-flex !important;
         align-items: center !important;
-        gap: 5px !important;
+        gap: 4px !important;
       }
 
       .loc-pill-badge {
         color: #0b1f3a !important;
-        font-size: 13px !important;
+        font-size: 12.5px !important;
         font-weight: 400 !important;
       }
 
       .defect-bottom-desc {
-        font-size: 13.5px !important;
-        gap: 5px !important;
-        margin-top: 3px !important;
+        margin-top: 2mm !important;
+        padding: 6px 12px !important;
+        background: #ffffff !important;
+        border: 1.5px solid #e2e8f0 !important;
+        border-radius: 6px !important;
         padding-right: 140px !important;
+        font-size: 13.5px !important;
+        display: flex !important;
+        flex-direction: column !important;
+        gap: 4px !important;
       }
       .defect-bottom-desc .line-desc {
-        padding: 7px 12px !important;
+        padding: 5px 10px !important;
         font-size: 14px !important;
         line-height: 1.4 !important;
-        border-radius: 0 6px 6px 0 !important;
+        background: #f8fafc !important;
+        border-radius: 0 4px 4px 0 !important;
         border-left: 4px solid #00adf2 !important;
+        color: #0f172a !important;
       }
       .defect-bottom-desc .line-reinspect {
-        font-size: 12.5px !important;
-        color: #475569 !important;
+        font-size: 12px !important;
+        color: #64748b !important;
+        padding-left: 4px !important;
       }
     }
   </style>
@@ -1982,6 +2003,9 @@
         </button>
         
         <div id="more-export-options" style="display: none; width: 100%; flex-direction: column; gap: 6px; padding: 10px; background: #070d1e; border: 1px solid #1e3a8a; border-radius: 8px;">
+          <button type="button" class="btn-secondary" style="width: 100%; padding: 8px; color: #38bdf8; border-color: #0284c7; background: #0b1f3a;" onclick="exportPDFDefectsLandscape(true)">
+            📑 สร้าง PDF รวมตารางสรุปหน้า 1-2 (A4 แนวนอน)
+          </button>
           <button type="button" class="btn-secondary" style="width: 100%; padding: 8px; color: #ffd700; border-color: #ffd700; background: #0b1f3a;" onclick="exportToPowerPoint()">
             📊 ดาวน์โหลด PowerPoint (.pptx)
           </button>
@@ -4808,50 +4832,16 @@
     /**
      * UPDATE SUMMARY & SLIDE 1 & SLIDE 2..N (1 SLIDE = 1 PAGE)
      */
-        /**
-     * ENFORCE LANDSCAPE PDF PRINT WITHOUT MANUAL PROMPT
+    /**
+     * EXPORT DEFECT REPORT AS A4 LANDSCAPE (1 DEFECT CARD = 1 FULL A4 SHEET)
      */
-    
-    function exportPDFDefectsPortrait(includeSummary) {
+    function exportPDFDefectsLandscape(includeSummary) {
       if (includeSummary) {
         document.body.classList.add('print-with-summary');
       } else {
         document.body.classList.remove('print-with-summary');
       }
-      let s = document.getElementById('force-landscape-style');
-      if (s) s.remove();
-      window._forceRenderSlides = true;
-      updateSummaryUI();
-      window._forceRenderSlides = false;
-      setTimeout(() => {
-        window.print();
-        setTimeout(() => {
-          document.body.classList.remove('print-with-summary');
-        }, 1500);
-      }, 150);
-    }
-
-    
-    function exportPDFDefectsPortrait(includeSummary) {
-      if (includeSummary) {
-        document.body.classList.add('print-with-summary');
-      } else {
-        document.body.classList.remove('print-with-summary');
-      }
-      let s = document.getElementById('force-landscape-style');
-      if (s) s.remove();
-      window._forceRenderSlides = true;
-      updateSummaryUI();
-      window._forceRenderSlides = false;
-      setTimeout(() => {
-        window.print();
-        setTimeout(() => {
-          document.body.classList.remove('print-with-summary');
-        }, 1500);
-      }, 150);
-    }
-
-    function printPDFLandscape() {
+      
       let s = document.getElementById("force-landscape-style");
       if (!s) {
         s = document.createElement("style");
@@ -4859,7 +4849,7 @@
         document.head.appendChild(s);
       }
       s.innerHTML = "@page { size: 297mm 210mm !important; size: landscape !important; margin: 0 !important; }";
-      
+
       window._forceRenderSlides = true;
       updateSummaryUI();
       window._forceRenderSlides = false;
@@ -4875,7 +4865,14 @@
 
       setTimeout(() => {
         window.print();
-      }, 100);
+        setTimeout(() => {
+          document.body.classList.remove('print-with-summary');
+        }, 1500);
+      }, 150);
+    }
+
+    function printPDFLandscape() {
+      exportPDFDefectsLandscape(false);
     }
 
     function proceedToPrintNow() {
@@ -4886,6 +4883,9 @@
       window._forceRenderSlides = false;
       setTimeout(() => {
         window.print();
+        setTimeout(() => {
+          document.body.classList.remove('print-with-summary');
+        }, 1500);
       }, 100);
     }
 
