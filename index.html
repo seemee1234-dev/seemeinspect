@@ -3303,7 +3303,7 @@
      * ========================================================
      */
     /**
-     * GENERATE CLEAN SEARCHABLE FILE NAME (FORMAT OPTION 1: โครงการ_ห้อง_วันที่)
+     * GENERATE CLEAN SEARCHABLE FILE NAME (FORMAT OPTION 1A: โครงการ_ห้อง_วันที่ - ขีดเดียว คลีน คมชัด)
      */
     function getFormattedBackupFileName(ext = "json") {
       const now = new Date();
@@ -3313,14 +3313,27 @@
 
       let dateStr = `${day}-${month}-${year}`;
       if (projectConfig.inspectDate) {
-        // Normalize user date e.g. 02/10/2026 or 02-10-2569 to clean format
-        dateStr = projectConfig.inspectDate.replace(/[/ ]/g, '-');
+        // Strip out Thai Buddhist text if present, clean whitespace, replace slashes/spaces with single dash
+        const cleanDate = projectConfig.inspectDate
+          .trim()
+          .replace(/[\s/.]+/g, '-')
+          .replace(/-+/g, '-');
+        if (cleanDate) dateStr = cleanDate;
       }
 
-      const projStr = (projectConfig.projName || "โครงการ").trim().replace(/[/\\?%*:|"<> ]/g, '_');
-      const roomStr = (projectConfig.roomNo || "ห้อง").trim().replace(/[/\\?%*:|"<> ]/g, '-');
+      const projStr = (projectConfig.projName || "โครงการ")
+        .trim()
+        .replace(/[/\\?%*:|"<>]/g, '')
+        .replace(/[\s_]+/g, '_')
+        .replace(/_+/g, '_');
 
-      // Format Option 1: Origin_88-102_02-10-2569.ext
+      const roomStr = (projectConfig.roomNo || "ห้อง")
+        .trim()
+        .replace(/[/\\?%*:|"<>]/g, '')
+        .replace(/[\s-]+/g, '-')
+        .replace(/-+/g, '-');
+
+      // Format Option 1A: Ping_60_02-10-2026.ext
       return `${projStr}_${roomStr}_${dateStr}.${ext}`;
     }
 
