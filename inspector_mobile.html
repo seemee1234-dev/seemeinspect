@@ -1391,6 +1391,11 @@
        A4 LANDSCAPE DEFECT REPORT PRINT RULES (1 DEFECT CARD = 1 PAGE)
        ======================================================== */
     @media print {
+      /* Universal crisp color preservation for printing */
+      *, *::before, *::after {
+        -webkit-print-color-adjust: exact !important;
+        print-color-adjust: exact !important;
+      }
       /* Dynamic @page is injected by exportPDFDefects() */
       html, body {
         margin: 0 !important;
@@ -1403,16 +1408,13 @@
         print-color-adjust: exact !important;
       }
 
-      /* SUMMARY SLIDES VISIBILITY: Slide 1 (Front Executive Cover) ALWAYS visible!
-         Customer Breakdown Table (#slide-customer-summary) shown only if .print-with-exec-table */
-      #slide-page-1 {
-        display: flex !important;
-      }
+      /* SUMMARY SLIDES VISIBILITY: Both Slide 1 (Executive Cover) AND Slide 2 (Customer Summary Table) ALWAYS visible in print! */
+      #slide-page-1,
       #slide-customer-summary {
-        display: none !important;
-      }
-      body.print-with-exec-table #slide-customer-summary {
         display: flex !important;
+      }
+      #slide-customer-summary div {
+        overflow: visible !important;
       }
 
       /* OVERRIDE CONTAINER */
@@ -1480,7 +1482,17 @@
 
       #slide-customer-summary {
         justify-content: flex-start !important;
-        gap: 3mm !important;
+        gap: 2.5mm !important;
+      }
+      #slide-customer-summary table {
+        width: 100% !important;
+        min-width: 100% !important;
+        font-size: 11.5px !important;
+      }
+      #slide-customer-summary th,
+      #slide-customer-summary td {
+        padding: 5px 6px !important;
+        font-size: 11.5px !important;
       }
 
       /* SHEET CORNER PAGE NUMBER IN PRINT (หน้าที่ X / Y) */
@@ -1874,6 +1886,20 @@
         font-size: 13px !important;
         padding: 3px 12px !important;
       }
+      body.print-portrait-mode #slide-customer-summary {
+        justify-content: flex-start !important;
+        gap: 2.5mm !important;
+      }
+      body.print-portrait-mode #slide-customer-summary table {
+        width: 100% !important;
+        min-width: 100% !important;
+        font-size: 10.5px !important;
+      }
+      body.print-portrait-mode #slide-customer-summary th,
+      body.print-portrait-mode #slide-customer-summary td {
+        padding: 4px 5px !important;
+        font-size: 10.5px !important;
+      }
 
     }
   </style>
@@ -2131,10 +2157,10 @@
       
       <!-- Clean Executive Toolbar: 2 Primary Buttons + Expandable More Options -->
       <div class="screen-toolbar no-print" style="display: flex; gap: 8px; flex-wrap: wrap;">
-        <button type="button" class="btn-main" style="flex: 1 1 28%; min-width: 130px; padding: 11px 8px; background: #00adf2; color: #ffffff; border: none; font-size: 13.5px; box-shadow: 0 4px 14px rgba(0, 173, 242, 0.3);" onclick="exportPDFDefects('landscape', false)">
+        <button type="button" class="btn-main" style="flex: 1 1 28%; min-width: 130px; padding: 11px 8px; background: #00adf2; color: #ffffff; border: none; font-size: 13.5px; box-shadow: 0 4px 14px rgba(0, 173, 242, 0.3);" onclick="exportPDFDefects('landscape', true)">
           📄 PDF แนวนอน
         </button>
-        <button type="button" class="btn-main" style="flex: 1 1 28%; min-width: 130px; padding: 11px 8px; background: linear-gradient(135deg, #2563eb, #1d4ed8); color: #ffffff; border: none; font-size: 13.5px; box-shadow: 0 4px 14px rgba(37, 99, 235, 0.3);" onclick="exportPDFDefects('portrait', false)">
+        <button type="button" class="btn-main" style="flex: 1 1 28%; min-width: 130px; padding: 11px 8px; background: linear-gradient(135deg, #2563eb, #1d4ed8); color: #ffffff; border: none; font-size: 13.5px; box-shadow: 0 4px 14px rgba(37, 99, 235, 0.3);" onclick="exportPDFDefects('portrait', true)">
           📄 PDF แนวตั้ง
         </button>
         <button type="button" class="btn-main" style="flex: 1 1 28%; min-width: 130px; padding: 11px 8px; background: linear-gradient(135deg, #06c755, #059669); color: #ffffff; border: none; font-size: 13.5px; box-shadow: 0 4px 14px rgba(6, 199, 85, 0.3);" onclick="shareRoomFileToLineOrDrive()">
@@ -2985,7 +3011,7 @@
     }
 
     function getDefectRoom(d) {
-      if (d && d.room) return d.room.replace(/^[^\s]+\s*/, '');
+      if (d && d.room) return d.room.replace(/^[\p{Emoji}\p{Extended_Pictographic}\uFE0F\s]+/u, '').trim() || d.room;
       const loc = (d && d.location) ? d.location : "";
       const rooms = ["ห้องรับแขก", "ห้องนั่งเล่น", "ห้องนอน 1", "ห้องนอน 2", "ห้องนอน", "ห้องครัว", "ห้องน้ำ 1", "ห้องน้ำ 2", "ห้องน้ำ", "ระเบียง", "โถงทางเดิน"];
       for (const r of rooms) {
@@ -2996,7 +3022,7 @@
 
     function updateCurrentRoomDisplay() {
       const el = document.getElementById("active-room-display");
-      const cleanName = currentSelectedRoom.replace(/^[^\s]+\s*/, '');
+      const cleanName = currentSelectedRoom.replace(/^[\p{Emoji}\p{Extended_Pictographic}\uFE0F\s]+/u, '').trim() || currentSelectedRoom;
       const countInRoom = defectList.filter(d => getDefectRoom(d) === cleanName).length;
       if (el) {
         el.innerHTML = `กำลังตรวจ: <strong style="color: #ffd700;">${currentSelectedRoom}</strong> <span style="font-size: 11px; color: #38bdf8; margin-left: 6px;">(ห้องนี้บันทึกแล้ว ${countInRoom} จุด)</span>`;
@@ -4983,17 +5009,12 @@
      * UNIFIED EXPORT DEFECT REPORT (A4 LANDSCAPE & A4 PORTRAIT)
      */
     let currentPrintOrientation = "landscape";
-    let currentPrintIncludeExecTable = false;
+    let currentPrintIncludeExecTable = true;
 
     function exportPDFDefects(orientation, includeExecutiveTable) {
       currentPrintOrientation = orientation || "landscape";
-      currentPrintIncludeExecTable = !!includeExecutiveTable;
-
-      if (currentPrintIncludeExecTable) {
-        document.body.classList.add("print-with-exec-table");
-      } else {
-        document.body.classList.remove("print-with-exec-table");
-      }
+      currentPrintIncludeExecTable = true; // Slide 2 (Executive Summary Table) is always included
+      document.body.classList.add("print-with-exec-table");
 
       let s = document.getElementById("force-dynamic-orientation-style");
       if (!s) {
@@ -5031,14 +5052,11 @@
 
       setTimeout(() => {
         window.print();
-        setTimeout(() => {
-          document.body.classList.remove("print-with-exec-table");
-        }, 1500);
       }, 150);
     }
 
     function printPDFLandscape() {
-      exportPDFDefects("landscape", false);
+      exportPDFDefects("landscape", true);
     }
 
     function proceedToPrintNow() {
@@ -5049,9 +5067,6 @@
       window._forceRenderSlides = false;
       setTimeout(() => {
         window.print();
-        setTimeout(() => {
-          document.body.classList.remove("print-with-exec-table");
-        }, 1500);
       }, 100);
     }
 
@@ -5256,8 +5271,8 @@
       }
 
       // 6. Render Slide 2..N: Every single defect is its OWN standalone .slide-page
-      const hasExecTable = currentPrintIncludeExecTable;
-      const totalSlides = defectList.length + (hasExecTable ? 2 : 1); // Slide 1 (+ Customer Summary Table) + Defect Slides
+      const hasExecTable = true; // Slide 2 (Customer Executive Summary Table) is ALWAYS included
+      const totalSlides = defectList.length + 2; // Slide 1 (Cover) + Slide 2 (Table) + Defect Slides
       const s1Corner = document.getElementById("s1-corner-num");
       if (s1Corner) {
         s1Corner.textContent = `หน้าที่ 1 / ${totalSlides}`;
@@ -5310,7 +5325,7 @@
         const roomName = getDefectRoom(d);
         const photoWideSrc = d.photoWide || d.photoBefore;
         const photoCloseSrc = d.photoClose || d.photoBefore;
-        const pageNum = index + 1 + (hasExecTable ? 2 : 1);
+        const pageNum = index + 3; // Page 1 = Cover, Page 2 = Table, Defect cards start at Page 3
 
         let statusStyle = 'background: #fef3c7; color: #b45309; border: 1px solid #fcd34d;';
         let statusIcon = '🟡';
