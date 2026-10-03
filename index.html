@@ -3017,7 +3017,11 @@
         <div class="zone-pills" id="zone-pills-container">
           <!-- Populated dynamically by JS via renderQuickZones() -->
         </div>
-        <input type="text" id="cur-location" placeholder="เช่น ผนังฝั่ง TV, บัวพื้นมุมห้อง, ใต้ซิงก์ล้างจาน">
+        <!-- ช่องกรอกตำแหน่ง พร้อมปุ่มล้างข้อความ ✕ -->
+        <div style="position: relative; width: 100%; display: flex; align-items: center;">
+          <input type="text" id="cur-location" placeholder="เช่น ผนังฝั่ง TV, บัวพื้นมุมห้อง, ใต้ซิงก์ล้างจาน" style="padding-right: 48px;" oninput="toggleLocationClearBtn()">
+          <button type="button" id="btn-clear-location" onclick="clearLocationInput()" style="display: none; position: absolute; right: 6px; top: 50%; transform: translateY(-50%); width: 34px; height: 34px; border-radius: 8px; background: rgba(239, 68, 68, 0.25); border: 1.5px solid #ef4444; color: #fca5a5; font-size: 16px; font-weight: 500; cursor: pointer; align-items: center; justify-content: center; padding: 0; line-height: 1; z-index: 5;" title="ลบข้อความตำแหน่ง">✕</button>
+        </div>
       </div>
 
       <!-- กลุ่ม ③: ภาพถ่าย 2 ระยะ & รายละเอียด (Photos & Finding) -->
@@ -5176,9 +5180,30 @@
 
     function addZoneTag(tag) {
       const locInput = document.getElementById("cur-location");
+      if (!locInput) return;
       if (!locInput.value.includes(tag)) {
         locInput.value = locInput.value ? `${tag} ${locInput.value}` : tag;
       }
+      toggleLocationClearBtn();
+    }
+
+    function toggleLocationClearBtn() {
+      const inp = document.getElementById("cur-location");
+      const btn = document.getElementById("btn-clear-location");
+      if (!inp || !btn) return;
+      if (inp.value && inp.value.trim().length > 0) {
+        btn.style.display = "flex";
+      } else {
+        btn.style.display = "none";
+      }
+    }
+
+    function clearLocationInput() {
+      const inp = document.getElementById("cur-location");
+      if (!inp) return;
+      inp.value = "";
+      toggleLocationClearBtn();
+      inp.focus();
     }
 
     /**
@@ -6535,7 +6560,7 @@
       const camGalInput = document.getElementById("camera-gallery-input");
       if (camGalInput) camGalInput.value = "";
       
-      if (locInput) locInput.value = "";
+      if (locInput) { locInput.value = ""; toggleLocationClearBtn(); }
       if (descInput) descInput.value = "";
       if (recInput) recInput.value = "";
       if (discussMemoInput) discussMemoInput.value = "";
