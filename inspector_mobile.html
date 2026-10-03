@@ -427,99 +427,220 @@
     }
 
     /* Category Buttons (8 Categories matching Slide 1) */
+    /* Category Buttons (Single Column / 1 Row Per Item: Large, Crisp, Kanit 300) */
     .cat-grid {
-      display: grid;
-      grid-template-columns: repeat(2, 1fr);
+      display: flex;
+      flex-direction: column;
       gap: 8px;
       margin-bottom: 14px;
     }
 
     .cat-btn {
+      width: 100%;
       background: #091024;
       border: 1.5px solid #233560;
       color: #cbd5e1;
-      padding: 11px 9px;
-      border-radius: 8px;
+      padding: 12px 14px;
+      border-radius: 10px;
       font-family: 'Kanit', sans-serif;
       font-weight: 300;
-      font-size: 14.5px;
-      text-align: center;
+      font-size: 15.5px;
       cursor: pointer;
       transition: all 0.15s ease;
       display: flex;
       align-items: center;
-      justify-content: center;
-      gap: 5px;
+      justify-content: space-between;
+      min-height: 50px;
+      box-shadow: 0 2px 6px rgba(0, 0, 0, 0.2);
     }
 
     .cat-btn:active {
-      transform: scale(0.98);
+      transform: scale(0.99);
     }
 
     .cat-btn.selected {
-      background: #0b1f3a;
+      background: linear-gradient(135deg, #0b1f3a, #1a2b4c);
       border-color: #ffd700;
-      color: #ffd700;
+      color: #ffffff;
       font-weight: 400;
-      box-shadow: 0 0 10px rgba(255, 215, 0, 0.2);
+      box-shadow: 0 0 10px rgba(255, 215, 0, 0.25);
+    }
+
+    .cat-btn-left {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      font-size: 15.5px;
+    }
+
+    .cat-btn-right {
+      display: flex;
+      align-items: center;
+      gap: 8px;
     }
 
     .cat-count-badge {
+      font-size: 12px;
+      color: #38bdf8;
+      background: rgba(56, 189, 248, 0.12);
+      border: 1px solid rgba(56, 189, 248, 0.4);
+      padding: 3px 8px;
+      border-radius: 12px;
+      font-weight: 300;
+      white-space: nowrap;
+    }
+
+    .cat-select-tag {
       font-size: 11.5px;
-      color: #38bdf8;
-      margin-left: 3px;
-      font-weight: 400;
-    }
-    .cat-btn.selected .cat-count-badge {
-      color: #38bdf8;
-      font-weight: 500;
-    }
-
-    /* Room Buttons Grid (Level 1: Inspection Room Selection) */
-    .room-grid {
-      display: grid;
-      grid-template-columns: repeat(2, 1fr);
-      gap: 8px;
-      margin-bottom: 8px;
+      color: #ffd700;
+      background: rgba(255, 215, 0, 0.15);
+      border: 1px solid #ffd700;
+      padding: 3px 8px;
+      border-radius: 12px;
+      font-weight: 300;
+      white-space: nowrap;
     }
 
-    .room-btn {
-      background: #091024;
-      border: 1.5px solid #1e3a8a;
-      color: #93c5fd;
-      padding: 11px 9px;
-      border-radius: 8px;
+    .cat-add-btn-row {
+      width: 100%;
+      border: 1.5px dashed #ffd700;
+      color: #ffd700;
+      background: rgba(255, 215, 0, 0.08);
+      border-radius: 10px;
+      padding: 12px;
       font-family: 'Kanit', sans-serif;
       font-weight: 300;
-      font-size: 14.5px;
-      text-align: center;
+      font-size: 15px;
       cursor: pointer;
-      transition: all 0.15s ease;
       display: flex;
       align-items: center;
       justify-content: center;
-      gap: 6px;
-      white-space: nowrap;
-      overflow: hidden;
-      text-overflow: ellipsis;
+      gap: 8px;
+      min-height: 48px;
     }
 
-    .room-btn:active {
-      transform: scale(0.98);
+    /* Room Buttons List (Single Column / 1 Row Per Item: Large, Crisp, With Checkmark at the End) */
+    .room-grid {
+      display: flex;
+      flex-direction: column;
+      gap: 8px;
+      margin-bottom: 12px;
     }
 
-    .room-btn.selected {
-      background: linear-gradient(135deg, #0b1f3a, #1e3a8a);
+    .room-row-card {
+      width: 100%;
+      background: #091024;
+      border: 1.5px solid #1e3a8a;
+      border-radius: 10px;
+      padding: 6px 8px 6px 12px;
+      transition: all 0.15s ease;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      min-height: 52px;
+      gap: 10px;
+      box-shadow: 0 2px 6px rgba(0, 0, 0, 0.2);
+    }
+
+    .room-row-card.selected {
+      background: linear-gradient(135deg, #0b1f3a, #16305c);
       border-color: #38bdf8;
-      color: #ffffff;
-      font-weight: 400;
       box-shadow: 0 0 12px rgba(56, 189, 248, 0.35);
     }
 
-    .room-btn.add-room-btn {
+    .room-row-card.done {
+      border-color: #10b981;
+      background: #07191d;
+    }
+
+    .room-main-select-btn {
+      flex: 1;
+      background: none;
+      border: none;
+      color: #93c5fd;
+      font-family: 'Kanit', sans-serif;
+      font-weight: 300;
+      font-size: 16px;
+      text-align: left;
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      padding: 6px 0;
+    }
+
+    .room-row-card.selected .room-main-select-btn {
+      color: #ffffff;
+      font-weight: 400;
+    }
+
+    .room-row-card.done .room-main-select-btn {
+      color: #a7f3d0;
+    }
+
+    .room-actions-right {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      flex-shrink: 0;
+    }
+
+    .room-defect-count-badge {
+      font-size: 12px;
+      color: #38bdf8;
+      background: rgba(56, 189, 248, 0.15);
+      border: 1px solid rgba(56, 189, 248, 0.5);
+      padding: 3px 8px;
+      border-radius: 12px;
+      font-weight: 300;
+      white-space: nowrap;
+    }
+
+    .room-toggle-done-btn {
+      background: rgba(255, 255, 255, 0.05);
+      border: 1.5px solid #475569;
+      color: #94a3b8;
+      font-family: 'Kanit', sans-serif;
+      font-weight: 300;
+      font-size: 13px;
+      padding: 5px 12px;
+      border-radius: 14px;
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      gap: 5px;
+      transition: all 0.15s ease;
+      white-space: nowrap;
+      user-select: none;
+    }
+
+    .room-toggle-done-btn.checked {
+      background: rgba(16, 185, 129, 0.2);
+      border-color: #10b981;
+      color: #34d399;
+      font-weight: 400;
+    }
+
+    .room-toggle-done-btn:active {
+      transform: scale(0.95);
+    }
+
+    .room-add-btn-row {
+      width: 100%;
       border: 1.5px dashed #38bdf8;
       color: #38bdf8;
       background: rgba(14, 165, 233, 0.08);
+      border-radius: 10px;
+      padding: 12px;
+      font-family: 'Kanit', sans-serif;
+      font-weight: 300;
+      font-size: 15px;
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 8px;
+      min-height: 48px;
     }
 
     .active-room-banner {
@@ -3551,17 +3672,38 @@
     let currentSelectedRoom = "🛋️ ห้องรับแขก";
     let currentSlideViewMode = "room"; // 'room' (Customer), 'category' (Contractor), 'order' (Timestamp)
     let completedRooms = {};
+    try {
+      const savedCompleted = localStorage.getItem("condo_completed_rooms");
+      if (savedCompleted) completedRooms = JSON.parse(savedCompleted);
+    } catch (e) {}
     let siteAttendance = {
       customer: true,
       contractor: true,
       confirmedAt: null
     };
 
+    function toggleRoomCompleted(roomName, event) {
+      if (event) {
+        event.stopPropagation();
+        event.preventDefault();
+      }
+      if (!roomName) return;
+      completedRooms[roomName] = !completedRooms[roomName];
+      try {
+        localStorage.setItem("condo_completed_rooms", JSON.stringify(completedRooms));
+      } catch (e) {}
+
+      if (navigator.vibrate) {
+        try { navigator.vibrate(completedRooms[roomName] ? [40, 30, 40] : 30); } catch (err) {}
+      }
+
+      renderRoomButtons();
+      updateSummaryUI();
+    }
+
     function selectRoom(roomName) {
       currentSelectedRoom = roomName;
-      document.querySelectorAll(".room-btn").forEach(b => {
-        b.classList.toggle("selected", b.dataset.room === roomName);
-      });
+      renderRoomButtons();
       updateCurrentRoomDisplay();
       if (typeof updateNextDefectCode === 'function') {
         updateNextDefectCode();
@@ -3592,14 +3734,24 @@
         const cleanName = r.replace(/^[^\s]+\s*/, '');
         const countInRoom = defectList.filter(d => getDefectRoom(d) === cleanName).length;
         const isDone = !!completedRooms[r];
+        const isSelected = r === currentSelectedRoom;
+        const safeRoom = r.replace(/'/g, "\\'");
         return `
-        <button type="button" class="room-btn ${r === currentSelectedRoom ? 'selected' : ''}" data-room="${r}" onclick="selectRoom('${r}')" style="${isDone ? 'border-color: #10b981; background: #07191d;' : ''}">
-          ${r} ${isDone ? '<span style="color: #10b981; font-weight: 500;">✓</span>' : ''} ${countInRoom > 0 ? `<span style="font-size: 11px; color: #38bdf8; margin-left: 2px;">(${countInRoom})</span>` : ''}
-        </button>
+        <div class="room-row-card ${isSelected ? 'selected' : ''} ${isDone ? 'done' : ''}" data-room="${r}">
+          <button type="button" class="room-main-select-btn" onclick="selectRoom('${safeRoom}')">
+            <span>${r}</span>
+          </button>
+          <div class="room-actions-right">
+            ${countInRoom > 0 ? `<span class="room-defect-count-badge">${countInRoom} จุด</span>` : ''}
+            <button type="button" class="room-toggle-done-btn ${isDone ? 'checked' : ''}" onclick="toggleRoomCompleted('${safeRoom}', event)" title="แตะเพื่อติ๊กตรวจห้องนี้แล้ว">
+              <span>${isDone ? '✓ ตรวจแล้ว' : '○ ติ๊กตรวจ'}</span>
+            </button>
+          </div>
+        </div>
         `;
       }).join("") + `
-        <button type="button" class="room-btn add-room-btn" onclick="promptAddCustomRoom()" title="เพิ่มห้องเอง">
-          ➕ เพิ่มห้อง
+        <button type="button" class="room-add-btn-row" onclick="promptAddCustomRoom()" title="เพิ่มห้องเอง">
+          ➕ เพิ่มห้องใหม่
         </button>
       `;
       updateCurrentRoomDisplay();
@@ -3625,14 +3777,21 @@
       container.innerHTML = allCats.map(c => {
         const isSelected = c === currentSelectedCategory;
         const safeCat = c.replace(/'/g, "\\'");
+        const countInCat = getCategoryDefectCount(c);
         return `
         <button type="button" class="cat-btn ${isSelected ? 'selected' : ''}" data-cat="${c}" onclick="selectCat('${safeCat}')">
-          <span>${c}</span>
+          <div class="cat-btn-left">
+            <span>${c}</span>
+          </div>
+          <div class="cat-btn-right">
+            ${countInCat > 0 ? `<span class="cat-count-badge">${countInCat} จุด</span>` : ''}
+            ${isSelected ? `<span class="cat-select-tag">✓ กำลังเลือก</span>` : ''}
+          </div>
         </button>
         `;
       }).join("") + `
-        <button type="button" class="cat-btn add-cat-btn" onclick="promptAddCustomCategory()" title="เพิ่มหมวดงานเอง" style="border: 1.5px dashed #ffd700; color: #ffd700; background: rgba(255, 215, 0, 0.08);">
-          ➕ เพิ่มหมวดงาน
+        <button type="button" class="cat-add-btn-row" onclick="promptAddCustomCategory()" title="เพิ่มหมวดงานเอง">
+          ➕ เพิ่มหมวดงานใหม่
         </button>
       `;
     }
@@ -4730,9 +4889,7 @@
      */
     function selectCat(catName) {
       currentSelectedCategory = catName;
-      document.querySelectorAll(".cat-btn").forEach(b => {
-        b.classList.toggle("selected", b.dataset.cat === catName);
-      });
+      renderCategoryButtons();
       updateNextDefectCode();
       if (typeof renderQuickFindings === 'function') renderQuickFindings();
       if (typeof renderQuickRecommendations === 'function') renderQuickRecommendations();
