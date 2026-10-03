@@ -5343,13 +5343,15 @@
     }
 
     /**
-     * VOICE RECOGNITION (WEB SPEECH API) - MULTI-SENSORY CUE & ZERO DUPLICATION
+     * VOICE RECOGNITION (WEB SPEECH API) - 3-SECOND STUDIO COUNTDOWN & ZERO DUPLICATION
      */
     let currentVoiceTarget = 'desc'; // 'desc' or 'recommend'
     let _voiceBaseText = "";
     let _silenceTimer = null;
     let _userExplicitStop = false;
     let _audioCtx = null;
+    let _countdownTimer = null;
+    let _isCountingDown = false;
 
     // Web Audio API Sound Cues (Zero external file, works offline & mobile instant)
     function getAudioContext() {
@@ -5369,7 +5371,35 @@
       return _audioCtx;
     }
 
-    // High crisp start cue chime ("ติ๊ง!") 880Hz -> 1320Hz + Haptic vibration
+    // Studio countdown tick beeps: Step 3 (440Hz), Step 2 (554Hz), Step 1 (660Hz)
+    function playCountdownBeep(step) {
+      try {
+        const ctx = getAudioContext();
+        if (ctx) {
+          const osc = ctx.createOscillator();
+          const gain = ctx.createGain();
+          osc.type = "sine";
+          const now = ctx.currentTime;
+          const freq = step === 3 ? 440 : (step === 2 ? 554.37 : 659.25);
+          osc.frequency.setValueAtTime(freq, now);
+          
+          gain.gain.setValueAtTime(0.001, now);
+          gain.gain.exponentialRampToValueAtTime(0.24, now + 0.015);
+          gain.gain.exponentialRampToValueAtTime(0.001, now + 0.085);
+          
+          osc.connect(gain);
+          gain.connect(ctx.destination);
+          osc.start(now);
+          osc.stop(now + 0.095);
+        }
+      } catch (e) {}
+
+      if (navigator.vibrate) {
+        try { navigator.vibrate(30); } catch (e) {}
+      }
+    }
+
+    // High crisp start chime ("ติ๊ง!") 880Hz -> 1320Hz + Haptic vibration
     function playStartCue() {
       try {
         const ctx = getAudioContext();
@@ -5381,17 +5411,17 @@
           osc.frequency.setValueAtTime(880, now);
           osc.frequency.exponentialRampToValueAtTime(1320, now + 0.12);
           gain.gain.setValueAtTime(0.001, now);
-          gain.gain.exponentialRampToValueAtTime(0.3, now + 0.03);
-          gain.gain.exponentialRampToValueAtTime(0.001, now + 0.15);
+          gain.gain.exponentialRampToValueAtTime(0.35, now + 0.03);
+          gain.gain.exponentialRampToValueAtTime(0.001, now + 0.16);
           osc.connect(gain);
           gain.connect(ctx.destination);
           osc.start(now);
-          osc.stop(now + 0.16);
+          osc.stop(now + 0.17);
         }
       } catch (e) {}
 
       if (navigator.vibrate) {
-        try { navigator.vibrate(50); } catch (e) {}
+        try { navigator.vibrate(60); } catch (e) {}
       }
     }
 
@@ -5421,38 +5451,56 @@
       }
     }
 
-    // Helper: Remove duplicate phrases (handles duplicate halves, repeated words, adjacent sentences)
-    function cleanDuplicatePhrases(str) {
-      if (!str) return '';
-      let text = str.trim();
-      let parts = text.split(/\s+/);
-      if (parts.length >= 2) {
-        if (parts.length === 2 && parts[0] === parts[1]) {
-          return parts[0];
-        }
-        if (parts.length % 2 === 0) {
-          let half = parts.length / 2;
-          let firstHalf = parts.slice(0, half).join(' ');
-          let secondHalf = parts.slice(half).join(' ');
-          if (firstHalf === secondHalf) {
-            return firstHalf;
+    // Helper: Robust multi-word phrase and stutter deduplication
+    function cleanDuplicatePhrases(text) {
+      if (!text) return '';
+      let s = text.trim();
+
+      // 1. Remove repeated adjacent phrase chunks (from chunk size 10 words down to 1 word)
+      let words = s.split(/\s+/);
+      let changed = true;
+      let passes = 0;
+      while (changed && passes < 10) {
+        changed = false;
+        passes++;
+        const maxK = Math.floor(words.length / 2);
+        for (let k = maxK; k >= 1; k--) {
+          for (let i = 0; i <= words.length - 2 * k; i++) {
+            const chunk1 = words.slice(i, i + k).join(' ');
+            const chunk2 = words.slice(i + k, i + 2 * k).join(' ');
+            if (chunk1 === chunk2 && chunk1.length >= 2) {
+              words.splice(i + k, k);
+              changed = true;
+              break;
+            }
           }
-        }
-        let filtered = [];
-        for (let i = 0; i < parts.length; i++) {
-          if (i === 0 || parts[i] !== parts[i - 1]) {
-            filtered.push(parts[i]);
-          }
-        }
-        text = filtered.join(' ');
-      }
-      if (text.length >= 8 && text.length % 2 === 0) {
-        let half = text.length / 2;
-        if (text.slice(0, half) === text.slice(half)) {
-          text = text.slice(0, half);
+          if (changed) break;
         }
       }
-      return text;
+
+      s = words.join(' ');
+
+      // 2. Remove premature stutter where a starting phrase is immediately repeated with more words
+      // e.g. "ทดสอบรายการ ทดสอบรายการครั้งที่ 2" -> "ทดสอบรายการครั้งที่ 2"
+      words = s.split(/\s+/);
+      for (let k = 1; k < words.length; k++) {
+        const prefix = words.slice(0, k).join(' ');
+        const rest = words.slice(k).join(' ');
+        if (rest.startsWith(prefix) && rest.length > prefix.length) {
+          s = rest;
+          break;
+        }
+      }
+
+      // 3. Exact halve repeat without spaces (even length exact repeat)
+      if (s.length >= 8 && s.length % 2 === 0) {
+        const half = s.length / 2;
+        if (s.slice(0, half) === s.slice(half)) {
+          s = s.slice(0, half);
+        }
+      }
+
+      return s;
     }
 
     function resetVoiceSilenceTimer() {
@@ -5597,6 +5645,29 @@
       };
     }
 
+    function cancelCountdown() {
+      if (_countdownTimer) {
+        clearTimeout(_countdownTimer);
+        _countdownTimer = null;
+      }
+      _isCountingDown = false;
+      ['desc', 'recommend'].forEach(target => {
+        const btn = document.getElementById(`voice-btn-${target}`);
+        const icon = document.getElementById(`voice-icon-${target}`);
+        const label = document.getElementById(`voice-label-${target}`);
+        const status = document.getElementById(`voice-status-${target}`);
+        if (btn) {
+          btn.classList.remove("waiting");
+          btn.classList.remove("recording");
+        }
+        if (icon) icon.textContent = "🎙️";
+        if (label) label.textContent = "แตะเพื่อพูด";
+        if (status && status.textContent.includes("นับถอยหลัง")) {
+          status.textContent = "";
+        }
+      });
+    }
+
     function toggleVoiceRecording(target = 'desc') {
       getAudioContext(); // ปลดล็อก AudioContext ทันทีที่ผู้ใช้แตะปุ่ม
 
@@ -5608,18 +5679,66 @@
         return;
       }
 
+      // หากกำลังบันทึกอยู่ -> แตะเพื่อหยุด
       if (isRecording) {
-        const wasTarget = currentVoiceTarget;
         _userExplicitStop = true;
         stopVoiceRecording();
-        if (wasTarget !== target) {
-          setTimeout(() => {
-            startVoiceForTarget(target);
-          }, 150);
-        }
-      } else {
-        startVoiceForTarget(target);
+        return;
       }
+
+      // หากอยู่ในช่วงนับถอยหลัง 3 2 1 -> แตะเพื่อยกเลิก
+      if (_isCountingDown) {
+        cancelCountdown();
+        return;
+      }
+
+      // เริ่มนับถอยหลัง 3... 2... 1... สไตล์ห้องอัดเสียง
+      startCountdown(target);
+    }
+
+    function startCountdown(target) {
+      _isCountingDown = true;
+      currentVoiceTarget = target || 'desc';
+
+      const btn = document.getElementById(`voice-btn-${currentVoiceTarget}`);
+      const icon = document.getElementById(`voice-icon-${currentVoiceTarget}`);
+      const label = document.getElementById(`voice-label-${currentVoiceTarget}`);
+      const status = document.getElementById(`voice-status-${currentVoiceTarget}`);
+
+      if (btn) {
+        btn.classList.remove("recording");
+        btn.classList.add("waiting");
+      }
+
+      // จังหวะที่ 3 (0ms) - เสียงทุ้มแรก "ตึ๊บ" (440Hz)
+      if (icon) icon.textContent = "⏳";
+      if (label) label.textContent = "เตรียมพูดใน 3...";
+      if (status) status.innerHTML = "<span style='color: #fbbf24; font-weight: 400;'>⏳ นับถอยหลัง... 3</span>";
+      playCountdownBeep(3);
+
+      // จังหวะที่ 2 (600ms) - เสียงกลาง "ติ๊ด" (554Hz)
+      _countdownTimer = setTimeout(() => {
+        if (!_isCountingDown) return;
+        if (label) label.textContent = "เตรียมพูดใน 2...";
+        if (status) status.innerHTML = "<span style='color: #fbbf24; font-weight: 400;'>⏳ นับถอยหลัง... 2</span>";
+        playCountdownBeep(2);
+
+        // จังหวะที่ 1 (1200ms) - เสียงสูง "ติ๊ด" (660Hz)
+        _countdownTimer = setTimeout(() => {
+          if (!_isCountingDown) return;
+          if (label) label.textContent = "เตรียมพูดใน 1...";
+          if (status) status.innerHTML = "<span style='color: #fbbf24; font-weight: 400;'>⏳ นับถอยหลัง... 1</span>";
+          playCountdownBeep(1);
+
+          // เริ่มอัดจริง (1800ms) - เสียงกระดิ่งสตูดิโอ "ติ๊ง!" (1320Hz)
+          _countdownTimer = setTimeout(() => {
+            if (!_isCountingDown) return;
+            _isCountingDown = false;
+            startVoiceForTarget(currentVoiceTarget);
+          }, 600);
+
+        }, 600);
+      }, 600);
     }
 
     function startVoiceForTarget(target) {
@@ -5632,7 +5751,6 @@
         : document.getElementById("cur-desc");
       _voiceBaseText = targetEl ? targetEl.value.trim() : "";
 
-      // ⏳ สเตจที่ 1: แจ้งเตือนสถานะกำลังเปิดไมค์ทันที เพื่อให้ผู้ใช้ชะลอรอสัญญาณ "ติ๊ง!"
       const btn = document.getElementById(`voice-btn-${currentVoiceTarget}`);
       const icon = document.getElementById(`voice-icon-${currentVoiceTarget}`);
       const label = document.getElementById(`voice-label-${currentVoiceTarget}`);
@@ -5658,6 +5776,12 @@
     }
 
     function stopVoiceRecording() {
+      if (_countdownTimer) {
+        clearTimeout(_countdownTimer);
+        _countdownTimer = null;
+      }
+      _isCountingDown = false;
+
       const wasRecording = isRecording;
       isRecording = false;
       _userExplicitStop = true;
@@ -5689,7 +5813,7 @@
         }
         if (icon) icon.textContent = "🎙️";
         if (label) label.textContent = "แตะเพื่อพูด";
-        if (status && (status.textContent.includes("กำลัง") || status.textContent.includes("ไมค์เปิดแล้ว"))) {
+        if (status && (status.textContent.includes("กำลัง") || status.textContent.includes("ไมค์เปิดแล้ว") || status.textContent.includes("นับถอยหลัง"))) {
           status.innerHTML = "<span style='color: #38bdf8;'>✓ บันทึกข้อความแล้ว (แตะพูดต่อได้)</span>";
         }
         if (targetEl) {
