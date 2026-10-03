@@ -732,12 +732,25 @@
       transform: scale(0.96);
     }
 
-    .voice-field-btn.recording {
-      background: linear-gradient(135deg, #ef4444, #b91c1c) !important;
-      border-color: #ef4444 !important;
+    .voice-field-btn.waiting {
+      background: linear-gradient(135deg, #b45309, #d97706) !important;
+      border-color: #fbbf24 !important;
       color: #ffffff !important;
-      animation: pulse 0.8s infinite alternate !important;
-      box-shadow: 0 0 14px rgba(239, 68, 68, 0.7) !important;
+      animation: pulse 0.7s infinite alternate !important;
+      box-shadow: 0 0 12px rgba(251, 191, 36, 0.7) !important;
+    }
+
+    .voice-field-btn.recording {
+      background: linear-gradient(135deg, #059669, #10b981) !important;
+      border-color: #34d399 !important;
+      color: #ffffff !important;
+      animation: pulse 0.7s infinite alternate !important;
+      box-shadow: 0 0 16px rgba(16, 185, 129, 0.75) !important;
+    }
+
+    .voice-active-input {
+      border-color: #10b981 !important;
+      box-shadow: 0 0 12px rgba(16, 185, 129, 0.35) !important;
     }
 
     .clear-field-btn {
@@ -5341,13 +5354,117 @@
     }
 
     /**
-     * VOICE RECOGNITION (WEB SPEECH API) - DUAL FIELD CONTINUOUS & REAL-TIME
+     * VOICE RECOGNITION (WEB SPEECH API) - MULTI-SENSORY CUE & ZERO DUPLICATION
      */
     let currentVoiceTarget = 'desc'; // 'desc' or 'recommend'
     let _voiceBaseText = "";
     let _silenceTimer = null;
     let _userExplicitStop = false;
-    let _sessionFinalTranscript = "";
+    let _audioCtx = null;
+
+    // Web Audio API Sound Cues (Zero external file, works offline & mobile instant)
+    function getAudioContext() {
+      try {
+        if (!_audioCtx) {
+          const AudioContextClass = window.AudioContext || window.webkitAudioContext;
+          if (AudioContextClass) {
+            _audioCtx = new AudioContextClass();
+          }
+        }
+        if (_audioCtx && _audioCtx.state === 'suspended') {
+          _audioCtx.resume().catch(() => {});
+        }
+      } catch (e) {
+        console.warn("AudioContext init error:", e);
+      }
+      return _audioCtx;
+    }
+
+    // High crisp start cue chime ("ติ๊ง!") 880Hz -> 1320Hz + Haptic vibration
+    function playStartCue() {
+      try {
+        const ctx = getAudioContext();
+        if (ctx) {
+          const osc = ctx.createOscillator();
+          const gain = ctx.createGain();
+          osc.type = "sine";
+          const now = ctx.currentTime;
+          osc.frequency.setValueAtTime(880, now);
+          osc.frequency.exponentialRampToValueAtTime(1320, now + 0.12);
+          gain.gain.setValueAtTime(0.001, now);
+          gain.gain.exponentialRampToValueAtTime(0.3, now + 0.03);
+          gain.gain.exponentialRampToValueAtTime(0.001, now + 0.15);
+          osc.connect(gain);
+          gain.connect(ctx.destination);
+          osc.start(now);
+          osc.stop(now + 0.16);
+        }
+      } catch (e) {}
+
+      if (navigator.vibrate) {
+        try { navigator.vibrate(50); } catch (e) {}
+      }
+    }
+
+    // Descending finish chime ("ตุ๊ง") 660Hz -> 440Hz + Subtle haptic
+    function playStopCue() {
+      try {
+        const ctx = getAudioContext();
+        if (ctx) {
+          const osc = ctx.createOscillator();
+          const gain = ctx.createGain();
+          osc.type = "sine";
+          const now = ctx.currentTime;
+          osc.frequency.setValueAtTime(660, now);
+          osc.frequency.exponentialRampToValueAtTime(440, now + 0.12);
+          gain.gain.setValueAtTime(0.001, now);
+          gain.gain.exponentialRampToValueAtTime(0.22, now + 0.02);
+          gain.gain.exponentialRampToValueAtTime(0.001, now + 0.13);
+          osc.connect(gain);
+          gain.connect(ctx.destination);
+          osc.start(now);
+          osc.stop(now + 0.14);
+        }
+      } catch (e) {}
+
+      if (navigator.vibrate) {
+        try { navigator.vibrate([25, 30, 25]); } catch (e) {}
+      }
+    }
+
+    // Helper: Remove duplicate phrases (handles duplicate halves, repeated words, adjacent sentences)
+    function cleanDuplicatePhrases(str) {
+      if (!str) return '';
+      let text = str.trim();
+      let parts = text.split(/\s+/);
+      if (parts.length >= 2) {
+        if (parts.length === 2 && parts[0] === parts[1]) {
+          return parts[0];
+        }
+        if (parts.length % 2 === 0) {
+          let half = parts.length / 2;
+          let firstHalf = parts.slice(0, half).join(' ');
+          let secondHalf = parts.slice(half).join(' ');
+          if (firstHalf === secondHalf) {
+            return firstHalf;
+          }
+        }
+        let filtered = [];
+        for (let i = 0; i < parts.length; i++) {
+          if (i === 0 || parts[i] !== parts[i - 1]) {
+            filtered.push(parts[i]);
+          }
+        }
+        text = filtered.join(' ');
+      }
+      if (text.length >= 8 && text.length % 2 === 0) {
+        let half = text.length / 2;
+        if (text.slice(0, half) === text.slice(half)) {
+          text = text.slice(0, half);
+        }
+      }
+      return text;
+    }
 
     function resetVoiceSilenceTimer() {
       if (_silenceTimer) {
@@ -5378,38 +5495,51 @@
       recognition.onstart = function() {
         isRecording = true;
         _userExplicitStop = false;
-        _sessionFinalTranscript = "";
         resetVoiceSilenceTimer();
+
+        // 🔔 เล่นเสียงสัญญาณ "ติ๊ง!" + สั่นเตือนว่าไมค์พร้อมรับเสียงแล้ว ให้เริ่มพูดได้ทันที
+        playStartCue();
 
         const target = currentVoiceTarget;
         const btn = document.getElementById(`voice-btn-${target}`);
         const icon = document.getElementById(`voice-icon-${target}`);
         const label = document.getElementById(`voice-label-${target}`);
         const status = document.getElementById(`voice-status-${target}`);
+        const targetEl = target === 'recommend' 
+          ? document.getElementById("cur-recommend") 
+          : document.getElementById("cur-desc");
 
-        if (btn) btn.classList.add("recording");
-        if (icon) icon.textContent = "⏹️";
-        if (label) label.textContent = "แตะเมื่อพูดจบ";
-        if (status) status.textContent = "🔴 กำลังฟังต่อเนื่อง... (เว้นจังหวะหายใจได้)";
+        if (btn) {
+          btn.classList.remove("waiting");
+          btn.classList.add("recording");
+        }
+        if (icon) icon.textContent = "🟢";
+        if (label) label.textContent = "พูดได้เลย! (แตะเมื่อจบ)";
+        if (status) {
+          status.innerHTML = "<span style='color: #34d399; font-weight: 400;'>🟢 ไมค์เปิดแล้ว พูดได้เลย! (กำลังบันทึกสด...)</span>";
+        }
+        if (targetEl) {
+          targetEl.classList.add("voice-active-input");
+        }
       };
 
       recognition.onresult = function(event) {
         resetVoiceSilenceTimer();
 
-        let interim = "";
-        let newFinal = "";
+        // สร้างข้อความตรงจาก event.results ทั้งหมด เพื่อป้องกันบั๊ก resultIndex=0 ใน Android Chrome ซ้ำซ้อน
+        let sessionFinal = "";
+        let sessionInterim = "";
 
-        for (let i = event.resultIndex; i < event.results.length; ++i) {
+        for (let i = 0; i < event.results.length; ++i) {
           const res = event.results[i];
           if (res.isFinal) {
-            newFinal += (newFinal ? " " : "") + res[0].transcript.trim();
+            const fText = res[0].transcript.trim();
+            if (fText) {
+              sessionFinal += (sessionFinal ? " " : "") + fText;
+            }
           } else {
-            interim += res[0].transcript;
+            sessionInterim += res[0].transcript;
           }
-        }
-
-        if (newFinal) {
-          _sessionFinalTranscript += (_sessionFinalTranscript ? " " : "") + newFinal;
         }
 
         const targetEl = currentVoiceTarget === 'recommend' 
@@ -5417,17 +5547,32 @@
           : document.getElementById("cur-desc");
 
         if (targetEl) {
-          const prefix = _voiceBaseText ? (_voiceBaseText + " ") : "";
-          const fullText = (prefix + _sessionFinalTranscript + (interim ? (" " + interim) : "")).trim();
+          let fullText = "";
+          if (_voiceBaseText) {
+            if (sessionFinal && (_voiceBaseText === sessionFinal || _voiceBaseText.endsWith(sessionFinal))) {
+              fullText = _voiceBaseText + (sessionInterim ? (" " + sessionInterim) : "");
+            } else if (sessionFinal && sessionFinal.startsWith(_voiceBaseText)) {
+              fullText = sessionFinal + (sessionInterim ? (" " + sessionInterim) : "");
+            } else {
+              fullText = _voiceBaseText + (sessionFinal ? (" " + sessionFinal) : "") + (sessionInterim ? (" " + sessionInterim) : "");
+            }
+          } else {
+            fullText = (sessionFinal ? sessionFinal : "") + (sessionInterim ? (" " + sessionInterim) : "");
+          }
+
+          // กรองคำซ้ำซ้อนออกทันที 100%
+          fullText = cleanDuplicatePhrases(fullText.trim());
           targetEl.value = fullText;
         }
 
         const status = document.getElementById(`voice-status-${currentVoiceTarget}`);
         if (status) {
-          if (interim) {
-            status.textContent = `🎙️ "${interim.slice(-20)}"`;
+          const livePhrase = sessionInterim || sessionFinal;
+          if (livePhrase) {
+            const cleanShort = livePhrase.slice(-25).replace(/[<>]/g, '');
+            status.innerHTML = `<span style="color: #38bdf8;">🎙️ "${cleanShort}"</span>`;
           } else {
-            status.textContent = "🔴 กำลังฟังต่อเนื่อง... (เว้นจังหวะได้)";
+            status.innerHTML = "<span style='color: #34d399;'>🟢 กำลังฟัง... (เว้นจังหวะหายใจได้)</span>";
           }
         }
       };
@@ -5445,6 +5590,13 @@
 
       recognition.onend = function() {
         if (isRecording && !_userExplicitStop) {
+          // เก็บข้อความล่าสุดไว้ก่อน แล้วรีสตาร์ทไมค์ต่ออัตโนมัติหากหยุดชั่วคราว
+          const targetEl = currentVoiceTarget === 'recommend' 
+            ? document.getElementById("cur-recommend") 
+            : document.getElementById("cur-desc");
+          if (targetEl) {
+            _voiceBaseText = targetEl.value.trim();
+          }
           try {
             recognition.start();
           } catch (e) {
@@ -5457,6 +5609,8 @@
     }
 
     function toggleVoiceRecording(target = 'desc') {
+      getAudioContext(); // ปลดล็อก AudioContext ทันทีที่ผู้ใช้แตะปุ่ม
+
       if (!recognition) {
         initSpeechRecognition();
       }
@@ -5482,10 +5636,29 @@
     function startVoiceForTarget(target) {
       currentVoiceTarget = target || 'desc';
       _userExplicitStop = false;
+      getAudioContext();
+
       const targetEl = currentVoiceTarget === 'recommend' 
         ? document.getElementById("cur-recommend") 
         : document.getElementById("cur-desc");
       _voiceBaseText = targetEl ? targetEl.value.trim() : "";
+
+      // ⏳ สเตจที่ 1: แจ้งเตือนสถานะกำลังเปิดไมค์ทันที เพื่อให้ผู้ใช้ชะลอรอสัญญาณ "ติ๊ง!"
+      const btn = document.getElementById(`voice-btn-${currentVoiceTarget}`);
+      const icon = document.getElementById(`voice-icon-${currentVoiceTarget}`);
+      const label = document.getElementById(`voice-label-${currentVoiceTarget}`);
+      const status = document.getElementById(`voice-status-${currentVoiceTarget}`);
+
+      if (btn) {
+        btn.classList.remove("recording");
+        btn.classList.add("waiting");
+      }
+      if (icon) icon.textContent = "⏳";
+      if (label) label.textContent = "กำลังเปิดไมค์...";
+      if (status) {
+        status.innerHTML = "<span style='color: #fbbf24;'>⏳ กำลังเชื่อมต่อไมโครโฟน... (รอเสียงสัญญาณ \"ติ๊ง\" แล้วเริ่มพูด)</span>";
+      }
+
       try {
         recognition.start();
       } catch (e) {
@@ -5496,6 +5669,7 @@
     }
 
     function stopVoiceRecording() {
+      const wasRecording = isRecording;
       isRecording = false;
       _userExplicitStop = true;
       if (_silenceTimer) {
@@ -5506,18 +5680,31 @@
         try { recognition.stop(); } catch (e) {}
       }
 
+      if (wasRecording) {
+        playStopCue();
+      }
+
       // Reset both buttons cleanly
       ['desc', 'recommend'].forEach(target => {
         const btn = document.getElementById(`voice-btn-${target}`);
         const icon = document.getElementById(`voice-icon-${target}`);
         const label = document.getElementById(`voice-label-${target}`);
         const status = document.getElementById(`voice-status-${target}`);
+        const targetEl = target === 'recommend' 
+          ? document.getElementById("cur-recommend") 
+          : document.getElementById("cur-desc");
 
-        if (btn) btn.classList.remove("recording");
+        if (btn) {
+          btn.classList.remove("recording");
+          btn.classList.remove("waiting");
+        }
         if (icon) icon.textContent = "🎙️";
         if (label) label.textContent = "แตะเพื่อพูด";
-        if (status && status.textContent.includes("กำลังฟัง")) {
-          status.textContent = "✓ บันทึกข้อความแล้ว (แตะพูดต่อได้)";
+        if (status && (status.textContent.includes("กำลัง") || status.textContent.includes("ไมค์เปิดแล้ว"))) {
+          status.innerHTML = "<span style='color: #38bdf8;'>✓ บันทึกข้อความแล้ว (แตะพูดต่อได้)</span>";
+        }
+        if (targetEl) {
+          targetEl.classList.remove("voice-active-input");
         }
       });
     }
@@ -5534,13 +5721,14 @@
 
       if (isRecording && currentVoiceTarget === target) {
         _voiceBaseText = "";
-        _sessionFinalTranscript = "";
         resetVoiceSilenceTimer();
+      } else {
+        _voiceBaseText = "";
       }
 
       const statusEl = document.getElementById(`voice-status-${target}`);
       if (statusEl) {
-        statusEl.textContent = "🗑️ ล้างข้อความแล้ว (พร้อมพูดใหม่หรือพิมพ์ได้ทันที)";
+        statusEl.innerHTML = "<span style='color: #94a3b8;'>🗑️ ล้างข้อความแล้ว (พร้อมพูดใหม่หรือพิมพ์ได้ทันที)</span>";
         setTimeout(() => {
           if (!isRecording && statusEl && statusEl.textContent.includes("ล้างข้อความแล้ว")) {
             statusEl.textContent = "";
