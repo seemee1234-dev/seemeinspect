@@ -3275,15 +3275,16 @@
         <div class="slide-gold-bar"></div>
 
         <div style="overflow-x: auto; -webkit-overflow-scrolling: touch; margin-top: 6px;">
-          <table class="slide-table" style="width: 100%; min-width: 680px; border-collapse: collapse; font-size: 11px;">
+          <table class="slide-table" style="width: 100%; min-width: 720px; border-collapse: collapse; font-size: 11px;">
             <thead>
               <tr style="background: #0b1f3a; color: #ffffff;">
-                <th style="padding: 6px 4px; border: 1px solid #cbd5e1; width: 36px; text-align: center;">No.</th>
-                <th style="padding: 7px 10px; border: 1px solid #cbd5e1; min-width: 110px; text-align: center; white-space: nowrap;">รหัส Defect</th>
+                <th style="padding: 6px 4px; border: 1px solid #cbd5e1; width: 34px; text-align: center;">No.</th>
+                <th style="padding: 7px 8px; border: 1px solid #cbd5e1; min-width: 105px; text-align: center; white-space: nowrap;">รหัส Defect</th>
                 <th style="padding: 6px 8px; border: 1px solid #cbd5e1; width: 105px; text-align: left;">🏠 พื้นที่ / ห้อง</th>
                 <th style="padding: 6px 8px; border: 1px solid #cbd5e1; width: 85px; text-align: left;">🏷️ หมวดงาน</th>
+                <th style="padding: 6px 4px; border: 1px solid #cbd5e1; width: 56px; text-align: center;">📸 ภาพระยะใกล้</th>
                 <th style="padding: 6px 8px; border: 1px solid #cbd5e1; text-align: left;">📝 รายการที่พบ</th>
-                <th style="padding: 6px 8px; border: 1px solid #cbd5e1; width: 120px; text-align: left;">📍 จุด/ตำแหน่ง</th>
+                <th style="padding: 6px 8px; border: 1px solid #cbd5e1; width: 110px; text-align: left;">📍 จุด/ตำแหน่ง</th>
                 <th style="padding: 6px 6px; border: 1px solid #cbd5e1; width: 65px; text-align: center;">สถานะ</th>
               </tr>
             </thead>
@@ -7103,7 +7104,7 @@
       const custTbody = document.getElementById("customer-summary-tbody");
       if (custTbody) {
         if (defectList.length === 0) {
-          custTbody.innerHTML = `<tr><td colspan="7" style="text-align: center; padding: 20px; color: #94a3b8;">ยังไม่มีข้อมูล Defect ในระบบ</td></tr>`;
+          custTbody.innerHTML = `<tr><td colspan="8" style="text-align: center; padding: 20px; color: #94a3b8;">ยังไม่มีข้อมูล Defect ในระบบ</td></tr>`;
         } else {
           // Sort for Customer Summary Table: always Room -> Category -> Item
           const sortedForSummary = [...defectList].sort((a, b) => {
@@ -7111,6 +7112,29 @@
             const roomB = getDefectRoom(b);
             if (roomA !== roomB) return roomA.localeCompare(roomB, 'th');
             return (a.category || "").localeCompare(b.category || "", 'th');
+          });
+
+          // Soft pastel color palette for distinct rooms
+          const roomPalette = [
+            { bg: '#f0f9ff', border: '#bae6fd', text: '#0369a1' }, // sky
+            { bg: '#fefce8', border: '#fef08a', text: '#854d0e' }, // amber/warm
+            { bg: '#f0fdf4', border: '#bbf7d0', text: '#15803d' }, // emerald
+            { bg: '#faf5ff', border: '#e9d5ff', text: '#7e22ce' }, // purple
+            { bg: '#fff1f2', border: '#fecdd3', text: '#be123c' }, // rose
+            { bg: '#ecfeff', border: '#a5f3fc', text: '#0e7490' }, // cyan
+            { bg: '#fef3c7', border: '#fde68a', text: '#b45309' }, // orange-warm
+            { bg: '#f1f5f9', border: '#cbd5e1', text: '#334155' }  // slate
+          ];
+
+          // Map distinct rooms to colors
+          const roomColorMap = {};
+          let colorIdx = 0;
+          sortedForSummary.forEach(d => {
+            const rName = getDefectRoom(d);
+            if (!roomColorMap[rName]) {
+              roomColorMap[rName] = roomPalette[colorIdx % roomPalette.length];
+              colorIdx++;
+            }
           });
 
           custTbody.innerHTML = sortedForSummary.map((d, i) => {
@@ -7132,16 +7156,38 @@
               badgeBorder = '#86efac';
             }
 
+            const rName = getDefectRoom(d);
+            const rTheme = roomColorMap[rName] || roomPalette[0];
+            const pClose = d.photoClose || d.photoBefore || d.photoWide || '';
+            const origIndex = defectList.indexOf(d);
+
+            // Thumbnail cell (tap to zoom only photo, or empty placeholder)
+            const photoCellHtml = pClose ? `
+              <td style="padding: 3px 2px; border: 1px solid #cbd5e1; text-align: center; vertical-align: middle;">
+                <div onclick="openSinglePhotoZoom('${pClose.replace(/'/g, "\\'")}', '${d.code}', '${rName}')" 
+                     title="คลิกเพื่อดูรูปขยายเดี่ยว" 
+                     style="display: inline-block; width: 44px; height: 34px; border-radius: 4px; overflow: hidden; border: 1px solid #94a3b8; cursor: pointer; background: #000; position: relative;">
+                  <img src="${pClose}" alt="${d.code}" style="width: 100%; height: 100%; object-fit: cover; display: block;" loading="lazy">
+                  <div style="position: absolute; bottom: 0; right: 0; background: rgba(0,0,0,0.75); color: #ffd700; font-size: 8px; line-height: 1; padding: 1px 2px; border-top-left-radius: 3px;">🔍</div>
+                </div>
+              </td>
+            ` : `
+              <td style="padding: 3px 2px; border: 1px solid #cbd5e1; text-align: center; color: #cbd5e1; font-size: 10px;">-</td>
+            `;
+
             return `
-            <tr style="border-bottom: 1px solid #e2e8f0; ${i % 2 === 1 ? 'background: #f8fafc;' : ''}">
-              <td style="padding: 6px 4px; border: 1px solid #cbd5e1; text-align: center; font-weight: 400; color: #0b1f3a;">${i + 1}</td>
-              <td style="padding: 7px 10px; border: 1px solid #cbd5e1; text-align: center; font-weight: 500; color: #b87a22; font-family: 'Kanit', sans-serif; font-size: 13.5px; letter-spacing: 0.3px; white-space: nowrap;">${d.code}</td>
-              <td style="padding: 6px 8px; border: 1px solid #cbd5e1; font-weight: 400; color: #0284c7;">${getDefectRoom(d)}</td>
-              <td style="padding: 6px 8px; border: 1px solid #cbd5e1; color: #0b1f3a;">${d.category}</td>
-              <td style="padding: 6px 8px; border: 1px solid #cbd5e1; color: #334155;">${d.desc}</td>
-              <td style="padding: 6px 8px; border: 1px solid #cbd5e1; color: #64748b;">${d.location || 'ในห้อง'}</td>
-              <td style="padding: 6px 6px; border: 1px solid #cbd5e1; text-align: center;">
-                <span style="display: inline-block; font-size: 10px; padding: 2px 6px; border-radius: 4px; background: ${badgeBg}; color: ${badgeColor}; border: 1px solid ${badgeBorder};">
+            <tr style="border-bottom: 1px solid #cbd5e1; background: ${rTheme.bg};">
+              <td style="padding: 5px 3px; border: 1px solid #cbd5e1; text-align: center; font-weight: 400; color: #0b1f3a;">${i + 1}</td>
+              <td style="padding: 6px 8px; border: 1px solid #cbd5e1; text-align: center; font-weight: 500; color: #b87a22; font-family: 'Kanit', sans-serif; font-size: 13px; letter-spacing: 0.3px; white-space: nowrap;">${d.code}</td>
+              <td style="padding: 5px 8px; border: 1px solid #cbd5e1; font-weight: 500; color: ${rTheme.text}; background: ${rTheme.bg}; border-left: 3.5px solid ${rTheme.text};">
+                ${rName}
+              </td>
+              <td style="padding: 5px 6px; border: 1px solid #cbd5e1; color: #0b1f3a;">${d.category}</td>
+              ${photoCellHtml}
+              <td style="padding: 5px 8px; border: 1px solid #cbd5e1; color: #334155; line-height: 1.35;">${d.desc}</td>
+              <td style="padding: 5px 6px; border: 1px solid #cbd5e1; color: #64748b;">${d.location || 'ในห้อง'}</td>
+              <td style="padding: 5px 4px; border: 1px solid #cbd5e1; text-align: center;">
+                <span style="display: inline-block; font-size: 9.5px; padding: 2px 5px; border-radius: 4px; background: ${badgeBg}; color: ${badgeColor}; border: 1px solid ${badgeBorder}; white-space: nowrap;">
                   ${statusText}
                 </span>
               </td>
@@ -7664,6 +7710,27 @@
           openPhotoLightbox(currentLightboxIndex);
         }
       }
+    }
+
+    /* Single Photo Zoom (รูปขยายอย่างเดียว โฟกัสเฉพาะรูป คมชัดเต็มจอ) */
+    function openSinglePhotoZoom(imgSrc, code, room) {
+      if (!imgSrc) return;
+      const modal = document.getElementById('single-photo-modal');
+      const imgEl = document.getElementById('sp-zoom-img');
+      const titleEl = document.getElementById('sp-zoom-title');
+      if (imgEl) imgEl.src = imgSrc;
+      if (titleEl) titleEl.textContent = `[${code || 'Defect'}] ${room || ''} · ภาพระยะใกล้`;
+      if (modal) {
+        modal.style.display = 'flex';
+        document.body.style.overflow = 'hidden';
+      }
+      if (navigator.vibrate) navigator.vibrate(25);
+    }
+
+    function closeSinglePhotoZoom() {
+      const modal = document.getElementById('single-photo-modal');
+      if (modal) modal.style.display = 'none';
+      document.body.style.overflow = '';
     }
 
     /**
@@ -8547,6 +8614,28 @@
         </div>
       </div>
 
+    </div>
+  </div>
+
+  <!-- Single Photo Full-Screen Zoom Modal (รูปขยายอย่างเดียว โฟกัสเฉพาะรูป คมชัดเต็มจอ) -->
+  <div id="single-photo-modal" class="no-print" onclick="if(event.target === this) closeSinglePhotoZoom()" style="display: none; position: fixed; inset: 0; background: rgba(0,0,0,0.96); z-index: 999999999; flex-direction: column; align-items: center; justify-content: space-between; padding: 14px 12px; box-sizing: border-box; user-select: none;">
+    <!-- Top Header Bar -->
+    <div style="width: 100%; max-width: 960px; display: flex; justify-content: space-between; align-items: center; padding: 8px 14px; background: rgba(11,31,58,0.95); border: 1.5px solid #00adf2; border-radius: 10px; box-sizing: border-box; z-index: 10;">
+      <div style="display: flex; align-items: center; gap: 8px;">
+        <span style="color: #ffd700; font-size: 17px;">🔍</span>
+        <span id="sp-zoom-title" style="font-family: 'Kanit', sans-serif; font-weight: 300; font-size: 15px; color: #ffffff;">ภาพระยะใกล้ (Close-up)</span>
+      </div>
+      <button type="button" onclick="closeSinglePhotoZoom()" style="background: rgba(255,255,255,0.15); border: 1px solid #64748b; color: #ffffff; width: 34px; height: 34px; border-radius: 50%; font-size: 18px; cursor: pointer; display: flex; align-items: center; justify-content: center;" title="ปิดหน้าต่าง">✕</button>
+    </div>
+
+    <!-- Centered Full Zoom Image View -->
+    <div style="flex: 1; width: 100%; max-width: 960px; display: flex; align-items: center; justify-content: center; overflow: hidden; padding: 12px 0; box-sizing: border-box;">
+      <img id="sp-zoom-img" src="" alt="ขยายภาพ" style="max-width: 100%; max-height: calc(88vh - 90px); width: auto; height: auto; object-fit: contain; border-radius: 10px; border: 1.5px solid #1e3a8a; box-shadow: 0 10px 40px rgba(0,0,0,0.9); background: #000000; display: block;">
+    </div>
+
+    <!-- Bottom Close Button Bar -->
+    <div style="width: 100%; max-width: 960px; display: flex; justify-content: center; z-index: 10;">
+      <button type="button" onclick="closeSinglePhotoZoom()" class="btn-main" style="width: 100%; max-width: 320px; padding: 13px 20px; font-size: 14.5px; border-radius: 8px; box-shadow: 0 4px 16px rgba(0,173,242,0.4);">✕ ปิดภาพขยาย</button>
     </div>
   </div>
 
