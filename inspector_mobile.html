@@ -710,6 +710,84 @@
       transition: all 0.2s;
     }
 
+    .voice-field-btn {
+      display: inline-flex;
+      align-items: center;
+      gap: 5px;
+      background: linear-gradient(135deg, #0b1f3a, #16365c);
+      color: #38bdf8;
+      border: 1px solid #00adf2;
+      border-radius: 6px;
+      padding: 5px 11px;
+      font-family: 'Kanit', sans-serif;
+      font-size: 12.5px;
+      font-weight: 300;
+      cursor: pointer;
+      transition: all 0.2s ease;
+      user-select: none;
+      -webkit-user-select: none;
+    }
+
+    .voice-field-btn:active {
+      transform: scale(0.96);
+    }
+
+    .voice-field-btn.recording {
+      background: linear-gradient(135deg, #ef4444, #b91c1c) !important;
+      border-color: #ef4444 !important;
+      color: #ffffff !important;
+      animation: pulse 0.8s infinite alternate !important;
+      box-shadow: 0 0 14px rgba(239, 68, 68, 0.7) !important;
+    }
+
+    .clear-field-btn {
+      display: inline-flex;
+      align-items: center;
+      gap: 4px;
+      background: #0f172a;
+      color: #94a3b8;
+      border: 1px solid #334155;
+      border-radius: 6px;
+      padding: 5px 9px;
+      font-family: 'Kanit', sans-serif;
+      font-size: 12px;
+      font-weight: 300;
+      cursor: pointer;
+      transition: all 0.2s ease;
+      user-select: none;
+      -webkit-user-select: none;
+    }
+
+    .clear-field-btn:active {
+      transform: scale(0.96);
+      background: rgba(239, 68, 68, 0.2);
+      border-color: #ef4444;
+      color: #fca5a5;
+    }
+
+    #cur-desc, #cur-recommend {
+      width: 100%;
+      min-height: 95px;
+      font-size: 14.5px;
+      font-family: 'Kanit', sans-serif;
+      font-weight: 300;
+      padding: 10px 12px;
+      line-height: 1.5;
+      border-radius: 8px;
+      background: #060b18;
+      color: #ffffff;
+      border: 1.5px solid #1e3a8a;
+      box-sizing: border-box;
+      resize: vertical;
+      transition: border-color 0.2s ease, box-shadow 0.2s ease;
+    }
+
+    #cur-desc:focus, #cur-recommend:focus {
+      border-color: #00adf2;
+      outline: none;
+      box-shadow: 0 0 12px rgba(0, 173, 242, 0.3);
+    }
+
     .voice-btn .voice-icon {
       font-size: 19px;
     }
@@ -2708,15 +2786,6 @@
           </div>
         </div>
 
-        <!-- Compact Voice Button (ย้ายขึ้นมาอยู่บนนี้ เหนือรูปที่ถ่ายไปแล้ว แตะพูดได้ทันทีหลังถ่ายรูป) -->
-        <div class="voice-control-box" style="margin-top: 12px; margin-bottom: 8px;">
-          <button type="button" class="voice-btn" id="voice-btn" onclick="toggleVoiceRecording()">
-            <span id="voice-icon">🎙️</span>
-            <span id="voice-label">แตะเพื่อพูดด้วยเสียง</span>
-          </button>
-          <span class="voice-status-text" id="voice-status">พูดไทยได้ทันที</span>
-        </div>
-
         <!-- Recent Captured Photos Carousel (เลื่อนดูรูปก่อนหน้านี้) -->
         <div class="recent-strip-box no-print" id="recent-strip-box" style="display: none; margin-top: 8px; margin-bottom: 12px;">
           <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 6px;">
@@ -2729,21 +2798,49 @@
         </div>
 
         <!-- รายละเอียดสิ่งที่พบ -->
-        <div class="form-group" style="margin-bottom: 10px;">
-          <label style="font-size: 13px; color: #38bdf8; font-weight: 400; margin-bottom: 4px;">📝 พบข้อสังเกต (แตะคำศัพท์ด่วน หรือพิมพ์แก้ไข):</label>
-          <div class="dynamic-pills-row" id="finding-pills">
+        <div class="form-group" style="margin-bottom: 14px;">
+          <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 6px; flex-wrap: wrap; gap: 6px;">
+            <label style="font-size: 13.5px; color: #38bdf8; font-weight: 400; margin: 0;">
+              📝 พบข้อสังเกต:
+            </label>
+            <div style="display: flex; align-items: center; gap: 6px;">
+              <button type="button" class="voice-field-btn" id="voice-btn-desc" onclick="toggleVoiceRecording('desc')" title="แตะเพื่อพูดข้อสังเกต">
+                <span id="voice-icon-desc">🎙️</span>
+                <span id="voice-label-desc">แตะเพื่อพูด</span>
+              </button>
+              <button type="button" class="clear-field-btn" onclick="clearAndRestartVoice('desc')" title="ล้างข้อความเพื่อพูดหรือพิมพ์ใหม่">
+                🗑️ ล้าง / พูดใหม่
+              </button>
+            </div>
+          </div>
+          <div class="dynamic-pills-row" id="finding-pills" style="margin-bottom: 6px;">
             <!-- Populated dynamically based on category -->
           </div>
-          <textarea id="cur-desc" rows="2" style="font-size: 14px; padding: 8px 10px; line-height: 1.4;" placeholder="เช่น ผิวผนังมีรอยคลื่นและเก็บสีไม่เรียบ, สีร่อนเป็นฟองอากาศ..."></textarea>
+          <textarea id="cur-desc" rows="4" placeholder="เช่น ผิวผนังมีรอยคลื่นและเก็บสีไม่เรียบ, สีร่อนเป็นฟองอากาศ..."></textarea>
+          <div id="voice-status-desc" style="font-size: 11.5px; color: #38bdf8; min-height: 18px; margin-top: 3px; font-weight: 300;"></div>
         </div>
 
         <!-- ข้อเสนอแนะในการแก้ไข -->
-        <div class="form-group" style="margin-bottom: 0;">
-          <label style="font-size: 13px; color: #38bdf8; font-weight: 400; margin-bottom: 4px; display: block;">💡 ข้อเสนอแนะในการแก้ไข (แตะเลือกด่วน):</label>
-          <div class="dynamic-pills-row" id="recommend-pills">
+        <div class="form-group" style="margin-bottom: 4px;">
+          <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 6px; flex-wrap: wrap; gap: 6px;">
+            <label style="font-size: 13.5px; color: #38bdf8; font-weight: 400; margin: 0;">
+              💡 ข้อเสนอแนะในการแก้ไข:
+            </label>
+            <div style="display: flex; align-items: center; gap: 6px;">
+              <button type="button" class="voice-field-btn" id="voice-btn-recommend" onclick="toggleVoiceRecording('recommend')" title="แตะเพื่อพูดข้อเสนอแนะ">
+                <span id="voice-icon-recommend">🎙️</span>
+                <span id="voice-label-recommend">แตะเพื่อพูด</span>
+              </button>
+              <button type="button" class="clear-field-btn" onclick="clearAndRestartVoice('recommend')" title="ล้างข้อความเพื่อพูดหรือพิมพ์ใหม่">
+                🗑️ ล้าง / พูดใหม่
+              </button>
+            </div>
+          </div>
+          <div class="dynamic-pills-row" id="recommend-pills" style="margin-bottom: 6px;">
             <!-- Populated dynamically based on category -->
           </div>
-          <textarea id="cur-recommend" rows="2" style="font-size: 14px; padding: 8px 10px; line-height: 1.4;" placeholder="เช่น ขัดปรับแต่งผิว ฉาบโป๊วและเก็บสีใหม่ให้เรียบร้อยตามมาตรฐาน..."></textarea>
+          <textarea id="cur-recommend" rows="4" placeholder="เช่น ขัดปรับแต่งผิว ฉาบโป๊วและเก็บสีใหม่ให้เรียบร้อยตามมาตรฐาน..."></textarea>
+          <div id="voice-status-recommend" style="font-size: 11.5px; color: #38bdf8; min-height: 18px; margin-top: 3px; font-weight: 300;"></div>
         </div>
       </div>
 
@@ -5244,11 +5341,13 @@
     }
 
     /**
-     * VOICE RECOGNITION (WEB SPEECH API) - UPGRADED CONTINUOUS & REAL-TIME
+     * VOICE RECOGNITION (WEB SPEECH API) - DUAL FIELD CONTINUOUS & REAL-TIME
      */
+    let currentVoiceTarget = 'desc'; // 'desc' or 'recommend'
     let _voiceBaseText = "";
     let _silenceTimer = null;
     let _userExplicitStop = false;
+    let _sessionFinalTranscript = "";
 
     function resetVoiceSilenceTimer() {
       if (_silenceTimer) {
@@ -5265,8 +5364,8 @@
     function initSpeechRecognition() {
       const SpeechRecognition = window.SpeechRecognition || window.webkitSpeechRecognition;
       if (!SpeechRecognition) {
-        const vs = document.getElementById("voice-status");
-        if (vs) vs.textContent = "แตะไมค์บนแป้นพิมพ์เพื่อพูด";
+        const vsDesc = document.getElementById("voice-status-desc");
+        if (vsDesc) vsDesc.textContent = "แตะไมค์บนแป้นพิมพ์เพื่อพูด";
         return;
       }
 
@@ -5276,23 +5375,22 @@
       recognition.interimResults = true;   // แสดงข้อความแบบเรียลไทม์ทันทีที่พูด
       recognition.maxAlternatives = 1;
 
-      let sessionFinalTranscript = "";
-
       recognition.onstart = function() {
         isRecording = true;
         _userExplicitStop = false;
-        sessionFinalTranscript = "";
+        _sessionFinalTranscript = "";
         resetVoiceSilenceTimer();
 
-        const btn = document.getElementById("voice-btn");
-        const icon = document.getElementById("voice-icon");
-        const label = document.getElementById("voice-label");
-        const status = document.getElementById("voice-status");
+        const target = currentVoiceTarget;
+        const btn = document.getElementById(`voice-btn-${target}`);
+        const icon = document.getElementById(`voice-icon-${target}`);
+        const label = document.getElementById(`voice-label-${target}`);
+        const status = document.getElementById(`voice-status-${target}`);
 
         if (btn) btn.classList.add("recording");
         if (icon) icon.textContent = "⏹️";
-        if (label) label.textContent = "กำลังฟัง... แตะเมื่อพูดจบ";
-        if (status) status.textContent = "🔴 พูดข้อความยาวได้เลย (เว้นวรรคได้)";
+        if (label) label.textContent = "แตะเมื่อพูดจบ";
+        if (status) status.textContent = "🔴 กำลังฟังต่อเนื่อง... (เว้นจังหวะหายใจได้)";
       };
 
       recognition.onresult = function(event) {
@@ -5311,20 +5409,23 @@
         }
 
         if (newFinal) {
-          sessionFinalTranscript += (sessionFinalTranscript ? " " : "") + newFinal;
+          _sessionFinalTranscript += (_sessionFinalTranscript ? " " : "") + newFinal;
         }
 
-        const descEl = document.getElementById("cur-desc");
-        if (descEl) {
+        const targetEl = currentVoiceTarget === 'recommend' 
+          ? document.getElementById("cur-recommend") 
+          : document.getElementById("cur-desc");
+
+        if (targetEl) {
           const prefix = _voiceBaseText ? (_voiceBaseText + " ") : "";
-          const fullText = (prefix + sessionFinalTranscript + (interim ? (" " + interim) : "")).trim();
-          descEl.value = fullText;
+          const fullText = (prefix + _sessionFinalTranscript + (interim ? (" " + interim) : "")).trim();
+          targetEl.value = fullText;
         }
 
-        const status = document.getElementById("voice-status");
+        const status = document.getElementById(`voice-status-${currentVoiceTarget}`);
         if (status) {
           if (interim) {
-            status.textContent = `🎙️ "${interim.slice(-18)}"`;
+            status.textContent = `🎙️ "${interim.slice(-20)}"`;
           } else {
             status.textContent = "🔴 กำลังฟังต่อเนื่อง... (เว้นจังหวะได้)";
           }
@@ -5334,7 +5435,6 @@
       recognition.onerror = function(event) {
         console.warn("Speech recognition error:", event.error);
         if (event.error === 'no-speech') {
-          // อย่าตัดทันที ให้ปล่อยให้ silence timer ทำงานต่อ
           return;
         }
         if (event.error === 'not-allowed') {
@@ -5345,7 +5445,6 @@
 
       recognition.onend = function() {
         if (isRecording && !_userExplicitStop) {
-          // ถ้าเบราว์เซอร์มือถือตัดสัญญาณระหว่างพักหายใจ ให้เชื่อมต่อใหม่ทันที
           try {
             recognition.start();
           } catch (e) {
@@ -5357,7 +5456,7 @@
       };
     }
 
-    function toggleVoiceRecording() {
+    function toggleVoiceRecording(target = 'desc') {
       if (!recognition) {
         initSpeechRecognition();
       }
@@ -5367,19 +5466,32 @@
       }
 
       if (isRecording) {
+        const wasTarget = currentVoiceTarget;
         _userExplicitStop = true;
         stopVoiceRecording();
-      } else {
-        _userExplicitStop = false;
-        const descEl = document.getElementById("cur-desc");
-        _voiceBaseText = descEl ? descEl.value.trim() : "";
-        try {
-          recognition.start();
-        } catch (e) {
-          console.warn("Recognition start failed, re-initializing:", e);
-          initSpeechRecognition();
-          try { recognition.start(); } catch (err) {}
+        if (wasTarget !== target) {
+          setTimeout(() => {
+            startVoiceForTarget(target);
+          }, 150);
         }
+      } else {
+        startVoiceForTarget(target);
+      }
+    }
+
+    function startVoiceForTarget(target) {
+      currentVoiceTarget = target || 'desc';
+      _userExplicitStop = false;
+      const targetEl = currentVoiceTarget === 'recommend' 
+        ? document.getElementById("cur-recommend") 
+        : document.getElementById("cur-desc");
+      _voiceBaseText = targetEl ? targetEl.value.trim() : "";
+      try {
+        recognition.start();
+      } catch (e) {
+        console.warn("Recognition start failed, re-initializing:", e);
+        initSpeechRecognition();
+        try { recognition.start(); } catch (err) {}
       }
     }
 
@@ -5394,15 +5506,47 @@
         try { recognition.stop(); } catch (e) {}
       }
 
-      const btn = document.getElementById("voice-btn");
-      const icon = document.getElementById("voice-icon");
-      const label = document.getElementById("voice-label");
-      const status = document.getElementById("voice-status");
+      // Reset both buttons cleanly
+      ['desc', 'recommend'].forEach(target => {
+        const btn = document.getElementById(`voice-btn-${target}`);
+        const icon = document.getElementById(`voice-icon-${target}`);
+        const label = document.getElementById(`voice-label-${target}`);
+        const status = document.getElementById(`voice-status-${target}`);
 
-      if (btn) btn.classList.remove("recording");
-      if (icon) icon.textContent = "🎙️";
-      if (label) label.textContent = "แตะเพื่อพูดด้วยเสียง";
-      if (status) status.textContent = "✓ บันทึกข้อความแล้ว (แตะพูดต่อได้)";
+        if (btn) btn.classList.remove("recording");
+        if (icon) icon.textContent = "🎙️";
+        if (label) label.textContent = "แตะเพื่อพูด";
+        if (status && status.textContent.includes("กำลังฟัง")) {
+          status.textContent = "✓ บันทึกข้อความแล้ว (แตะพูดต่อได้)";
+        }
+      });
+    }
+
+    function clearAndRestartVoice(target = 'desc') {
+      const targetEl = target === 'recommend' 
+        ? document.getElementById("cur-recommend") 
+        : document.getElementById("cur-desc");
+      
+      if (targetEl) {
+        targetEl.value = "";
+        targetEl.focus();
+      }
+
+      if (isRecording && currentVoiceTarget === target) {
+        _voiceBaseText = "";
+        _sessionFinalTranscript = "";
+        resetVoiceSilenceTimer();
+      }
+
+      const statusEl = document.getElementById(`voice-status-${target}`);
+      if (statusEl) {
+        statusEl.textContent = "🗑️ ล้างข้อความแล้ว (พร้อมพูดใหม่หรือพิมพ์ได้ทันที)";
+        setTimeout(() => {
+          if (!isRecording && statusEl && statusEl.textContent.includes("ล้างข้อความแล้ว")) {
+            statusEl.textContent = "";
+          }
+        }, 2500);
+      }
     }
 
     function showSavedSuccessToast(code) {
