@@ -585,22 +585,9 @@
       transform: scale(0.96);
     }
 
-    /* Sticky Room Header Bar (ห้องที่กำลังตรวจลอยติดหน้าจอ - ปรับระยะลงมาไม่ให้บังทับข้อความหัวเว็บ) */
+    /* Sticky Room Header Bar - ซ่อนตามที่ผู้ใช้สั่ง เพื่อไม่ให้รกและสับสน */
     .sticky-room-bar {
-      position: sticky;
-      top: 68px;
-      z-index: 80;
-      background: rgba(7, 13, 30, 0.98);
-      backdrop-filter: blur(8px);
-      -webkit-backdrop-filter: blur(8px);
-      border-bottom: 1.5px solid #00adf2;
-      padding: 8px 12px;
-      margin: 6px 0 12px 0;
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
-      gap: 8px;
-      box-shadow: 0 4px 14px rgba(0, 0, 0, 0.5);
+      display: none !important;
     }
 
     .sticky-room-info {
@@ -2614,23 +2601,6 @@
          ======================================================== -->
     <div id="tab-capture" class="tab-content active">
       
-      <!-- STICKY TOP ROOM BAR (ห้องที่กำลังตรวจลอยติดหน้าจอ) -->
-      <div id="sticky-room-bar" class="sticky-room-bar no-print" style="display: flex; justify-content: space-between; align-items: center; gap: 8px;">
-        <div class="sticky-room-info" style="display: flex; align-items: center; gap: 6px; overflow: hidden; white-space: nowrap; flex: 1;">
-          <span class="sticky-room-label" style="font-size: 12px; color: #94a3b8; flex-shrink: 0;">ห้อง:</span>
-          <strong id="sticky-room-name" class="sticky-room-title" style="font-size: 13px; color: #ffd700; font-weight: 400; overflow: hidden; text-overflow: ellipsis; white-space: nowrap;">🛋️ ห้องรับแขก</strong>
-          <span id="sticky-room-count" class="sticky-room-badge" style="font-size: 11px; padding: 2px 7px; background: rgba(0, 173, 242, 0.15); border: 1px solid #00adf2; color: #38bdf8; border-radius: 10px; flex-shrink: 0;">0 จุด</span>
-        </div>
-        <div style="display: flex; gap: 6px; align-items: center; flex-shrink: 0;">
-          <button type="button" class="sticky-room-btn" style="background: linear-gradient(135deg, #10b981, #059669); border-color: #059669; color: #ffffff; font-size: 11px; padding: 5px 10px; border-radius: 16px; white-space: nowrap;" onclick="openRoomSummaryModal()">
-            ✓ จบห้องนี้
-          </button>
-          <button type="button" class="sticky-room-btn" style="background: #091024; border-color: #1e2e54; color: #94a3b8; font-size: 11px; padding: 5px 10px; border-radius: 16px; white-space: nowrap;" onclick="scrollToRoomPicker()" title="เลือกเปลี่ยนห้อง">
-            สลับห้อง
-          </button>
-        </div>
-      </div>
-
       <!-- กลุ่ม ①: ห้องและหมวดงาน (Room & Category) -->
       <div class="card" id="room-selector-card" style="border: 1.5px solid #1e3a8a; background: #070d1e;">
         <div class="group-header">
@@ -2638,9 +2608,8 @@
           <span class="group-sub">Room & Category</span>
         </div>
         
-        <div class="active-room-banner" id="active-room-display" style="display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 6px;">
-          <div>กำลังตรวจ: <strong style="color: #ffd700;">🛋️ ห้องรับแขก</strong> <span style="font-size: 11px; color: #38bdf8; margin-left: 6px;">(ห้องนี้บันทึกแล้ว 0 จุด)</span></div>
-          <button type="button" class="btn-secondary" style="font-size: 11px; padding: 3px 10px; color: #10b981; border-color: #059669; background: #07191d;" onclick="openRoomSummaryModal()">✓ สรุป & จบห้องนี้</button>
+        <div class="active-room-banner" id="active-room-display" style="display: flex; align-items: center; margin-bottom: 10px; padding: 6px 12px; background: rgba(0, 173, 242, 0.08); border-radius: 6px; border: 1px solid rgba(0, 173, 242, 0.2);">
+          <div>กำลังตรวจ: <strong style="color: #ffd700; font-size: 14.5px;">🛋️ ห้องรับแขก</strong></div>
         </div>
 
         <div class="room-grid" id="room-grid">
@@ -3547,10 +3516,9 @@
       container.innerHTML = allCats.map(c => {
         const isSelected = c === currentSelectedCategory;
         const safeCat = c.replace(/'/g, "\\'");
-        const countInCat = getCategoryDefectCount(c);
         return `
         <button type="button" class="cat-btn ${isSelected ? 'selected' : ''}" data-cat="${c}" onclick="selectCat('${safeCat}')">
-          <span>${c}</span>${countInCat > 0 ? `<span class="cat-count-badge">(${countInCat})</span>` : ''}
+          <span>${c}</span>
         </button>
         `;
       }).join("") + `
@@ -3674,15 +3642,9 @@
 
     function updateCurrentRoomDisplay() {
       const el = document.getElementById("active-room-display");
-      const cleanName = currentSelectedRoom.replace(/^[\p{Emoji}\p{Extended_Pictographic}\uFE0F\s]+/u, '').trim() || currentSelectedRoom;
-      const countInRoom = defectList.filter(d => getDefectRoom(d) === cleanName).length;
       if (el) {
-        el.innerHTML = `กำลังตรวจ: <strong style="color: #ffd700;">${currentSelectedRoom}</strong> <span style="font-size: 11px; color: #38bdf8; margin-left: 6px;">(ห้องนี้บันทึกแล้ว ${countInRoom} จุด)</span>`;
+        el.innerHTML = `<div>กำลังตรวจ: <strong style="color: #ffd700; font-size: 14.5px;">${currentSelectedRoom}</strong></div>`;
       }
-      const stickyName = document.getElementById("sticky-room-name");
-      if (stickyName) stickyName.textContent = currentSelectedRoom;
-      const stickyCount = document.getElementById("sticky-room-count");
-      if (stickyCount) stickyCount.textContent = `พบแล้ว ${countInRoom} จุด`;
     }
 
     function scrollToRoomPicker() {
