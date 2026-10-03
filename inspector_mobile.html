@@ -2799,17 +2799,6 @@
           </div>
         </div>
 
-        <!-- Recent Captured Photos Carousel (เลื่อนดูรูปก่อนหน้านี้) -->
-        <div class="recent-strip-box no-print" id="recent-strip-box" style="display: none; margin-top: 8px; margin-bottom: 12px;">
-          <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 6px;">
-            <span style="font-size: 11px; color: #ffd700; font-weight: 400;">🎞️ รูปที่ถ่ายไปแล้ว (<span id="strip-count">0</span> จุด) - แตะดูหรือลบได้:</span>
-            <span style="font-size: 10px; color: #64748b;">👈 ปัดซ้าย-ขวา 👉</span>
-          </div>
-          <div class="recent-scroll-row" id="recent-scroll-row">
-            <!-- Populated by JS -->
-          </div>
-        </div>
-
         <!-- รายละเอียดสิ่งที่พบ -->
         <div class="form-group" style="margin-bottom: 14px;">
           <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 6px; flex-wrap: wrap; gap: 6px;">
@@ -6965,60 +6954,14 @@
       updateSummaryUI();
     }
 
-    // Update Recent Photos Strip in Tab 1
+    // Update Quick Jump Bar in Tab 2
     function updateRecentStrip() {
-      const stripBox = document.getElementById('recent-strip-box');
-      const stripRow = document.getElementById('recent-scroll-row');
       const jumpBar = document.getElementById('quick-jump-bar');
-
-      if (!stripBox || !stripRow) return;
-
-      if (defectList.length === 0) {
-        stripBox.style.display = 'none';
-        if (jumpBar) jumpBar.innerHTML = '';
-        return;
-      }
-
-      stripBox.style.display = 'block';
-      const stripCountEl = document.getElementById('strip-count');
-      if (stripCountEl) stripCountEl.textContent = defectList.length;
-
-      // Populate Thumbnails in Tab 1 (Render latest 12 items to keep mobile DOM ultra-fast)
-      const maxRecent = 12;
-      const recentItems = defectList.slice(-maxRecent).reverse();
-      const olderCount = defectList.length - recentItems.length;
-
-      let stripHtml = recentItems.map((d) => {
-        const origIdx = defectList.findIndex(item => item.id === d.id);
-        const thumbSrc = d.photoClose || d.photoBefore || d.photoWide || '';
-        const roomName = getDefectRoom(d);
-        const isDiscuss = d.status === 'รอตรวจสอบร่วมกัน';
-        const statusDot = isDiscuss ? '🔵' : '🟡';
-
-        return `
-          <div class="recent-thumb-item" onclick="openPhotoLightbox(${origIdx})" title="${d.code}: ${d.category} (${roomName})">
-            <div class="thumb-top-badge">${d.code}</div>
-            <div style="position: absolute; top: 5px; right: 5px; font-size: 11px; z-index: 2;">${statusDot}</div>
-            <img src="${thumbSrc}" alt="${d.code}" loading="lazy">
-            <div class="thumb-cat-bar">🏷️ ${d.category}</div>
-            <div class="thumb-loc-bar">${roomName}${d.location ? ' · ' + d.location : ''}</div>
-          </div>
-        `;
-      }).join("");
-
-      if (olderCount > 0) {
-        stripHtml += `
-          <div class="recent-thumb-item" onclick="scrollToTab1List()" style="display: flex; flex-direction: column; align-items: center; justify-content: center; background: rgba(11,31,58,0.85); border: 1.5px dashed #00adf2; min-width: 90px; cursor: pointer; border-radius: 8px;">
-            <div style="font-size: 22px; margin-bottom: 4px;">📂</div>
-            <div style="font-size: 11px; color: #00adf2; font-weight: 400; text-align: center;">+${olderCount} จุดก่อนหน้า</div>
-            <div style="font-size: 9px; color: #94a3b8; text-align: center;">(แตะดูทั้งหมด)</div>
-          </div>
-        `;
-      }
-      stripRow.innerHTML = stripHtml;
-
-      // Populate Jump Bar in Tab 2
       if (jumpBar) {
+        if (defectList.length === 0) {
+          jumpBar.innerHTML = '';
+          return;
+        }
         let jumpHtml = `<button type="button" class="jump-pill" onclick="scrollToSlide('slide-page-1')">📊 หน้าแรก (สรุป)</button>`;
         jumpHtml += `<button type="button" class="jump-pill" onclick="scrollToSlide('slide-customer-summary')">📑 ตารางสรุป</button>`;
         defectList.forEach((d, index) => {
