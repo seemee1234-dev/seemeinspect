@@ -677,33 +677,45 @@
       font-weight: 400;
     }
 
-    /* Zone Pills (Larger, Chunky, Easy to Tap) */
+    /* Zone Pills (Single Column Layout - ปรับเป็นแถวเดียว กดง่าย เต็มความกว้าง) */
     .zone-pills {
       display: flex;
-      flex-wrap: wrap;
-      gap: 8px;
+      flex-direction: column;
+      gap: 7px;
       margin-top: 8px;
       margin-bottom: 12px;
     }
 
     .zone-pill {
-      background: #172547;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      width: 100%;
+      box-sizing: border-box;
+      background: #132240;
       color: #f1f5f9;
-      border: 1.5px solid #2a3e6d;
+      border: 1.5px solid #243b6b;
       font-size: 15px;
       font-weight: 300;
-      padding: 9px 18px;
-      border-radius: 20px;
+      padding: 11px 16px;
+      border-radius: 10px;
       cursor: pointer;
       font-family: 'Kanit', sans-serif;
       transition: all 0.15s ease;
+      user-select: none;
+      -webkit-tap-highlight-color: transparent;
+    }
+
+    .zone-pill:hover {
+      border-color: #00adf2;
+      background: #172a52;
     }
 
     .zone-pill:active {
       background: #00adf2;
       color: #ffffff;
       border-color: #00adf2;
-      transform: scale(0.96);
+      transform: scale(0.985);
     }
 
     /* Sticky Room Header Bar - ซ่อนตามที่ผู้ใช้สั่ง เพื่อไม่ให้รกและสับสน */
@@ -2865,16 +2877,16 @@
           <span class="group-sub">Sub-location</span>
         </div>
         <div class="zone-pills">
-          <span class="zone-pill" onclick="addZoneTag('ผนังทิศเหนือ')">ผนังทิศเหนือ</span>
-          <span class="zone-pill" onclick="addZoneTag('ผนังทิศใต้')">ผนังทิศใต้</span>
-          <span class="zone-pill" onclick="addZoneTag('ผนังฝั่ง TV')">ผนังฝั่ง TV</span>
-          <span class="zone-pill" onclick="addZoneTag('หน้าประตู')">หน้าประตู</span>
-          <span class="zone-pill" onclick="addZoneTag('เหนือประตู')">เหนือประตู</span>
-          <span class="zone-pill" onclick="addZoneTag('ใต้หน้าต่าง')">ใต้หน้าต่าง</span>
-          <span class="zone-pill" onclick="addZoneTag('บัวพื้น')">บัวพื้น</span>
-          <span class="zone-pill" onclick="addZoneTag('ใต้แอร์')">ใต้แอร์</span>
-          <span class="zone-pill" onclick="addZoneTag('หน้าโถสุขภัณฑ์')">หน้าโถสุขภัณฑ์</span>
-          <span class="zone-pill" onclick="addZoneTag('ใต้ซิงก์')">ใต้ซิงก์</span>
+          <div class="zone-pill" onclick="addZoneTag('ผนังทิศเหนือ')"><span>ผนังทิศเหนือ</span><span style="color: #64748b; font-size: 13px;">+ เลือก</span></div>
+          <div class="zone-pill" onclick="addZoneTag('ผนังทิศใต้')"><span>ผนังทิศใต้</span><span style="color: #64748b; font-size: 13px;">+ เลือก</span></div>
+          <div class="zone-pill" onclick="addZoneTag('ผนังฝั่ง TV')"><span>ผนังฝั่ง TV</span><span style="color: #64748b; font-size: 13px;">+ เลือก</span></div>
+          <div class="zone-pill" onclick="addZoneTag('หน้าประตู')"><span>หน้าประตู</span><span style="color: #64748b; font-size: 13px;">+ เลือก</span></div>
+          <div class="zone-pill" onclick="addZoneTag('เหนือประตู')"><span>เหนือประตู</span><span style="color: #64748b; font-size: 13px;">+ เลือก</span></div>
+          <div class="zone-pill" onclick="addZoneTag('ใต้หน้าต่าง')"><span>ใต้หน้าต่าง</span><span style="color: #64748b; font-size: 13px;">+ เลือก</span></div>
+          <div class="zone-pill" onclick="addZoneTag('บัวพื้น')"><span>บัวพื้น</span><span style="color: #64748b; font-size: 13px;">+ เลือก</span></div>
+          <div class="zone-pill" onclick="addZoneTag('ใต้แอร์')"><span>ใต้แอร์</span><span style="color: #64748b; font-size: 13px;">+ เลือก</span></div>
+          <div class="zone-pill" onclick="addZoneTag('หน้าโถสุขภัณฑ์')"><span>หน้าโถสุขภัณฑ์</span><span style="color: #64748b; font-size: 13px;">+ เลือก</span></div>
+          <div class="zone-pill" onclick="addZoneTag('ใต้ซิงก์')"><span>ใต้ซิงก์</span><span style="color: #64748b; font-size: 13px;">+ เลือก</span></div>
         </div>
         <input type="text" id="cur-location" placeholder="เช่น ผนังทิศเหนือ ใกล้สวิตช์ไฟ">
       </div>
@@ -7158,16 +7170,16 @@
 
             const rName = getDefectRoom(d);
             const rTheme = roomColorMap[rName] || roomPalette[0];
-            const pClose = d.photoClose || d.photoBefore || d.photoWide || '';
+            const pClose = d.photoClose || d.photoBefore || d.photoWide || d.photo || (d.photos && d.photos[0]) || '';
             const origIndex = defectList.indexOf(d);
 
             // Thumbnail cell (tap to zoom only photo, or empty placeholder)
             const photoCellHtml = pClose ? `
               <td style="padding: 2px 3px; border: 1px solid #cbd5e1; text-align: center; vertical-align: middle;">
-                <div onclick="openSinglePhotoZoom('${pClose.replace(/'/g, "\\'")}', '${d.code}', '${rName}')" 
+                <div onclick="openSinglePhotoZoom(${origIndex})" 
                      title="คลิกเพื่อดูรูปขยายเดี่ยว" 
                      style="display: block; width: 100%; max-width: 88px; height: 58px; margin: 0 auto; border-radius: 4px; overflow: hidden; border: 1.5px solid #64748b; cursor: pointer; background: #000; position: relative; box-shadow: 0 1px 4px rgba(0,0,0,0.18);">
-                  <img src="${pClose}" alt="${d.code}" style="width: 100%; height: 100%; object-fit: cover; display: block;" loading="lazy">
+                  <img src="${pClose}" alt="${d.code}" style="width: 100%; height: 100%; object-fit: cover; display: block;" loading="eager" onerror="this.onerror=null; this.style.display='none'; if(this.parentElement) this.parentElement.innerHTML='<span style=\\'color:#94a3b8;font-size:10px;line-height:58px;\\'>ไม่มีรูป</span>';">
                   <div style="position: absolute; bottom: 1px; right: 1px; background: rgba(0,0,0,0.8); color: #ffd700; font-size: 8px; line-height: 1; padding: 1.5px 3px; border-radius: 2px;">🔍</div>
                 </div>
               </td>
@@ -7713,13 +7725,28 @@
     }
 
     /* Single Photo Zoom (รูปขยายอย่างเดียว โฟกัสเฉพาะรูป คมชัดเต็มจอ) */
-    function openSinglePhotoZoom(imgSrc, code, room) {
+    function openSinglePhotoZoom(target, code, room) {
+      let imgSrc = "";
+      let itemCode = code || "";
+      let itemRoom = room || "";
+
+      if (typeof target === "number") {
+        const d = defectList[target];
+        if (d) {
+          imgSrc = d.photoClose || d.photoBefore || d.photoWide || (d.photos && d.photos[0]) || "";
+          itemCode = d.code;
+          itemRoom = getDefectRoom(d);
+        }
+      } else if (typeof target === "string") {
+        imgSrc = target;
+      }
+
       if (!imgSrc) return;
       const modal = document.getElementById('single-photo-modal');
       const imgEl = document.getElementById('sp-zoom-img');
       const titleEl = document.getElementById('sp-zoom-title');
       if (imgEl) imgEl.src = imgSrc;
-      if (titleEl) titleEl.textContent = `[${code || 'Defect'}] ${room || ''} · ภาพระยะใกล้`;
+      if (titleEl) titleEl.textContent = `[${itemCode || 'Defect'}] ${itemRoom || ''} · ภาพระยะใกล้`;
       if (modal) {
         modal.style.display = 'flex';
         document.body.style.overflow = 'hidden';
