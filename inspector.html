@@ -5244,44 +5244,116 @@
     }
 
     /**
-     * VOICE RECOGNITION (WEB SPEECH API)
+     * VOICE RECOGNITION (WEB SPEECH API) - UPGRADED CONTINUOUS & REAL-TIME
      */
+    let _voiceBaseText = "";
+    let _silenceTimer = null;
+    let _userExplicitStop = false;
+
+    function resetVoiceSilenceTimer() {
+      if (_silenceTimer) {
+        clearTimeout(_silenceTimer);
+      }
+      // หน่วงเวลาให้คิดคำหรือเว้นวรรคหายใจได้สบายๆ 5 วินาทีเต็ม ก่อนจะปิดไมค์อัตโนมัติ
+      _silenceTimer = setTimeout(() => {
+        if (isRecording) {
+          stopVoiceRecording();
+        }
+      }, 5000);
+    }
+
     function initSpeechRecognition() {
       const SpeechRecognition = window.SpeechRecognition || window.webkitSpeechRecognition;
       if (!SpeechRecognition) {
-        document.getElementById("voice-status").textContent = "แตะไมค์บนคีย์บอร์ดมือถือเพื่อพูด";
+        const vs = document.getElementById("voice-status");
+        if (vs) vs.textContent = "แตะไมค์บนแป้นพิมพ์เพื่อพูด";
         return;
       }
 
       recognition = new SpeechRecognition();
       recognition.lang = 'th-TH';
-      recognition.continuous = false;
-      recognition.interimResults = false;
+      recognition.continuous = true;       // เปิดรับฟังต่อเนื่อง ไม่ตัดบทสนทนา
+      recognition.interimResults = true;   // แสดงข้อความแบบเรียลไทม์ทันทีที่พูด
+      recognition.maxAlternatives = 1;
+
+      let sessionFinalTranscript = "";
 
       recognition.onstart = function() {
         isRecording = true;
-        document.getElementById("voice-btn").classList.add("recording");
-        document.getElementById("voice-label").textContent = "กำลังฟังเสียงพูด...";
-        document.getElementById("voice-status").textContent = "กำลังบันทึกเสียง...";
+        _userExplicitStop = false;
+        sessionFinalTranscript = "";
+        resetVoiceSilenceTimer();
+
+        const btn = document.getElementById("voice-btn");
+        const icon = document.getElementById("voice-icon");
+        const label = document.getElementById("voice-label");
+        const status = document.getElementById("voice-status");
+
+        if (btn) btn.classList.add("recording");
+        if (icon) icon.textContent = "⏹️";
+        if (label) label.textContent = "กำลังฟัง... แตะเมื่อพูดจบ";
+        if (status) status.textContent = "🔴 พูดข้อความยาวได้เลย (เว้นวรรคได้)";
       };
 
       recognition.onresult = function(event) {
-        const transcript = event.results[0][0].transcript;
+        resetVoiceSilenceTimer();
+
+        let interim = "";
+        let newFinal = "";
+
+        for (let i = event.resultIndex; i < event.results.length; ++i) {
+          const res = event.results[i];
+          if (res.isFinal) {
+            newFinal += (newFinal ? " " : "") + res[0].transcript.trim();
+          } else {
+            interim += res[0].transcript;
+          }
+        }
+
+        if (newFinal) {
+          sessionFinalTranscript += (sessionFinalTranscript ? " " : "") + newFinal;
+        }
+
         const descEl = document.getElementById("cur-desc");
-        if (descEl.value) {
-          descEl.value += " " + transcript;
-        } else {
-          descEl.value = transcript;
+        if (descEl) {
+          const prefix = _voiceBaseText ? (_voiceBaseText + " ") : "";
+          const fullText = (prefix + sessionFinalTranscript + (interim ? (" " + interim) : "")).trim();
+          descEl.value = fullText;
+        }
+
+        const status = document.getElementById("voice-status");
+        if (status) {
+          if (interim) {
+            status.textContent = `🎙️ "${interim.slice(-18)}"`;
+          } else {
+            status.textContent = "🔴 กำลังฟังต่อเนื่อง... (เว้นจังหวะได้)";
+          }
         }
       };
 
       recognition.onerror = function(event) {
-        console.error("Speech error", event.error);
-        stopVoiceRecording();
+        console.warn("Speech recognition error:", event.error);
+        if (event.error === 'no-speech') {
+          // อย่าตัดทันที ให้ปล่อยให้ silence timer ทำงานต่อ
+          return;
+        }
+        if (event.error === 'not-allowed') {
+          alert("⚠️ กรุณากดอนุญาตให้ใช้ไมโครโฟนบนเบราว์เซอร์ เพื่อใช้งานระบบสั่งการด้วยเสียงครับ");
+          stopVoiceRecording();
+        }
       };
 
       recognition.onend = function() {
-        stopVoiceRecording();
+        if (isRecording && !_userExplicitStop) {
+          // ถ้าเบราว์เซอร์มือถือตัดสัญญาณระหว่างพักหายใจ ให้เชื่อมต่อใหม่ทันที
+          try {
+            recognition.start();
+          } catch (e) {
+            stopVoiceRecording();
+          }
+        } else {
+          stopVoiceRecording();
+        }
       };
     }
 
@@ -5295,21 +5367,42 @@
       }
 
       if (isRecording) {
-        recognition.stop();
+        _userExplicitStop = true;
+        stopVoiceRecording();
       } else {
+        _userExplicitStop = false;
+        const descEl = document.getElementById("cur-desc");
+        _voiceBaseText = descEl ? descEl.value.trim() : "";
         try {
           recognition.start();
         } catch (e) {
-          console.error(e);
+          console.warn("Recognition start failed, re-initializing:", e);
+          initSpeechRecognition();
+          try { recognition.start(); } catch (err) {}
         }
       }
     }
 
     function stopVoiceRecording() {
       isRecording = false;
-      document.getElementById("voice-btn").classList.remove("recording");
-      document.getElementById("voice-label").textContent = "กดเพื่อพูดด้วยเสียง";
-      document.getElementById("voice-status").textContent = "พูดเสร็จแล้ว กดบันทึกได้เลย";
+      _userExplicitStop = true;
+      if (_silenceTimer) {
+        clearTimeout(_silenceTimer);
+        _silenceTimer = null;
+      }
+      if (recognition) {
+        try { recognition.stop(); } catch (e) {}
+      }
+
+      const btn = document.getElementById("voice-btn");
+      const icon = document.getElementById("voice-icon");
+      const label = document.getElementById("voice-label");
+      const status = document.getElementById("voice-status");
+
+      if (btn) btn.classList.remove("recording");
+      if (icon) icon.textContent = "🎙️";
+      if (label) label.textContent = "แตะเพื่อพูดด้วยเสียง";
+      if (status) status.textContent = "✓ บันทึกข้อความแล้ว (แตะพูดต่อได้)";
     }
 
     function showSavedSuccessToast(code) {
