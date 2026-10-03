@@ -5466,7 +5466,9 @@
      * VOICE RECOGNITION (WEB SPEECH API) - 3-SECOND STUDIO COUNTDOWN & ZERO DUPLICATION
      */
     let currentVoiceTarget = 'desc'; // 'desc' or 'recommend'
-    let _voiceBaseText = "";
+    let _initialBaseText = "";
+    let _committedSentences = [];
+    let _lastSessionFinal = "";
     let _silenceTimer = null;
     let _userExplicitStop = false;
     let _audioCtx = null;
@@ -5571,44 +5573,39 @@
       }
     }
 
-    // Helper: Safe deduplication (Never deletes legitimate words, only collapses verbatim duplicated sentences/chunks >= 6 chars)
+    // Helper: Safe deduplication (Never deletes legitimate words, only collapses verbatim duplicated sentences/chunks >= 4 chars)
     function cleanDuplicatePhrases(text) {
       if (!text) return '';
       let s = text.trim();
 
-      // 1. If entire text is an exact 2-half repeat: 'A A' -> 'A' (e.g. 'แก้ไขผนังห้องนอน แก้ไขผนังห้องนอน')
-      let parts = s.split(/\s+/);
-      if (parts.length >= 2 && parts.length % 2 === 0) {
-        let half = parts.length / 2;
-        let firstHalf = parts.slice(0, half).join(' ');
-        let secondHalf = parts.slice(half).join(' ');
-        if (firstHalf === secondHalf && firstHalf.length >= 4) {
-          return firstHalf;
-        }
-      }
-
-      // 2. Continuous Thai repeat without space: 'AAA' (length >= 8, even length)
+      // 1. Continuous Thai repeat without space: 'AAA' (length >= 8, even length)
       if (s.length >= 8 && s.length % 2 === 0) {
         let half = s.length / 2;
         if (s.slice(0, half) === s.slice(half)) {
-          return s.slice(0, half);
+          s = s.slice(0, half);
         }
       }
 
-      // 3. Consecutive identical chunks where chunk length is at least 6 characters
-      // (Catches repeated sentences like: "ทำสีใหม่อีกครั้ง ทำสีใหม่อีกครั้ง" without touching individual words like "ทดสอบ", "ครั้งที่", "1", "2")
-      for (let k = Math.floor(parts.length / 2); k >= 1; k--) {
-        for (let i = 0; i <= parts.length - 2 * k; i++) {
-          let chunk1 = parts.slice(i, i + k).join(' ');
-          let chunk2 = parts.slice(i + k, i + 2 * k).join(' ');
-          if (chunk1 === chunk2 && chunk1.length >= 6) {
-            parts.splice(i + k, k);
-            return parts.join(' ');
+      // 2. Multi-word repeated chunks (handles loops like "ทดสอบครั้งที่ 1 ทดสอบครั้งที่ 1 ...")
+      let parts = s.split(/\s+/);
+      let changed = true;
+      while (changed && parts.length >= 2) {
+        changed = false;
+        for (let k = Math.floor(parts.length / 2); k >= 1; k--) {
+          for (let i = 0; i <= parts.length - 2 * k; i++) {
+            let chunk1 = parts.slice(i, i + k).join(' ');
+            let chunk2 = parts.slice(i + k, i + 2 * k).join(' ');
+            if (chunk1 === chunk2 && chunk1.length >= 4) {
+              parts.splice(i + k, k);
+              changed = true;
+              break;
+            }
           }
+          if (changed) break;
         }
       }
 
-      return s;
+      return parts.join(' ').trim();
     }
 
     function resetVoiceSilenceTimer() {
@@ -5671,42 +5668,59 @@
       recognition.onresult = function(event) {
         resetVoiceSilenceTimer();
 
-        // สร้างข้อความตรงจาก event.results ทั้งหมด เพื่อป้องกันบั๊ก resultIndex=0 ใน Android Chrome ซ้ำซ้อน
         let sessionFinal = "";
         let sessionInterim = "";
 
         for (let i = 0; i < event.results.length; ++i) {
           const res = event.results[i];
           if (res.isFinal) {
-            const fText = res[0].transcript.trim();
+            const fText = (res[0] && res[0].transcript ? res[0].transcript : "").trim();
             if (fText) {
               sessionFinal += (sessionFinal ? " " : "") + fText;
             }
           } else {
-            sessionInterim += res[0].transcript;
+            sessionInterim += (res[0] && res[0].transcript ? res[0].transcript : "");
           }
         }
+
+        _lastSessionFinal = sessionFinal;
 
         const targetEl = currentVoiceTarget === 'recommend' 
           ? document.getElementById("cur-recommend") 
           : document.getElementById("cur-desc");
 
         if (targetEl) {
-          let fullText = "";
-          if (_voiceBaseText) {
-            if (sessionFinal && (_voiceBaseText === sessionFinal || _voiceBaseText.endsWith(sessionFinal))) {
-              fullText = _voiceBaseText + (sessionInterim ? (" " + sessionInterim) : "");
-            } else if (sessionFinal && sessionFinal.startsWith(_voiceBaseText)) {
-              fullText = sessionFinal + (sessionInterim ? (" " + sessionInterim) : "");
+          let spoken = "";
+          const committedStr = _committedSentences.join(" ");
+
+          if (sessionFinal) {
+            if (committedStr) {
+              if (committedStr === sessionFinal || committedStr.endsWith(sessionFinal)) {
+                spoken = committedStr;
+              } else if (sessionFinal.startsWith(committedStr)) {
+                spoken = sessionFinal;
+              } else {
+                const lastEl = _committedSentences[_committedSentences.length - 1];
+                if (lastEl && sessionFinal.startsWith(lastEl)) {
+                  const rest = sessionFinal.slice(lastEl.length).trim();
+                  spoken = rest ? (committedStr + " " + rest) : committedStr;
+                } else {
+                  spoken = committedStr + " " + sessionFinal;
+                }
+              }
             } else {
-              fullText = _voiceBaseText + (sessionFinal ? (" " + sessionFinal) : "") + (sessionInterim ? (" " + sessionInterim) : "");
+              spoken = sessionFinal;
             }
           } else {
-            fullText = (sessionFinal ? sessionFinal : "") + (sessionInterim ? (" " + sessionInterim) : "");
+            spoken = committedStr;
           }
 
-          // กรองคำซ้ำซ้อนออกทันที 100%
-          fullText = cleanDuplicatePhrases(fullText.trim());
+          if (sessionInterim) {
+            spoken = (spoken ? (spoken + " ") : "") + sessionInterim.trim();
+          }
+
+          let fullText = _initialBaseText ? (_initialBaseText + " " + spoken).trim() : spoken.trim();
+          fullText = cleanDuplicatePhrases(fullText);
           targetEl.value = fullText;
         }
 
@@ -5734,14 +5748,9 @@
       };
 
       recognition.onend = function() {
+        commitCurrentSessionFinal();
+
         if (isRecording && !_userExplicitStop) {
-          // เก็บข้อความล่าสุดไว้ก่อน แล้วรีสตาร์ทไมค์ต่ออัตโนมัติหากหยุดชั่วคราว
-          const targetEl = currentVoiceTarget === 'recommend' 
-            ? document.getElementById("cur-recommend") 
-            : document.getElementById("cur-desc");
-          if (targetEl) {
-            _voiceBaseText = targetEl.value.trim();
-          }
           try {
             recognition.start();
           } catch (e) {
@@ -5751,6 +5760,28 @@
           stopVoiceRecording();
         }
       };
+    }
+
+    function commitCurrentSessionFinal() {
+      if (_lastSessionFinal) {
+        const committedStr = _committedSentences.join(" ");
+        if (!committedStr) {
+          _committedSentences.push(_lastSessionFinal);
+        } else if (committedStr === _lastSessionFinal || committedStr.endsWith(_lastSessionFinal)) {
+          // replay จาก buffer -> ไม่บันทึกซ้ำ
+        } else if (_lastSessionFinal.startsWith(committedStr)) {
+          _committedSentences = [_lastSessionFinal];
+        } else {
+          const lastEl = _committedSentences[_committedSentences.length - 1];
+          if (lastEl && _lastSessionFinal.startsWith(lastEl)) {
+            const rest = _lastSessionFinal.slice(lastEl.length).trim();
+            if (rest) _committedSentences.push(rest);
+          } else {
+            _committedSentences.push(_lastSessionFinal);
+          }
+        }
+      }
+      _lastSessionFinal = "";
     }
 
     function cancelCountdown() {
@@ -5857,7 +5888,9 @@
       const targetEl = currentVoiceTarget === 'recommend' 
         ? document.getElementById("cur-recommend") 
         : document.getElementById("cur-desc");
-      _voiceBaseText = targetEl ? targetEl.value.trim() : "";
+      _initialBaseText = targetEl ? targetEl.value.trim() : "";
+      _committedSentences = [];
+      _lastSessionFinal = "";
 
       const btn = document.getElementById(`voice-btn-${currentVoiceTarget}`);
       const icon = document.getElementById(`voice-icon-${currentVoiceTarget}`);
@@ -5889,6 +5922,10 @@
         _countdownTimer = null;
       }
       _isCountingDown = false;
+
+      if (isRecording) {
+        commitCurrentSessionFinal();
+      }
 
       const wasRecording = isRecording;
       isRecording = false;
@@ -5940,11 +5977,12 @@
         targetEl.focus();
       }
 
+      _initialBaseText = "";
+      _committedSentences = [];
+      _lastSessionFinal = "";
+
       if (isRecording && currentVoiceTarget === target) {
-        _voiceBaseText = "";
         resetVoiceSilenceTimer();
-      } else {
-        _voiceBaseText = "";
       }
 
       const statusEl = document.getElementById(`voice-status-${target}`);
