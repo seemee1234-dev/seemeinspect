@@ -2253,25 +2253,34 @@
       -webkit-overflow-scrolling: touch;
       position: relative;
       background: radial-gradient(circle at center, #0f1c3f 0%, #060b18 100%);
-      padding: 24px 16px;
+      padding: 30px 24px 60px 24px;
       touch-action: pan-x pan-y;
-      display: flex;
-      justify-content: center;
-      align-items: flex-start;
+      cursor: grab;
+      user-select: none;
+      -webkit-user-select: none;
+      text-align: left;
+    }
+
+    #preprint-viewport.is-dragging {
+      cursor: grabbing !important;
     }
 
     #preprint-zoom-footprint {
+      display: block;
       position: relative;
       margin: 0 auto;
+      box-sizing: border-box;
       flex-shrink: 0;
+      text-align: left;
     }
 
     #preprint-zoom-wrapper {
       position: absolute;
       top: 0;
-      left: 50%;
-      transform-origin: top center;
+      left: 0;
+      transform-origin: 0 0;
       transition: transform 0.12s cubic-bezier(0.2, 0.8, 0.4, 1);
+      pointer-events: none;
     }
 
     /* Strict A4 Landscape Layout in Zoom Modal */
@@ -2279,9 +2288,8 @@
       width: 1122px !important;
       min-width: 1122px !important;
       max-width: 1122px !important;
-      height: 794px !important;
+      height: auto !important;
       min-height: 794px !important;
-      max-height: 794px !important;
       padding: 24px 38px 20px 38px !important;
       box-sizing: border-box !important;
       background: #ffffff !important;
@@ -2289,7 +2297,7 @@
       display: flex !important;
       flex-direction: column !important;
       justify-content: space-between !important;
-      overflow: hidden !important;
+      overflow: visible !important;
       position: relative !important;
       border-radius: 4px !important;
       box-shadow: 0 16px 40px rgba(0, 0, 0, 0.7) !important;
@@ -2301,9 +2309,8 @@
       width: 794px !important;
       min-width: 794px !important;
       max-width: 794px !important;
-      height: 1122px !important;
+      height: auto !important;
       min-height: 1122px !important;
-      max-height: 1122px !important;
       padding: 30px 42px 24px 42px !important;
       box-sizing: border-box !important;
       background: #ffffff !important;
@@ -2311,7 +2318,7 @@
       display: flex !important;
       flex-direction: column !important;
       justify-content: space-between !important;
-      overflow: hidden !important;
+      overflow: visible !important;
       position: relative !important;
       border-radius: 4px !important;
       box-shadow: 0 16px 40px rgba(0, 0, 0, 0.7) !important;
@@ -5888,6 +5895,9 @@
       clone.style.margin = "0";
       host.appendChild(clone);
 
+      // Adapt footprint to dynamic slide dimensions
+      setZoomFactor(currentZoomFactor);
+
       // Update dropdown select
       const select = document.getElementById("zoom-page-select");
       if (select) select.value = String(currentZoomPage);
@@ -5912,6 +5922,16 @@
           subTitle = dItem ? `จุดที่ ${dIdx + 1} (${dItem.code}) · ${getDefectRoom(dItem)}` : "จุดตรวจสอบ";
         }
         footerInfo.textContent = `หน้าที่ ${currentZoomPage} / ${totalSlides} · ${subTitle} [${pName} ห้อง ${rNo}]`;
+      }
+
+      const viewport = document.getElementById("preprint-viewport");
+      if (viewport) {
+        viewport.scrollTop = 0;
+        if (currentZoomFactor <= 1.0) {
+          viewport.scrollLeft = Math.max(0, (viewport.scrollWidth - viewport.clientWidth) / 2);
+        } else {
+          viewport.scrollLeft = 0;
+        }
       }
     }
 
@@ -5938,7 +5958,13 @@
       }
     }
 
+    let _zoomFitTimeout = null;
+
     function setZoomFactor(factor) {
+      if (_zoomFitTimeout) {
+        clearTimeout(_zoomFitTimeout);
+        _zoomFitTimeout = null;
+      }
       currentZoomFactor = Math.max(0.25, Math.min(3.0, factor));
 
       const wrapper = document.getElementById("preprint-zoom-wrapper");
@@ -5948,13 +5974,24 @@
       const baseW = currentZoomOrientation === "landscape" ? 1122 : 794;
       const baseH = currentZoomOrientation === "landscape" ? 794 : 1122;
 
+      const host = document.getElementById("preprint-active-slide-host");
+      const slide = host ? host.querySelector(".slide-page") : null;
+      const actualW = slide && slide.offsetWidth > 0 ? Math.max(baseW, slide.offsetWidth) : baseW;
+      const actualH = slide && slide.offsetHeight > 0 ? Math.max(baseH, slide.offsetHeight) : baseH;
+
+      const scaledW = Math.round(actualW * currentZoomFactor);
+      const scaledH = Math.round(actualH * currentZoomFactor);
+
       if (wrapper) {
-        wrapper.style.transform = `translateX(-50%) scale(${currentZoomFactor})`;
+        wrapper.style.width = `${actualW}px`;
+        wrapper.style.height = `${actualH}px`;
+        wrapper.style.transform = `scale(${currentZoomFactor})`;
+        wrapper.style.transformOrigin = "0 0";
       }
 
       if (footprint) {
-        footprint.style.width = `${Math.round(baseW * currentZoomFactor + 32)}px`;
-        footprint.style.height = `${Math.round(baseH * currentZoomFactor + 40)}px`;
+        footprint.style.width = `${scaledW}px`;
+        footprint.style.height = `${scaledH + 60}px`;
       }
 
       if (levelText) {
@@ -5987,10 +6024,14 @@
     }
 
     function zoomFit() {
+      if (_zoomFitTimeout) {
+        clearTimeout(_zoomFitTimeout);
+        _zoomFitTimeout = null;
+      }
       const viewport = document.getElementById("preprint-viewport");
       if (!viewport) return;
-      const availW = Math.max(280, viewport.clientWidth - 32);
-      const availH = Math.max(300, viewport.clientHeight - 32);
+      const availW = Math.max(280, viewport.clientWidth - 48);
+      const availH = Math.max(300, viewport.clientHeight - 80);
 
       const baseW = currentZoomOrientation === "landscape" ? 1122 : 794;
       const baseH = currentZoomOrientation === "landscape" ? 794 : 1122;
@@ -6002,6 +6043,13 @@
       setZoomFactor(fitFactor);
       const btnFit = document.getElementById("btn-zoom-fit");
       if (btnFit) btnFit.classList.add("active");
+
+      _zoomFitTimeout = setTimeout(() => {
+        if (viewport) {
+          viewport.scrollLeft = Math.max(0, (viewport.scrollWidth - viewport.clientWidth) / 2);
+          viewport.scrollTop = 0;
+        }
+      }, 40);
     }
 
     function proceedToPrintFromZoom() {
@@ -6010,14 +6058,16 @@
       exportPDFDefects(currentZoomOrientation, true);
     }
 
-    let _zoomPinchSetupDone = false;
+    let _zoomTouchSetupDone = false;
+
     function setupZoomPinchListeners() {
-      if (_zoomPinchSetupDone) return;
-      _zoomPinchSetupDone = true;
+      if (_zoomTouchSetupDone) return;
+      _zoomTouchSetupDone = true;
 
       const viewport = document.getElementById("preprint-viewport");
       if (!viewport) return;
 
+      // 2-Finger Pinch for Mobile Touchscreens (1-finger panning is handled natively by browser at 60/120fps)
       viewport.addEventListener("touchstart", (e) => {
         if (e.touches.length === 2) {
           zoomPinchInitialDist = Math.hypot(
@@ -6045,6 +6095,38 @@
           zoomPinchInitialDist = 0;
         }
       }, { passive: true });
+
+      // Mouse drag-to-pan for desktop
+      let isMouseDown = false;
+      let mouseStartX = 0;
+      let mouseStartY = 0;
+      let mouseStartScrollLeft = 0;
+      let mouseStartScrollTop = 0;
+
+      viewport.addEventListener("mousedown", (e) => {
+        if (e.button !== 0) return;
+        isMouseDown = true;
+        viewport.classList.add("is-dragging");
+        mouseStartX = e.clientX;
+        mouseStartY = e.clientY;
+        mouseStartScrollLeft = viewport.scrollLeft;
+        mouseStartScrollTop = viewport.scrollTop;
+      });
+
+      window.addEventListener("mousemove", (e) => {
+        if (!isMouseDown) return;
+        const dx = e.clientX - mouseStartX;
+        const dy = e.clientY - mouseStartY;
+        viewport.scrollLeft = mouseStartScrollLeft - dx;
+        viewport.scrollTop = mouseStartScrollTop - dy;
+      });
+
+      window.addEventListener("mouseup", () => {
+        if (isMouseDown) {
+          isMouseDown = false;
+          viewport.classList.remove("is-dragging");
+        }
+      });
 
       // Keyboard navigation for arrow keys
       window.addEventListener("keydown", (e) => {
