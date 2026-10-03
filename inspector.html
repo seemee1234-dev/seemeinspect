@@ -2081,6 +2081,469 @@
       }
 
     }
+
+    /* ========================================================
+       PRE-PRINT HD SLIDE ZOOM & INSPECT MODAL (ตรวจขยายก่อนพิมพ์)
+       ======================================================== */
+    #preprint-zoom-modal {
+      display: none;
+      position: fixed;
+      inset: 0;
+      background: #060b18;
+      z-index: 9999999;
+      flex-direction: column;
+      overflow: hidden;
+      font-family: 'Kanit', sans-serif;
+      font-weight: 300;
+      color: #ffffff;
+      user-select: none;
+    }
+
+    .zoom-top-bar {
+      background: rgba(11, 31, 58, 0.98);
+      border-bottom: 1.5px solid #1e3a8a;
+      padding: 10px 14px;
+      display: flex;
+      flex-direction: column;
+      gap: 8px;
+      z-index: 20;
+      box-shadow: 0 4px 20px rgba(0, 0, 0, 0.5);
+    }
+
+    .zoom-bar-row1 {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      gap: 8px;
+      flex-wrap: wrap;
+    }
+
+    .zoom-title-badge {
+      display: flex;
+      align-items: center;
+      gap: 6px;
+      font-size: 14.5px;
+      font-weight: 500;
+      color: #ffd700;
+      letter-spacing: 0.3px;
+    }
+
+    .zoom-orientation-toggle {
+      display: flex;
+      background: #070d1e;
+      border: 1px solid #1e3a8a;
+      border-radius: 8px;
+      padding: 2px;
+      gap: 2px;
+    }
+
+    .zoom-orient-btn {
+      padding: 5px 10px;
+      border: none;
+      border-radius: 6px;
+      background: transparent;
+      color: #94a3b8;
+      font-size: 12px;
+      font-family: 'Kanit', sans-serif;
+      cursor: pointer;
+      transition: all 0.15s ease;
+      white-space: nowrap;
+    }
+
+    .zoom-orient-btn.active {
+      background: #00adf2;
+      color: #ffffff;
+      font-weight: 500;
+      box-shadow: 0 2px 8px rgba(0, 173, 242, 0.35);
+    }
+
+    .zoom-bar-row2 {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      gap: 8px;
+      flex-wrap: wrap;
+      background: #070d1e;
+      border: 1px solid #162444;
+      border-radius: 8px;
+      padding: 6px 10px;
+    }
+
+    .zoom-page-nav {
+      display: flex;
+      align-items: center;
+      gap: 6px;
+      flex: 1 1 auto;
+      min-width: 240px;
+    }
+
+    .zoom-nav-btn {
+      padding: 6px 12px;
+      background: #0f1c3f;
+      border: 1px solid #2563eb;
+      color: #ffffff;
+      border-radius: 6px;
+      font-size: 12.5px;
+      font-family: 'Kanit', sans-serif;
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      gap: 4px;
+      white-space: nowrap;
+    }
+
+    .zoom-nav-btn:disabled {
+      opacity: 0.35;
+      cursor: not-allowed;
+      border-color: #334155;
+      background: #0b1528;
+    }
+
+    .zoom-page-select {
+      flex: 1;
+      padding: 6px 8px;
+      background: #091329;
+      color: #ffd700;
+      border: 1px solid #1e3a8a;
+      border-radius: 6px;
+      font-size: 12.5px;
+      font-family: 'Kanit', sans-serif;
+      font-weight: 300;
+      cursor: pointer;
+      max-width: 320px;
+    }
+
+    .zoom-scale-ctrls {
+      display: flex;
+      align-items: center;
+      gap: 4px;
+    }
+
+    .zoom-scale-btn {
+      padding: 4px 8px;
+      background: #0f1c3f;
+      border: 1px solid #1e3a8a;
+      color: #e2e8f0;
+      border-radius: 5px;
+      font-size: 12px;
+      font-family: 'Kanit', sans-serif;
+      cursor: pointer;
+      white-space: nowrap;
+    }
+
+    .zoom-scale-btn:active, .zoom-scale-btn.active {
+      background: #ffd700;
+      color: #0b1f3a;
+      font-weight: 500;
+      border-color: #ffd700;
+    }
+
+    #zoom-level-text {
+      font-size: 12.5px;
+      font-weight: 500;
+      color: #38bdf8;
+      min-width: 44px;
+      text-align: center;
+    }
+
+    /* Viewport & Pan Stage */
+    #preprint-viewport {
+      flex: 1;
+      overflow: auto;
+      -webkit-overflow-scrolling: touch;
+      position: relative;
+      background: radial-gradient(circle at center, #0f1c3f 0%, #060b18 100%);
+      padding: 24px 16px;
+      touch-action: pan-x pan-y;
+      display: flex;
+      justify-content: center;
+      align-items: flex-start;
+    }
+
+    #preprint-zoom-footprint {
+      position: relative;
+      margin: 0 auto;
+      flex-shrink: 0;
+    }
+
+    #preprint-zoom-wrapper {
+      position: absolute;
+      top: 0;
+      left: 50%;
+      transform-origin: top center;
+      transition: transform 0.12s cubic-bezier(0.2, 0.8, 0.4, 1);
+    }
+
+    /* Strict A4 Landscape Layout in Zoom Modal */
+    #preprint-zoom-modal.mode-landscape #preprint-active-slide-host .slide-page {
+      width: 1122px !important;
+      min-width: 1122px !important;
+      max-width: 1122px !important;
+      height: 794px !important;
+      min-height: 794px !important;
+      max-height: 794px !important;
+      padding: 24px 38px 20px 38px !important;
+      box-sizing: border-box !important;
+      background: #ffffff !important;
+      color: #1e293b !important;
+      display: flex !important;
+      flex-direction: column !important;
+      justify-content: space-between !important;
+      overflow: hidden !important;
+      position: relative !important;
+      border-radius: 4px !important;
+      box-shadow: 0 16px 40px rgba(0, 0, 0, 0.7) !important;
+      border: 1px solid #cbd5e1 !important;
+    }
+
+    /* Strict A4 Portrait Layout in Zoom Modal */
+    #preprint-zoom-modal.mode-portrait #preprint-active-slide-host .slide-page {
+      width: 794px !important;
+      min-width: 794px !important;
+      max-width: 794px !important;
+      height: 1122px !important;
+      min-height: 1122px !important;
+      max-height: 1122px !important;
+      padding: 30px 42px 24px 42px !important;
+      box-sizing: border-box !important;
+      background: #ffffff !important;
+      color: #1e293b !important;
+      display: flex !important;
+      flex-direction: column !important;
+      justify-content: space-between !important;
+      overflow: hidden !important;
+      position: relative !important;
+      border-radius: 4px !important;
+      box-shadow: 0 16px 40px rgba(0, 0, 0, 0.7) !important;
+      border: 1px solid #cbd5e1 !important;
+    }
+
+    /* Universal Zoom Inspection Overrides */
+    #preprint-zoom-modal #preprint-active-slide-host .slide-page-badge,
+    #preprint-zoom-modal #preprint-active-slide-host .slide-card-ctrl {
+      display: none !important;
+    }
+
+    #preprint-zoom-modal #preprint-active-slide-host .slide-top-navy {
+      padding: 10px 18px !important;
+      margin-bottom: 4px !important;
+      border-radius: 6px !important;
+      background: #0b1f3a !important;
+    }
+    #preprint-zoom-modal #preprint-active-slide-host .slide-top-navy h2 {
+      font-size: 19px !important;
+      font-weight: 500 !important;
+      color: #ffffff !important;
+      line-height: 1.25 !important;
+    }
+    #preprint-zoom-modal #preprint-active-slide-host .slide-top-navy p {
+      font-size: 12px !important;
+      font-weight: 300 !important;
+      color: #e2e8f0 !important;
+    }
+    #preprint-zoom-modal #preprint-active-slide-host .slide-info-grid {
+      display: grid !important;
+      grid-template-columns: 1fr 1fr !important;
+      gap: 8px !important;
+      margin-bottom: 8px !important;
+    }
+    #preprint-zoom-modal #preprint-active-slide-host .info-card-box {
+      display: flex !important;
+      flex-direction: row !important;
+      align-items: center !important;
+      justify-content: flex-start !important;
+      padding: 6px 12px !important;
+      gap: 10px !important;
+      min-height: 38px !important;
+      background: #f8fafc !important;
+      border: 1px solid #e2e8f0 !important;
+    }
+    #preprint-zoom-modal #preprint-active-slide-host .info-card-box .f-lbl {
+      width: 110px !important;
+      font-size: 13px !important;
+      color: #64748b !important;
+      font-weight: 300 !important;
+    }
+    #preprint-zoom-modal #preprint-active-slide-host .info-card-box .f-val {
+      font-size: 14.5px !important;
+      font-weight: 500 !important;
+      color: #0b1f3a !important;
+    }
+    #preprint-zoom-modal #preprint-active-slide-host .slide-table td {
+      padding: 4px 8px !important;
+      font-size: 12px !important;
+    }
+    #preprint-zoom-modal #preprint-active-slide-host .slide-corner-num {
+      font-size: 12.5px !important;
+      font-weight: 400 !important;
+    }
+
+    /* Defect photos in Landscape */
+    #preprint-zoom-modal.mode-landscape #preprint-active-slide-host .defect-photos-side-by-side {
+      display: grid !important;
+      grid-template-columns: 1fr 1fr !important;
+      gap: 14px !important;
+      height: 480px !important;
+      min-height: 480px !important;
+      margin-bottom: 8px !important;
+    }
+    #preprint-zoom-modal.mode-landscape #preprint-active-slide-host .photo-col-frame {
+      height: 100% !important;
+      display: flex !important;
+      flex-direction: column !important;
+      border-radius: 6px !important;
+      overflow: hidden !important;
+      background: #000000 !important;
+    }
+    #preprint-zoom-modal.mode-landscape #preprint-active-slide-host .photo-img-wrap {
+      flex: 1 !important;
+      height: 100% !important;
+      min-height: 0 !important;
+      aspect-ratio: auto !important;
+      display: flex !important;
+      align-items: center !important;
+      justify-content: center !important;
+      background: #000000 !important;
+    }
+    #preprint-zoom-modal.mode-landscape #preprint-active-slide-host .photo-img-contain {
+      width: 100% !important;
+      height: 100% !important;
+      object-fit: contain !important;
+    }
+
+    /* Defect photos in Portrait */
+    #preprint-zoom-modal.mode-portrait #preprint-active-slide-host .defect-photos-side-by-side {
+      display: flex !important;
+      flex-direction: column !important;
+      gap: 12px !important;
+      height: 740px !important;
+      min-height: 740px !important;
+      margin-bottom: 8px !important;
+    }
+    #preprint-zoom-modal.mode-portrait #preprint-active-slide-host .photo-col-frame {
+      flex: 1 !important;
+      height: 50% !important;
+      display: flex !important;
+      flex-direction: column !important;
+      border-radius: 6px !important;
+      overflow: hidden !important;
+      background: #000000 !important;
+    }
+    #preprint-zoom-modal.mode-portrait #preprint-active-slide-host .photo-img-wrap {
+      flex: 1 !important;
+      height: 100% !important;
+      min-height: 0 !important;
+      aspect-ratio: auto !important;
+      display: flex !important;
+      align-items: center !important;
+      justify-content: center !important;
+      background: #000000 !important;
+    }
+    #preprint-zoom-modal.mode-portrait #preprint-active-slide-host .photo-img-contain {
+      width: 100% !important;
+      height: 100% !important;
+      object-fit: contain !important;
+    }
+
+    /* Slide 2 Customer Summary Table in Zoom Modal */
+    #preprint-zoom-modal #preprint-active-slide-host #slide-customer-summary {
+      justify-content: flex-start !important;
+      gap: 8px !important;
+    }
+    #preprint-zoom-modal #preprint-active-slide-host #slide-customer-summary table {
+      width: 100% !important;
+      border-collapse: collapse !important;
+      font-size: 12px !important;
+    }
+    #preprint-zoom-modal #preprint-active-slide-host #slide-customer-summary th,
+    #preprint-zoom-modal #preprint-active-slide-host #slide-customer-summary td {
+      padding: 6px 8px !important;
+      font-size: 12px !important;
+    }
+
+    /* Sticky Footer Action Bar */
+    .zoom-bottom-bar {
+      background: rgba(11, 31, 58, 0.98);
+      border-top: 1.5px solid #1e3a8a;
+      padding: 10px 16px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      gap: 12px;
+      z-index: 20;
+      flex-shrink: 0 !important;
+      box-shadow: 0 -4px 20px rgba(0, 0, 0, 0.5);
+    }
+
+    #zoom-footer-info {
+      white-space: nowrap !important;
+      overflow: hidden !important;
+      text-overflow: ellipsis !important;
+      min-width: 0 !important;
+    }
+
+    @media (max-width: 640px) {
+      .zoom-top-bar {
+        padding: 6px 8px;
+        gap: 5px;
+      }
+      .zoom-title-badge {
+        font-size: 12.5px;
+      }
+      .zoom-orient-btn {
+        padding: 4px 7px;
+        font-size: 11px;
+      }
+      .zoom-bar-row2 {
+        padding: 5px 6px;
+        gap: 5px;
+        flex-direction: column !important;
+        align-items: stretch !important;
+      }
+      .zoom-page-nav {
+        width: 100% !important;
+        min-width: 0 !important;
+        display: flex !important;
+        gap: 4px !important;
+      }
+      .zoom-nav-btn {
+        padding: 5px 8px;
+        font-size: 11px;
+        flex-shrink: 0;
+      }
+      .zoom-page-select {
+        font-size: 11.5px;
+        padding: 4px 6px;
+        flex: 1 1 auto !important;
+        min-width: 0 !important;
+        max-width: none !important;
+      }
+      .zoom-scale-ctrls {
+        width: 100% !important;
+        display: flex !important;
+        justify-content: space-between !important;
+        gap: 3px !important;
+      }
+      .zoom-scale-btn {
+        flex: 1 1 auto !important;
+        padding: 4px 2px !important;
+        font-size: 11px;
+        text-align: center;
+      }
+      #zoom-level-text {
+        font-size: 11px;
+        min-width: 32px;
+      }
+      .zoom-bottom-bar {
+        padding: 6px 10px;
+        gap: 6px;
+      }
+      .zoom-bottom-bar button {
+        padding: 7px 10px !important;
+        font-size: 12px !important;
+      }
+    }
+
   </style>
   <!-- HEIC/HEIF Image Support (for Samsung / iPhone photos from Gallery) -->
   <script src="heic2any.min.js"></script>
@@ -2340,6 +2803,10 @@
       
       <!-- Clean Executive Toolbar: 2 Primary Buttons + Expandable More Options -->
       <div class="screen-toolbar no-print" style="display: flex; gap: 8px; flex-wrap: wrap;">
+        <!-- Primary Inspection Button: HD Zoom & Pre-Print Inspector -->
+        <button type="button" class="btn-main" style="flex: 1 1 100%; padding: 12px 14px; background: linear-gradient(135deg, #b87a22, #ffd700); color: #0b1f3a; font-weight: 500; font-size: 14.5px; border: none; border-radius: 8px; box-shadow: 0 4px 14px rgba(212, 175, 55, 0.35); display: flex; align-items: center; justify-content: center; gap: 8px;" onclick="openPreprintZoomViewer(currentPrintOrientation || 'landscape')">
+          <span>🔎 ตรวจขยายก่อนพิมพ์ (ซูมดูตัวเลข & ตารางสรุปชัดเจน)</span>
+        </button>
         <button type="button" class="btn-main" style="flex: 1 1 28%; min-width: 130px; padding: 11px 8px; background: #00adf2; color: #ffffff; border: none; font-size: 13.5px; box-shadow: 0 4px 14px rgba(0, 173, 242, 0.3);" onclick="exportPDFDefects('landscape', true)">
           📄 PDF แนวนอน
         </button>
@@ -5279,6 +5746,321 @@
       if (guideModal) guideModal.style.display = "none";
     }
 
+    /* ========================================================
+       PRE-PRINT HD SLIDE ZOOM & INSPECT CONTROLLER
+       ======================================================== */
+    let currentZoomOrientation = "landscape";
+    let currentZoomPage = 1;
+    let currentZoomFactor = 1.0;
+    let zoomPinchInitialDist = 0;
+    let zoomPinchInitialFactor = 1.0;
+
+    function openPreprintZoomViewer(orientation, targetPage) {
+      currentZoomOrientation = orientation || currentPrintOrientation || "landscape";
+      currentZoomPage = targetPage || 1;
+      
+      // 1. Force update summary UI to ensure all slides are populated in DOM
+      window._forceRenderSlides = true;
+      updateSummaryUI();
+      window._forceRenderSlides = false;
+
+      // 2. Setup modal orientation class
+      const modal = document.getElementById("preprint-zoom-modal");
+      if (!modal) return;
+      modal.className = `no-print mode-${currentZoomOrientation}`;
+      modal.style.display = "flex";
+
+      // 3. Update orientation buttons
+      const landBtn = document.getElementById("btn-zoom-orient-land");
+      const portBtn = document.getElementById("btn-zoom-orient-port");
+      if (landBtn) landBtn.classList.toggle("active", currentZoomOrientation === "landscape");
+      if (portBtn) portBtn.classList.toggle("active", currentZoomOrientation === "portrait");
+
+      // 4. Build page selector dropdown
+      buildZoomPageSelector();
+
+      // 5. Default zoom: on mobile, start at Fit
+      const isMobile = window.innerWidth <= 768;
+      if (isMobile) {
+        zoomFit();
+      } else {
+        setZoomFactor(1.0);
+      }
+
+      // 6. Render the current slide
+      renderCurrentZoomSlide();
+
+      // 7. Setup pinch zoom listeners once
+      setupZoomPinchListeners();
+    }
+
+    function closePreprintZoomViewer() {
+      const modal = document.getElementById("preprint-zoom-modal");
+      if (modal) modal.style.display = "none";
+    }
+
+    function setZoomOrientation(orient) {
+      if (currentZoomOrientation === orient) return;
+      currentZoomOrientation = orient;
+      currentPrintOrientation = orient;
+
+      const modal = document.getElementById("preprint-zoom-modal");
+      if (modal) modal.className = `no-print mode-${currentZoomOrientation}`;
+
+      const landBtn = document.getElementById("btn-zoom-orient-land");
+      const portBtn = document.getElementById("btn-zoom-orient-port");
+      if (landBtn) landBtn.classList.toggle("active", currentZoomOrientation === "landscape");
+      if (portBtn) portBtn.classList.toggle("active", currentZoomOrientation === "portrait");
+
+      // Update scale footprint and re-render
+      setZoomFactor(currentZoomFactor);
+    }
+
+    function buildZoomPageSelector() {
+      const select = document.getElementById("zoom-page-select");
+      if (!select) return;
+
+      const totalSlides = defectList.length + 2;
+      let optionsHtml = `
+        <option value="1">หน้าที่ 1 / ${totalSlides} : หน้าแรก (สรุปภาพรวมผู้บริหาร)</option>
+        <option value="2">หน้าที่ 2 / ${totalSlides} : ตารางสรุปแจกแจงตามห้อง</option>
+      `;
+
+      // Sort matching current view mode
+      let displayList = [...defectList];
+      if (currentSlideViewMode === 'room') {
+        displayList.sort((a, b) => {
+          const roomA = getDefectRoom(a);
+          const roomB = getDefectRoom(b);
+          if (roomA !== roomB) return roomA.localeCompare(roomB, 'th');
+          return (a.category || "").localeCompare(b.category || "", 'th');
+        });
+      } else if (currentSlideViewMode === 'category') {
+        displayList.sort((a, b) => {
+          const catA = a.category || "";
+          const catB = b.category || "";
+          if (catA !== catB) return catA.localeCompare(catB, 'th');
+          return getDefectRoom(a).localeCompare(getDefectRoom(b), 'th');
+        });
+      }
+
+      displayList.forEach((d, idx) => {
+        const pageNum = idx + 3;
+        const rName = getDefectRoom(d);
+        optionsHtml += `<option value="${pageNum}">หน้าที่ ${pageNum} / ${totalSlides} : จุดที่ ${idx + 1} [${d.code}] · ${rName}</option>`;
+      });
+
+      select.innerHTML = optionsHtml;
+      select.value = String(currentZoomPage);
+    }
+
+    function renderCurrentZoomSlide() {
+      const host = document.getElementById("preprint-active-slide-host");
+      if (!host) return;
+
+      const totalSlides = defectList.length + 2;
+      if (currentZoomPage < 1) currentZoomPage = 1;
+      if (currentZoomPage > totalSlides) currentZoomPage = totalSlides;
+
+      // Find slide element
+      let targetSlide = null;
+      if (currentZoomPage === 1) {
+        targetSlide = document.getElementById("slide-page-1");
+      } else if (currentZoomPage === 2) {
+        targetSlide = document.getElementById("slide-customer-summary");
+      } else {
+        const defectSlides = document.querySelectorAll("#defect-slides-container .slide-page");
+        const idx = currentZoomPage - 3;
+        if (defectSlides && defectSlides[idx]) {
+          targetSlide = defectSlides[idx];
+        }
+      }
+
+      if (!targetSlide) {
+        host.innerHTML = `<div style="padding: 40px; text-align: center; color: #64748b;">ไม่พบข้อมูลสไลด์หน้านี้</div>`;
+        return;
+      }
+
+      // Clone and place inside host
+      host.innerHTML = "";
+      const clone = targetSlide.cloneNode(true);
+      clone.style.display = "flex";
+      clone.style.margin = "0";
+      host.appendChild(clone);
+
+      // Update dropdown select
+      const select = document.getElementById("zoom-page-select");
+      if (select) select.value = String(currentZoomPage);
+
+      // Update prev/next buttons
+      const btnPrev = document.getElementById("btn-zoom-prev");
+      const btnNext = document.getElementById("btn-zoom-next");
+      if (btnPrev) btnPrev.disabled = currentZoomPage <= 1;
+      if (btnNext) btnNext.disabled = currentZoomPage >= totalSlides;
+
+      // Update footer info
+      const footerInfo = document.getElementById("zoom-footer-info");
+      if (footerInfo) {
+        const pName = projectConfig.projName || "--";
+        const rNo = projectConfig.roomNo || "--";
+        let subTitle = "";
+        if (currentZoomPage === 1) subTitle = "หน้าแรก / สรุปผู้บริหาร";
+        else if (currentZoomPage === 2) subTitle = "ตารางแจกแจงตามห้อง";
+        else {
+          const dIdx = currentZoomPage - 3;
+          const dItem = defectList[dIdx];
+          subTitle = dItem ? `จุดที่ ${dIdx + 1} (${dItem.code}) · ${getDefectRoom(dItem)}` : "จุดตรวจสอบ";
+        }
+        footerInfo.textContent = `หน้าที่ ${currentZoomPage} / ${totalSlides} · ${subTitle} [${pName} ห้อง ${rNo}]`;
+      }
+    }
+
+    function onZoomPageSelectChange() {
+      const select = document.getElementById("zoom-page-select");
+      if (select) {
+        currentZoomPage = parseInt(select.value, 10) || 1;
+        renderCurrentZoomSlide();
+      }
+    }
+
+    function prevZoomPage() {
+      if (currentZoomPage > 1) {
+        currentZoomPage--;
+        renderCurrentZoomSlide();
+      }
+    }
+
+    function nextZoomPage() {
+      const totalSlides = defectList.length + 2;
+      if (currentZoomPage < totalSlides) {
+        currentZoomPage++;
+        renderCurrentZoomSlide();
+      }
+    }
+
+    function setZoomFactor(factor) {
+      currentZoomFactor = Math.max(0.25, Math.min(3.0, factor));
+
+      const wrapper = document.getElementById("preprint-zoom-wrapper");
+      const footprint = document.getElementById("preprint-zoom-footprint");
+      const levelText = document.getElementById("zoom-level-text");
+
+      const baseW = currentZoomOrientation === "landscape" ? 1122 : 794;
+      const baseH = currentZoomOrientation === "landscape" ? 794 : 1122;
+
+      if (wrapper) {
+        wrapper.style.transform = `translateX(-50%) scale(${currentZoomFactor})`;
+      }
+
+      if (footprint) {
+        footprint.style.width = `${Math.round(baseW * currentZoomFactor + 32)}px`;
+        footprint.style.height = `${Math.round(baseH * currentZoomFactor + 40)}px`;
+      }
+
+      if (levelText) {
+        levelText.textContent = `${Math.round(currentZoomFactor * 100)}%`;
+      }
+
+      // Update preset active classes
+      ["fit", "100", "150", "200"].forEach(id => {
+        const btn = document.getElementById(`btn-zoom-${id}`);
+        if (btn) btn.classList.remove("active");
+      });
+      if (Math.abs(currentZoomFactor - 1.0) < 0.05) {
+        const b = document.getElementById("btn-zoom-100");
+        if (b) b.classList.add("active");
+      } else if (Math.abs(currentZoomFactor - 1.5) < 0.05) {
+        const b = document.getElementById("btn-zoom-150");
+        if (b) b.classList.add("active");
+      } else if (Math.abs(currentZoomFactor - 2.0) < 0.05) {
+        const b = document.getElementById("btn-zoom-200");
+        if (b) b.classList.add("active");
+      }
+    }
+
+    function zoomIn() {
+      setZoomFactor(currentZoomFactor + 0.25);
+    }
+
+    function zoomOut() {
+      setZoomFactor(currentZoomFactor - 0.25);
+    }
+
+    function zoomFit() {
+      const viewport = document.getElementById("preprint-viewport");
+      if (!viewport) return;
+      const availW = Math.max(280, viewport.clientWidth - 32);
+      const availH = Math.max(300, viewport.clientHeight - 32);
+
+      const baseW = currentZoomOrientation === "landscape" ? 1122 : 794;
+      const baseH = currentZoomOrientation === "landscape" ? 794 : 1122;
+
+      const scaleW = availW / baseW;
+      const scaleH = availH / baseH;
+      const fitFactor = Math.min(scaleW, scaleH);
+
+      setZoomFactor(fitFactor);
+      const btnFit = document.getElementById("btn-zoom-fit");
+      if (btnFit) btnFit.classList.add("active");
+    }
+
+    function proceedToPrintFromZoom() {
+      closePreprintZoomViewer();
+      // Forward to standard print handler with selected orientation
+      exportPDFDefects(currentZoomOrientation, true);
+    }
+
+    let _zoomPinchSetupDone = false;
+    function setupZoomPinchListeners() {
+      if (_zoomPinchSetupDone) return;
+      _zoomPinchSetupDone = true;
+
+      const viewport = document.getElementById("preprint-viewport");
+      if (!viewport) return;
+
+      viewport.addEventListener("touchstart", (e) => {
+        if (e.touches.length === 2) {
+          zoomPinchInitialDist = Math.hypot(
+            e.touches[0].clientX - e.touches[1].clientX,
+            e.touches[0].clientY - e.touches[1].clientY
+          );
+          zoomPinchInitialFactor = currentZoomFactor;
+        }
+      }, { passive: true });
+
+      viewport.addEventListener("touchmove", (e) => {
+        if (e.touches.length === 2 && zoomPinchInitialDist > 0) {
+          const currentDist = Math.hypot(
+            e.touches[0].clientX - e.touches[1].clientX,
+            e.touches[0].clientY - e.touches[1].clientY
+          );
+          const ratio = currentDist / zoomPinchInitialDist;
+          const nextFactor = Math.max(0.25, Math.min(3.0, zoomPinchInitialFactor * ratio));
+          setZoomFactor(nextFactor);
+        }
+      }, { passive: true });
+
+      viewport.addEventListener("touchend", (e) => {
+        if (e.touches.length < 2) {
+          zoomPinchInitialDist = 0;
+        }
+      }, { passive: true });
+
+      // Keyboard navigation for arrow keys
+      window.addEventListener("keydown", (e) => {
+        const modal = document.getElementById("preprint-zoom-modal");
+        if (!modal || modal.style.display !== "flex") return;
+        if (e.key === "ArrowLeft") {
+          prevZoomPage();
+        } else if (e.key === "ArrowRight") {
+          nextZoomPage();
+        } else if (e.key === "Escape") {
+          closePreprintZoomViewer();
+        }
+      });
+    }
+
+
     function openQRModal() {
       const m = document.getElementById("qr-code-modal");
       if (m) m.style.display = "flex";
@@ -6654,14 +7436,117 @@
         </div>
       </div>
 
-      <div style="display: flex; gap: 10px;">
-        <button type="button" class="btn-main" style="flex: 1; padding: 12px; background: linear-gradient(135deg, #00adf2, #0284c7); font-size: 14px; font-weight: 400; border: none; border-radius: 8px; color: #ffffff; cursor: pointer;" onclick="proceedToPrintNow()">
-          เปิดหน้าพิมพ์ PDF ทันที 🚀
+      <div style="display: flex; flex-direction: column; gap: 8px;">
+        <button type="button" class="btn-main" style="width: 100%; padding: 12px; background: linear-gradient(135deg, #ffd700, #b87a22); color: #0b1f3a; font-weight: 500; font-size: 14px; border: none; border-radius: 8px; cursor: pointer; box-shadow: 0 4px 12px rgba(212,175,55,0.35);" onclick="closePrintGuide(); openPreprintZoomViewer(currentPrintOrientation);">
+          🔎 ซูมตรวจดูตัวเลขให้ชัดก่อนพิมพ์
         </button>
-        <button type="button" class="btn-secondary" style="padding: 12px 16px; font-size: 13px; border-radius: 8px; cursor: pointer;" onclick="closePrintGuide()">
-          ยกเลิก
-        </button>
+        <div style="display: flex; gap: 8px;">
+          <button type="button" class="btn-main" style="flex: 1; padding: 12px; background: linear-gradient(135deg, #00adf2, #0284c7); font-size: 13.5px; font-weight: 400; border: none; border-radius: 8px; color: #ffffff; cursor: pointer;" onclick="proceedToPrintNow()">
+            เปิดหน้าพิมพ์ PDF ทันที 🚀
+          </button>
+          <button type="button" class="btn-secondary" style="padding: 12px 16px; font-size: 13px; border-radius: 8px; cursor: pointer;" onclick="closePrintGuide()">
+            ยกเลิก
+          </button>
+        </div>
       </div>
+    </div>
+  </div>
+
+  <!-- ========================================================
+       PRE-PRINT HD SLIDE ZOOM & INSPECT MODAL (ตรวจขยายก่อนพิมพ์)
+       ======================================================== -->
+  <div id="preprint-zoom-modal" class="no-print mode-landscape">
+    <!-- Top Control Bar -->
+    <div class="zoom-top-bar">
+      <div class="zoom-bar-row1">
+        <div class="zoom-title-badge">
+          <span>🔎</span>
+          <span>ตรวจสอบความถูกต้องก่อนพิมพ์ (HD Zoom Preview)</span>
+        </div>
+        
+        <div style="display: flex; align-items: center; gap: 8px;">
+          <!-- Orientation Switcher -->
+          <div class="zoom-orientation-toggle">
+            <button type="button" id="btn-zoom-orient-land" class="zoom-orient-btn active" onclick="setZoomOrientation('landscape')">
+              📄 แนวนอน
+            </button>
+            <button type="button" id="btn-zoom-orient-port" class="zoom-orient-btn" onclick="setZoomOrientation('portrait')">
+              📄 แนวตั้ง
+            </button>
+          </div>
+          
+          <!-- Close Button -->
+          <button type="button" class="btn-secondary" style="padding: 5px 12px; font-size: 12px; border-radius: 6px; cursor: pointer; color: #94a3b8;" onclick="closePreprintZoomViewer()">
+            ✕ ปิด
+          </button>
+        </div>
+      </div>
+
+      <div class="zoom-bar-row2">
+        <!-- Page Navigation -->
+        <div class="zoom-page-nav">
+          <button type="button" id="btn-zoom-prev" class="zoom-nav-btn" onclick="prevZoomPage()">
+            ◀ ก่อนหน้า
+          </button>
+          
+          <select id="zoom-page-select" class="zoom-page-select" onchange="onZoomPageSelectChange()">
+            <!-- Populated dynamically -->
+          </select>
+          
+          <button type="button" id="btn-zoom-next" class="zoom-nav-btn" onclick="nextZoomPage()">
+            ถัดไป ▶
+          </button>
+        </div>
+
+        <!-- Zoom Scaling Controls -->
+        <div class="zoom-scale-ctrls">
+          <button type="button" class="zoom-scale-btn" onclick="zoomOut()" title="ลดขนาด">
+            🔍 -
+          </button>
+          <button type="button" id="btn-zoom-fit" class="zoom-scale-btn" onclick="zoomFit()">
+            พอดีจอ
+          </button>
+          <button type="button" id="btn-zoom-100" class="zoom-scale-btn active" onclick="setZoomFactor(1.0)">
+            100%
+          </button>
+          <button type="button" id="btn-zoom-150" class="zoom-scale-btn" onclick="setZoomFactor(1.5)">
+            150%
+          </button>
+          <button type="button" id="btn-zoom-200" class="zoom-scale-btn" onclick="setZoomFactor(2.0)">
+            200%
+          </button>
+          <button type="button" class="zoom-scale-btn" onclick="zoomIn()" title="ขยายใหญ่">
+            🔍 +
+          </button>
+          <span id="zoom-level-text">100%</span>
+        </div>
+      </div>
+    </div>
+
+    <!-- Viewport Stage -->
+    <div id="preprint-viewport">
+      <div id="preprint-zoom-footprint">
+        <div id="preprint-zoom-wrapper">
+          <div id="preprint-active-slide-host">
+            <!-- Active slide cloned here -->
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Bottom Action Bar -->
+    <div class="zoom-bottom-bar">
+      <button type="button" class="btn-secondary" style="padding: 10px 14px; font-size: 13px; border-radius: 8px; cursor: pointer; color: #cbd5e1;" onclick="closePreprintZoomViewer()">
+        ✕ ปิดเพื่อกลับไปแก้ไข
+      </button>
+      
+      <div id="zoom-footer-info" style="font-size: 12.5px; color: #ffd700; text-align: center; flex: 1; font-weight: 300;">
+        หน้าที่ 1 / 1 · โครงการ --
+      </div>
+
+      <button type="button" class="btn-main" style="padding: 10px 20px; font-size: 13.5px; font-weight: 500; background: linear-gradient(135deg, #00adf2, #0284c7); color: #ffffff; border: none; border-radius: 8px; cursor: pointer; box-shadow: 0 4px 14px rgba(0,173,242,0.4);" onclick="proceedToPrintFromZoom()">
+        🖨️ ข้อมูลถูกต้อง สั่งพิมพ์ / บันทึก PDF เลย 🚀
+      </button>
     </div>
   </div>
   <!-- QR Code Modal (Scan from another phone or share) -->
