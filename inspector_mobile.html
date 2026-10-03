@@ -2675,6 +2675,10 @@
     </div>
     <div style="display: flex; align-items: center; gap: 8px; flex-shrink: 0;">
       <button type="button" onclick="openQRModal()" style="background: rgba(255,215,0,0.12); border: 1.5px solid #ffd700; border-radius: 16px; color: #ffd700; font-size: 12px; font-family: 'Kanit', sans-serif; font-weight: 300; padding: 4px 10px; cursor: pointer; display: flex; align-items: center; gap: 4px;" title="เปิด QR Code สแกนเข้ามือถือ">📱 QR</button>
+      <button type="button" id="wakelock-btn" onclick="toggleScreenWakeLock()" style="background: rgba(16, 185, 129, 0.15); border: 1.5px solid #10b981; border-radius: 16px; color: #34d399; font-size: 12px; font-family: 'Kanit', sans-serif; font-weight: 300; padding: 4px 9px; cursor: pointer; display: flex; align-items: center; gap: 4px;" title="ตั้งค่าไม่ให้หน้าจอดับไฟขณะตรวจงาน (แตะเพื่อเปิด/ปิด)">
+        <span id="wakelock-icon">🔆</span>
+        <span id="wakelock-label">จอสว่าง</span>
+      </button>
       <div class="badge-counter" id="total-badge" style="font-size: 12px; padding: 4px 10px; border-radius: 16px; font-weight: 400;">0 จุด</div>
       <button type="button" onclick="logoutInspector()" style="background: rgba(239, 68, 68, 0.15); border: 1.5px solid #ef4444; border-radius: 16px; color: #fca5a5; font-size: 12px; font-family: 'Kanit', sans-serif; font-weight: 300; padding: 4px 10px; cursor: pointer; display: flex; align-items: center; gap: 4px;" title="ออกจากระบบทีมตรวจงาน (ล็อกแอป)">🔒 ออก</button>
     </div>
@@ -5343,6 +5347,122 @@
     }
 
     /**
+     * SCREEN ALWAYS ON (WAKE LOCK ENGINE)
+     * ป้องกันหน้าจอดับไฟ / พักหน้าจออัตโนมัติ เพื่อให้อ่านข้อความและตรวจงานได้ต่อเนื่อง
+     */
+    let _wakeLock = null;
+    let _isScreenAlwaysOn = true; // เปิดใช้งานเป็นมาตรฐานเริ่มต้นตลอดการตรวจงาน
+    let _dummyVideoKeepAlive = null;
+
+    async function enableScreenWakeLock() {
+      if (!_isScreenAlwaysOn) return;
+
+      // 1. มาตรฐาน W3C Screen Wake Lock API (รองรับ Chrome Android, Edge, Safari 16.4+)
+      try {
+        if ('wakeLock' in navigator) {
+          _wakeLock = await navigator.wakeLock.request('screen');
+          _wakeLock.addEventListener('release', () => {
+            _wakeLock = null;
+            if (_isScreenAlwaysOn && document.visibilityState === 'visible') {
+              setTimeout(enableScreenWakeLock, 1000);
+            }
+          });
+          updateWakeLockUI(true);
+          return true;
+        }
+      } catch (err) {
+        console.warn('Native WakeLock unavailable or restricted:', err);
+      }
+
+      // 2. ระบบสำรองสากล (Looping muted dummy video fallback สำหรับ In-app browser / เว็บบนมือถือรุ่นเก่า)
+      try {
+        if (!_dummyVideoKeepAlive) {
+          _dummyVideoKeepAlive = document.createElement('video');
+          _dummyVideoKeepAlive.setAttribute('playsinline', '');
+          _dummyVideoKeepAlive.setAttribute('webkit-playsinline', '');
+          _dummyVideoKeepAlive.muted = true;
+          _dummyVideoKeepAlive.loop = true;
+          _dummyVideoKeepAlive.style.cssText = 'position:fixed;width:1px;height:1px;top:-100px;opacity:0.01;pointer-events:none;';
+          _dummyVideoKeepAlive.src = 'data:video/mp4;base64,AAAAHGZ0eXBtcDQyAAAAAG1wNDJpc29tYXZjMQAAAAhmcmVlAAAABG1kYXQAAAAIZmxhZwAAAAJtb292AAAAbG12aGQAAAAAAAAAAAAAAAAAAAPoAAAAAAABAAABAAAAAAAAAAAAAAAAAAAAAAAAAAEAAAAAAAAAAAAAAAAAAAAAQAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAMAAAABbXRyZWsAAAAldGtmaAAAAAEAAAAAAAAAAAAAAAABAAAAAAAAAAAAAAAB';
+          document.body.appendChild(_dummyVideoKeepAlive);
+        }
+        _dummyVideoKeepAlive.play().catch(() => {});
+        updateWakeLockUI(true);
+        return true;
+      } catch (e) {
+        console.warn('Video fallback keepalive error:', e);
+      }
+
+      updateWakeLockUI(false);
+      return false;
+    }
+
+    function disableScreenWakeLock() {
+      _isScreenAlwaysOn = false;
+      if (_wakeLock) {
+        try { _wakeLock.release(); } catch (e) {}
+        _wakeLock = null;
+      }
+      if (_dummyVideoKeepAlive) {
+        try { _dummyVideoKeepAlive.pause(); } catch (e) {}
+      }
+      updateWakeLockUI(false);
+    }
+
+    function toggleScreenWakeLock() {
+      if (_isScreenAlwaysOn) {
+        disableScreenWakeLock();
+        showToast('💤 ปิดโหมดหน้าจอสว่าง (หน้าจอจะพักตามเวลาปกติของมือถือ)');
+      } else {
+        _isScreenAlwaysOn = true;
+        enableScreenWakeLock();
+        showToast('🔆 เปิดโหมดหน้าจอสว่างค้างตลอด (หน้าจอจะไม่ดับไฟ)');
+      }
+    }
+
+    function updateWakeLockUI(active) {
+      const btn = document.getElementById('wakelock-btn');
+      const icon = document.getElementById('wakelock-icon');
+      const label = document.getElementById('wakelock-label');
+      if (!btn) return;
+
+      if (active) {
+        btn.style.background = 'rgba(16, 185, 129, 0.2)';
+        btn.style.borderColor = '#10b981';
+        btn.style.color = '#34d399';
+        if (icon) icon.textContent = '🔆';
+        if (label) label.textContent = 'จอสว่าง';
+      } else {
+        btn.style.background = 'rgba(100, 116, 139, 0.15)';
+        btn.style.borderColor = '#475569';
+        btn.style.color = '#94a3b8';
+        if (icon) icon.textContent = '💤';
+        if (label) label.textContent = 'พักจอปกติ';
+      }
+    }
+
+    // เมื่อสลับแท็บกลับมา หรือปลดล็อกหน้าจอมือถือ ให้เรียกต่ออายุ Wake Lock ทันที
+    document.addEventListener('visibilitychange', () => {
+      if (document.visibilityState === 'visible' && _isScreenAlwaysOn) {
+        enableScreenWakeLock();
+      }
+    });
+
+    // เริ่มต้นเปิดโหมดจอสว่างอัตโนมัติตั้งแต่เปิดเว็บ และเปิดทันทีที่มีการแตะสัมผัสหน้าจอครั้งแรก
+    if (typeof window !== 'undefined') {
+      window.addEventListener('DOMContentLoaded', () => {
+        enableScreenWakeLock();
+      });
+      ['click', 'touchstart', 'focus'].forEach(evt => {
+        window.addEventListener(evt, () => {
+          if (_isScreenAlwaysOn && !_wakeLock) {
+            enableScreenWakeLock();
+          }
+        }, { passive: true });
+      });
+    }
+
+    /**
      * VOICE RECOGNITION (WEB SPEECH API) - 3-SECOND STUDIO COUNTDOWN & ZERO DUPLICATION
      */
     let currentVoiceTarget = 'desc'; // 'desc' or 'recommend'
@@ -5451,52 +5571,40 @@
       }
     }
 
-    // Helper: Robust multi-word phrase and stutter deduplication
+    // Helper: Safe deduplication (Never deletes legitimate words, only collapses verbatim duplicated sentences/chunks >= 6 chars)
     function cleanDuplicatePhrases(text) {
       if (!text) return '';
       let s = text.trim();
 
-      // 1. Remove repeated adjacent phrase chunks (from chunk size 10 words down to 1 word)
-      let words = s.split(/\s+/);
-      let changed = true;
-      let passes = 0;
-      while (changed && passes < 10) {
-        changed = false;
-        passes++;
-        const maxK = Math.floor(words.length / 2);
-        for (let k = maxK; k >= 1; k--) {
-          for (let i = 0; i <= words.length - 2 * k; i++) {
-            const chunk1 = words.slice(i, i + k).join(' ');
-            const chunk2 = words.slice(i + k, i + 2 * k).join(' ');
-            if (chunk1 === chunk2 && chunk1.length >= 2) {
-              words.splice(i + k, k);
-              changed = true;
-              break;
-            }
-          }
-          if (changed) break;
+      // 1. If entire text is an exact 2-half repeat: 'A A' -> 'A' (e.g. 'แก้ไขผนังห้องนอน แก้ไขผนังห้องนอน')
+      let parts = s.split(/\s+/);
+      if (parts.length >= 2 && parts.length % 2 === 0) {
+        let half = parts.length / 2;
+        let firstHalf = parts.slice(0, half).join(' ');
+        let secondHalf = parts.slice(half).join(' ');
+        if (firstHalf === secondHalf && firstHalf.length >= 4) {
+          return firstHalf;
         }
       }
 
-      s = words.join(' ');
-
-      // 2. Remove premature stutter where a starting phrase is immediately repeated with more words
-      // e.g. "ทดสอบรายการ ทดสอบรายการครั้งที่ 2" -> "ทดสอบรายการครั้งที่ 2"
-      words = s.split(/\s+/);
-      for (let k = 1; k < words.length; k++) {
-        const prefix = words.slice(0, k).join(' ');
-        const rest = words.slice(k).join(' ');
-        if (rest.startsWith(prefix) && rest.length > prefix.length) {
-          s = rest;
-          break;
-        }
-      }
-
-      // 3. Exact halve repeat without spaces (even length exact repeat)
+      // 2. Continuous Thai repeat without space: 'AAA' (length >= 8, even length)
       if (s.length >= 8 && s.length % 2 === 0) {
-        const half = s.length / 2;
+        let half = s.length / 2;
         if (s.slice(0, half) === s.slice(half)) {
-          s = s.slice(0, half);
+          return s.slice(0, half);
+        }
+      }
+
+      // 3. Consecutive identical chunks where chunk length is at least 6 characters
+      // (Catches repeated sentences like: "ทำสีใหม่อีกครั้ง ทำสีใหม่อีกครั้ง" without touching individual words like "ทดสอบ", "ครั้งที่", "1", "2")
+      for (let k = Math.floor(parts.length / 2); k >= 1; k--) {
+        for (let i = 0; i <= parts.length - 2 * k; i++) {
+          let chunk1 = parts.slice(i, i + k).join(' ');
+          let chunk2 = parts.slice(i + k, i + 2 * k).join(' ');
+          if (chunk1 === chunk2 && chunk1.length >= 6) {
+            parts.splice(i + k, k);
+            return parts.join(' ');
+          }
         }
       }
 
