@@ -351,6 +351,97 @@
       color: #00adf2;
     }
 
+    /* Target Pin Marker on Wide Photo (เป้าชี้ตำแหน่ง Defect คมชัด แม่นยำ) */
+    .photo-pin-layer {
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      pointer-events: auto;
+      z-index: 6;
+      touch-action: none;
+    }
+    .photo-pin-marker {
+      position: absolute;
+      transform: translate(-50%, -50%);
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      cursor: grab;
+      user-select: none;
+      filter: drop-shadow(0 2px 5px rgba(0,0,0,0.85));
+      transition: transform 0.08s ease;
+      pointer-events: auto;
+    }
+    .photo-pin-marker:active {
+      cursor: grabbing;
+      transform: translate(-50%, -50%) scale(1.15);
+    }
+    .pin-crosshair {
+      width: 26px;
+      height: 26px;
+      border: 2px solid #ef4444;
+      border-radius: 50%;
+      position: relative;
+      background: rgba(239, 68, 68, 0.2);
+      box-shadow: inset 0 0 0 1.5px rgba(255, 255, 255, 0.9), 0 0 0 1px rgba(0, 0, 0, 0.85);
+    }
+    .pin-crosshair::before,
+    .pin-crosshair::after {
+      content: '';
+      position: absolute;
+      background: #ffffff;
+    }
+    .pin-crosshair::before {
+      top: 50%;
+      left: -4px;
+      right: -4px;
+      height: 1.5px;
+      transform: translateY(-50%);
+    }
+    .pin-crosshair::after {
+      left: 50%;
+      top: -4px;
+      bottom: -4px;
+      width: 1.5px;
+      transform: translateX(-50%);
+    }
+    .pin-code-tag {
+      margin-top: 3px;
+      background: #0b1f3a;
+      border: 1px solid #ffd700;
+      color: #ffd700;
+      font-size: 11px;
+      font-family: 'Kanit', sans-serif;
+      font-weight: 300;
+      line-height: 1.2;
+      padding: 1.5px 6px;
+      border-radius: 4px;
+      white-space: nowrap;
+      box-shadow: 0 1.5px 4px rgba(0,0,0,0.7);
+    }
+    .pin-guide-banner {
+      position: absolute;
+      top: 36px;
+      left: 8px;
+      right: 8px;
+      background: rgba(11, 31, 58, 0.88);
+      border: 1px solid rgba(255, 215, 0, 0.6);
+      color: #f8fafc;
+      font-size: 11px;
+      font-family: 'Kanit', sans-serif;
+      font-weight: 300;
+      padding: 3px 8px;
+      border-radius: 6px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      z-index: 7;
+      pointer-events: none;
+    }
+
     /* Dynamic Quick Finding & Recommendation Pills */
     .dynamic-pills-row {
       display: flex;
@@ -3047,7 +3138,19 @@
               </div>
             </div>
 
-            <div id="retake-wide-group" style="display: none; position: absolute; bottom: 6px; left: 8px; right: 8px; gap: 8px; z-index: 5;">
+            <!-- Layer เป้าชี้ตำแหน่ง Defect บนภาพกว้าง (แตะ/ลากเลื่อนได้ คมชัด แม่นยำ) -->
+            <div id="photo-wide-pin-layer" class="photo-pin-layer" style="display: none;" onclick="event.stopPropagation();">
+              <div id="photo-wide-pin-marker" class="photo-pin-marker" style="left: 50%; top: 50%;">
+                <div class="pin-crosshair"></div>
+                <div id="photo-wide-pin-tag" class="pin-code-tag">D-001</div>
+              </div>
+              <div class="pin-guide-banner">
+                <span>🎯 แตะหรือลากเป้าเพื่อชี้ตำแหน่ง Defect</span>
+                <button type="button" onclick="event.stopPropagation(); resetWidePhotoPin();" style="background: none; border: none; color: #ffd700; font-size: 11px; cursor: pointer; text-decoration: underline; padding: 0;">กึ่งกลาง</button>
+              </div>
+            </div>
+
+            <div id="retake-wide-group" style="display: none; position: absolute; bottom: 6px; left: 8px; right: 8px; gap: 8px; z-index: 8;">
               <button class="photo-retake-btn" type="button" style="position: static; flex: 1; text-align: center; font-size: 12.5px; padding: 6px 0; display: block;" onclick="event.stopPropagation(); openLiveCamera('wide');">📷 ถ่ายใหม่</button>
               <button class="photo-retake-btn" type="button" style="position: static; flex: 1; text-align: center; font-size: 12.5px; padding: 6px 0; background: rgba(239,68,68,0.9); border-color: #ef4444; color: #fff; display: block;" onclick="event.stopPropagation(); clearCurrentWidePhoto();">🗑️ ลบ</button>
             </div>
@@ -3350,15 +3453,15 @@
           </div>
 
           <!-- Summary Breakdown: Left = Summary by Room, Right = Summary by Category (Customer-Centric) -->
-          <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 8px;">
+          <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 8px; align-items: stretch;">
             <!-- Left: ตารางสรุปตามห้อง (Summary by Room) per user philosophy -->
-            <div class="slide-table-wrap" style="margin-bottom: 0;">
-              <div class="slide-table-title">🏠 สรุปตามพื้นที่ / ห้อง (Summary by Room)</div>
-              <table class="slide-table" style="width: 100%;">
+            <div class="slide-table-wrap" style="margin-bottom: 0; display: flex; flex-direction: column;">
+              <div class="slide-table-title" style="padding: 5px 8px; font-size: 11.5px; white-space: nowrap;">🏠 สรุปตามพื้นที่ / ห้อง (Summary by Room)</div>
+              <table class="slide-table" style="width: 100%; table-layout: fixed; flex: 1;">
                 <thead>
-                  <tr style="background: #0b1f3a; color: #ffffff; font-size: 10px;">
-                    <th style="padding: 2px 6px; text-align: left; width: 68%;">พื้นที่ / ห้อง</th>
-                    <th style="padding: 2px 6px; text-align: center; width: 32%;">ตรวจพบ (จุด)</th>
+                  <tr style="background: #0b1f3a; color: #ffffff; font-size: 10.5px;">
+                    <th style="padding: 4px 6px; text-align: left; width: 68%;">พื้นที่ / ห้อง</th>
+                    <th style="padding: 4px 6px; text-align: center; width: 32%;">ตรวจพบ</th>
                   </tr>
                 </thead>
                 <tbody id="slide1-room-summary-tbody">
@@ -3368,33 +3471,45 @@
             </div>
 
             <!-- Right: สรุปตามหมวดงาน (Summary by Category) -->
-            <div class="slide-table-wrap" style="margin-bottom: 0;">
-              <div class="slide-table-title">🏷️ สรุปตามหมวดงาน (Summary by Category)</div>
-              <table class="slide-table" style="width: 100%;">
+            <div class="slide-table-wrap" style="margin-bottom: 0; display: flex; flex-direction: column;">
+              <div class="slide-table-title" style="padding: 5px 8px; font-size: 11.5px; white-space: nowrap;">🏷️ สรุปตามหมวดงาน (Summary by Category)</div>
+              <table class="slide-table" style="width: 100%; table-layout: fixed; flex: 1;">
+                <thead>
+                  <tr style="background: #0b1f3a; color: #ffffff; font-size: 10.5px;">
+                    <th style="padding: 4px 6px; text-align: left; width: 35%;">หมวดงาน</th>
+                    <th style="padding: 4px 6px; text-align: center; width: 15%;">ตรวจพบ</th>
+                    <th style="padding: 4px 6px; text-align: left; width: 35%;">หมวดงาน</th>
+                    <th style="padding: 4px 6px; text-align: center; width: 15%;">ตรวจพบ</th>
+                  </tr>
+                </thead>
                 <tbody>
                   <tr>
-                    <td class="t-cat" style="width: 32%;">งานพื้น</td>
-                    <td class="t-cnt" style="width: 18%;" id="count-งานพื้น">0 จุด</td>
-                    <td class="t-cat" style="width: 32%;">ห้องน้ำ</td>
-                    <td class="t-cnt" style="width: 18%;" id="count-ห้องน้ำ">0 จุด</td>
+                    <td class="t-cat" style="padding: 4px 6px; font-size: 11px;">งานพื้น</td>
+                    <td class="t-cnt" style="padding: 4px 6px; font-size: 11px; text-align: center;" id="count-งานพื้น">0 จุด</td>
+                    <td class="t-cat" style="padding: 4px 6px; font-size: 11px;">ห้องน้ำ</td>
+                    <td class="t-cnt" style="padding: 4px 6px; font-size: 11px; text-align: center;" id="count-ห้องน้ำ">0 จุด</td>
                   </tr>
                   <tr>
-                    <td class="t-cat">งานผนัง</td>
-                    <td class="t-cnt" id="count-งานผนัง">0 จุด</td>
-                    <td class="t-cat">ครัว / Built-in</td>
-                    <td class="t-cnt" id="count-ครัว / Built-in">0 จุด</td>
+                    <td class="t-cat" style="padding: 4px 6px; font-size: 11px;">งานผนัง</td>
+                    <td class="t-cnt" style="padding: 4px 6px; font-size: 11px; text-align: center;" id="count-งานผนัง">0 จุด</td>
+                    <td class="t-cat" style="padding: 4px 6px; font-size: 11px;">ครัว / Built-in</td>
+                    <td class="t-cnt" style="padding: 4px 6px; font-size: 11px; text-align: center;" id="count-ครัว / Built-in">0 จุด</td>
                   </tr>
                   <tr>
-                    <td class="t-cat">งานฝ้าเพดาน</td>
-                    <td class="t-cnt" id="count-งานฝ้าเพดาน">0 จุด</td>
-                    <td class="t-cat">ระบบไฟฟ้า/ประปา</td>
-                    <td class="t-cnt" id="count-ระบบไฟฟ้า / ประปา">0 จุด</td>
+                    <td class="t-cat" style="padding: 4px 6px; font-size: 11px;">งานฝ้าเพดาน</td>
+                    <td class="t-cnt" style="padding: 4px 6px; font-size: 11px; text-align: center;" id="count-งานฝ้าเพดาน">0 จุด</td>
+                    <td class="t-cat" style="padding: 4px 6px; font-size: 11px;">ระบบไฟ/ประปา</td>
+                    <td class="t-cnt" style="padding: 4px 6px; font-size: 11px; text-align: center;" id="count-ระบบไฟฟ้า / ประปา">0 จุด</td>
                   </tr>
                   <tr>
-                    <td class="t-cat">ประตู / หน้าต่าง</td>
-                    <td class="t-cnt" id="count-ประตู / หน้าต่าง">0 จุด</td>
-                    <td class="t-cat">ระเบียง / อื่น ๆ</td>
-                    <td class="t-cnt" id="count-ระเบียง / อื่น ๆ">0 จุด</td>
+                    <td class="t-cat" style="padding: 4px 6px; font-size: 11px;">ประตู / หน้าต่าง</td>
+                    <td class="t-cnt" style="padding: 4px 6px; font-size: 11px; text-align: center;" id="count-ประตู / หน้าต่าง">0 จุด</td>
+                    <td class="t-cat" style="padding: 4px 6px; font-size: 11px;">ระเบียง / อื่น ๆ</td>
+                    <td class="t-cnt" style="padding: 4px 6px; font-size: 11px; text-align: center;" id="count-ระเบียง / อื่น ๆ">0 จุด</td>
+                  </tr>
+                  <tr style="background: #f8fafc; font-weight: 500;">
+                    <td colspan="3" class="t-cat" style="padding: 4px 6px; font-size: 11px; font-weight: 500; color: #0b1f3a; text-align: right; border-right: 1px solid #e2e8f0;">รวมทุกหมวดงาน:</td>
+                    <td class="t-cnt has-val" id="cat-total-count" style="padding: 4px 6px; font-size: 11px; text-align: center; color: #b87a22; font-weight: 500;">0 จุด</td>
                   </tr>
                 </tbody>
               </table>
@@ -3616,6 +3731,7 @@
     let currentPhotoBase64 = null;
     let currentPhotoWide = null;
     let currentPhotoClose = null;
+    let currentWidePhotoPin = { x: 50, y: 50 }; // เปอร์เซ็นต์พิกัดเป้าชี้ตำแหน่งบนภาพกว้าง (0-100%)
     let currentDefectStatus = "พบข้อสังเกต"; // 'พบข้อสังเกต' | 'รอตรวจสอบร่วมกัน' | 'ผ่านการตรวจ' | 'ควรแก้ไข'
     let defectList = [];
     window.getDefectList = () => defectList;
@@ -4515,11 +4631,84 @@
     }
 
     function triggerImportRoomFile() {
-      const input = document.getElementById("import-room-file");
-      if (input) {
-        input.value = "";
-        input.click();
+      const lib = getSavedRoomsLibrary();
+      if (!lib || lib.length === 0) {
+        // No saved rooms in local library, open file selector directly
+        const input = document.getElementById("import-room-file");
+        if (input) {
+          input.value = "";
+          input.click();
+        }
+        return;
       }
+
+      // If saved rooms exist in library, show modal to let inspector choose room or choose JSON file
+      openRoomLibrarySelectorModal();
+    }
+
+    function openRoomLibrarySelectorModal() {
+      let modal = document.getElementById("room-picker-modal");
+      if (!modal) {
+        modal = document.createElement("div");
+        modal.id = "room-picker-modal";
+        modal.style.cssText = "position: fixed; inset: 0; background: rgba(3, 7, 18, 0.88); z-index: 99999; display: flex; align-items: center; justify-content: center; padding: 16px; backdrop-filter: blur(4px);";
+        document.body.appendChild(modal);
+      }
+
+      const lib = getSavedRoomsLibrary();
+      let roomItemsHtml = "";
+      if (lib.length === 0) {
+        roomItemsHtml = '<div style="font-size: 13px; color: #94a3b8; text-align: center; padding: 20px;">ยังไม่มีห้องที่บันทึกไว้ในเครื่อง</div>';
+      } else {
+        roomItemsHtml = lib.map((r, i) => `
+          <div onclick="selectRoomFromPicker(${i})" style="background: #0b1528; border: 1.5px solid #1e3a8a; border-radius: 10px; padding: 12px 14px; margin-bottom: 8px; cursor: pointer; transition: all 0.2s;" onmouseover="this.style.borderColor='#ffd700'" onmouseout="this.style.borderColor='#1e3a8a'">
+            <div style="display: flex; justify-content: space-between; align-items: flex-start; gap: 8px;">
+              <div style="font-size: 14px; color: #ffffff; font-weight: 500;">🏢 ${r.title}</div>
+              <span style="background: #1e3a8a; color: #ffd700; font-size: 11px; padding: 2px 7px; border-radius: 6px; white-space: nowrap;">${r.defectCount} จุด</span>
+            </div>
+            <div style="font-size: 11.5px; color: #94a3b8; margin-top: 4px; display: flex; justify-content: space-between; align-items: center;">
+              <span>📅 วันที่ตรวจ: <strong style="color: #38bdf8;">${r.savedAt}</strong></span>
+              <span style="color: #06c755; font-size: 12px; font-weight: 500;">แตะเพื่อตรวจรอบ 2 👉</span>
+            </div>
+          </div>
+        `).join("");
+      }
+
+      modal.innerHTML = `
+        <div style="background: #070d1e; border: 1.5px solid #f59e0b; border-radius: 14px; width: 100%; max-width: 440px; max-height: 85vh; display: flex; flex-direction: column; overflow: hidden; box-shadow: 0 10px 30px rgba(0,0,0,0.8);">
+          <div style="padding: 14px 16px; border-bottom: 1px solid #1e2e54; display: flex; justify-content: space-between; align-items: center; background: #0c1836;">
+            <div style="font-size: 15px; color: #ffd700; font-weight: 500; display: flex; align-items: center; gap: 6px;">
+              <span>📂 เลือกประวัติห้องเดิมมาตรวจรอบ 2</span>
+            </div>
+            <button type="button" onclick="closeRoomLibrarySelectorModal()" style="background: transparent; border: none; color: #94a3b8; font-size: 20px; line-height: 1; cursor: pointer; padding: 2px 6px;">✕</button>
+          </div>
+          <div style="padding: 12px 14px; overflow-y: auto; flex: 1;">
+            <p style="font-size: 12px; color: #94a3b8; margin-bottom: 10px; line-height: 1.4;">
+              แตะเลือกห้องที่ต้องการตรวจรอบ 2 จากประวัติในเครื่องได้ทันที หรือเลือกไฟล์ .json จาก LINE/เครื่อง:
+            </p>
+            <div>${roomItemsHtml}</div>
+          </div>
+          <div style="padding: 12px 14px; border-top: 1px solid #1e2e54; background: #091224; display: flex; flex-direction: column; gap: 8px;">
+            <button type="button" class="btn-main" style="background: linear-gradient(135deg, #0284c7, #0369a1); font-size: 12.5px; padding: 9px;" onclick="closeRoomLibrarySelectorModal(); document.getElementById('import-room-file').click();">
+              📁 เลือกไฟล์ .json จากเครื่อง / ดาวน์โหลดจาก LINE
+            </button>
+            <button type="button" class="btn-secondary" style="font-size: 12px; padding: 7px; color: #94a3b8;" onclick="closeRoomLibrarySelectorModal()">
+              ปิดหน้าต่าง
+            </button>
+          </div>
+        </div>
+      `;
+      modal.style.display = "flex";
+    }
+
+    function closeRoomLibrarySelectorModal() {
+      const modal = document.getElementById("room-picker-modal");
+      if (modal) modal.style.display = "none";
+    }
+
+    function selectRoomFromPicker(idx) {
+      closeRoomLibrarySelectorModal();
+      loadRoomFromLibrary(idx);
     }
 
     function handleRoomFileImport(e) {
@@ -4629,6 +4818,9 @@
     /**
      * IN-BROWSER SAVED ROOMS LIBRARY
      */
+    /**
+     * IN-BROWSER SAVED ROOMS LIBRARY (AUTO-SAVE & INSTANT RE-INSPECTION)
+     */
     function getSavedRoomsLibrary() {
       try {
         const raw = localStorage.getItem("condo_room_library");
@@ -4638,19 +4830,34 @@
       }
     }
 
-    async function saveCurrentRoomToLibrary() {
-      if (defectList.length === 0 && !projectConfig.roomNo) {
-        alert("⚠️ ยังไม่มีข้อมูลห้องให้บันทึกเข้าคลังครับ");
+    let autoSaveRoomLibraryTimer = null;
+    function triggerAutoSaveToRoomLibrary() {
+      if (autoSaveRoomLibraryTimer) clearTimeout(autoSaveRoomLibraryTimer);
+      autoSaveRoomLibraryTimer = setTimeout(() => {
+        saveCurrentRoomToLibrary(true); // silent auto-save
+      }, 1500);
+    }
+
+    async function saveCurrentRoomToLibrary(silent = false) {
+      if (defectList.length === 0 && !projectConfig.roomNo && !projectConfig.projName) {
+        if (!silent) alert("⚠️ ยังไม่มีข้อมูลห้องให้บันทึกเข้าคลังครับ");
         return;
       }
 
-      const roomId = `${projectConfig.projName || 'คอนโด'}_${projectConfig.roomNo || Date.now()}`;
-      const title = `${projectConfig.projName || 'ไม่ระบุโครงการ'} - ห้อง ${projectConfig.roomNo || 'ไม่ระบุ'}`;
-      const savedAt = new Date().toLocaleDateString('th-TH') + ' ' + new Date().toLocaleTimeString('th-TH', { hour: '2-digit', minute: '2-digit' });
+      const pName = (projectConfig.projName || 'ไม่ระบุโครงการ').trim();
+      const rNo = (projectConfig.roomNo || 'ไม่ระบุห้อง').trim();
+      const roomId = `${pName}_${rNo}`;
+      const title = `${pName} - ห้อง ${rNo}`;
+      const inspectDateStr = projectConfig.inspectDate || new Date().toLocaleDateString('th-TH');
+      const timeStr = new Date().toLocaleTimeString('th-TH', { hour: '2-digit', minute: '2-digit' });
+      const savedAt = `${inspectDateStr} (${timeStr})`;
 
       const roomEntry = {
         id: roomId,
         title: title,
+        projName: pName,
+        roomNo: rNo,
+        inspectDate: inspectDateStr,
         savedAt: savedAt,
         defectCount: defectList.length,
         projectConfig: JSON.parse(JSON.stringify(projectConfig)),
@@ -4677,6 +4884,9 @@
       const metaEntry = {
         id: roomId,
         title: title,
+        projName: pName,
+        roomNo: rNo,
+        inspectDate: inspectDateStr,
         savedAt: savedAt,
         defectCount: defectList.length
       };
@@ -4695,7 +4905,9 @@
       }
 
       renderSavedRoomsList();
-      alert(`✅ เซฟห้อง "${title}" (${defectList.length} จุด) เข้าคลังในเครื่องเรียบร้อย!\n(ข้อมูลทั้งหมดและรูปภาพถูกจัดเก็บในฐานข้อมูลความจุสูง ปลอดภัย 100% ไม่ติดข้อจำกัดหน่วยความจำ)`);
+      if (!silent) {
+        alert(`✅ เซฟห้อง "${title}" (${defectList.length} จุด) เข้าคลังในเครื่องเรียบร้อย!\n(ข้อมูลทั้งหมดและรูปภาพถูกจัดเก็บในฐานข้อมูลความจุสูง ปลอดภัย 100% ไม่ติดข้อจำกัดหน่วยความจำ)`);
+      }
     }
 
     async function loadRoomFromLibrary(idx) {
@@ -4794,11 +5006,13 @@
       el.innerHTML = lib.map((r, i) => `
         <div style="display: flex; justify-content: space-between; align-items: center; background: #091024; border: 1px solid #1e2e54; border-radius: 6px; padding: 6px 10px;">
           <div>
-            <div style="font-size: 12px; color: #f8fafc; font-weight: 400;">${r.title}</div>
-            <div style="font-size: 10px; color: #64748b;">${r.savedAt} · <span style="color: #ffd700;">${r.defectCount} จุด</span></div>
+            <div style="font-size: 12px; color: #f8fafc; font-weight: 500;">🏢 ${r.title}</div>
+            <div style="font-size: 10px; color: #64748b; margin-top: 2px;">
+              <span>📅 วันที่ตรวจ: <strong style="color: #38bdf8;">${r.inspectDate || r.savedAt}</strong></span> · <span style="color: #ffd700;">${r.defectCount} จุด</span>
+            </div>
           </div>
           <div style="display: flex; gap: 4px;">
-            <button type="button" class="btn-secondary" style="font-size: 11px; padding: 3px 8px; color: #00adf2; border-color: #00adf2;" onclick="loadRoomFromLibrary(${i})">โหลด</button>
+            <button type="button" class="btn-secondary" style="font-size: 11px; padding: 3px 8px; color: #00adf2; border-color: #00adf2;" onclick="loadRoomFromLibrary(${i})">ตรวจต่อ</button>
             <button type="button" class="btn-danger-sm" style="font-size: 10px; padding: 2px 6px;" onclick="deleteRoomFromLibrary(${i})">ลบ</button>
           </div>
         </div>
@@ -4885,6 +5099,7 @@
       localStorage.setItem("condo_inspect_cfg", JSON.stringify(projectConfig));
       flashOfflineSavedIndicator();
       updateSummaryUI();
+      triggerAutoSaveToRoomLibrary();
     }
 
     /**
@@ -4967,6 +5182,7 @@
       }
       flashOfflineSavedIndicator();
       updateCurrentRoomDisplay();
+      triggerAutoSaveToRoomLibrary();
     }
 
     /**
@@ -5143,6 +5359,10 @@
       const previewBadge = document.getElementById("preview-defect-code-badge");
       if (previewBadge) {
         previewBadge.textContent = code;
+      }
+      const pinTag = document.getElementById("photo-wide-pin-tag");
+      if (pinTag) {
+        pinTag.textContent = code;
       }
     }
 
@@ -5450,6 +5670,7 @@
         if (box) box.classList.add("has-photo");
         const checkEl = document.getElementById("wide-photo-check");
         if (checkEl) checkEl.style.display = "block";
+        if (typeof showWidePhotoPinLayer === 'function') showWidePhotoPinLayer();
       } else if (liveCamMode === 'close' || liveCamMode === 'before') {
         currentPhotoClose = photoBase64;
         currentPhotoBase64 = photoBase64;
@@ -5508,6 +5729,7 @@
       if (box) box.classList.remove("has-photo");
       const checkEl = document.getElementById("wide-photo-check");
       if (checkEl) checkEl.style.display = "none";
+      if (typeof hideWidePhotoPinLayer === 'function') hideWidePhotoPinLayer();
     }
 
     function clearCurrentClosePhoto() {
@@ -5787,6 +6009,7 @@
           if (box) box.classList.add("has-photo");
           const checkEl = document.getElementById("wide-photo-check");
           if (checkEl) checkEl.style.display = "block";
+          if (typeof showWidePhotoPinLayer === 'function') showWidePhotoPinLayer();
         } else {
           currentPhotoClose = b64;
           currentPhotoBase64 = b64;
@@ -5811,6 +6034,207 @@
         hideToast();
         e.target.value = "";
       }
+    }
+
+    /**
+     * WIDE PHOTO TARGET PIN MARKER ENGINE (เป้าชี้ตำแหน่ง Defect คมชัด สัดส่วนเป๊ะ รหัสตรงหัวข้อ)
+     */
+    function showWidePhotoPinLayer() {
+      const layer = document.getElementById("photo-wide-pin-layer");
+      const tag = document.getElementById("photo-wide-pin-tag");
+      const marker = document.getElementById("photo-wide-pin-marker");
+      if (!layer || !marker) return;
+
+      const codeInput = document.getElementById("cur-defect-code");
+      const code = (codeInput && codeInput.value.trim()) || generateSmartDefectCode();
+      if (tag) tag.textContent = code;
+
+      // Default to 50%, 50% if not set
+      if (!currentWidePhotoPin || typeof currentWidePhotoPin.x !== 'number') {
+        currentWidePhotoPin = { x: 50, y: 50 };
+      }
+      marker.style.left = `${currentWidePhotoPin.x}%`;
+      marker.style.top = `${currentWidePhotoPin.y}%`;
+      layer.style.display = "block";
+    }
+
+    function hideWidePhotoPinLayer() {
+      const layer = document.getElementById("photo-wide-pin-layer");
+      if (layer) layer.style.display = "none";
+      currentWidePhotoPin = { x: 50, y: 50 };
+    }
+
+    function resetWidePhotoPin() {
+      currentWidePhotoPin = { x: 50, y: 50 };
+      const marker = document.getElementById("photo-wide-pin-marker");
+      if (marker) {
+        marker.style.left = "50%";
+        marker.style.top = "50%";
+      }
+      if (navigator.vibrate) navigator.vibrate(20);
+    }
+
+    function updateWidePhotoPinPosFromEvent(e) {
+      const layer = document.getElementById("photo-wide-pin-layer");
+      const marker = document.getElementById("photo-wide-pin-marker");
+      if (!layer || !marker) return;
+
+      const rect = layer.getBoundingClientRect();
+      const clientX = e.touches ? e.touches[0].clientX : e.clientX;
+      const clientY = e.touches ? e.touches[0].clientY : e.clientY;
+
+      let pctX = ((clientX - rect.left) / rect.width) * 100;
+      let pctY = ((clientY - rect.top) / rect.height) * 100;
+
+      // Clamp so crosshair stays visible inside box (5% - 95%)
+      pctX = Math.max(5, Math.min(95, Math.round(pctX * 10) / 10));
+      pctY = Math.max(6, Math.min(94, Math.round(pctY * 10) / 10));
+
+      currentWidePhotoPin = { x: pctX, y: pctY };
+      marker.style.left = `${pctX}%`;
+      marker.style.top = `${pctY}%`;
+    }
+
+    function initWidePhotoPinEvents() {
+      const layer = document.getElementById("photo-wide-pin-layer");
+      if (!layer) return;
+
+      let isDragging = false;
+
+      const handleStart = (e) => {
+        isDragging = true;
+        updateWidePhotoPinPosFromEvent(e);
+        if (navigator.vibrate) navigator.vibrate(25);
+      };
+
+      const handleMove = (e) => {
+        if (!isDragging) return;
+        if (e.cancelable) e.preventDefault();
+        updateWidePhotoPinPosFromEvent(e);
+      };
+
+      const handleEnd = () => {
+        isDragging = false;
+      };
+
+      layer.addEventListener("mousedown", handleStart);
+      window.addEventListener("mousemove", handleMove);
+      window.addEventListener("mouseup", handleEnd);
+
+      layer.addEventListener("touchstart", handleStart, { passive: false });
+      window.addEventListener("touchmove", handleMove, { passive: false });
+      window.addEventListener("touchend", handleEnd);
+    }
+
+    /**
+     * STAMP VECTOR PIN ON WIDE PHOTO (วาดเป้าชี้จุดคมกริบ สัดส่วนเป๊ะ สเกลตามรูปจริง 100%)
+     */
+    async function stampDefectPinOnPhoto(base64Src, code, pinCoords) {
+      if (!base64Src || !pinCoords || typeof pinCoords.x !== 'number') return base64Src;
+      return new Promise((resolve) => {
+        const img = new Image();
+        img.onload = () => {
+          const w = img.naturalWidth || img.width;
+          const h = img.naturalHeight || img.height;
+          if (!w || !h) { resolve(base64Src); return; }
+
+          const canvas = document.createElement("canvas");
+          canvas.width = w;
+          canvas.height = h;
+          const ctx = canvas.getContext("2d");
+          if (!ctx) { resolve(base64Src); return; }
+
+          // 1. Draw base photo
+          ctx.drawImage(img, 0, 0, w, h);
+
+          // 2. Compute pin coordinates in pixel space
+          const px = (pinCoords.x / 100) * w;
+          const py = (pinCoords.y / 100) * h;
+
+          // 3. Scale radius proportional to photo size (clean & razor sharp, never oversized)
+          const baseDim = Math.min(w, h);
+          const r = Math.max(16, Math.min(48, Math.round(baseDim * 0.038)));
+          const crossArm = Math.round(r * 1.35);
+
+          // Dark drop shadow
+          ctx.save();
+          ctx.shadowColor = "rgba(0, 0, 0, 0.85)";
+          ctx.shadowBlur = Math.round(r * 0.4);
+          ctx.shadowOffsetX = 0;
+          ctx.shadowOffsetY = 2;
+
+          // Red Target Circle
+          ctx.beginPath();
+          ctx.arc(px, py, r, 0, Math.PI * 2);
+          ctx.fillStyle = "rgba(239, 68, 68, 0.28)";
+          ctx.fill();
+          ctx.lineWidth = Math.max(2, Math.round(r * 0.16));
+          ctx.strokeStyle = "#ef4444";
+          ctx.stroke();
+
+          // Inner White Ring
+          ctx.beginPath();
+          ctx.arc(px, py, r * 0.65, 0, Math.PI * 2);
+          ctx.lineWidth = Math.max(1.5, Math.round(r * 0.08));
+          ctx.strokeStyle = "rgba(255, 255, 255, 0.95)";
+          ctx.stroke();
+
+          // Crosshairs
+          ctx.lineWidth = Math.max(2, Math.round(r * 0.12));
+          ctx.strokeStyle = "#ffffff";
+          // Horizontal line
+          ctx.beginPath();
+          ctx.moveTo(px - crossArm, py);
+          ctx.lineTo(px + crossArm, py);
+          ctx.stroke();
+          // Vertical line
+          ctx.beginPath();
+          ctx.moveTo(px, py - crossArm);
+          ctx.lineTo(px, py + crossArm);
+          ctx.stroke();
+
+          // Center Red Dot
+          ctx.beginPath();
+          ctx.arc(px, py, Math.max(2.5, r * 0.15), 0, Math.PI * 2);
+          ctx.fillStyle = "#ef4444";
+          ctx.fill();
+
+          // 4. Code Pill Badge under Target (เช่น D-001 / D-002 ตรงรหัส)
+          const cleanCode = code || "D-001";
+          const fontSize = Math.max(12, Math.min(32, Math.round(baseDim * 0.032)));
+          ctx.font = `300 ${fontSize}px 'Kanit', sans-serif`;
+          ctx.textBaseline = "middle";
+          const textMetrics = ctx.measureText(cleanCode);
+          const padX = Math.round(fontSize * 0.45);
+          const padY = Math.round(fontSize * 0.28);
+          const badgeW = textMetrics.width + (padX * 2);
+          const badgeH = fontSize + (padY * 2);
+          const badgeX = px - (badgeW / 2);
+          const badgeY = py + r + Math.round(r * 0.25);
+
+          // Badge Background (Navy Blue + Gold Border)
+          ctx.fillStyle = "rgba(11, 31, 58, 0.95)";
+          ctx.strokeStyle = "#ffd700";
+          ctx.lineWidth = Math.max(1.5, Math.round(fontSize * 0.08));
+          
+          const cornerR = Math.round(badgeH * 0.25);
+          ctx.beginPath();
+          ctx.roundRect(badgeX, badgeY, badgeW, badgeH, cornerR);
+          ctx.fill();
+          ctx.stroke();
+
+          // Badge Text (Gold #ffd700, razor sharp Kanit 300)
+          ctx.fillStyle = "#ffd700";
+          ctx.shadowBlur = 0;
+          ctx.fillText(cleanCode, badgeX + padX, badgeY + (badgeH / 2));
+          ctx.restore();
+
+          const stampedBase64 = canvas.toDataURL("image/jpeg", 0.78);
+          resolve(stampedBase64);
+        };
+        img.onerror = () => resolve(base64Src);
+        img.src = base64Src;
+      });
     }
 
     /**
@@ -6484,7 +6908,7 @@
     /**
      * SAVE CURRENT DEFECT (CUSTOMER-CENTRIC 6 PILLARS)
      */
-    function saveCurrentDefect() {
+    async function saveCurrentDefect() {
       const hasWide = !!currentPhotoWide;
       const hasClose = !!(currentPhotoClose || currentPhotoBase64);
 
@@ -6517,6 +6941,15 @@
       const discussMemoInput = document.getElementById("cur-discuss-memo");
       const discussMemo = (currentDefectStatus === 'รอตรวจสอบร่วมกัน' && discussMemoInput) ? discussMemoInput.value.trim() : "";
 
+      let stampedWide = pWide;
+      if (currentPhotoWide && currentWidePhotoPin && typeof stampDefectPinOnPhoto === 'function') {
+        try {
+          stampedWide = await stampDefectPinOnPhoto(currentPhotoWide, code, currentWidePhotoPin);
+        } catch (stampErr) {
+          console.warn("Stamp pin error, falling back to raw photo:", stampErr);
+        }
+      }
+
       const defect = {
         id: Date.now(),
         code: code,
@@ -6528,7 +6961,9 @@
         status: currentDefectStatus || "พบข้อสังเกต",
         discussMemo: discussMemo,
         date: inspectDate,
-        photoWide: pWide,
+        photoWide: stampedWide,
+        photoWideRaw: currentPhotoWide,
+        pinCoords: currentWidePhotoPin ? { ...currentWidePhotoPin } : null,
         photoClose: pClose,
         photoBefore: pClose, // backward compatibility
         photoAfter: null
@@ -7446,27 +7881,35 @@
             roomMap[r] = (roomMap[r] || 0) + 1;
           });
           const roomEntries = Object.entries(roomMap);
-          let rowsHtml = roomEntries.slice(0, 4).map(([r, cnt]) => `
+          let displayedRooms = [];
+          if (roomEntries.length <= 4) {
+            displayedRooms = roomEntries.map(([r, cnt]) => ({ name: r, count: cnt }));
+            // Pad empty rows if fewer than 4 rooms so height matches perfectly
+            while (displayedRooms.length < 4) {
+              displayedRooms.push({ name: "-", count: 0, isEmpty: true });
+            }
+          } else {
+            // First 3 rooms + 1 aggregate extra rooms row = 4 rows
+            displayedRooms = roomEntries.slice(0, 3).map(([r, cnt]) => ({ name: r, count: cnt }));
+            const extraRooms = roomEntries.slice(3).reduce((sum, [, cnt]) => sum + cnt, 0);
+            displayedRooms.push({
+              name: `และอีก ${roomEntries.length - 3} พื้นที่`,
+              count: extraRooms,
+              isExtra: true
+            });
+          }
+
+          let rowsHtml = displayedRooms.map(item => `
             <tr>
-              <td class="t-cat" style="font-size: 11px; padding: 2px 6px;">${r}</td>
-              <td class="t-cnt ${cnt > 0 ? 'has-val' : ''}" style="font-size: 11px; padding: 2px 6px; text-align: center;">${cnt} จุด</td>
+              <td class="t-cat" style="font-size: 11px; padding: 4px 6px; color: ${item.isEmpty ? '#94a3b8' : (item.isExtra ? '#64748b' : '#1e293b')};">${item.name}</td>
+              <td class="t-cnt ${item.count > 0 ? 'has-val' : ''}" style="font-size: 11px; padding: 4px 6px; text-align: center; color: ${item.isEmpty ? '#94a3b8' : ''};">${item.isEmpty ? '-' : `${item.count} จุด`}</td>
             </tr>
           `).join("");
 
-          if (roomEntries.length > 4) {
-            const extraRooms = roomEntries.slice(4).reduce((sum, [, cnt]) => sum + cnt, 0);
-            rowsHtml += `
-              <tr>
-                <td class="t-cat" style="font-size: 10px; color: #64748b; padding: 2px 6px;">และอีก ${roomEntries.length - 4} พื้นที่</td>
-                <td class="t-cnt has-val" style="font-size: 10px; padding: 2px 6px; text-align: center;">${extraRooms} จุด</td>
-              </tr>
-            `;
-          }
-
           rowsHtml += `
             <tr style="background: #f8fafc; font-weight: 500;">
-              <td class="t-cat" style="font-weight: 500; color: #0b1f3a; padding: 2px 6px;">รวมทุกพื้นที่</td>
-              <td class="t-cnt has-val" style="text-align: center; color: #b87a22; font-weight: 500; padding: 2px 6px;">${defectList.length} จุด</td>
+              <td class="t-cat" style="font-weight: 500; color: #0b1f3a; padding: 4px 6px; font-size: 11px;">รวมทุกพื้นที่:</td>
+              <td class="t-cnt has-val" style="text-align: center; color: #b87a22; font-weight: 500; padding: 4px 6px; font-size: 11px;">${defectList.length} จุด</td>
             </tr>
           `;
           roomSummaryTbody.innerHTML = rowsHtml;
@@ -7492,6 +7935,10 @@
           el.classList.toggle("has-val", cnt > 0);
         }
       });
+      const catTotalEl = document.getElementById("cat-total-count");
+      if (catTotalEl) {
+        catTotalEl.textContent = `${defectList.length} จุด`;
+      }
 
       // 5. Populate Customer Room Breakdown Table (ตารางแจกแจงตามห้องหน้าเดียว แบบภาพที่ 1)
       // 5. Render Executive Customer Summary Tables (ตารางแจกแจงตามห้อง แบ่งหน้าละ 7 รายการ พร้อมหัวกระดาษทุกหน้า)
@@ -8607,6 +9054,7 @@
       loadSavedData();
       initSpeechRecognition();
       initLightboxGestures();
+      if (typeof initWidePhotoPinEvents === 'function') initWidePhotoPinEvents();
       if (/Line|FB_IAB|FBAN|FBAV|Instagram/i.test(navigator.userAgent)) {
         const iab = document.getElementById("iab-warning-banner");
         if (iab) iab.style.display = "flex";
