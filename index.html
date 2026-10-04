@@ -350,6 +350,11 @@
       border-color: #00adf2;
       color: #00adf2;
     }
+    /* เมื่อมีรูปภาพแล้ว ซ่อนป้ายหัวข้อและป้ายเช็กด้านบนออก เพื่อไม่ให้บังรูปและมองเห็นรูปได้ 100% */
+    .dual-photo-box.has-photo .dual-photo-tag,
+    .dual-photo-box.has-photo .photo-saved-check {
+      display: none !important;
+    }
 
     /* Target Pin Marker on Wide Photo (เป้าชี้ตำแหน่ง Defect คมชัด แม่นยำ) */
     .photo-pin-layer {
@@ -380,13 +385,13 @@
       transform: translate(-50%, -50%) scale(1.15);
     }
     .pin-crosshair {
-      width: 26px;
-      height: 26px;
-      border: 2px solid #ef4444;
+      width: 20px;
+      height: 20px;
+      border: 1.5px solid #ef4444;
       border-radius: 50%;
       position: relative;
-      background: rgba(239, 68, 68, 0.2);
-      box-shadow: inset 0 0 0 1.5px rgba(255, 255, 255, 0.9), 0 0 0 1px rgba(0, 0, 0, 0.85);
+      background: rgba(239, 68, 68, 0.18);
+      box-shadow: inset 0 0 0 1px rgba(255, 255, 255, 0.9), 0 0 0 1px rgba(0, 0, 0, 0.85);
     }
     .pin-crosshair::before,
     .pin-crosshair::after {
@@ -396,50 +401,31 @@
     }
     .pin-crosshair::before {
       top: 50%;
-      left: -4px;
-      right: -4px;
-      height: 1.5px;
+      left: -3px;
+      right: -3px;
+      height: 1px;
       transform: translateY(-50%);
     }
     .pin-crosshair::after {
       left: 50%;
-      top: -4px;
-      bottom: -4px;
-      width: 1.5px;
+      top: -3px;
+      bottom: -3px;
+      width: 1px;
       transform: translateX(-50%);
     }
     .pin-code-tag {
-      margin-top: 3px;
-      background: #0b1f3a;
+      margin-top: 2px;
+      background: rgba(11, 31, 58, 0.92);
       border: 1px solid #ffd700;
       color: #ffd700;
-      font-size: 11px;
+      font-size: 10px;
       font-family: 'Kanit', sans-serif;
       font-weight: 300;
-      line-height: 1.2;
-      padding: 1.5px 6px;
-      border-radius: 4px;
+      line-height: 1.1;
+      padding: 1px 5px;
+      border-radius: 3px;
       white-space: nowrap;
-      box-shadow: 0 1.5px 4px rgba(0,0,0,0.7);
-    }
-    .pin-guide-banner {
-      position: absolute;
-      top: 36px;
-      left: 8px;
-      right: 8px;
-      background: rgba(11, 31, 58, 0.88);
-      border: 1px solid rgba(255, 215, 0, 0.6);
-      color: #f8fafc;
-      font-size: 11px;
-      font-family: 'Kanit', sans-serif;
-      font-weight: 300;
-      padding: 3px 8px;
-      border-radius: 6px;
-      display: flex;
-      align-items: center;
-      justify-content: space-between;
-      z-index: 7;
-      pointer-events: none;
+      box-shadow: 0 1px 3px rgba(0,0,0,0.7);
     }
 
     /* Dynamic Quick Finding & Recommendation Pills */
@@ -3138,15 +3124,11 @@
               </div>
             </div>
 
-            <!-- Layer เป้าชี้ตำแหน่ง Defect บนภาพกว้าง (แตะ/ลากเลื่อนได้ คมชัด แม่นยำ) -->
+            <!-- Layer เป้าชี้ตำแหน่ง Defect บนภาพกว้าง (แตะ/ลากเลื่อนได้ คมชัด แม่นยำ ไม่บังรูป) -->
             <div id="photo-wide-pin-layer" class="photo-pin-layer" style="display: none;" onclick="event.stopPropagation();">
               <div id="photo-wide-pin-marker" class="photo-pin-marker" style="left: 50%; top: 50%;">
                 <div class="pin-crosshair"></div>
                 <div id="photo-wide-pin-tag" class="pin-code-tag">D-001</div>
-              </div>
-              <div class="pin-guide-banner">
-                <span>🎯 แตะหรือลากเป้าเพื่อชี้ตำแหน่ง Defect</span>
-                <button type="button" onclick="event.stopPropagation(); resetWidePhotoPin();" style="background: none; border: none; color: #ffd700; font-size: 11px; cursor: pointer; text-decoration: underline; padding: 0;">กึ่งกลาง</button>
               </div>
             </div>
 
@@ -6151,36 +6133,36 @@
           const px = (pinCoords.x / 100) * w;
           const py = (pinCoords.y / 100) * h;
 
-          // 3. Scale radius proportional to photo size (clean & razor sharp, never oversized)
+          // 3. Scale radius proportional to photo size (compact, razor-sharp, never covering the picture)
           const baseDim = Math.min(w, h);
-          const r = Math.max(16, Math.min(48, Math.round(baseDim * 0.038)));
-          const crossArm = Math.round(r * 1.35);
+          const r = Math.max(12, Math.min(30, Math.round(baseDim * 0.024)));
+          const crossArm = Math.round(r * 1.3);
 
           // Dark drop shadow
           ctx.save();
           ctx.shadowColor = "rgba(0, 0, 0, 0.85)";
-          ctx.shadowBlur = Math.round(r * 0.4);
+          ctx.shadowBlur = Math.round(r * 0.35);
           ctx.shadowOffsetX = 0;
-          ctx.shadowOffsetY = 2;
+          ctx.shadowOffsetY = 1.5;
 
           // Red Target Circle
           ctx.beginPath();
           ctx.arc(px, py, r, 0, Math.PI * 2);
-          ctx.fillStyle = "rgba(239, 68, 68, 0.28)";
+          ctx.fillStyle = "rgba(239, 68, 68, 0.22)";
           ctx.fill();
-          ctx.lineWidth = Math.max(2, Math.round(r * 0.16));
+          ctx.lineWidth = Math.max(1.5, Math.round(r * 0.14));
           ctx.strokeStyle = "#ef4444";
           ctx.stroke();
 
           // Inner White Ring
           ctx.beginPath();
           ctx.arc(px, py, r * 0.65, 0, Math.PI * 2);
-          ctx.lineWidth = Math.max(1.5, Math.round(r * 0.08));
+          ctx.lineWidth = Math.max(1, Math.round(r * 0.08));
           ctx.strokeStyle = "rgba(255, 255, 255, 0.95)";
           ctx.stroke();
 
           // Crosshairs
-          ctx.lineWidth = Math.max(2, Math.round(r * 0.12));
+          ctx.lineWidth = Math.max(1.5, Math.round(r * 0.1));
           ctx.strokeStyle = "#ffffff";
           // Horizontal line
           ctx.beginPath();
@@ -6195,27 +6177,27 @@
 
           // Center Red Dot
           ctx.beginPath();
-          ctx.arc(px, py, Math.max(2.5, r * 0.15), 0, Math.PI * 2);
+          ctx.arc(px, py, Math.max(2, r * 0.14), 0, Math.PI * 2);
           ctx.fillStyle = "#ef4444";
           ctx.fill();
 
-          // 4. Code Pill Badge under Target (เช่น D-001 / D-002 ตรงรหัส)
+          // 4. Code Pill Badge under Target (เช่น D-001 / D-002 ตรงรหัส กะทัดรัด คมกริบ)
           const cleanCode = code || "D-001";
-          const fontSize = Math.max(12, Math.min(32, Math.round(baseDim * 0.032)));
+          const fontSize = Math.max(10, Math.min(22, Math.round(baseDim * 0.022)));
           ctx.font = `300 ${fontSize}px 'Kanit', sans-serif`;
           ctx.textBaseline = "middle";
           const textMetrics = ctx.measureText(cleanCode);
-          const padX = Math.round(fontSize * 0.45);
-          const padY = Math.round(fontSize * 0.28);
+          const padX = Math.round(fontSize * 0.4);
+          const padY = Math.round(fontSize * 0.22);
           const badgeW = textMetrics.width + (padX * 2);
           const badgeH = fontSize + (padY * 2);
           const badgeX = px - (badgeW / 2);
-          const badgeY = py + r + Math.round(r * 0.25);
+          const badgeY = py + r + Math.round(r * 0.2);
 
           // Badge Background (Navy Blue + Gold Border)
-          ctx.fillStyle = "rgba(11, 31, 58, 0.95)";
+          ctx.fillStyle = "rgba(11, 31, 58, 0.92)";
           ctx.strokeStyle = "#ffd700";
-          ctx.lineWidth = Math.max(1.5, Math.round(fontSize * 0.08));
+          ctx.lineWidth = Math.max(1, Math.round(fontSize * 0.07));
           
           const cornerR = Math.round(badgeH * 0.25);
           ctx.beginPath();
