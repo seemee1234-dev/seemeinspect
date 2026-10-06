@@ -8527,6 +8527,22 @@
       document.body.style.overflow = '';
     }
 
+    function zoomWideFromLightbox() {
+      if (currentLightboxIndex < 0 || currentLightboxIndex >= defectList.length) return;
+      const d = defectList[currentLightboxIndex];
+      const pWide = d.photoWide || d.photoClose || d.photoBefore || (d.photos && d.photos[0]) || '';
+      if (!pWide) return;
+      openSinglePhotoZoom(pWide, d.code, getDefectRoom(d), 'ภาพตำแหน่ง (กว้าง)');
+    }
+
+    function zoomCloseFromLightbox() {
+      if (currentLightboxIndex < 0 || currentLightboxIndex >= defectList.length) return;
+      const d = defectList[currentLightboxIndex];
+      const pClose = d.photoClose || d.photoBefore || d.photoWide || (d.photos && d.photos[1]) || (d.photos && d.photos[0]) || '';
+      if (!pClose) return;
+      openSinglePhotoZoom(pClose, d.code, getDefectRoom(d), 'ภาพระยะใกล้ (Close-up)');
+    }
+
     function editFromLightbox() {
       editDefectDesc(currentLightboxIndex);
       openPhotoLightbox(currentLightboxIndex);
@@ -8550,10 +8566,11 @@
     }
 
     /* Single Photo Zoom (รูปขยายอย่างเดียว โฟกัสเฉพาะรูป คมชัดเต็มจอ) */
-    function openSinglePhotoZoom(target, code, room) {
+    function openSinglePhotoZoom(target, code, room, label) {
       let imgSrc = "";
       let itemCode = code || "";
       let itemRoom = room || "";
+      let itemLabel = label || "ภาพระยะใกล้";
 
       if (typeof target === "number") {
         const d = defectList[target];
@@ -8571,7 +8588,7 @@
       const imgEl = document.getElementById('sp-zoom-img');
       const titleEl = document.getElementById('sp-zoom-title');
       if (imgEl) imgEl.src = imgSrc;
-      if (titleEl) titleEl.textContent = `[${itemCode || 'Defect'}] ${itemRoom || ''} · ภาพระยะใกล้`;
+      if (titleEl) titleEl.textContent = `[${itemCode || 'Defect'}] ${itemRoom ? itemRoom + ' · ' : ''}${itemLabel}`;
       if (modal) {
         modal.style.display = 'flex';
         document.body.style.overflow = 'hidden';
@@ -8582,7 +8599,12 @@
     function closeSinglePhotoZoom() {
       const modal = document.getElementById('single-photo-modal');
       if (modal) modal.style.display = 'none';
-      document.body.style.overflow = '';
+      const lb = document.getElementById('photo-lightbox-modal');
+      if (lb && lb.style.display !== 'none') {
+        document.body.style.overflow = 'hidden';
+      } else {
+        document.body.style.overflow = '';
+      }
     }
 
     /**
@@ -9433,13 +9455,15 @@
         <div style="position: relative; margin-bottom: 12px;">
           <div id="lb-photos-container" style="display: grid; grid-template-columns: 1fr 1fr; gap: 8px;">
             <!-- Wide Box -->
-            <div style="background: #020617; border: 1.5px solid #1e293b; border-radius: 8px; overflow: hidden; position: relative;">
-              <div style="position: absolute; top: 6px; left: 6px; font-size: 11.5px; background: rgba(0,0,0,0.85); color: #38bdf8; border: 1px solid #0284c7; padding: 2px 8px; border-radius: 4px; z-index: 2;">📸 ภาพตำแหน่ง (กว้าง)</div>
+            <div style="background: #020617; border: 1.5px solid #1e293b; border-radius: 8px; overflow: hidden; position: relative; cursor: zoom-in;" onclick="zoomWideFromLightbox()">
+              <div style="position: absolute; top: 6px; left: 6px; font-size: 11px; background: rgba(0,0,0,0.85); color: #38bdf8; border: 1px solid #0284c7; padding: 2px 7px; border-radius: 4px; z-index: 2;">📸 ภาพตำแหน่ง</div>
+              <div style="position: absolute; bottom: 6px; right: 6px; font-size: 10.5px; background: rgba(11,31,58,0.9); color: #ffd700; border: 1px solid #ffd700; padding: 1.5px 6px; border-radius: 4px; z-index: 2; pointer-events: none;">🔍 แตะขยายเต็มจอ</div>
               <img id="lb-photo-wide" src="" alt="ภาพตำแหน่ง" style="width: 100%; height: 250px; min-height: 220px; object-fit: contain; background: #000000; display: block;">
             </div>
             <!-- Close Box -->
-            <div style="background: #020617; border: 1.5px solid #1e293b; border-radius: 8px; overflow: hidden; position: relative;">
-              <div style="position: absolute; top: 6px; left: 6px; font-size: 11.5px; background: rgba(0,0,0,0.85); color: #ffd700; border: 1px solid #ca8a04; padding: 2px 8px; border-radius: 4px; z-index: 2;">🔍 ภาพรายละเอียด (ใกล้)</div>
+            <div style="background: #020617; border: 1.5px solid #1e293b; border-radius: 8px; overflow: hidden; position: relative; cursor: zoom-in;" onclick="zoomCloseFromLightbox()">
+              <div style="position: absolute; top: 6px; left: 6px; font-size: 11px; background: rgba(0,0,0,0.85); color: #ffd700; border: 1px solid #ca8a04; padding: 2px 7px; border-radius: 4px; z-index: 2;">🔍 ภาพรายละเอียด</div>
+              <div style="position: absolute; bottom: 6px; right: 6px; font-size: 10.5px; background: rgba(11,31,58,0.9); color: #ffd700; border: 1px solid #ffd700; padding: 1.5px 6px; border-radius: 4px; z-index: 2; pointer-events: none;">🔍 แตะขยายเต็มจอ</div>
               <img id="lb-photo-close" src="" alt="ภาพระยะใกล้" style="width: 100%; height: 250px; min-height: 220px; object-fit: contain; background: #000000; display: block;">
             </div>
           </div>
