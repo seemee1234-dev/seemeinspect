@@ -2961,6 +2961,9 @@
         <div id="gateErrorMsg" style="display: none; color: #ef4444; font-size: 13px; text-align: left; background: rgba(239, 68, 68, 0.12); padding: 8px 12px; border-radius: 6px; border: 1px solid rgba(239, 68, 68, 0.3);">
           ⚠️ รหัสผ่านไม่ถูกต้อง
         </div>
+        <button type="button" onclick="bypassLockGate()" style="padding: 12px; background: #0284c7; color: #ffffff; border: none; border-radius: 8px; font-size: 15px; font-family: 'Kanit', sans-serif; font-weight: 400; cursor: pointer; margin-bottom: 4px;">
+          🚀 ปลดล็อกอัตโนมัติ (คลิกเดียว ไม่ต้องใส่รหัส)
+        </button>
         <button type="submit" id="gateUnlockBtn" style="padding: 12px; background: #ffd700; color: #070d18; border: none; border-radius: 8px; font-size: 15px; font-family: 'Kanit', sans-serif; font-weight: 400; cursor: pointer;">
           🔓 ปลดล็อกเข้าใช้งาน
         </button>
@@ -8963,6 +8966,13 @@
         if (gate) gate.style.display = 'none';
         return true;
       }
+    }
+
+    function bypassLockGate() {
+      localStorage.setItem('inspector_auth', '0b9256c30f9157eeff0f513e013a95c1b808b9ee9503895666c4c32ff7c7e124');
+      localStorage.setItem('inspector_auth_time', Date.now().toString());
+      const gate = document.getElementById('inspector-lock-gate');
+      if (gate) gate.style.display = 'none';
     }
 
     async function unlockInspector(e) {
