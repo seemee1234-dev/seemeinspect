@@ -5428,32 +5428,38 @@
       if (!guideBox) return;
 
       if (currentLiveCamAspect === '4:3') {
+        guideBox.style.inset = "auto";
         guideBox.style.aspectRatio = "4 / 3";
         guideBox.style.width = "92%";
         guideBox.style.maxWidth = "440px";
         guideBox.style.height = "auto";
         guideBox.style.borderRadius = "12px";
         guideBox.style.border = "2px solid #ffd700";
+        guideBox.style.boxSizing = "border-box";
         guideBox.style.boxShadow = "0 0 0 9999px rgba(0,0,0,0.55), inset 0 0 20px rgba(255,215,0,0.2)";
         if (aspectBtn) aspectBtn.textContent = "📐 4:3 แนวนอน";
         if (guideLabel) guideLabel.textContent = "📐 สัดส่วน 4:3 (สิ่งที่เห็นในกรอบ = รูปที่เซฟ 100%)";
       } else if (currentLiveCamAspect === '3:4') {
+        guideBox.style.inset = "auto";
         guideBox.style.aspectRatio = "3 / 4";
         guideBox.style.width = "68%";
         guideBox.style.maxWidth = "320px";
         guideBox.style.height = "auto";
         guideBox.style.borderRadius = "12px";
         guideBox.style.border = "2px solid #ffd700";
+        guideBox.style.boxSizing = "border-box";
         guideBox.style.boxShadow = "0 0 0 9999px rgba(0,0,0,0.55), inset 0 0 20px rgba(255,215,0,0.2)";
         if (aspectBtn) aspectBtn.textContent = "📱 3:4 แนวตั้ง";
         if (guideLabel) guideLabel.textContent = "📱 สัดส่วน 3:4 แนวตั้ง (สิ่งที่เห็นในกรอบ = รูปที่เซฟ 100%)";
       } else {
         guideBox.style.aspectRatio = "unset";
+        guideBox.style.inset = "0";
         guideBox.style.width = "100%";
         guideBox.style.maxWidth = "100%";
         guideBox.style.height = "100%";
         guideBox.style.borderRadius = "0px";
-        guideBox.style.border = "3px solid #ffd700";
+        guideBox.style.border = "3.5px solid #ffd700";
+        guideBox.style.boxSizing = "border-box";
         guideBox.style.boxShadow = "inset 0 0 0 2px rgba(0,0,0,0.6)";
         if (aspectBtn) aspectBtn.textContent = "🌐 เต็มเฟรม";
         if (guideLabel) guideLabel.textContent = "🌐 ถ่ายเต็มเฟรม 100% (กรอบสีเหลืองชิดขอบจอเต็มรูป)";
