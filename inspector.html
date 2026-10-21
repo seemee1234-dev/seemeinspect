@@ -385,27 +385,16 @@
       transform: translate(-50%, -50%) scale(1.15);
     }
     .pin-crosshair {
-      width: 42px;
-      height: 42px;
-      border: 3px dashed #ef4444;
+      width: 84px;
+      height: 84px;
+      border: 4px solid #ef4444;
       border-radius: 50%;
       position: relative;
-      background: rgba(239, 68, 68, 0.08);
-      box-shadow: 0 0 0 1.5px rgba(255, 255, 255, 0.95), 0 2px 8px rgba(0, 0, 0, 0.85);
+      background: transparent;
+      box-shadow: 0 2px 10px rgba(0, 0, 0, 0.75);
     }
     .pin-code-tag {
-      margin-top: 3px;
-      background: rgba(11, 31, 58, 0.95);
-      border: 1.5px solid #ffd700;
-      color: #ffd700;
-      font-size: 11.5px;
-      font-family: 'Kanit', sans-serif;
-      font-weight: 400;
-      line-height: 1.1;
-      padding: 2px 7px;
-      border-radius: 4px;
-      white-space: nowrap;
-      box-shadow: 0 1px 4px rgba(0,0,0,0.8);
+      display: none !important;
     }
 
     /* Dynamic Quick Finding & Recommendation Pills */
@@ -6130,63 +6119,23 @@
           const px = (pinCoords.x / 100) * w;
           const py = (pinCoords.y / 100) * h;
 
-          // 3. Scale radius proportional to photo size (enlarged, razor-sharp, clearly visible)
+          // 3. Scale radius proportional to photo size (วงสีแดงอย่างเดียว ใหญ่ขึ้น 1 เท่าตัว)
           const baseDim = Math.min(w, h);
-          const r = Math.max(24, Math.min(52, Math.round(baseDim * 0.042)));
-          const crossArm = Math.round(r * 1.3);
+          const r = Math.max(48, Math.min(104, Math.round(baseDim * 0.084)));
 
           // Dark drop shadow
           ctx.save();
-          ctx.shadowColor = "rgba(0, 0, 0, 0.85)";
-          ctx.shadowBlur = Math.round(r * 0.35);
+          ctx.shadowColor = "rgba(0, 0, 0, 0.75)";
+          ctx.shadowBlur = Math.round(r * 0.25);
           ctx.shadowOffsetX = 0;
-          ctx.shadowOffsetY = 1.5;
+          ctx.shadowOffsetY = 2;
 
-          // 1. Draw outer solid white stroke halo (ensures 100% visibility on dark background)
+          // Pure Red Circle (วงกลมสีแดงทึบคมชัด ไม่บังจุดบกพร่อง ไม่ใส่ป้ายตัวหนังสือ)
           ctx.beginPath();
           ctx.arc(px, py, r, 0, Math.PI * 2);
-          ctx.lineWidth = Math.max(3.2, Math.round(r * 0.22));
-          ctx.strokeStyle = "rgba(255, 255, 255, 0.95)";
-          ctx.stroke();
-
-          // 2. Draw red dashed/dotted circle over halo (clear center, zero obstruction of defect)
-          ctx.beginPath();
-          ctx.arc(px, py, r, 0, Math.PI * 2);
-          ctx.lineWidth = Math.max(2.6, Math.round(r * 0.18));
+          ctx.lineWidth = Math.max(4.5, Math.round(r * 0.11));
           ctx.strokeStyle = "#ef4444";
-          const dashLen = Math.max(4.5, Math.round(r * 0.28));
-          ctx.setLineDash([dashLen, dashLen * 0.75]);
           ctx.stroke();
-          ctx.setLineDash([]); // Reset line dash
-
-          // 4. Code Pill Badge under Target (เช่น D-001 / D-002 ตรงรหัส กะทัดรัด คมกริบ)
-          const cleanCode = code || "D-001";
-          const fontSize = Math.max(12, Math.min(26, Math.round(baseDim * 0.026)));
-          ctx.font = `300 ${fontSize}px 'Kanit', sans-serif`;
-          ctx.textBaseline = "middle";
-          const textMetrics = ctx.measureText(cleanCode);
-          const padX = Math.round(fontSize * 0.4);
-          const padY = Math.round(fontSize * 0.22);
-          const badgeW = textMetrics.width + (padX * 2);
-          const badgeH = fontSize + (padY * 2);
-          const badgeX = px - (badgeW / 2);
-          const badgeY = py + r + Math.round(r * 0.2);
-
-          // Badge Background (Navy Blue + Gold Border)
-          ctx.fillStyle = "rgba(11, 31, 58, 0.92)";
-          ctx.strokeStyle = "#ffd700";
-          ctx.lineWidth = Math.max(1, Math.round(fontSize * 0.07));
-          
-          const cornerR = Math.round(badgeH * 0.25);
-          ctx.beginPath();
-          ctx.roundRect(badgeX, badgeY, badgeW, badgeH, cornerR);
-          ctx.fill();
-          ctx.stroke();
-
-          // Badge Text (Gold #ffd700, razor sharp Kanit 300)
-          ctx.fillStyle = "#ffd700";
-          ctx.shadowBlur = 0;
-          ctx.fillText(cleanCode, badgeX + padX, badgeY + (badgeH / 2));
           ctx.restore();
 
           const stampedBase64 = canvas.toDataURL("image/jpeg", 0.78);
