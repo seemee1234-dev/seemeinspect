@@ -8539,6 +8539,44 @@
       }
     }
 
+    // Helper: Distinct Soft Color Tint for Each Room Group (เฉดสีจางๆ แยกกลุ่มห้องละสี)
+    function getRoomCardStyle(roomName) {
+      if (!roomName) roomName = "ห้องรับแขก";
+      
+      const PRESET_ROOMS = {
+        "ห้องรับแขก": { bg: "rgba(2, 132, 199, 0.14)", border: "rgba(2, 132, 199, 0.55)", leftBar: "#0284c7", tagColor: "#38bdf8" },
+        "ห้องนั่งเล่น": { bg: "rgba(2, 132, 199, 0.14)", border: "rgba(2, 132, 199, 0.55)", leftBar: "#0284c7", tagColor: "#38bdf8" },
+        "ห้องครัว": { bg: "rgba(16, 185, 129, 0.14)", border: "rgba(16, 185, 129, 0.55)", leftBar: "#10b981", tagColor: "#34d399" },
+        "ห้องนอน 1": { bg: "rgba(139, 92, 246, 0.14)", border: "rgba(139, 92, 246, 0.55)", leftBar: "#8b5cf6", tagColor: "#c084fc" },
+        "ห้องนอน 2": { bg: "rgba(245, 158, 11, 0.14)", border: "rgba(245, 158, 11, 0.55)", leftBar: "#f59e0b", tagColor: "#fbbf24" },
+        "ห้องนอน 3": { bg: "rgba(234, 179, 8, 0.14)", border: "rgba(234, 179, 8, 0.55)", leftBar: "#eab308", tagColor: "#facc15" },
+        "ห้องน้ำ": { bg: "rgba(6, 182, 212, 0.14)", border: "rgba(6, 182, 212, 0.55)", leftBar: "#06b6d4", tagColor: "#22d3ee" },
+        "ห้องน้ำ 1": { bg: "rgba(6, 182, 212, 0.14)", border: "rgba(6, 182, 212, 0.55)", leftBar: "#06b6d4", tagColor: "#22d3ee" },
+        "ห้องน้ำ 2": { bg: "rgba(20, 184, 166, 0.14)", border: "rgba(20, 184, 166, 0.55)", leftBar: "#14b8a6", tagColor: "#2dd4bf" },
+        "ระเบียง": { bg: "rgba(236, 72, 153, 0.14)", border: "rgba(236, 72, 153, 0.55)", leftBar: "#ec4899", tagColor: "#f472b6" },
+        "โถงทางเดิน": { bg: "rgba(99, 102, 241, 0.14)", border: "rgba(99, 102, 241, 0.55)", leftBar: "#6366f1", tagColor: "#818cf8" }
+      };
+
+      if (PRESET_ROOMS[roomName]) return PRESET_ROOMS[roomName];
+
+      const FALLBACK_PALETTE = [
+        { bg: "rgba(2, 132, 199, 0.14)", border: "rgba(2, 132, 199, 0.55)", leftBar: "#0284c7", tagColor: "#38bdf8" },
+        { bg: "rgba(16, 185, 129, 0.14)", border: "rgba(16, 185, 129, 0.55)", leftBar: "#10b981", tagColor: "#34d399" },
+        { bg: "rgba(245, 158, 11, 0.14)", border: "rgba(245, 158, 11, 0.55)", leftBar: "#f59e0b", tagColor: "#fbbf24" },
+        { bg: "rgba(139, 92, 246, 0.14)", border: "rgba(139, 92, 246, 0.55)", leftBar: "#8b5cf6", tagColor: "#c084fc" },
+        { bg: "rgba(6, 182, 212, 0.14)", border: "rgba(6, 182, 212, 0.55)", leftBar: "#06b6d4", tagColor: "#22d3ee" },
+        { bg: "rgba(236, 72, 153, 0.14)", border: "rgba(236, 72, 153, 0.55)", leftBar: "#ec4899", tagColor: "#f472b6" },
+        { bg: "rgba(234, 179, 8, 0.14)", border: "rgba(234, 179, 8, 0.55)", leftBar: "#eab308", tagColor: "#facc15" }
+      ];
+
+      let hash = 0;
+      for (let i = 0; i < roomName.length; i++) {
+        hash = (hash << 5) - hash + roomName.charCodeAt(i);
+        hash |= 0;
+      }
+      return FALLBACK_PALETTE[Math.abs(hash) % FALLBACK_PALETTE.length];
+    }
+
     // Populate Tab 1 Recorded Defect Cards List
     function updateTab1RecordedList() {
       const listBox = document.getElementById('tab1-recorded-list-box');
@@ -8581,13 +8619,15 @@
           badgeColor = '#34d399';
         }
 
+        const roomStyle = getRoomCardStyle(roomName);
+
         return `
-          <div class="tab1-recorded-card" style="background: #0f1c3f; border: 1.5px solid #1e3a8a; border-radius: 10px; padding: 10px; display: flex; flex-direction: column; gap: 8px; box-shadow: 0 4px 12px rgba(0,0,0,0.3);">
+          <div class="tab1-recorded-card" style="background: ${roomStyle.bg}; border: 1.5px solid ${roomStyle.border}; border-left: 5px solid ${roomStyle.leftBar}; border-radius: 10px; padding: 10px 12px; display: flex; flex-direction: column; gap: 8px; box-shadow: 0 4px 14px rgba(0,0,0,0.35); transition: all 0.2s ease;">
             <!-- Top Line: Code, Room, Status -->
             <div style="display: flex; justify-content: space-between; align-items: center;">
               <div style="display: flex; align-items: center; gap: 6px;">
                 <span style="background: #0b1f3a; border: 1px solid #ffd700; color: #ffd700; font-size: 12px; font-weight: 500; padding: 1px 6px; border-radius: 4px;">${d.code}</span>
-                <span style="font-size: 13px; color: #ffffff; font-weight: 400;">🏠 ${roomName}</span>
+                <span style="font-size: 13.5px; color: ${roomStyle.tagColor}; font-weight: 500; display: inline-flex; align-items: center; gap: 4px;">🏠 ${roomName}</span>
                 <span style="font-size: 11px; color: #94a3b8;">· 🏷️ ${d.category}</span>
               </div>
               <span style="font-size: 11px; padding: 2px 8px; border-radius: 10px; background: ${badgeBg}; border: 1px solid ${badgeBorder}; color: ${badgeColor}; white-space: nowrap;">${statusText}</span>
