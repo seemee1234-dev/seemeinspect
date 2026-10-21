@@ -1732,6 +1732,7 @@
       /* SUMMARY SLIDES VISIBILITY: Both Slide 1 (Executive Cover) AND Summary Tables ALWAYS visible in print! */
       #slide-page-1,
       #slide-customer-summary,
+      #closing-summary-slide-container .slide-page,
       .slide-summary-page {
         display: flex !important;
       }
@@ -1832,6 +1833,7 @@
       }
 
       #slide-customer-summary,
+      #closing-summary-slide-container .slide-page,
       .slide-summary-page {
         justify-content: flex-start !important;
         gap: 2.5mm !important;
@@ -3516,6 +3518,13 @@
         <!-- Rendered by JavaScript dynamically -->
       </div>
 
+      <!-- ========================================================
+           SLIDE CLOSING: สรุปภาพรวมสถิติ 3 มิติแยกตามหมวดหมู่งาน (แผ่นสุดท้าย)
+           ======================================================== -->
+      <div id="closing-summary-slide-container">
+        <!-- Rendered dynamically as the very last slide -->
+      </div>
+
     </div>
 
     <!-- ========================================================
@@ -5050,6 +5059,11 @@
       updateDateDisplay();
       updateSummaryUI();
       renderSavedRoomsList();
+      try {
+        renderClosing3DChartSlide(defectList);
+      } catch (err) {
+        console.warn("Closing 3D chart notice:", err);
+      }
     }
 
     function saveConfig() {
@@ -7750,6 +7764,280 @@
       }
     }
 
+    /**
+     * RENDER CLOSING 3D CHART SLIDE (แผ่นสุดท้าย สรุปภาพรวม 3 มิติแยกตามหมวดหมู่งาน)
+     * Self-contained, non-invasive, zero side-effects.
+     */
+    function renderClosing3DChartSlide(defects) {
+      const container = document.getElementById("closing-summary-slide-container");
+      if (!container) return;
+
+      if (!defects || defects.length === 0) {
+        container.innerHTML = "";
+        return;
+      }
+
+      const totalDefects = defects.length;
+
+      // Group by category dynamically
+      const catCounts = {};
+      defects.forEach(d => {
+        const cat = (d.category || "ระเบียง / อื่น ๆ").trim();
+        catCounts[cat] = (catCounts[cat] || 0) + 1;
+      });
+
+      const CATEGORY_PALETTE = {
+        "งานผนัง": { bg: "#10b981", light: "#ecfdf5", border: "#a7f3d0", text: "#065f46", icon: "🧱" },
+        "งานพื้น": { bg: "#0284c7", light: "#f0f9ff", border: "#bae6fd", text: "#0369a1", icon: "🪵" },
+        "งานฝ้าเพดาน": { bg: "#8b5cf6", light: "#f5f3ff", border: "#ddd6fe", text: "#5b21b6", icon: "📐" },
+        "ประตู / หน้าต่าง": { bg: "#f59e0b", light: "#fffbeb", border: "#fde68a", text: "#92400e", icon: "🚪" },
+        "ห้องน้ำ": { bg: "#06b6d4", light: "#ecfeff", border: "#a5f3fc", text: "#0e7490", icon: "🚿" },
+        "สุขภัณฑ์ / ห้องน้ำ": { bg: "#06b6d4", light: "#ecfeff", border: "#a5f3fc", text: "#0e7490", icon: "🚿" },
+        "ระบบไฟฟ้า / ประปา": { bg: "#ef4444", light: "#fef2f2", border: "#fecaca", text: "#991b1b", icon: "⚡" },
+        "ครัว / Built-in": { bg: "#ec4899", light: "#fdf2f8", border: "#fbcfe8", text: "#9d174d", icon: "🍳" },
+        "ระเบียง / อื่น ๆ": { bg: "#64748b", light: "#f8fafc", border: "#cbd5e1", text: "#334155", icon: "🌿" }
+      };
+      const VIBRANT_FALLBACKS = ["#3b82f6", "#14b8a6", "#f97316", "#a855f7", "#6366f1", "#84cc16", "#d946ef", "#0ea5e9"];
+      let fbIdx = 0;
+
+      function getTheme(name) {
+        if (CATEGORY_PALETTE[name]) return CATEGORY_PALETTE[name];
+        const c = VIBRANT_FALLBACKS[fbIdx % VIBRANT_FALLBACKS.length];
+        fbIdx++;
+        return { bg: c, light: "#f8fafc", border: "#cbd5e1", text: "#0b1f3a", icon: "🏷️" };
+      }
+
+      // Active categories sorted descending
+      const activeCats = Object.keys(catCounts)
+        .map(c => {
+          const count = catCounts[c];
+          const pct = (count / totalDefects) * 100;
+          return {
+            name: c,
+            count: count,
+            pct: pct,
+            theme: getTheme(c)
+          };
+        })
+        .sort((a, b) => b.count - a.count);
+
+      const topCat = activeCats[0];
+      const cleanCats = DEFAULT_CATEGORIES.filter(c => !catCounts[c]);
+
+      function shade(hex, factor) {
+        let num = parseInt(hex.replace('#',''), 16);
+        let r = Math.floor((num >> 16) * factor);
+        let g = Math.floor(((num >> 8) & 0x00FF) * factor);
+        let b = Math.floor((num & 0x0000FF) * factor);
+        return `#${(r < 0 ? 0 : r).toString(16).padStart(2,'0')}${(g < 0 ? 0 : g).toString(16).padStart(2,'0')}${(b < 0 ? 0 : b).toString(16).padStart(2,'0')}`;
+      }
+
+      const cx = 150, cy = 110;
+      const rx = 125, ry = 68;
+      const h = 22;
+
+      let slices = [];
+      let startDeg = -90.0;
+      activeCats.forEach(item => {
+        const sweepDeg = (item.count / totalDefects) * 360.0;
+        slices.push({
+          name: item.name,
+          count: item.count,
+          pct: item.pct,
+          color: item.theme.bg,
+          darkColor: shade(item.theme.bg, 0.70),
+          start: startDeg,
+          end: startDeg + sweepDeg,
+          sweep: sweepDeg,
+          mid: startDeg + sweepDeg / 2.0
+        });
+        startDeg += sweepDeg;
+      });
+
+      let svgParts = [];
+      svgParts.push(`<ellipse cx="${cx}" cy="${cy + h + 8}" rx="${rx + 8}" ry="${ry + 6}" fill="rgba(0,0,0,0.12)" filter="blur(6px)" />`);
+
+      slices.forEach(s => {
+        let a = s.start;
+        const step = 2.5;
+        while (a < s.end) {
+          const aNext = Math.min(s.end, a + step);
+          const midA = (a + aNext) / 2.0;
+          const radMid = (midA * Math.PI) / 180.0;
+          if (Math.sin(radMid) >= -0.01) {
+            const rad1 = (a * Math.PI) / 180.0;
+            const rad2 = (aNext * Math.PI) / 180.0;
+            const x1 = cx + rx * Math.cos(rad1);
+            const y1 = cy + ry * Math.sin(rad1);
+            const x2 = cx + rx * Math.cos(rad2);
+            const y2 = cy + ry * Math.sin(rad2);
+            const d = `M ${x1.toFixed(1)} ${y1.toFixed(1)} L ${x2.toFixed(1)} ${y2.toFixed(1)} L ${x2.toFixed(1)} ${(y2 + h).toFixed(1)} L ${x1.toFixed(1)} ${(y1 + h).toFixed(1)} Z`;
+            const light = 0.58 + 0.28 * Math.sin(radMid);
+            const col = shade(s.color, light);
+            svgParts.push(`<path d="${d}" fill="${col}" stroke="${col}" stroke-width="0.7" />`);
+          }
+          a = aNext;
+        }
+      });
+
+      slices.forEach(s => {
+        const radStart = (s.start * Math.PI) / 180.0;
+        if (Math.sin(radStart) > 0 && Math.cos(radStart) < 0) {
+          const x = cx + rx * Math.cos(radStart);
+          const y = cy + ry * Math.sin(radStart);
+          const d = `M ${cx} ${cy} L ${x.toFixed(1)} ${y.toFixed(1)} L ${x.toFixed(1)} ${(y + h).toFixed(1)} L ${cx} ${cy + h} Z`;
+          svgParts.push(`<path d="${d}" fill="${s.darkColor}" stroke="${s.darkColor}" stroke-width="0.5" />`);
+        }
+        const radEnd = (s.end * Math.PI) / 180.0;
+        if (Math.sin(radEnd) > 0 && Math.cos(radEnd) > 0) {
+          const x = cx + rx * Math.cos(radEnd);
+          const y = cy + ry * Math.sin(radEnd);
+          const d = `M ${cx} ${cy} L ${x.toFixed(1)} ${y.toFixed(1)} L ${x.toFixed(1)} ${(y + h).toFixed(1)} L ${cx} ${cy + h} Z`;
+          svgParts.push(`<path d="${d}" fill="${shade(s.color, 0.55)}" stroke="${shade(s.color, 0.55)}" stroke-width="0.5" />`);
+        }
+      });
+
+      if (slices.length === 1) {
+        svgParts.push(`<ellipse cx="${cx}" cy="${cy}" rx="${rx}" ry="${ry}" fill="${slices[0].color}" stroke="#ffffff" stroke-width="2.5" />`);
+      } else {
+        slices.forEach(s => {
+          const rad1 = (s.start * Math.PI) / 180.0;
+          const rad2 = (s.end * Math.PI) / 180.0;
+          const x1 = cx + rx * Math.cos(rad1);
+          const y1 = cy + ry * Math.sin(rad1);
+          const x2 = cx + rx * Math.cos(rad2);
+          const y2 = cy + ry * Math.sin(rad2);
+          const largeArc = s.sweep > 180 ? 1 : 0;
+          const d = `M ${cx} ${cy} L ${x1.toFixed(1)} ${y1.toFixed(1)} A ${rx} ${ry} 0 ${largeArc} 1 ${x2.toFixed(1)} ${y2.toFixed(1)} Z`;
+          svgParts.push(`<path d="${d}" fill="${s.color}" stroke="#ffffff" stroke-width="2.2" stroke-linejoin="round" />`);
+        });
+      }
+
+      slices.forEach(s => {
+        if (s.sweep >= 18) {
+          const radMid = (s.mid * Math.PI) / 180.0;
+          const lx = cx + (rx * 0.65) * Math.cos(radMid);
+          const ly = cy + (ry * 0.65) * Math.sin(radMid);
+          if (s.sweep >= 32) {
+            svgParts.push(`
+              <text x="${lx.toFixed(1)}" y="${(ly - 4).toFixed(1)}" text-anchor="middle" fill="#ffffff" font-weight="700" font-size="11" filter="drop-shadow(0 1px 2px rgba(0,0,0,0.9))">${s.count} จุด</text>
+              <text x="${lx.toFixed(1)}" y="${(ly + 8).toFixed(1)}" text-anchor="middle" fill="#ffffff" font-weight="400" font-size="8.5" opacity="0.95" filter="drop-shadow(0 1px 2px rgba(0,0,0,0.9))">${s.pct.toFixed(0)}%</text>
+            `);
+          } else {
+            svgParts.push(`<text x="${lx.toFixed(1)}" y="${ly.toFixed(1)}" text-anchor="middle" dominant-baseline="central" fill="#ffffff" font-weight="700" font-size="10" filter="drop-shadow(0 1px 2px rgba(0,0,0,0.9))">${s.count}</text>`);
+          }
+        }
+      });
+
+      svgParts.push(`
+        <ellipse cx="${cx}" cy="${cy + 2}" rx="30" ry="16" fill="#07172c" stroke="#d4af37" stroke-width="2.2" filter="drop-shadow(0 2px 5px rgba(0,0,0,0.4))" />
+        <text x="${cx}" y="${cy}" text-anchor="middle" fill="#ffd700" font-weight="700" font-size="12">${totalDefects}</text>
+        <text x="${cx}" y="${cy + 10}" text-anchor="middle" fill="#93c5fd" font-weight="300" font-size="7.5">จุดรวม</text>
+      `);
+
+      const svgHtml = `<svg viewBox="0 0 300 240" width="100%" height="100%" style="overflow: visible;">${svgParts.join("")}</svg>`;
+
+      const cardsHtml = activeCats.map(item => `
+        <div style="background: ${item.theme.light}; border: 1px solid ${item.theme.border}; border-radius: 6px; padding: 5px 9px; display: flex; flex-direction: column; gap: 3px;">
+          <div style="display: flex; justify-content: space-between; align-items: center;">
+            <div style="display: flex; align-items: center; gap: 6px;">
+              <span style="display: inline-block; width: 11px; height: 11px; border-radius: 3px; background: ${item.theme.bg}; border: 1px solid rgba(0,0,0,0.15); flex-shrink: 0;"></span>
+              <span style="font-size: 11.5px; font-weight: 500; color: #0b1f3a;">${item.theme.icon} ${item.name}</span>
+            </div>
+            <div style="display: flex; align-items: center; gap: 6px;">
+              <span style="font-size: 11.5px; font-weight: 600; color: ${item.theme.text};">${item.count} จุด</span>
+              <span style="font-size: 9.5px; color: #64748b; background: #ffffff; border: 1px solid #e2e8f0; padding: 1px 5px; border-radius: 4px;">${item.pct.toFixed(1)}%</span>
+            </div>
+          </div>
+          <div style="height: 5px; background: #ffffff; border: 0.5px solid #e2e8f0; border-radius: 3px; overflow: hidden; width: 100%;">
+            <div style="width: ${item.pct}%; height: 100%; background: ${item.theme.bg}; border-radius: 3px;"></div>
+          </div>
+        </div>
+      `).join("");
+
+      const logoSrc = document.querySelector('#slide-page-1 .slide-top-navy img')?.src || '';
+
+      container.innerHTML = `
+        <div class="slide-page slide-summary-page" id="slide-closing-3d-page" style="margin-top: 20px; justify-content: flex-start !important; gap: 6px;">
+          <div class="slide-page-badge no-print">สไลด์แผ่นสุดท้าย (สรุปภาพรวม 3 มิติ)</div>
+          <div class="slide-corner-num">สรุปปิดเล่มรายงาน</div>
+
+          <div class="slide-top-navy" style="display: flex; justify-content: space-between; align-items: center;">
+            <div style="display: flex; align-items: center; gap: 12px;">
+              ${logoSrc ? `<img src="${logoSrc}" alt="Logo" style="width: 40px; height: 40px; border-radius: 8px; object-fit: contain; background: #070d1e; border: 1.5px solid rgba(212, 175, 55, 0.6);">` : ''}
+              <div>
+                <h2>สรุปสถิติจุดบกพร่องตามหมวดหมู่งาน 3 มิติ (Executive 3D Category Summary)</h2>
+                <p>สัดส่วนภาพรวมและจำนวนจุดที่ตรวจพบแยกตามหมวดงาน สำหรับส่งมอบโครงการและติดตามการแก้ไข</p>
+              </div>
+            </div>
+          </div>
+          <div class="slide-gold-bar"></div>
+
+          <!-- Top 3 Metrics -->
+          <div style="display: grid; grid-template-columns: repeat(3, 1fr); gap: 8px; margin-top: 6px; margin-bottom: 6px;">
+            <div style="background: #f8fafc; border: 1.5px solid #cbd5e1; border-radius: 6px; padding: 6px 8px; text-align: center;">
+              <div style="font-size: 10.5px; color: #475569;">📋 ตรวจพบทั้งหมด</div>
+              <div style="font-size: 17px; color: #0b1f3a; font-weight: 500;">${totalDefects} จุด</div>
+              <div style="font-size: 9.5px; color: #64748b; margin-top: 1px;">รายการบันทึกในเล่ม</div>
+            </div>
+            <div style="background: #f0f9ff; border: 1.5px solid #bae6fd; border-radius: 6px; padding: 6px 8px; text-align: center;">
+              <div style="font-size: 10.5px; color: #0369a1;">🏷️ หมวดงานที่พบข้อสังเกต</div>
+              <div style="font-size: 17px; color: #0284c7; font-weight: 500;">${activeCats.length} หมวด</div>
+              <div style="font-size: 9.5px; color: #0284c7; margin-top: 1px;">หมวดหมู่งานที่ต้องแก้ไข</div>
+            </div>
+            <div style="background: #fefce8; border: 1.5px solid #fef08a; border-radius: 6px; padding: 6px 8px; text-align: center;">
+              <div style="font-size: 10.5px; color: #854d0e;">⚠️ หมวดที่พบมากที่สุด</div>
+              <div style="font-size: 15px; color: #ca8a04; font-weight: 500; white-space: nowrap; overflow: hidden; text-overflow: ellipsis;">${topCat ? topCat.name : '--'} (${topCat ? topCat.count : 0} จุด)</div>
+              <div style="font-size: 9.5px; color: #a16207; margin-top: 1px;">คิดเป็น ${topCat ? topCat.pct.toFixed(1) : 0}% ของทั้งหมด</div>
+            </div>
+          </div>
+
+          <!-- Main 2-Column Body -->
+          <div style="display: grid; grid-template-columns: 1fr 1.25fr; gap: 12px; align-items: stretch; flex: 1; min-height: 0; margin-top: 2px;">
+            <!-- Left: 3D Pie SVG -->
+            <div style="background: #ffffff; border: 1.5px solid #e2e8f0; border-radius: 8px; padding: 8px 12px; display: flex; flex-direction: column; align-items: center; justify-content: center; box-shadow: 0 2px 8px rgba(0,0,0,0.03);">
+              <div style="font-size: 12px; font-weight: 500; color: #0b1f3a; margin-bottom: 2px; display: flex; align-items: center; gap: 6px;">
+                <span>🍰 แผนภูมิ 3 มิติแยกตามหมวดงาน (3D Pie Chart)</span>
+              </div>
+              <div style="width: 100%; max-width: 300px; height: 240px; display: flex; justify-content: center; align-items: center;">
+                ${svgHtml}
+              </div>
+              <div style="font-size: 9.5px; color: #64748b; margin-top: 2px; text-align: center;">
+                ความหนา 3 มิติพร้อมแยกสีและตัวเลขตามหมวดหมู่งาน
+              </div>
+            </div>
+
+            <!-- Right: Detailed Cards -->
+            <div style="background: #ffffff; border: 1.5px solid #e2e8f0; border-radius: 8px; padding: 8px 12px; display: flex; flex-direction: column; justify-content: space-between; box-shadow: 0 2px 8px rgba(0,0,0,0.03);">
+              <div>
+                <div style="font-size: 12px; font-weight: 500; color: #0b1f3a; margin-bottom: 6px; display: flex; justify-content: space-between; align-items: center; border-bottom: 1.5px solid #f1f5f9; padding-bottom: 4px;">
+                  <span>📊 รายละเอียดจำนวนจุดแยกตามหมวดงาน</span>
+                  <span style="font-size: 11px; background: #0b1f3a; color: #ffd700; padding: 2px 8px; border-radius: 12px; font-weight: 500;">รวม ${totalDefects} จุด (100%)</span>
+                </div>
+                <div style="display: flex; flex-direction: column; gap: 5px; max-height: 220px; overflow-y: auto; padding-right: 4px;">
+                  ${cardsHtml}
+                </div>
+              </div>
+              ${cleanCats.length > 0 ? `
+                <div style="margin-top: 6px; padding: 4px 8px; background: #f0fdf4; border: 1px solid #bbf7d0; border-radius: 6px; font-size: 10px; color: #166534; display: flex; align-items: center; gap: 6px;">
+                  <span>✓</span>
+                  <span>หมวดงานที่ผ่านการตรวจ (0 จุด): ${cleanCats.join(', ')}</span>
+                </div>
+              ` : ''}
+            </div>
+          </div>
+
+          <!-- Foot Bar -->
+          <div class="slide-foot-bar" style="display: flex; justify-content: space-between; align-items: flex-end; gap: 8px; margin-top: 6px; padding-top: 4px;">
+            <div class="slide-foot" style="flex: 1; margin: 0; font-size: 10px; line-height: 1.35; color: #64748b;">
+              หมายเหตุ: วิเคราะห์ข้อมูลตามหมวดหมู่งานจริงที่มีการบันทึก Defect ตามมาตรฐานการตรวจรับมอบห้อง / บ้าน INSPECT Q
+            </div>
+            <div class="slide-corner-num" style="position: static !important; flex-shrink: 0; font-size: 11px; white-space: nowrap;">สไลด์ปิดเล่มรายงาน</div>
+          </div>
+        </div>
+      `;
+    }
+
     function updateSummaryUI() {
       if (typeof renderRoomButtons === 'function') renderRoomButtons();
       if (typeof renderCategoryButtons === 'function') renderCategoryButtons();
@@ -8231,6 +8519,12 @@
         </div>
         `;
       }).join("");
+
+      try {
+        renderClosing3DChartSlide(defectList);
+      } catch (err) {
+        console.warn("Closing 3D chart notice:", err);
+      }
     }
 
 
