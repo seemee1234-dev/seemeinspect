@@ -3151,6 +3151,14 @@
               </button>
             </div>
           </div>
+          <!-- Preset Defect ด่วนประจำห้อง (แตะ 1 วินาที ข้อความเด้งทันที) -->
+          <div id="room-preset-container" style="margin-bottom: 8px; background: rgba(30, 58, 138, 0.25); border: 1px dashed #3b82f6; border-radius: 8px; padding: 6px 8px;">
+            <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 4px;">
+              <span id="room-preset-badge" style="font-size: 11.5px; color: #93c5fd; font-weight: 400;">⚡ ปุ่มลัด Defect ประจำห้อง:</span>
+              <span style="font-size: 10px; color: #64748b;">แตะเพื่อกรอกทันที</span>
+            </div>
+            <div class="dynamic-pills-row" id="room-preset-pills" style="margin-bottom: 0;"></div>
+          </div>
           <div class="dynamic-pills-row" id="finding-pills" style="margin-bottom: 6px;">
             <!-- Populated dynamically based on category -->
           </div>
@@ -3946,7 +3954,98 @@
       }).join("");
     }
 
+    
+    const ROOM_PRESET_DEFECTS = {
+      "โถง": [
+        { label: "🚪 บานประตูตก/ฝืด", desc: "บานประตูหน้าห้องตกขูดพื้น/เปิด-ปิดฝืดขัด", loc: "บานประตูหน้าห้อง", cat: "ประตู / หน้าต่าง", rec: "ปรับตั้งบานพับและระดับบานประตูใหม่" },
+        { label: "🔐 กลอนล็อกไม่ลงเบ้า", desc: "ลิ้นล็อก Digital Door Lock / กลอนไม่ลงเบ้าวงกบ ปิดล็อกยาก", loc: "วงกบประตูหน้า", cat: "ประตู / หน้าต่าง", rec: "ขยับปรับตำแหน่งเบ้ารับลิ้นล็อกให้ตรงตำแหน่ง" },
+        { label: "⚡ ตู้ไฟไร้ป้ายกำกับ", desc: "ตู้ควบคุมไฟฟ้า (Consumer Unit) ยังไม่ติดป้ายชื่อโซนคุมเบรกเกอร์", loc: "ตู้ไฟหลัก (DB Box)", cat: "งานระบบไฟฟ้า", rec: "ติดป้ายชื่อกำกับวงจรเบรกเกอร์ให้ครบถ้วนถูกต้อง" },
+        { label: "🚪 ซีลยางรอบวงกบขาด", desc: "ยางกันเสียง/กันควันรอบวงกบประตูหน้าห้องแนบไม่สนิท/มีรอยแหว่ง", loc: "รอบวงกบประตูหน้า", cat: "ประตู / หน้าต่าง", rec: "ติดตั้งยางกันเสียงรอบวงกบใหม่ให้แนบสนิทรอบบาน" }
+      ],
+      "รับแขก": [
+        { label: "🪵 พื้น SPC/ลามิเนตยวบ", desc: "พื้นไม้ลามิเนต/SPC ยวบตัว เหยียบมีเสียงดังก๊อบแก๊บ", loc: "พื้นกลางห้องรับแขก", cat: "งานพื้น", rec: "รื้อปรับระดับปูนรองพื้นให้ได้ระนาบแล้วปูใหม่" },
+        { label: "🎨 ผนังเป็นคลื่น/สีด่าง", desc: "ผิวผนังฉาบเป็นลอนคลื่น และมีรอยแปรงทาสีไม่สม่ำเสมอ", loc: "ผนังฝั่งโซฟา/TV", cat: "งานผนัง", rec: "ขัดลูบผิวผนัง ฉาบแต่งบาง (Skim coat) และทาสีทับหน้าใหม่" },
+        { label: "📐 บัวพื้นอ้า/ไม่แนบ", desc: "บัวเชิงผนังอ้า ยาแนวซิลิโคนขอบบัวหลุดร่อนไม่ได้แนว", loc: "บัวเชิงผนัง", cat: "งานผนัง", rec: "ยึดบัวพื้นให้แนบผนังและยิงแด๊ปอะคริลิกเก็บความเรียบร้อย" },
+        { label: "⬜ ฝ้าเพดานแอ่นตกท้องช้าง", desc: "แผ่นฝ้าเพดานไม่ได้ระดับ เป็นแอ่นคลื่นเห็นรอยต่อแผ่นยิปซัม", loc: "ฝ้าเพดานห้องรับแขก", cat: "งานฝ้าเพดาน", rec: "ปรับระดับโครงซีไลน์ฝ้าเพดานและฉาบรอยต่อใหม่" }
+      ],
+      "นอน": [
+        { label: "🪟 ตัวล็อกหน้าต่างหลวม", desc: "ตัวล็อกก้นหอย/ล็อกกลางบานหน้าต่างหลวม ล็อกไม่อยู่", loc: "หน้าต่างบานเลื่อน", cat: "ประตู / หน้าต่าง", rec: "ขันแน่นหรือเปลี่ยนตัวล็อกหน้าต่างใหม่" },
+        { label: "🌧️ ยางขอบกระจกแนบไม่สนิท", desc: "ยางกันน้ำขอบกระจกหน้าต่างหลุดร่อน เสี่ยงน้ำฝนซึมเข้าห้อง", loc: "ขอบหน้าต่างกระจก", cat: "ประตู / หน้าต่าง", rec: "กดยางขอบกระจกให้เข้าล็อกและยิงซิลิโคนกันน้ำซึม" },
+        { label: "🚪 ประตูห้องนอนตกขูดพื้น", desc: "บานประตูห้องนอนตก เสียดสีกับพื้นห้องขณะเปิด-ปิด", loc: "บานประตูห้องนอน", cat: "ประตู / หน้าต่าง", rec: "ปรับขันบานพับหรือไสปรับระยะใต้บานประตู" },
+        { label: "❄️ ท่อแอร์หยด/รั่วซึม", desc: "ฉนวนหุ้มท่อน้ำทิ้งแอร์ไม่มิดชิด มีหยดน้ำเกาะ/คราบซึมบนฝ้า", loc: "ท่อแอร์เหนือฝ้า", cat: "งานระบบสุขาภิบาล", rec: "พันฉนวนกันความเย็นท่อแอร์ใหม่ให้มิดชิดหนาแน่น" }
+      ],
+      "ครัว": [
+        { label: "💧 ท่อน้ำทิ้งซิงค์รั่ว", desc: "ขังน้ำเทสสะดืออ่างล้างจานแล้วมีน้ำซึมหยดตามข้อต่อท่อดักกลิ่น", loc: "ใต้เคาน์เตอร์ซิงค์ล้างจาน", cat: "งานระบบสุขาภิบาล", rec: "เปลี่ยนปะเก็นยางและขันข้อต่อท่อน้ำทิ้งซิงค์ให้แน่นสนิท" },
+        { label: "🍳 ซิลิโคนเคาน์เตอร์หลุด", desc: "ยาแนวซิลิโคนรอยต่อระหว่างเคาน์เตอร์ครัวกับผนังหลุดร่อน/เป็นโพรง", loc: "ขอบเคาน์เตอร์ครัว", cat: "งานผนัง", rec: "ลอกซิลิโคนเดิมออกและยิงซิลิโคนกันเชื้อราใหม่เต็มร่อง" },
+        { label: "💨 แรงดูดฮูดครัวเบา", desc: "เครื่องดูดควัน (Cooker Hood) ลมดูดเบา/ท่อลมระบายควันหลุดหลวม", loc: "เครื่องดูดควัน", cat: "งานระบบไฟฟ้า", rec: "ตรวจสอบท่อเฟล็กซ์ระบายอากาศและต่อเชื่อมให้แน่นหนา" },
+        { label: "🔲 หน้าบานตู้ครัวตก", desc: "หน้าบานตู้ครัวบิวท์อินปิดไม่เสมอระดับ/บานพับหลวม", loc: "ตู้ครัวลอย/ตู้ใต้ซิงค์", cat: "งานเฟอร์นิเจอร์", rec: "ปรับตั้งองศาบานพับถ้วยหน้าบานตู้ให้ได้ระดับเสมอกัน" }
+      ],
+      "น้ำ": [
+        { label: "🌊 น้ำขังพื้นไม่ลง Drain", desc: "สโลปพื้นห้องน้ำไม่ได้ระดับ มีน้ำขังเป็นแอ่งไม่ไหลลง Floor Drain", loc: "พื้นโซนเปียก/แห้ง", cat: "งานพื้น", rec: "รื้อปรับสโลปปูนใต้กระเบื้องใหม่ให้น้ำระบายหมดจด" },
+        { label: "🔨 กระเบื้องกลวง/มีโพรง", desc: "เคาะกระเบื้องพื้นและผนังมีเสียงโปร่งหลายแผ่น (ปูนกาวไม่เต็มแผ่น)", loc: "ผนังและพื้นห้องน้ำ", cat: "งานพื้น", rec: "สกัดรื้อเปลี่ยนกระเบื้องแผ่นที่กลวงและปูเต็มแผ่น" },
+        { label: "🚽 ยาแนวฐานชักโครกรั่ว", desc: "ยาแนวซิลิโคนรอบฐานชักโครกหลุดร่อน มีน้ำซึมรอบฐาน", loc: "ฐานโถสุขภัณฑ์", cat: "งานระบบสุขาภิบาล", rec: "ยาแนวฐานชักโครกใหม่ด้วยซิลิโคนกันเชื้อราคุณภาพสูง" },
+        { label: "🚿 ซีลฉากกั้นอาบน้ำน้ำรั่ว", desc: "ยางกันน้ำฉากกั้นอาบน้ำแนบไม่สนิท น้ำกระเด็นรั่วออกโซนแห้ง", loc: "ฉากกั้นอาบน้ำกระจก", cat: "ประตู / หน้าต่าง", rec: "เปลี่ยนแถบยางกันน้ำและปรับระดับบานกระจกอาบน้ำ" }
+      ],
+      "ระเบียง": [
+        { label: "🌧️ สโลประเบียงขังน้ำ", desc: "พื้นระเบียงลาดเอียงไม่พอ มีน้ำขังบริเวณขอบพื้น ไม่ไหลลงท่อ", loc: "พื้นระเบียงภายนอก", cat: "งานพื้น", rec: "ปรับระดับปูนและปูกระเบื้องไล่สโลปลงท่อระบายน้ำใหม่" },
+        { label: "🛡️ ราวกันตกโยกคลอน", desc: "โครงสร้างราวกันตกระเบียงยึดพุกไม่แน่น โยกแล้วมีอาการคลอนตัว", loc: "ราวกันตกระเบียง", cat: "ประตู / หน้าต่าง", rec: "ยึดพุกสแตนเลสเสริมความแข็งแรงให้แน่นหนาปลอดภัย 100%" },
+        { label: "🔌 ปลั๊กนอกไม่มีฝากันน้ำ", desc: "เต้ารับไฟฟ้าบริเวณระเบียงไม่มีกล่องฝาครอบกันน้ำ (Weatherproof)", loc: "ปลั๊กไฟระเบียง", cat: "งานระบบไฟฟ้า", rec: "ติดตั้งกล่องฝาครอบกันน้ำสำหรับเต้ารับภายนอกอาคาร" },
+        { label: "💧 ท่อน้ำทิ้งแอร์หยดเลอะ", desc: "ปลายท่อน้ำทิ้งแอร์ไม่ตรงตำแหน่ง Floor Drain ปล่อยน้ำไหลเลอะพื้น", loc: "ท่อน้ำทิ้งคอมเพรสเซอร์", cat: "งานระบบสุขาภิบาล", rec: "ต่อขยายท่อน้ำทิ้งแอร์ลงตรงปากท่อระบายน้ำให้เรียบร้อย" }
+      ]
+    };
+
+    function renderRoomPresetDefects() {
+      const box = document.getElementById("room-preset-pills");
+      const badge = document.getElementById("room-preset-badge");
+      if (!box) return;
+
+      const room = currentSelectedRoom || "";
+      let matchedKey = "รับแขก";
+      if (room.includes("โถง") || room.includes("ทางเข้า")) matchedKey = "โถง";
+      else if (room.includes("นอน")) matchedKey = "นอน";
+      else if (room.includes("ครัว")) matchedKey = "ครัว";
+      else if (room.includes("น้ำ")) matchedKey = "น้ำ";
+      else if (room.includes("ระเบียง")) matchedKey = "ระเบียง";
+      else if (room.includes("รับแขก") || room.includes("นั่งเล่น")) matchedKey = "รับแขก";
+
+      if (badge) {
+        badge.textContent = "⚡ ปุ่มลัด Defect ประจำห้อง (" + room.replace(/^[^\s]+\s*/, "") + "):";
+      }
+
+      const presets = ROOM_PRESET_DEFECTS[matchedKey] || ROOM_PRESET_DEFECTS["รับแขก"];
+      box.innerHTML = presets.map((p, idx) => `
+        <span class="dynamic-pill" style="background: #1e3a8a; border-color: #3b82f6; color: #ffd700; font-weight: 400;" onclick="applyRoomPreset(${idx}, '${matchedKey}')">
+          ${p.label}
+        </span>
+      `).join("");
+    }
+
+    function applyRoomPreset(idx, key) {
+      const presets = ROOM_PRESET_DEFECTS[key];
+      if (!presets || !presets[idx]) return;
+      const p = presets[idx];
+
+      const descInput = document.getElementById("cur-desc");
+      const locInput = document.getElementById("cur-location");
+      const recInput = document.getElementById("cur-recommend");
+
+      if (descInput) descInput.value = p.desc;
+      if (locInput) {
+        locInput.value = p.loc;
+        if (typeof toggleLocationClearBtn === "function") toggleLocationClearBtn();
+      }
+      if (recInput) recInput.value = p.rec;
+
+      if (p.cat && typeof selectCategory === "function") {
+        selectCategory(p.cat);
+      }
+      if (typeof showToast === "function") {
+        showToast("⚡ โหลด Defect ประจำห้อง: " + p.label);
+      }
+    }
+
     function renderQuickFindings() {
+      renderRoomPresetDefects();
       const box = document.getElementById("finding-pills");
       if (!box) return;
       const key = getNormalizedCategoryKey(currentSelectedCategory);
