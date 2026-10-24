@@ -1,0 +1,196 @@
+<!DOCTYPE html>
+<html lang="th">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+<title>INSPECT Q - QR Code Scanner & Access Portal</title>
+<link href="https://fonts.googleapis.com/css2?family=Prompt:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --bg: #0b1120;
+    --card-bg: #1e293b;
+    --border: #334155;
+    --gold: #d4af37;
+    --gold-light: #fef08a;
+    --blue: #2563eb;
+    --green: #10b981;
+    --text: #f8fafc;
+    --text-muted: #94a3b8;
+  }
+  * { box-sizing: border-box; margin: 0; padding: 0; font-family: 'Prompt', -apple-system, sans-serif; }
+  body {
+    background: radial-gradient(circle at 50% 20%, #1e293b 0%, #0b1120 100%);
+    color: var(--text);
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    padding: 20px;
+  }
+  .portal-card {
+    background: rgba(30, 41, 59, 0.85);
+    backdrop-filter: blur(12px);
+    border: 2px solid var(--gold);
+    border-radius: 24px;
+    padding: 28px 24px;
+    max-width: 420px;
+    width: 100%;
+    text-align: center;
+    box-shadow: 0 12px 40px rgba(0, 0, 0, 0.6), 0 0 24px rgba(212, 175, 55, 0.2);
+  }
+  .brand-badge {
+    display: inline-block;
+    font-size: 11px;
+    padding: 4px 12px;
+    background: rgba(212, 175, 55, 0.15);
+    color: var(--gold);
+    border: 1px solid var(--gold);
+    border-radius: 20px;
+    font-weight: 600;
+    margin-bottom: 12px;
+    letter-spacing: 0.5px;
+  }
+  h1 {
+    font-size: 22px;
+    color: var(--gold);
+    font-weight: 700;
+    margin-bottom: 6px;
+  }
+  p.subtitle {
+    font-size: 13px;
+    color: var(--text-muted);
+    margin-bottom: 22px;
+  }
+  .qr-box {
+    background: #ffffff;
+    padding: 16px;
+    border-radius: 18px;
+    display: inline-block;
+    box-shadow: 0 8px 24px rgba(0,0,0,0.4);
+    margin-bottom: 20px;
+    border: 3px solid #d4af37;
+  }
+  .qr-box img {
+    display: block;
+    width: 240px;
+    height: 240px;
+    border-radius: 8px;
+  }
+  .url-text {
+    font-size: 12px;
+    color: var(--gold-light);
+    background: #0b1120;
+    padding: 8px 12px;
+    border-radius: 8px;
+    border: 1px solid var(--border);
+    word-break: break-all;
+    margin-bottom: 20px;
+    user-select: all;
+  }
+  .btn-group {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+  }
+  .btn {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 8px;
+    padding: 12px 18px;
+    border-radius: 12px;
+    font-size: 14px;
+    font-weight: 700;
+    text-decoration: none;
+    border: none;
+    cursor: pointer;
+    transition: transform 0.15s, opacity 0.15s;
+  }
+  .btn:active { transform: scale(0.97); }
+  .btn-gold {
+    background: linear-gradient(135deg, var(--gold), #b89628);
+    color: #0b1120;
+  }
+  .btn-blue {
+    background: rgba(37, 99, 235, 0.2);
+    color: #93c5fd;
+    border: 1px solid var(--blue);
+  }
+  .instructions {
+    margin-top: 24px;
+    padding-top: 18px;
+    border-top: 1px dashed var(--border);
+    text-align: left;
+    font-size: 12px;
+    color: var(--text-muted);
+    line-height: 1.6;
+  }
+  .instructions strong {
+    color: var(--gold);
+  }
+  .toast {
+    position: fixed;
+    bottom: 24px;
+    left: 50%;
+    transform: translateX(-50%);
+    background: var(--green);
+    color: #fff;
+    padding: 10px 22px;
+    border-radius: 30px;
+    font-size: 13px;
+    font-weight: 600;
+    display: none;
+    box-shadow: 0 8px 24px rgba(0,0,0,0.6);
+    z-index: 1000;
+  }
+</style>
+</head>
+<body>
+
+<div class="portal-card">
+  <div class="brand-badge">🏛️ INSPECT Q PORTAL</div>
+  <h1>สแกนเปิดระบบ LINE OA</h1>
+  <p class="subtitle">คลังข้อความด่วนสำหรับสถาปนิก (One-Click Copy)</p>
+
+  <div class="qr-box">
+    <img src="https://api.qrserver.com/v1/create-qr-code/?size=300x300&margin=0&data=https://seemee1234-dev.github.io/seemeinspect/line.html" alt="QR Code">
+  </div>
+
+  <div class="url-text" id="target-url">https://seemee1234-dev.github.io/seemeinspect/line.html</div>
+
+  <div class="btn-group">
+    <a href="line.html" class="btn btn-gold">
+      🚀 แตะเปิดหน้าเว็บทันที
+    </a>
+    <button class="btn btn-blue" onclick="copyLink()">
+      📋 คัดลอกลิงก์ส่งต่อ
+    </button>
+    <a href="index.html" class="btn btn-blue" style="border-color:#475569; color:#94a3b8;">
+      ⬅️ กลับไประบบตรวจคอนโด
+    </a>
+  </div>
+
+  <div class="instructions">
+    📌 <strong>วิธีเซฟไว้ใช้ตลอดชีพ:</strong><br>
+    1. สแกน QR แล้วเปิดหน้าเว็บขึ้นมา<br>
+    2. กด <strong>"เพิ่มไปยังหน้าจอโฮม (Add to Home Screen)"</strong><br>
+    3. จะได้ไอคอนแอป INSPECT Q บนมือถือ เปิดใช้ได้ทันทีไม่ต้องสแกนซ้ำครับ
+  </div>
+</div>
+
+<div class="toast" id="toast">✅ คัดลอกลิงก์สำเร็จแล้ว!</div>
+
+<script>
+function copyLink() {
+  const url = document.getElementById('target-url').innerText;
+  navigator.clipboard.writeText(url).then(() => {
+    const toast = document.getElementById('toast');
+    toast.style.display = 'block';
+    setTimeout(() => { toast.style.display = 'none'; }, 2000);
+  });
+}
+</script>
+
+</body>
+</html>
