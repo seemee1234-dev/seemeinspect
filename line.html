@@ -1,0 +1,402 @@
+<!DOCTYPE html>
+<html lang="th">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+<title>INSPECT Q - LINE OA Quick Response Hub</title>
+<link href="https://fonts.googleapis.com/css2?family=Prompt:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --bg: #0b1120;
+    --card-bg: #1e293b;
+    --border: #334155;
+    --gold: #d4af37;
+    --gold-light: #fef08a;
+    --crimson: #991b1b;
+    --crimson-light: #fca5a5;
+    --blue: #2563eb;
+    --blue-light: #93c5fd;
+    --green: #10b981;
+    --text: #f8fafc;
+    --text-muted: #94a3b8;
+  }
+  * { box-sizing: border-box; margin: 0; padding: 0; font-family: 'Prompt', -apple-system, sans-serif; -webkit-tap-highlight-color: transparent; }
+  body { background: var(--bg); color: var(--text); padding: 14px; min-height: 100vh; padding-bottom: 60px; }
+  
+  .header {
+    text-align: center;
+    margin-bottom: 16px;
+    padding: 16px 12px;
+    background: linear-gradient(135deg, #1e293b 0%, #0f172a 100%);
+    border: 1px solid var(--gold);
+    border-radius: 16px;
+    box-shadow: 0 4px 20px rgba(0,0,0,0.4);
+  }
+  .header-badge {
+    display: inline-block;
+    font-size: 11px;
+    padding: 3px 10px;
+    background: rgba(212,175,55,0.15);
+    color: var(--gold);
+    border: 1px solid var(--gold);
+    border-radius: 20px;
+    font-weight: 600;
+    margin-bottom: 6px;
+  }
+  .header h1 { font-size: 19px; color: var(--gold); font-weight: 700; margin-bottom: 4px; }
+  .header p { font-size: 12px; color: var(--text-muted); line-height: 1.4; }
+  
+  .nav-bar {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 14px;
+    gap: 8px;
+  }
+  .nav-link {
+    font-size: 12px;
+    color: var(--blue-light);
+    text-decoration: none;
+    padding: 6px 12px;
+    background: rgba(37,99,235,0.15);
+    border: 1px solid var(--blue);
+    border-radius: 8px;
+    font-weight: 500;
+  }
+  .sync-status {
+    font-size: 11px;
+    color: var(--green);
+    display: flex;
+    align-items: center;
+    gap: 4px;
+  }
+  
+  .search-box {
+    width: 100%;
+    padding: 12px 16px;
+    border-radius: 12px;
+    border: 1px solid var(--border);
+    background: #111827;
+    color: #fff;
+    font-size: 14px;
+    margin-bottom: 16px;
+    outline: none;
+    transition: border-color 0.2s;
+  }
+  .search-box:focus { border-color: var(--gold); }
+  
+  .card {
+    background: var(--card-bg);
+    border: 1px solid var(--border);
+    border-radius: 14px;
+    padding: 14px;
+    margin-bottom: 16px;
+    position: relative;
+    box-shadow: 0 4px 12px rgba(0,0,0,0.25);
+  }
+  .card-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-start;
+    margin-bottom: 10px;
+    gap: 8px;
+    flex-wrap: wrap;
+  }
+  .card-title {
+    font-size: 15px;
+    font-weight: 600;
+    color: #fff;
+    line-height: 1.3;
+    flex: 1 1 100%;
+    margin-bottom: 4px;
+  }
+  .badge {
+    font-size: 10.5px;
+    padding: 3px 8px;
+    border-radius: 12px;
+    font-weight: 600;
+  }
+  .badge-gold { background: rgba(212, 175, 55, 0.2); color: var(--gold-light); border: 1px solid var(--gold); }
+  .badge-crimson { background: rgba(153, 27, 27, 0.3); color: var(--crimson-light); border: 1px solid var(--crimson); }
+  .badge-blue { background: rgba(37, 99, 235, 0.2); color: #93c5fd; border: 1px solid var(--blue); }
+  
+  .action-bar {
+    display: flex;
+    gap: 6px;
+    width: 100%;
+    margin-top: 6px;
+    margin-bottom: 8px;
+  }
+  .btn {
+    border: none;
+    padding: 8px 14px;
+    border-radius: 8px;
+    font-size: 13px;
+    font-weight: 600;
+    cursor: pointer;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: 4px;
+    transition: opacity 0.15s, transform 0.1s;
+  }
+  .btn:active { transform: scale(0.97); }
+  .btn-copy { background: linear-gradient(135deg, var(--gold), #b89628); color: #0f172a; flex: 2; font-weight: 700; }
+  .btn-edit { background: #334155; color: #f8fafc; flex: 1; }
+  .btn-reset { background: transparent; color: var(--text-muted); font-size: 11px; padding: 4px 8px; border: 1px dashed var(--border); }
+  
+  .content-box {
+    background: #0b1120;
+    border: 1px solid #1e293b;
+    border-radius: 10px;
+    padding: 12px;
+    font-size: 13px;
+    line-height: 1.55;
+    white-space: pre-wrap;
+    word-break: break-word;
+    color: #e2e8f0;
+    outline: none;
+    min-height: 80px;
+  }
+  .content-box[contenteditable="true"] {
+    border-color: var(--gold);
+    background: #172554;
+    box-shadow: 0 0 0 2px rgba(212,175,55,0.2);
+  }
+  
+  .edit-notice {
+    font-size: 11px;
+    color: var(--gold-light);
+    margin-top: 6px;
+    display: none;
+  }
+  
+  .toast {
+    position: fixed;
+    bottom: 24px;
+    left: 50%;
+    transform: translateX(-50%);
+    background: var(--green);
+    color: #fff;
+    padding: 10px 20px;
+    border-radius: 30px;
+    font-size: 13px;
+    font-weight: 600;
+    display: none;
+    box-shadow: 0 8px 24px rgba(0,0,0,0.6);
+    z-index: 1000;
+    white-space: nowrap;
+  }
+</style>
+</head>
+<body>
+
+<div class="header">
+  <div class="header-badge">🏛️ INSPECT Q ARCHITECTURAL STANDARD</div>
+  <h1>คลังข้อความด่วน LINE OA</h1>
+  <p>แตะ "📋 กดคัดลอก" แตะเดียวเข้าคลิปบอร์ด หรือกด "✏️ แก้ไข" เพื่อปรับคำได้ตามใจ</p>
+</div>
+
+<div class="nav-bar">
+  <a href="index.html" class="nav-link">⬅️ กลับไประบบตรวจคอนโด</a>
+  <span class="sync-status">● ใช้งานออนไลน์ได้ 100%</span>
+</div>
+
+<input type="text" class="search-box" id="search" placeholder="🔍 พิมพ์ค้นหา เช่น นัดคิว, ฉีดน้ำ, สโลป, เลเซอร์..." onkeyup="filterCards()">
+
+<div id="card-container">
+
+  <!-- Card 1 -->
+  <div class="card" data-tags="เปิดตัว นัดคิว แนะนำตัว มาตรฐาน เครื่องมือ สถาปนิก ปลอดภัย เลเซอร์">
+    <div class="card-header">
+      <span class="badge badge-gold">นัดคิว & แนะนำตัว (มาตรฐานสถาปนิก)</span>
+      <div class="card-title">ข้อความที่ 1: ขั้นตอนตรวจ & เสนอคิวนัด (ฉบับเซฟสถาปนิก 100%)</div>
+      <div class="action-bar">
+        <button class="btn btn-copy" onclick="copyText('t1')">📋 กดคัดลอก</button>
+        <button class="btn btn-edit" id="btn-edit-t1" onclick="toggleEdit('t1')">✏️ แก้ไข</button>
+        <button class="btn btn-reset" onclick="resetText('t1')">🔄 คืนค่าเดิม</button>
+      </div>
+      <div class="edit-notice" id="notice-t1">✏️ กำลังอยู่ในโหมดแก้ไข แตะที่ข้อความด้านล่างเพื่อพิมพ์เปลี่ยนคำ แล้วกดปุ่ม "💾 บันทึก"</div>
+    </div>
+    <div class="content-box" id="t1" contenteditable="false">🏛️ สวัสดีครับคุณ [ชื่อลูกค้า] / INSPECT Q ตรวจรับมอบคอนโดโดยสถาปนิก ยินดีให้บริการครับ 🔍
+
+สำหรับโครงการ [ชื่อโครงการ] (ห้อง [เลขห้อง]) 
+ทางทีมสถาปนิกสรุปขั้นตอนและมาตรฐานการตรวจให้อ่านเข้าใจง่ายใน 1 นาทีครับ:
+
+⏱️ 1. ระยะเวลาการตรวจ:
+• ใช้เวลาตรวจละเอียดประมาณ 2.0 – 2.5 ชม. (ปรับตามขนาดพื้นที่และสภาพจริงของห้อง)
+• ช่วง 20–30 นาทีสุดท้าย สถาปนิกจะพาคุณ [ชื่อลูกค้า] เดินดูสรุปจุดสำคัญร่วมกัน พร้อมอธิบายแนวทางแก้ไขครับ
+
+🔍 2. สถาปนิกตรวจอะไรบ้าง? (ตรวจครบ 6 โซน 5 หมวดงานสถาปัตย์-วิศวกรรม)
+• พื้นที่ตรวจ: โถงทางเข้า / ห้องรับแขก / ห้องนอน / ห้องครัว / ห้องน้ำ / ระเบียง
+• งานสถาปัตย์: พื้นลามิเนต-SPC (เช็กการยวบ/โก่ง), ผนังดิ่ง-ฉาก, ฝ้าเพดาน, ประตู-หน้าต่าง
+• งานสุขาภิบาล: ขังน้ำเทสรั่วซึมใต้ซิงค์, ตรวจสโลปการระบายน้ำห้องน้ำและระเบียงให้แห้งเรียบสนิท
+• งานระบบไฟฟ้า: ตรวจตู้ควบคุม (DB Box), เบรกเกอร์ตัดไฟรั่ว (RCD) และสายดินทุกปลั๊ก 100%
+
+🧰 3. เครื่องมือมาตรฐานสถาปนิก (จัดเตรียมพร้อมใช้งานตามสภาพหน้างาน):
+1. เลเซอร์ 3D (วัดระนาบ ผนัง ฝ้า พื้น วงกบ)
+2. เครื่องวัดความชื้นดิจิทัล (Moisture Meter ตรวจการรั่วซึมสะสมใต้ผนัง)
+3. เครื่องทดสอบการตัดไฟรั่ว & ขั้วเต้ารับ (Socket & RCD Tester)
+4. ค้อนเคาะกระเบื้องก้านสไลด์ (เช็กโพรงอากาศใต้กระเบื้อง)
+5. อุปกรณ์ทดสอบการระบายน้ำ (Flow & Drain Tester) ตรวจสโลปท่อระบายน้ำพื้น
+
+📄 4. สิ่งที่คุณ [ชื่อลูกค้า] จะได้รับ:
+• สรุปรายการ Defect ส่งเข้า LINE ทันทีหลังตรวจเสร็จ
+• เล่มรายงานตรวจฉบับเต็ม PDF (A4 แนวนอน) ระบุตำแหน่งและภาพถ่ายชัดเจน พร้อมใช้อ้างอิงส่งต่อให้ช่างโครงการเข้าแก้ไขได้ทันทีครับ
+
+──────────────────────
+📅 คุณ [ชื่อลูกค้า] เล็งวันและช่วงเวลาไหนไว้ แจ้งนัดคิวตรวจกับสถาปนิกได้เลยนะครับผม 🤝</div>
+  </div>
+
+  <!-- Card 2 -->
+  <div class="card" data-tags="ฉีดน้ำ รั่วซึม หน้าต่าง กระจก ตอบคำถาม เสี่ยง นิติ สักหลาด ยาง epdm">
+    <div class="card-header">
+      <span class="badge badge-crimson">แก้เกม: ลูกค้าถามเรื่องฉีดน้ำหน้าต่าง</span>
+      <div class="card-title">ข้อความที่ 2: ชุดคำตอบแก้เกมกรณีลูกค้าถาม "มีฉีดน้ำเทสหน้าต่างไหม?"</div>
+      <div class="action-bar">
+        <button class="btn btn-copy" onclick="copyText('t2')">📋 กดคัดลอก</button>
+        <button class="btn btn-edit" id="btn-edit-t2" onclick="toggleEdit('t2')">✏️ แก้ไข</button>
+        <button class="btn btn-reset" onclick="resetText('t2')">🔄 คืนค่าเดิม</button>
+      </div>
+      <div class="edit-notice" id="notice-t2">✏️ กำลังอยู่ในโหมดแก้ไข แตะที่ข้อความด้านล่างเพื่อพิมพ์เปลี่ยนคำ แล้วกดปุ่ม "💾 บันทึก"</div>
+    </div>
+    <div class="content-box" id="t2" contenteditable="false">เรียนคุณ [ชื่อลูกค้า] ครับ ทางสถาปนิกตรวจรับมอบคอนโดสูง จะใช้มาตรฐานการตรวจเชิงโครงสร้างสถาปัตย์ (Physical & Seal Integrity Inspection) แทนการฉีดน้ำภายนอก ด้วยเหตุผล 3 ข้อหลักครับ:
+
+1. 🏢 ระเบียบความปลอดภัยอาคารชุด: นิติบุคคลคอนโดส่วนใหญ่มีกฎห้ามฉีดน้ำออกนอกอาคารเด็ดขาด เพื่อป้องกันละอองน้ำกระเด็นตกใส่ห้องชั้นล่าง รถยนต์ลูกบ้าน หรือทางเดินส่วนกลางครับ
+2. 🔍 ตรวจตรงจุดโครงสร้างจริง 100%: จุดที่ทำให้น้ำรั่วเข้าห้อง 99% ไม่ได้เกิดจากบานกระจก แต่เกิดจาก 3 จุดวิกฤตที่สถาปนิกตรวจละเอียด:
+   • ซีลยาง EPDM & สักหลาด: เช็กการบีบอัดแนบสนิทและการคืนตัวของยาง
+   • ซิลิโคนรอยต่อเฟรมกับผนังปูน: เช็กการฉีกขาด โพรงอากาศ และการยึดเกาะ
+   • รูระบายน้ำ (Weep Hole): ตรวจร่องรางและลิ้นระบายน้ำ ต้องไม่อุดตัน ไม่ให้น้ำล้นเอ่อเข้าห้อง
+3. 📟 เครื่องวัดความชื้นดิจิทัล (Moisture Meter): สถาปนิกจะสแกนความชื้นสะสมใต้กรอบวงกบและผนังใต้หน้าต่างทุกบานเพื่อตรวจหารอยรั่วซึมฝังลึก ซึ่งแม่นยำกว่าการสาดน้ำชั่วคราวเพียงไม่กี่วินาทีครับ 🤝</div>
+  </div>
+
+  <!-- Card 3 -->
+  <div class="card" data-tags="สโลป น้ำขัง ห้องน้ำ ระเบียง สุขาภิบาล ทางการ ท่อเดรน">
+    <div class="card-header">
+      <span class="badge badge-blue">งานสโลปพื้น & การระบายน้ำ</span>
+      <div class="card-title">ข้อความที่ 3: คำอธิบายงานสโลปพื้นห้องน้ำ-ระเบียง (ทางการ สุภาพ ไร้คำว่าห้ามเด็ดขาด)</div>
+      <div class="action-bar">
+        <button class="btn btn-copy" onclick="copyText('t3')">📋 กดคัดลอก</button>
+        <button class="btn btn-edit" id="btn-edit-t3" onclick="toggleEdit('t3')">✏️ แก้ไข</button>
+        <button class="btn btn-reset" onclick="resetText('t3')">🔄 คืนค่าเดิม</button>
+      </div>
+      <div class="edit-notice" id="notice-t3">✏️ กำลังอยู่ในโหมดแก้ไข แตะที่ข้อความด้านล่างเพื่อพิมพ์เปลี่ยนคำ แล้วกดปุ่ม "💾 บันทึก"</div>
+    </div>
+    <div class="content-box" id="t3" contenteditable="false">• งานสุขาภิบาล & ระบายน้ำ: ตรวจระดับความลาดเอียง (Slope) ของพื้นห้องน้ำและระเบียงให้ระบายน้ำลง Floor Drain ได้อย่างรวดเร็วและแห้งเรียบสนิท พร้อมทดสอบขังน้ำเช็กการรั่วซึมของข้อต่อท่อน้ำทิ้งใต้เคาน์เตอร์ซิงค์ทุกจุด 100% ครับ</div>
+  </div>
+
+  <!-- Card 4 -->
+  <div class="card" data-tags="เงื่อนไข ใบเสนอราคา สัญญา ท้ายเล่ม หมายเหตุ กฎหมาย">
+    <div class="card-header">
+      <span class="badge badge-gold">เงื่อนไขท้ายเอกสาร/เล่ม PDF</span>
+      <div class="card-title">ข้อความที่ 4: ข้อกำหนดมาตรฐานการปฏิบัติงาน (สำหรับใส่ท้ายใบเสนอราคา/เล่มรายงาน)</div>
+      <div class="action-bar">
+        <button class="btn btn-copy" onclick="copyText('t4')">📋 กดคัดลอก</button>
+        <button class="btn btn-edit" id="btn-edit-t4" onclick="toggleEdit('t4')">✏️ แก้ไข</button>
+        <button class="btn btn-reset" onclick="resetText('t4')">🔄 คืนค่าเดิม</button>
+      </div>
+      <div class="edit-notice" id="notice-t4">✏️ กำลังอยู่ในโหมดแก้ไข แตะที่ข้อความด้านล่างเพื่อพิมพ์เปลี่ยนคำ แล้วกดปุ่ม "💾 บันทึก"</div>
+    </div>
+    <div class="content-box" id="t4" contenteditable="false">ข้อกำหนดและมาตรฐานการปฏิบัติงาน (Inspection Terms & Conditions):
+1. การทดสอบการระบายน้ำและสุขาภิบาล: สถาปนิกจะทำการทดสอบระดับความลาดเอียง (Slope) ของพื้นห้องน้ำและระเบียง รวมถึงการขังน้ำทดสอบการรั่วซึมของท่อน้ำทิ้งใต้เคาน์เตอร์ซิงค์ทุกจุด
+2. การตรวจสอบการรั่วซึมกรอบบานภายนอก: ยึดหลักวิศวกรรมสถาปัตย์ในการตรวจสอบแนวซีลยาง EPDM, ยาแนวซิลิโคนรอยต่อ และระบบร่องระบายน้ำกรอบบาน (Weep Hole) พร้อมตรวจวัดความชื้นสะสมด้วยเครื่องดิจิทัล ทั้งนี้การทดสอบในจุดเปิดโล่งจะดำเนินการภายใต้ขอบเขตที่ไม่ขัดต่อระเบียบความปลอดภัยและข้อกำหนดของนิติบุคคลอาคารชุด</div>
+  </div>
+
+</div>
+
+<div class="toast" id="toast">✅ คัดลอกข้อความสำเร็จแล้ว!</div>
+
+<script>
+const defaultTexts = {
+  t1: document.getElementById('t1').innerText,
+  t2: document.getElementById('t2').innerText,
+  t3: document.getElementById('t3').innerText,
+  t4: document.getElementById('t4').innerText
+};
+
+// Load saved edits from localStorage
+window.addEventListener('DOMContentLoaded', () => {
+  ['t1', 't2', 't3', 't4'].forEach(id => {
+    const saved = localStorage.getItem('inspect_q_' + id);
+    if (saved) {
+      document.getElementById(id).innerText = saved;
+    }
+  });
+});
+
+function copyText(id) {
+  const el = document.getElementById(id);
+  const text = el.innerText;
+  navigator.clipboard.writeText(text).then(() => {
+    showToast("✅ คัดลอกข้อความสำเร็จแล้ว!");
+  }).catch(() => {
+    // Fallback
+    const ta = document.createElement('textarea');
+    ta.value = text;
+    document.body.appendChild(ta);
+    ta.select();
+    document.execCommand('copy');
+    document.body.removeChild(ta);
+    showToast("✅ คัดลอกข้อความสำเร็จแล้ว!");
+  });
+}
+
+function toggleEdit(id) {
+  const el = document.getElementById(id);
+  const btn = document.getElementById('btn-edit-' + id);
+  const notice = document.getElementById('notice-' + id);
+  const isEditing = el.getAttribute('contenteditable') === 'true';
+
+  if (!isEditing) {
+    el.setAttribute('contenteditable', 'true');
+    el.focus();
+    btn.innerText = '💾 บันทึก';
+    btn.style.background = '#10b981';
+    btn.style.color = '#fff';
+    notice.style.display = 'block';
+  } else {
+    el.setAttribute('contenteditable', 'false');
+    btn.innerText = '✏️ แก้ไข';
+    btn.style.background = '#334155';
+    btn.style.color = '#f8fafc';
+    notice.style.display = 'none';
+    localStorage.setItem('inspect_q_' + id, el.innerText);
+    showToast("💾 บันทึกการแก้ไขลงเครื่องเรียบร้อยแล้ว!");
+  }
+}
+
+function resetText(id) {
+  if (confirm("ต้องการคืนค่าข้อความเริ่มต้นใช่หรือไม่?")) {
+    document.getElementById(id).innerText = defaultTexts[id];
+    localStorage.removeItem('inspect_q_' + id);
+    const el = document.getElementById(id);
+    el.setAttribute('contenteditable', 'false');
+    const btn = document.getElementById('btn-edit-' + id);
+    btn.innerText = '✏️ แก้ไข';
+    btn.style.background = '#334155';
+    btn.style.color = '#f8fafc';
+    document.getElementById('notice-' + id).style.display = 'none';
+    showToast("🔄 คืนค่าข้อความเริ่มต้นแล้ว!");
+  }
+}
+
+function showToast(msg) {
+  const toast = document.getElementById('toast');
+  toast.innerText = msg;
+  toast.style.display = 'block';
+  setTimeout(() => { toast.style.display = 'none'; }, 2000);
+}
+
+function filterCards() {
+  const q = document.getElementById('search').value.toLowerCase();
+  const cards = document.querySelectorAll('.card');
+  cards.forEach(c => {
+    const tags = c.getAttribute('data-tags').toLowerCase();
+    const content = c.innerText.toLowerCase();
+    c.style.display = (tags.includes(q) || content.includes(q)) ? 'block' : 'none';
+  });
+}
+</script>
+
+</body>
+</html>
