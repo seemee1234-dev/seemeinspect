@@ -936,7 +936,7 @@
         </div>
       </div>
       <div class="top-hud-badge">
-        <span class="dot"></span> ● AI Property & Building Inspector
+        <span class="dot"></span> ● สถาปนิกวิชาชีพตรวจเอง | LINE OA: @inspectq
       </div>
       <div class="nav-actions">
         <a href="#calculator" class="btn btn-outline">คำนวณราคา</a>
@@ -1018,10 +1018,10 @@
             <div class="calc-control-group">
               <div class="slider-val-display">
                 <span>2. ขนาดพื้นที่ใช้สอย:</span>
-                <span class="current-val" id="areaValueDisplay">35 ตร.ม.</span>
+                <span class="current-val" id="areaValueDisplay">30 ตร.ม.</span>
               </div>
               <div class="slider-container">
-                <input type="range" id="areaSlider" min="20" max="350" step="1" value="35" oninput="updateCalculator()">
+                <input type="range" id="areaSlider" min="20" max="350" step="1" value="30" oninput="updateCalculator()">
               </div>
             </div>
 
@@ -1038,12 +1038,12 @@
           <!-- Right Result Card -->
           <div class="calc-result">
             <div class="calc-result-card">
-              <span class="result-badge" id="calcBadge">แพ็กเกจแนะนำ</span>
-              <h3 class="result-title" id="calcPkgTitle">ตรวจรับคอนโด 31–45 ตร.ม.</h3>
+              <span class="result-badge" id="calcBadge">ยอดนิยม</span>
+              <h3 class="result-title" id="calcPkgTitle">Studio / 1 Bedroom (ไม่เกิน 30 ตร.ม.)</h3>
               <p class="result-sub" id="calcPkgSub">ตรวจ 2 รอบ พร้อม Defect Report</p>
               
               <div class="result-price-wrap">
-                <span class="result-price" id="calcPrice">3,490 บาท</span>
+                <span class="result-price" id="calcPrice">3,500 บาท</span>
                 <span class="result-rounds" id="calcRounds">/ ตรวจ 2 รอบ</span>
               </div>
 
@@ -1081,235 +1081,302 @@
 
       <!-- Category Toggle -->
       <div class="category-toggle">
-        <button class="cat-btn active" id="tabCondoBtn" onclick="switchPackageTab('condo')">🏢 แพ็กเกจตรวจคอนโด (7 แพ็กเกจ)</button>
+        <button class="cat-btn active" id="tabCondoBtn" onclick="switchPackageTab('condo')">🏢 แพ็กเกจตรวจคอนโด (Condo Inspection)</button>
         <button class="cat-btn" id="tabHouseBtn" onclick="switchPackageTab('house')">🏡 แพ็กเกจตรวจบ้าน & อาคาร (4 แพ็กเกจ)</button>
       </div>
 
       <!-- Condo Packages (7 items directly from slides_data.json) -->
-      <div id="condoPackagesGrid" class="packages-grid">
-        
-        <!-- Pkg 1 -->
-        <div class="pkg-card">
-          <div class="pkg-header">
-            <span class="pkg-number">1</span>
-            <h3 class="pkg-title">ดูคอนโดแทนคุณ</h3>
-            <p class="pkg-sub">Video Call และเช็กภาพรวม</p>
-            <div class="pkg-price-row">
-              <span class="pkg-price">700 บาท</span>
+            <!-- Condo Packages: Ground Truth 100% Matching LINE OA Master Card -->
+      <div id="condoPackagesGrid" style="display: flex; flex-direction: column; gap: 24px;">
+
+        <!-- 1. Official Graphic Pricing Card Banner directly from LINE OA -->
+        <div style="background: linear-gradient(135deg, #0b1528, #10203e); border: 1.5px solid rgba(212, 175, 55, 0.7); border-radius: 16px; padding: 20px; box-shadow: 0 10px 30px rgba(0,0,0,0.6); display: flex; flex-direction: column; align-items: center; text-align: center;">
+          <div style="display: flex; justify-content: space-between; align-items: center; width: 100%; margin-bottom: 14px; flex-wrap: wrap; gap: 8px;">
+            <div style="text-align: left;">
+              <span style="display: inline-block; font-size: 11.5px; background: rgba(212, 175, 55, 0.2); border: 1px solid rgba(212, 175, 55, 0.85); color: #ffd700; padding: 2px 10px; border-radius: 12px; margin-bottom: 4px;">
+                ★ อัตราค่าบริการทางการ (Official LINE OA Pricing Card)
+              </span>
+              <h3 style="font-size: 19px; color: #ffffff; font-weight: 400; margin: 0;">
+                ตารางค่าบริการตรวจรับคอนโด <span style="color: #ffd700;">(Condo Inspection)</span>
+              </h3>
+            </div>
+            <div style="display: flex; align-items: center; gap: 10px;">
+              <span style="font-size: 13px; color: #38bdf8; background: rgba(0, 173, 242, 0.12); border: 1px solid #00adf2; padding: 4px 12px; border-radius: 16px;">
+                ● สถาปนิกวิชาชีพตรวจเอง
+              </span>
+              <a href="tel:0814499499" class="btn btn-outline" style="padding: 6px 12px; font-size: 12.5px; text-decoration: none;">
+                📞 081-449-9499
+              </a>
             </div>
           </div>
-          <div class="pkg-hours">⏱️ เวลาทำงาน: 1–1.5 ชั่วโมง / ห้อง / ครั้ง</div>
-          <div>
-            <div class="pkg-list-title">📌 ขอบเขตงาน:</div>
-            <ul class="pkg-list">
-              <li><span class="bullet">▪</span> Video Call ตามเวลานัดหมาย</li>
-              <li><span class="bullet">▪</span> ลูกค้าหรือผู้แทนพาชมห้องแบบเรียลไทม์</li>
-              <li><span class="bullet">▪</span> เช็กสภาพทั่วไปและมุมสำคัญของห้อง</li>
-              <li><span class="bullet">▪</span> แจ้งข้อสังเกตเบื้องต้นระหว่างการโทร</li>
-            </ul>
-            <div class="pkg-list-title">🎁 สิ่งที่ได้รับ:</div>
-            <ul class="pkg-list">
-              <li><span class="bullet">✓</span> คำแนะนำผ่าน Video Call</li>
-              <li><span class="bullet">✓</span> ภาพถ่ายและวิดีโอภาพรวม</li>
-              <li><span class="bullet">✓</span> สรุปจุดสังเกตเบื้องต้น</li>
-            </ul>
+          
+          <div style="width: 100%; max-width: 880px; position: relative; border-radius: 12px; overflow: hidden; border: 1px solid rgba(255,255,255,0.15); box-shadow: 0 8px 24px rgba(0,0,0,0.5);">
+            <img src="assets/images/02_CONDO_PRICING_TABLE_CARD.png" alt="อัตราค่าบริการตรวจรับคอนโด INSPECT Q" style="width: 100%; height: auto; display: block;">
           </div>
-          <div class="pkg-terms">
-            <strong>เงื่อนไข:</strong> ลูกค้าหรือผู้แทนต้องอยู่หน้างานและมีสัญญาณเน็ต ไม่ใช่การเข้าตรวจหน้างานและไม่รวม Defect Report
+          <div style="font-size: 12.5px; color: #94a3b8; margin-top: 10px;">
+            💡 อัตราค่าบริการข้างต้นเป็นราคามาตรฐานเดียวกับที่ส่งใน LINE OA อย่างเป็นทางการ 100%
           </div>
-          <button class="btn btn-outline" onclick="selectSpecificPackage('ดูคอนโดแทนคุณ (Video Call)', '700 บาท')">จองบริการนี้</button>
         </div>
 
-        <!-- Pkg 2 -->
-        <div class="pkg-card">
-          <div class="pkg-header">
-            <span class="pkg-number">2</span>
-            <h3 class="pkg-title">ตรวจคอนโด 1 รอบ</h3>
-            <p class="pkg-sub">ตรวจ Defect และสรุปเบื้องต้น</p>
-            <div class="pkg-price-row">
-              <span class="pkg-price">1,990 บาท</span>
+        <!-- 2. Individual Package Cards (Interactive Selectable) -->
+        <div class="packages-grid">
+          
+          <!-- Pkg 1: ดูคอนโดแทนคุณ (Video Call) -->
+          <div class="pkg-card">
+            <div class="pkg-header">
+              <span class="pkg-number">1</span>
+              <h3 class="pkg-title">ดูคอนโดแทนคุณ (Video Call)</h3>
+              <p class="pkg-sub">Video Call และเช็กภาพรวมเรียลไทม์</p>
+              <div class="pkg-price-row">
+                <span class="pkg-price">700 บาท</span>
+                <span style="font-size: 13px; color: #94a3b8; margin-left: 6px;">/ ครั้ง</span>
+              </div>
             </div>
+            <div class="pkg-hours">⏱️ เวลาทำงาน: 1–1.5 ชั่วโมง / ห้อง / ครั้ง</div>
+            <div>
+              <div class="pkg-list-title">📌 ขอบเขตงาน:</div>
+              <ul class="pkg-list">
+                <li><span class="bullet">▪</span> Video Call สดตามเวลานัดหมาย</li>
+                <li><span class="bullet">▪</span> ผู้ตรวจพาชมห้องและเช็กสภาพทั่วไปมุมสำคัญ</li>
+                <li><span class="bullet">▪</span> แจ้งข้อสังเกตและจุดควรระวังเบื้องต้นระหว่างการโทร</li>
+              </ul>
+              <div class="pkg-list-title">🎁 สิ่งที่ได้รับ:</div>
+              <ul class="pkg-list">
+                <li><span class="bullet">✓</span> คำแนะนำจากผู้เชี่ยวชาญผ่าน Video Call</li>
+                <li><span class="bullet">✓</span> สรุปข้อสังเกตเบื้องต้นส่งให้ทาง LINE</li>
+              </ul>
+            </div>
+            <div class="pkg-terms">
+              <strong>เงื่อนไข:</strong> เป็นบริการพาชมและให้คำแนะนำเบื้องต้น ไม่รวมเล่ม Defect Report
+            </div>
+            <button class="btn btn-outline" onclick="selectSpecificPackage('ดูคอนโดแทนคุณ (Video Call)', '700 บาท')">จองบริการนี้</button>
           </div>
-          <div class="pkg-hours">⏱️ เวลาทำงาน: 2–3 ชั่วโมง / ห้อง / ครั้ง</div>
-          <div>
-            <div class="pkg-list-title">📌 ขอบเขตงาน:</div>
-            <ul class="pkg-list">
-              <li><span class="bullet">▪</span> ตรวจพื้น ผนัง ฝ้า ประตู และหน้าต่าง</li>
-              <li><span class="bullet">▪</span> ตรวจห้องน้ำ ครัว และ Built-in</li>
-              <li><span class="bullet">▪</span> ตรวจระบบไฟฟ้าและประปาเบื้องต้น</li>
-              <li><span class="bullet">▪</span> ถ่ายภาพทุกจุดที่พบปัญหา</li>
-            </ul>
-            <div class="pkg-list-title">🎁 สิ่งที่ได้รับ:</div>
-            <ul class="pkg-list">
-              <li><span class="bullet">✓</span> สรุปรายการตรวจเบื้องต้น</li>
-              <li><span class="bullet">✓</span> ภาพจุดปัญหาพร้อมระบุตำแหน่ง</li>
-              <li><span class="bullet">✓</span> คำแนะนำและแนวทางแก้ไขเบื้องต้น</li>
-            </ul>
+
+          <!-- Pkg 2: Studio / 1 Bedroom (ไม่เกิน 30 ตร.ม.) -->
+          <div class="pkg-card featured">
+            <div class="pkg-header">
+              <span class="pkg-number">2</span>
+              <h3 class="pkg-title">Studio / 1 Bedroom</h3>
+              <p class="pkg-sub">พื้นที่ไม่เกิน 30 ตร.ม. (สถาปนิกตรวจเอง)</p>
+              <div class="pkg-price-row" style="flex-direction: column; align-items: flex-start; gap: 4px;">
+                <div style="display: flex; align-items: baseline; gap: 8px;">
+                  <span style="font-size: 13px; color: #94a3b8;">ตรวจ 1 รอบ:</span>
+                  <span style="font-size: 20px; color: #ffffff; font-weight: 500;">2,500.-</span>
+                </div>
+                <div style="display: flex; align-items: baseline; gap: 8px;">
+                  <span style="font-size: 13px; color: #ffd700; font-weight: 400;">ตรวจ 2 รอบ:</span>
+                  <span class="pkg-price" style="font-size: 27px; color: #ffd700;">3,500.-</span>
+                  <span style="font-size: 11px; background: #dc2626; color: #ffffff; padding: 1px 6px; border-radius: 4px;">ยอดนิยม</span>
+                </div>
+              </div>
+            </div>
+            <div class="pkg-hours">⏱️ รอบ 1: 2.5–3.5 ชม. · รอบ 2: 1.5–2 ชม. (รวม 4–5.5 ชม.)</div>
+            <div>
+              <div class="pkg-list-title">📌 ขอบเขตงาน:</div>
+              <ul class="pkg-list">
+                <li><span class="bullet">▪</span> สแกนครบ 5 ระบบมาตรฐานวิศวกรรม</li>
+                <li><span class="bullet">▪</span> กล้องอินฟราเรด FLIR & เลเซอร์วัดระนาบ 360°</li>
+                <li><span class="bullet">▪</span> แปะสติกเกอร์มาร์กจุด Defect จริงหน้างานทุกจุด</li>
+                <li><span class="bullet">▪</span> สถาปนิกเข้าตรวจซ้ำจุดแก้ไขในรอบที่ 2</li>
+              </ul>
+              <div class="pkg-list-title">🎁 สิ่งที่ได้รับ:</div>
+              <ul class="pkg-list">
+                <li><span class="bullet">✓</span> เล่ม Defect Report ฉบับสมบูรณ์ในวันตรวจ</li>
+                <li><span class="bullet">✓</span> สถาปนิกตรวจรับรองความสมบูรณ์ 100% ก่อนโอน</li>
+              </ul>
+            </div>
+            <div class="pkg-terms">
+              <strong>เงื่อนไข:</strong> เหมาะสำหรับห้อง Studio และ 1 Bedroom ขนาดกะทัดรัด
+            </div>
+            <button class="btn btn-gold" onclick="selectSpecificPackage('Studio / 1 Bedroom (<30 ตร.ม.) 2 รอบ', '3,500 บาท')">จองบริการนี้ (3,500.-)</button>
           </div>
-          <div class="pkg-terms">
-            <strong>เงื่อนไข:</strong> ตรวจหน้างาน 1 ครั้ง เหมาะก่อนตัดสินใจซื้อ ไม่รวมเล่มรายงานเต็มและการตรวจติดตามรอบ 2
+
+          <!-- Pkg 3: 1 Bedroom / 1 Bed Plus (31–45 ตร.ม.) -->
+          <div class="pkg-card featured">
+            <div class="pkg-header">
+              <span class="pkg-number">3</span>
+              <h3 class="pkg-title">1 Bedroom / 1 Bed Plus</h3>
+              <p class="pkg-sub">พื้นที่ 31–45 ตร.ม. (สถาปนิกตรวจเอง)</p>
+              <div class="pkg-price-row" style="flex-direction: column; align-items: flex-start; gap: 4px;">
+                <div style="display: flex; align-items: baseline; gap: 8px;">
+                  <span style="font-size: 13px; color: #94a3b8;">ตรวจ 1 รอบ:</span>
+                  <span style="font-size: 20px; color: #ffffff; font-weight: 500;">3,500.-</span>
+                </div>
+                <div style="display: flex; align-items: baseline; gap: 8px;">
+                  <span style="font-size: 13px; color: #ffd700; font-weight: 400;">ตรวจ 2 รอบ:</span>
+                  <span class="pkg-price" style="font-size: 27px; color: #ffd700;">4,500.-</span>
+                  <span style="font-size: 11px; background: #0284c7; color: #ffffff; padding: 1px 6px; border-radius: 4px;">แนะนำ</span>
+                </div>
+              </div>
+            </div>
+            <div class="pkg-hours">⏱️ รอบ 1: 3–4 ชม. · รอบ 2: 2–2.5 ชม. (รวม 5–6.5 ชม.)</div>
+            <div>
+              <div class="pkg-list-title">📌 ขอบเขตงาน:</div>
+              <ul class="pkg-list">
+                <li><span class="bullet">▪</span> สแกนครบ 5 ระบบมาตรฐานวิศวกรรม</li>
+                <li><span class="bullet">▪</span> ตรวจห้องนอน ห้องนั่งเล่น ห้องอเนกประสงค์ ครัว ห้องน้ำ</li>
+                <li><span class="bullet">▪</span> ตรวจระบบไฟฟ้า แอร์ สุขาภิบาล และการรั่วซึม</li>
+                <li><span class="bullet">▪</span> สถาปนิกเข้าตรวจซ้ำจุดแก้ไขในรอบที่ 2</li>
+              </ul>
+              <div class="pkg-list-title">🎁 สิ่งที่ได้รับ:</div>
+              <ul class="pkg-list">
+                <li><span class="bullet">✓</span> เล่ม Defect Report ฉบับสมบูรณ์ในวันตรวจ</li>
+                <li><span class="bullet">✓</span> ยืนยันความสมบูรณ์ 100% ก่อนเซ็นรับโอน</li>
+              </ul>
+            </div>
+            <div class="pkg-terms">
+              <strong>เงื่อนไข:</strong> เหมาะสำหรับ 1 Bedroom ขนาดใหญ่ หรือ 1 Bed Plus มีห้องทำงาน
+            </div>
+            <button class="btn btn-gold" onclick="selectSpecificPackage('1 Bed / 1 Bed Plus (31-45 ตร.ม.) 2 รอบ', '4,500 บาท')">จองบริการนี้ (4,500.-)</button>
           </div>
-          <button class="btn btn-outline" onclick="selectSpecificPackage('ตรวจคอนโด 1 รอบเบื้องต้น', '1,990 บาท')">จองบริการนี้</button>
+
+          <!-- Pkg 4: 2 Bedroom ขนาดกลาง (46–60 ตร.ม.) -->
+          <div class="pkg-card">
+            <div class="pkg-header">
+              <span class="pkg-number">4</span>
+              <h3 class="pkg-title">2 Bedroom ขนาดกลาง</h3>
+              <p class="pkg-sub">พื้นที่ 46–60 ตร.ม. (สถาปนิกตรวจเอง)</p>
+              <div class="pkg-price-row" style="flex-direction: column; align-items: flex-start; gap: 4px;">
+                <div style="display: flex; align-items: baseline; gap: 8px;">
+                  <span style="font-size: 13px; color: #94a3b8;">ตรวจ 1 รอบ:</span>
+                  <span style="font-size: 20px; color: #ffffff; font-weight: 500;">4,500.-</span>
+                </div>
+                <div style="display: flex; align-items: baseline; gap: 8px;">
+                  <span style="font-size: 13px; color: #ffd700; font-weight: 400;">ตรวจ 2 รอบ:</span>
+                  <span class="pkg-price" style="font-size: 27px; color: #ffd700;">5,800.-</span>
+                </div>
+              </div>
+            </div>
+            <div class="pkg-hours">⏱️ รอบ 1: 3.5–4.5 ชม. · รอบ 2: 2–2.5 ชม. (รวม 5.5–7 ชม.)</div>
+            <div>
+              <div class="pkg-list-title">📌 ขอบเขตงาน:</div>
+              <ul class="pkg-list">
+                <li><span class="bullet">▪</span> สแกน 5 ระบบตรวจละเอียด 2 ห้องนอน 1-2 ห้องน้ำ</li>
+                <li><span class="bullet">▪</span> กล้องความร้อน FLIR เช็กฝ้าและท่อน้ำทิ้ง</li>
+                <li><span class="bullet">▪</span> ติดสติกเกอร์ชี้จุดบกพร่องทุกห้องครบถ้วน</li>
+                <li><span class="bullet">▪</span> สถาปนิกตรวจซ้ำจุดแก้ไขรอบที่ 2</li>
+              </ul>
+              <div class="pkg-list-title">🎁 สิ่งที่ได้รับ:</div>
+              <ul class="pkg-list">
+                <li><span class="bullet">✓</span> เล่ม Defect Report สมบูรณ์พร้อมภาพประกอบ</li>
+                <li><span class="bullet">✓</span> ช่วยคุยเคลียร์กับช่างโครงการจนเรียบร้อย</li>
+              </ul>
+            </div>
+            <div class="pkg-terms">
+              <strong>เงื่อนไข:</strong> เหมาะสำหรับ 2 Bedroom ครอบครัวขนาดกลาง
+            </div>
+            <button class="btn btn-outline" onclick="selectSpecificPackage('2 Bedroom ขนาดกลาง (46-60 ตร.ม.) 2 รอบ', '5,800 บาท')">จองบริการนี้ (5,800.-)</button>
+          </div>
+
+          <!-- Pkg 5: 2–3 Bedroom / Duplex (61–80 ตร.ม.) -->
+          <div class="pkg-card">
+            <div class="pkg-header">
+              <span class="pkg-number">5</span>
+              <h3 class="pkg-title">2–3 Bedroom / Duplex</h3>
+              <p class="pkg-sub">พื้นที่ 61–80 ตร.ม. (สถาปนิกตรวจเอง)</p>
+              <div class="pkg-price-row" style="flex-direction: column; align-items: flex-start; gap: 4px;">
+                <div style="display: flex; align-items: baseline; gap: 8px;">
+                  <span style="font-size: 13px; color: #94a3b8;">ตรวจ 1 รอบ:</span>
+                  <span style="font-size: 20px; color: #ffffff; font-weight: 500;">5,500.-</span>
+                </div>
+                <div style="display: flex; align-items: baseline; gap: 8px;">
+                  <span style="font-size: 13px; color: #ffd700; font-weight: 400;">ตรวจ 2 รอบ:</span>
+                  <span class="pkg-price" style="font-size: 27px; color: #ffd700;">6,900.-</span>
+                </div>
+              </div>
+            </div>
+            <div class="pkg-hours">⏱️ รอบ 1: 4–5 ชม. · รอบ 2: 2.5–3 ชม. (รวม 6.5–8 ชม.)</div>
+            <div>
+              <div class="pkg-list-title">📌 ขอบเขตงาน:</div>
+              <ul class="pkg-list">
+                <li><span class="bullet">▪</span> สแกนครบทุกห้อง โซนบันได Duplex และพื้นที่ระเบียง</li>
+                <li><span class="bullet">▪</span> เช็กระบบโหลดไฟฟ้าตู้ DB แอร์หลายตัว และสุขภัณฑ์</li>
+                <li><span class="bullet">▪</span> ติดสติกเกอร์ชี้จุด Defect ทุกตำแหน่ง</li>
+                <li><span class="bullet">▪</span> สถาปนิกตรวจซ้ำจุดแก้ไขรอบที่ 2</li>
+              </ul>
+              <div class="pkg-list-title">🎁 สิ่งที่ได้รับ:</div>
+              <ul class="pkg-list">
+                <li><span class="bullet">✓</span> เล่ม Defect Report สมบูรณ์ 100%</li>
+                <li><span class="bullet">✓</span> คำแนะนำวิศวกรรมการแก้ไขกับผู้รับเหมา</li>
+              </ul>
+            </div>
+            <div class="pkg-terms">
+              <strong>เงื่อนไข:</strong> เหมาะสำหรับห้อง 2-3 ห้องนอน หรือห้อง Duplex 2 ชั้น
+            </div>
+            <button class="btn btn-outline" onclick="selectSpecificPackage('2-3 Bed / Duplex (61-80 ตร.ม.) 2 รอบ', '6,900 บาท')">จองบริการนี้ (6,900.-)</button>
+          </div>
+
+          <!-- Pkg 6: Penthouse / ขนาดพิเศษ (> 80 ตร.ม.) -->
+          <div class="pkg-card">
+            <div class="pkg-header">
+              <span class="pkg-number">6</span>
+              <h3 class="pkg-title">Penthouse / ขนาดพิเศษ</h3>
+              <p class="pkg-sub">พื้นที่เกิน 80 ตร.ม. ขึ้นไป</p>
+              <div class="pkg-price-row">
+                <span class="pkg-price" style="font-size: 26px;">ประเมินตามพื้นที่</span>
+              </div>
+            </div>
+            <div class="pkg-hours">⏱️ ระยะเวลาประเมินตามพื้นที่ จำนวนห้อง และความซับซ้อน</div>
+            <div>
+              <div class="pkg-list-title">📌 ขอบเขตงาน:</div>
+              <ul class="pkg-list">
+                <li><span class="bullet">▪</span> ประเมินแผนตรวจงานตามแปลนและพื้นที่จริง</li>
+                <li><span class="bullet">▪</span> ตรวจความสมบูรณ์สถาปัตย์และระบบวิศวกรรม 2 รอบ</li>
+                <li><span class="bullet">▪</span> เล่ม Defect Report ฉบับสมบูรณ์</li>
+              </ul>
+              <div class="pkg-list-title">🎁 สิ่งที่ได้รับ:</div>
+              <ul class="pkg-list">
+                <li><span class="bullet">✓</span> ใบเสนอราคาตามพื้นที่จริง</li>
+                <li><span class="bullet">✓</span> เล่มรายงาน Defect และสรุปผลตรวจติดตาม</li>
+              </ul>
+            </div>
+            <div class="pkg-terms">
+              <strong>เงื่อนไข:</strong> ส่งแปลนห้องและพื้นที่ผ่าน LINE: @inspectq เพื่อรับใบเสนอราคา
+            </div>
+            <button class="btn btn-sky" onclick="selectSpecificPackage('คอนโดเกิน 80 ตร.ม. / Penthouse', 'ประเมินราคาตามพื้นที่')">ขอใบเสนอราคา</button>
+          </div>
+
         </div>
 
-        <!-- Pkg 3 -->
-        <div class="pkg-card featured">
-          <div class="pkg-header">
-            <span class="pkg-number">3</span>
-            <h3 class="pkg-title">ตรวจรับคอนโด ไม่เกิน 30 ตร.ม.</h3>
-            <p class="pkg-sub">ตรวจ 2 รอบ พร้อม Defect Report</p>
-            <div class="pkg-price-row">
-              <span class="pkg-price">2,990 บาท</span>
+        <!-- 3. Comparison Feature Box: ตรวจ 1 รอบ vs ตรวจ 2 รอบ แตกต่างกันอย่างไร? -->
+        <div style="background: #0f1a2e; border: 1px solid rgba(255,255,255,0.15); border-radius: 14px; padding: 22px; margin-top: 10px;">
+          <h3 style="font-size: 18px; color: #ffd700; font-weight: 400; margin-bottom: 6px; text-align: center;">
+            🔍 ตรวจ 1 รอบ vs ตรวจ 2 รอบ แตกต่างกันอย่างไร?
+          </h3>
+          <p style="font-size: 13px; color: #94a3b8; text-align: center; margin-bottom: 18px;">
+            เปรียบเทียบขอบเขตงาน เพื่อเลือกแพ็กเกจที่คุ้มค่าและเหมาะกับห้องของคุณ
+          </p>
+          
+          <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(290px, 1fr)); gap: 16px;">
+            <!-- Column 1: ตรวจ 1 รอบ -->
+            <div style="background: rgba(7, 13, 24, 0.65); border: 1px solid rgba(0, 173, 242, 0.3); border-radius: 10px; padding: 18px;">
+              <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 8px;">
+                <h4 style="font-size: 16px; color: #38bdf8; font-weight: 400; margin: 0;">ตรวจ 1 รอบ (ตรวจละเอียดรอบแรก)</h4>
+              </div>
+              <div style="font-size: 12px; color: #94a3b8; margin-bottom: 14px;">เหมาะสำหรับลูกค้านำเล่มรายงานไปส่งต่อให้โครงการแก้เอง</div>
+              <ul style="list-style: none; padding: 0; margin: 0; display: flex; flex-direction: column; gap: 10px; font-size: 13.5px; color: #cbd5e1;">
+                <li><span style="color: #00adf2; margin-right: 6px;">✓</span> <strong>สแกนครบ 5 ระบบมาตรฐานวิศวกรรม</strong><br><span style="font-size: 12px; color: #64748b;">(โครงสร้าง, ไฟฟ้า, ประปา, สถาปัตย์, สุขาภิบาล)</span></li>
+                <li><span style="color: #00adf2; margin-right: 6px;">✓</span> <strong>สแกนจุดรั่วซึม FLIR & เลเซอร์ 360°</strong><br><span style="font-size: 12px; color: #64748b;">(หาจุดรั่วซึมซ่อนเร้นใต้ฝ้า และวัดระดับระนาบพื้น-ผนัง)</span></li>
+                <li><span style="color: #00adf2; margin-right: 6px;">✓</span> <strong>ติดสติกเกอร์ชี้จุด Defect จริงหน้างาน</strong><br><span style="font-size: 12px; color: #64748b;">(มาร์กจุดบกพร่องทุกตำแหน่ง ให้ช่างเห็นชัดเจน ไม่ต้องเดินหา)</span></li>
+                <li><span style="color: #00adf2; margin-right: 6px;">✓</span> <strong>ออกเล่ม Defect Report ในวันตรวจ</strong><br><span style="font-size: 12px; color: #64748b;">(ระบุพิกัดพร้อมภาพถ่ายชัดเจน ส่งโครงการเริ่มซ่อมทันที)</span></li>
+              </ul>
             </div>
-          </div>
-          <div class="pkg-hours">⏱️ รอบ 1: 2.5–3.5 ชม. · รอบ 2: 1.5–2 ชม. (รวม 4–5.5 ชม.)</div>
-          <div>
-            <div class="pkg-list-title">📌 ขอบเขตงาน:</div>
-            <ul class="pkg-list">
-              <li><span class="bullet">▪</span> ตรวจ Defect อย่างละเอียดในรอบแรก</li>
-              <li><span class="bullet">▪</span> จัดทำ Defect Report พร้อมภาพประกอบ</li>
-              <li><span class="bullet">▪</span> ระบุตำแหน่งและรายละเอียดปัญหาชัดเจน</li>
-              <li><span class="bullet">▪</span> ตรวจซ้ำหลังโครงการแก้ไขในรอบที่ 2</li>
-            </ul>
-            <div class="pkg-list-title">🎁 สิ่งที่ได้รับ:</div>
-            <ul class="pkg-list">
-              <li><span class="bullet">✓</span> Defect Report ฉบับสมบูรณ์</li>
-              <li><span class="bullet">✓</span> ภาพถ่ายทุกจุดที่พบปัญหาครบถ้วน</li>
-              <li><span class="bullet">✓</span> ผลตรวจติดตามและสรุปเปรียบเทียบทั้ง 2 รอบ</li>
-            </ul>
-          </div>
-          <div class="pkg-terms">
-            <strong>เงื่อนไข:</strong> สำหรับห้อง Studio หรือ 1 Bed ไม่เกิน 30 ตร.ม. รอบ 2 นัดหลังโครงการแก้ไขตามเวลาที่ตกลง
-          </div>
-          <button class="btn btn-gold" onclick="selectSpecificPackage('ตรวจรับคอนโด ไม่เกิน 30 ตร.ม. (2 รอบ)', '2,990 บาท')">จองบริการนี้</button>
-        </div>
 
-        <!-- Pkg 4 -->
-        <div class="pkg-card featured">
-          <div class="pkg-header">
-            <span class="pkg-number">4</span>
-            <h3 class="pkg-title">ตรวจรับคอนโด 31–45 ตร.ม.</h3>
-            <p class="pkg-sub">ตรวจ 2 รอบ พร้อม Defect Report</p>
-            <div class="pkg-price-row">
-              <span class="pkg-price">3,490 บาท</span>
+            <!-- Column 2: ตรวจ 2 รอบ -->
+            <div style="background: rgba(30, 58, 138, 0.18); border: 1.5px solid #ffd700; border-radius: 10px; padding: 18px; position: relative;">
+              <span style="position: absolute; top: -11px; right: 14px; background: #dc2626; color: #ffffff; font-size: 11px; padding: 2px 10px; border-radius: 10px; font-weight: 500;">แนะนำที่สุด</span>
+              <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 8px;">
+                <h4 style="font-size: 16px; color: #ffd700; font-weight: 400; margin: 0;">ตรวจ 2 รอบ (ตรวจ + รีเช็กก่อนโอน)</h4>
+              </div>
+              <div style="font-size: 12px; color: #ffd700; margin-bottom: 14px;">สถาปนิกตรวจซ้ำจุดที่ช่างแก้ไข มั่นใจ 100% ก่อนเซ็นรับโอน</div>
+              <ul style="list-style: none; padding: 0; margin: 0; display: flex; flex-direction: column; gap: 10px; font-size: 13.5px; color: #cbd5e1;">
+                <li><span style="color: #ffd700; margin-right: 6px;">✓</span> <strong>ครอบคลุมการตรวจรอบแรกครบทุกระบบ</strong><br><span style="font-size: 12px; color: #94a3b8;">(ตรวจละเอียดทุกตารางนิ้ว พร้อมส่งมอบเล่มรายงาน Defect)</span></li>
+                <li><span style="color: #ffd700; margin-right: 6px;">✓</span> <strong>สถาปนิกเข้าตรวจซ้ำจุดที่ช่างแก้ไข (รอบ 2)</strong><br><span style="font-size: 12px; color: #94a3b8;">(ตรวจสอบทุกจุดตามเล่มรายงาน ว่าช่างซ่อมได้มาตรฐานจริง)</span></li>
+                <li><span style="color: #ffd700; margin-right: 6px;">✓</span> <strong>ทดสอบระบบน้ำ-ไฟ และเก็บสีซ้ำจนสมบูรณ์</strong><br><span style="font-size: 12px; color: #94a3b8;">(ตรวจเช็กรอยร้าว ผิวสัมผัส และจุดรั่วซึมซ้ำอีกครั้ง)</span></li>
+                <li><span style="color: #ffd700; margin-right: 6px;">✓</span> <strong>ยืนยันความสมบูรณ์ 100% ก่อนเซ็นรับโอน</strong><br><span style="font-size: 12px; color: #94a3b8;">(ป้องกันการหมกเม็ด ช่วยคุยเคลียร์กับช่างโครงการจนเรียบร้อย)</span></li>
+              </ul>
             </div>
           </div>
-          <div class="pkg-hours">⏱️ รอบ 1: 3–4 ชม. · รอบ 2: 2–2.5 ชม. (รวม 5–6.5 ชม.)</div>
-          <div>
-            <div class="pkg-list-title">📌 ขอบเขตงาน:</div>
-            <ul class="pkg-list">
-              <li><span class="bullet">▪</span> ตรวจ Defect อย่างละเอียด 2 รอบ</li>
-              <li><span class="bullet">▪</span> ตรวจงานสถาปัตย์ทุกจุดสำคัญ</li>
-              <li><span class="bullet">▪</span> ตรวจไฟฟ้าและประปาเบื้องต้น</li>
-              <li><span class="bullet">▪</span> จัดทำรายงานและตรวจติดตามหลังแก้ไข</li>
-            </ul>
-            <div class="pkg-list-title">🎁 สิ่งที่ได้รับ:</div>
-            <ul class="pkg-list">
-              <li><span class="bullet">✓</span> Defect Report ฉบับสมบูรณ์</li>
-              <li><span class="bullet">✓</span> ภาพปัญหาพร้อมระบุตำแหน่ง</li>
-              <li><span class="bullet">✓</span> ผลตรวจติดตามและสรุปทั้ง 2 รอบ</li>
-            </ul>
-          </div>
-          <div class="pkg-terms">
-            <strong>เงื่อนไข:</strong> เหมาะกับ 1 Bedroom ขนาดใหญ่ หรือ 1 Bedroom Plus ไม่รวมค่าซ่อมและพื้นที่ส่วนกลาง
-          </div>
-          <button class="btn btn-gold" onclick="selectSpecificPackage('ตรวจรับคอนโด 31–45 ตร.ม. (2 รอบ)', '3,490 บาท')">จองบริการนี้</button>
-        </div>
-
-        <!-- Pkg 5 -->
-        <div class="pkg-card">
-          <div class="pkg-header">
-            <span class="pkg-number">5</span>
-            <h3 class="pkg-title">ตรวจรับคอนโด 46–60 ตร.ม.</h3>
-            <p class="pkg-sub">ตรวจ 2 รอบ พร้อม Defect Report</p>
-            <div class="pkg-price-row">
-              <span class="pkg-price">4,490 บาท</span>
-            </div>
-          </div>
-          <div class="pkg-hours">⏱️ รอบ 1: 3.5–4.5 ชม. · รอบ 2: 2–2.5 ชม. (รวม 5.5–7 ชม.)</div>
-          <div>
-            <div class="pkg-list-title">📌 ขอบเขตงาน:</div>
-            <ul class="pkg-list">
-              <li><span class="bullet">▪</span> ตรวจพื้น ผนัง ฝ้า ห้องน้ำ ครัว และ Built-in</li>
-              <li><span class="bullet">▪</span> ตรวจระบบไฟฟ้าและประปาเบื้องต้น</li>
-              <li><span class="bullet">▪</span> จัดทำ Defect Report พร้อมภาพประกอบ</li>
-              <li><span class="bullet">▪</span> ตรวจซ้ำหลังโครงการแก้ไขและสรุปผล</li>
-            </ul>
-            <div class="pkg-list-title">🎁 สิ่งที่ได้รับ:</div>
-            <ul class="pkg-list">
-              <li><span class="bullet">✓</span> Defect Report ฉบับสมบูรณ์</li>
-              <li><span class="bullet">✓</span> ภาพปัญหาพร้อมระบุตำแหน่ง</li>
-              <li><span class="bullet">✓</span> ผลตรวจติดตามและสรุปทั้ง 2 รอบ</li>
-            </ul>
-          </div>
-          <div class="pkg-terms">
-            <strong>เงื่อนไข:</strong> เหมาะกับ 2 Bedroom ขนาดมาตรฐาน หรือห้องที่มีหลายโซน รอบ 2 นัดหลังโครงการแก้ไข
-          </div>
-          <button class="btn btn-outline" onclick="selectSpecificPackage('ตรวจรับคอนโด 46–60 ตร.ม. (2 รอบ)', '4,490 บาท')">จองบริการนี้</button>
-        </div>
-
-        <!-- Pkg 6 -->
-        <div class="pkg-card">
-          <div class="pkg-header">
-            <span class="pkg-number">6</span>
-            <h3 class="pkg-title">ตรวจรับคอนโด 61–80 ตร.ม.</h3>
-            <p class="pkg-sub">ตรวจ 2 รอบ พร้อม Defect Report</p>
-            <div class="pkg-price-row">
-              <span class="pkg-price">5,490 บาท</span>
-            </div>
-          </div>
-          <div class="pkg-hours">⏱️ รอบ 1: 4–5 ชม. · รอบ 2: 2.5–3 ชม. (รวม 6.5–8 ชม.)</div>
-          <div>
-            <div class="pkg-list-title">📌 ขอบเขตงาน:</div>
-            <ul class="pkg-list">
-              <li><span class="bullet">▪</span> ตรวจ Defect อย่างละเอียดครบทุกโซน</li>
-              <li><span class="bullet">▪</span> ตรวจระบบไฟฟ้าและประปาเบื้องต้น</li>
-              <li><span class="bullet">▪</span> จัดทำ Defect Report พร้อมภาพประกอบ</li>
-              <li><span class="bullet">▪</span> ตรวจซ้ำหลังโครงการแก้ไขและสรุปผล</li>
-            </ul>
-            <div class="pkg-list-title">🎁 สิ่งที่ได้รับ:</div>
-            <ul class="pkg-list">
-              <li><span class="bullet">✓</span> Defect Report ฉบับสมบูรณ์</li>
-              <li><span class="bullet">✓</span> ภาพปัญหาพร้อมระบุตำแหน่ง</li>
-              <li><span class="bullet">✓</span> ผลตรวจติดตามและสรุปทั้ง 2 รอบ</li>
-            </ul>
-          </div>
-          <div class="pkg-terms">
-            <strong>เงื่อนไข:</strong> เหมาะกับ 2 Bedroom ขนาดใหญ่ หรือ 3 Bedroom ไม่รวมค่าซ่อมและพื้นที่ส่วนกลาง
-          </div>
-          <button class="btn btn-outline" onclick="selectSpecificPackage('ตรวจรับคอนโด 61–80 ตร.ม. (2 รอบ)', '5,490 บาท')">จองบริการนี้</button>
-        </div>
-
-        <!-- Pkg 7 -->
-        <div class="pkg-card">
-          <div class="pkg-header">
-            <span class="pkg-number">7</span>
-            <h3 class="pkg-title">พื้นที่เกิน 80 ตร.ม.</h3>
-            <p class="pkg-sub">Penthouse & ยูนิตขนาดพิเศษ</p>
-            <div class="pkg-price-row">
-              <span class="pkg-price" style="font-size: 26px;">ประเมินตามพื้นที่</span>
-            </div>
-          </div>
-          <div class="pkg-hours">⏱️ ระยะเวลาประเมินตามพื้นที่ จำนวนห้อง และความซับซ้อน</div>
-          <div>
-            <div class="pkg-list-title">📌 ขอบเขตงาน:</div>
-            <ul class="pkg-list">
-              <li><span class="bullet">▪</span> ประเมินขอบเขตงานตามพื้นที่จริง</li>
-              <li><span class="bullet">▪</span> ตรวจ Defect อย่างละเอียด 2 รอบ</li>
-              <li><span class="bullet">▪</span> จัดทำ Defect Report พร้อมภาพประกอบ</li>
-              <li><span class="bullet">▪</span> ตรวจติดตามหลังแก้ไขและสรุปผล</li>
-            </ul>
-            <div class="pkg-list-title">🎁 สิ่งที่ได้รับ:</div>
-            <ul class="pkg-list">
-              <li><span class="bullet">✓</span> ใบเสนอราคาตามพื้นที่จริง</li>
-              <li><span class="bullet">✓</span> Defect Report ฉบับสมบูรณ์</li>
-              <li><span class="bullet">✓</span> ภาพปัญหาและผลตรวจติดตาม</li>
-            </ul>
-          </div>
-          <div class="pkg-terms">
-            <strong>เงื่อนไข:</strong> กรุณาแจ้งพื้นที่ แปลน จำนวนห้อง และที่ตั้งก่อน เพื่อทำใบเสนอราคาอย่างเป็นทางการ
-          </div>
-          <button class="btn btn-sky" onclick="selectSpecificPackage('คอนโดเกิน 80 ตร.ม. / Penthouse', 'ประเมินราคาตามพื้นที่')">ขอใบเสนอราคา</button>
         </div>
 
       </div>
@@ -1709,7 +1776,7 @@
             </div>
             <div>
               <label class="form-label">เบอร์โทรศัพท์มือถือ *</label>
-              <input type="tel" id="custPhone" class="form-input" placeholder="เช่น 081-234-5678" required>
+              <input type="tel" id="custPhone" class="form-input" placeholder="เช่น 081-449-9499" required>
             </div>
             <div>
               <label class="form-label">LINE ID</label>
@@ -1738,7 +1805,7 @@
             </div>
             <div class="form-group-full">
               <label class="form-label">แพ็กเกจที่ต้องการจอง</label>
-              <input type="text" id="custPackage" class="form-input" value="ตรวจรับคอนโด 31–45 ตร.ม. (ตรวจ 2 รอบ) - 3,490 บาท">
+              <input type="text" id="custPackage" class="form-input" value="Studio / 1 Bedroom (<30 ตร.ม.) ตรวจ 2 รอบ - 3,500 บาท">
             </div>
             <div class="form-group-full">
               <label class="form-label">ข้อความเพิ่มเติม / จุดที่กังวลเป็นพิเศษ</label>
@@ -1786,8 +1853,8 @@
         <h4 class="footer-title">ติดต่อสอบถาม</h4>
         <ul class="footer-links">
           <li>โทร: 081-xxx-xxxx</li>
-          <li>LINE ID: @proinspect (หรือสแกน QR)</li>
-          <li>Email: contact@proinspect.com</li>
+          <li>LINE ID: @inspectq (หรือสแกน QR)</li>
+          <li>Email: contact@inspectq.com</li>
           <li>Facebook: ตรวจคอนโดและอาคาร INSPECT Q</li>
         </ul>
       </div>
@@ -1799,7 +1866,7 @@
 
   <!-- Mobile Floating Action Bar -->
   <div class="mobile-bar">
-    <a href="tel:0812345678" class="btn btn-outline">📞 โทรสอบถาม</a>
+    <a href="tel:0814499499" class="btn btn-outline">📞 โทรสอบถาม</a>
     <a href="#booking" class="btn btn-gold">💬 จองคิวตรวจ</a>
     <button type="button" onclick="openAuthModal()" class="btn btn-sky" style="padding: 10px 8px;">🔐 เข้าแอปตรวจ</button>
   </div>
@@ -1848,57 +1915,89 @@
       let roundsText = '';
       let time = '';
       let deliverable = 'Defect Report ฉบับสมบูรณ์ พร้อมรูปถ่ายระบุตำแหน่งชัดเจน';
-      let equipment = 'ตรวจครบ สถาปัตย์ ระบบไฟฟ้า ประปา สุขาภิบาล และ Built-in';
+      let equipment = 'สแกน 5 ระบบวิศวกรรม (โครงสร้าง, ไฟฟ้า, ประปา, สถาปัตย์, สุขาภิบาล) + กล้อง FLIR & เลเซอร์ 360°';
       let badge = 'แพ็กเกจแนะนำ';
 
       if (currentPropType === 'condo') {
         if (rounds === 'video') {
           title = 'ดูคอนโดแทนคุณ (Video Call)';
-          sub = 'Video Call และเช็กภาพรวม';
+          sub = 'Video Call และเช็กภาพรวมเรียลไทม์';
           price = '700 บาท';
           roundsText = '/ ตรวจ 1 ครั้ง';
           time = 'เวลาทำงาน: 1–1.5 ชั่วโมง / ห้อง / ครั้ง';
           deliverable = 'คำแนะนำผ่าน Video Call + ภาพถ่ายและสรุปจุดสังเกตเบื้องต้น';
           badge = 'ราคาประหยัด';
         } else if (rounds === '1') {
-          title = 'ตรวจคอนโด 1 รอบ';
-          sub = 'ตรวจ Defect และสรุปเบื้องต้น';
-          price = '1,990 บาท';
-          roundsText = '/ ตรวจ 1 รอบ';
-          time = 'เวลาทำงาน: 2–3 ชั่วโมง / ห้อง / ครั้ง';
-          deliverable = 'สรุปรายการตรวจเบื้องต้น + ภาพจุดปัญหา';
-          badge = 'ก่อนตัดสินใจซื้อ';
-        } else {
-          // Standard 2 rounds condo packages from slides_data.json
-          roundsText = '/ ตรวจ 2 รอบ';
+          // ตรวจ 1 รอบ (ตรวจละเอียดรอบแรก) - Ground truth from LINE OA Master Card
+          roundsText = '/ ตรวจ 1 รอบ (ตรวจละเอียดรอบแรก)';
+          deliverable = 'สแกนครบ 5 ระบบ + สแกนจุดรั่วซึม FLIR & เลเซอร์ 360° + ติดสติกเกอร์ชี้จุด Defect + ออกเล่ม Defect Report ในวันตรวจ';
           if (area <= 30) {
-            title = 'ตรวจรับคอนโด ไม่เกิน 30 ตร.ม.';
-            sub = 'ตรวจ 2 รอบ พร้อม Defect Report';
-            price = '2,990 บาท';
-            time = 'เวลาทำงาน: รอบ 1: 2.5–3.5 ชม. · รอบ 2: 1.5–2 ชม. (รวม 4–5.5 ชม.)';
+            title = 'Studio / 1 Bedroom (ไม่เกิน 30 ตร.ม.)';
+            sub = 'ตรวจ 1 รอบ (ตรวจละเอียดรอบแรก)';
+            price = '2,500 บาท';
+            time = 'เวลาทำงาน: 2.5–3.5 ชั่วโมง';
+            badge = 'ตรวจ 1 รอบ';
           } else if (area <= 45) {
-            title = 'ตรวจรับคอนโด 31–45 ตร.ม.';
-            sub = 'ตรวจ 2 รอบ พร้อม Defect Report';
-            price = '3,490 บาท';
-            time = 'เวลาทำงาน: รอบ 1: 3–4 ชม. · รอบ 2: 2–2.5 ชม. (รวม 5–6.5 ชม.)';
+            title = '1 Bedroom / 1 Bed Plus (31–45 ตร.ม.)';
+            sub = 'ตรวจ 1 รอบ (ตรวจละเอียดรอบแรก)';
+            price = '3,500 บาท';
+            time = 'เวลาทำงาน: 3–4 ชั่วโมง';
+            badge = 'ตรวจ 1 รอบ';
           } else if (area <= 60) {
-            title = 'ตรวจรับคอนโด 46–60 ตร.ม.';
-            sub = 'ตรวจ 2 รอบ พร้อม Defect Report';
-            price = '4,490 บาท';
-            time = 'เวลาทำงาน: รอบ 1: 3.5–4.5 ชม. · รอบ 2: 2–2.5 ชม. (รวม 5.5–7 ชม.)';
+            title = '2 Bedroom ขนาดกลาง (46–60 ตร.ม.)';
+            sub = 'ตรวจ 1 รอบ (ตรวจละเอียดรอบแรก)';
+            price = '4,500 บาท';
+            time = 'เวลาทำงาน: 3.5–4.5 ชั่วโมง';
+            badge = 'ตรวจ 1 รอบ';
           } else if (area <= 80) {
-            title = 'ตรวจรับคอนโด 61–80 ตร.ม.';
-            sub = 'ตรวจ 2 รอบ พร้อม Defect Report';
-            price = '5,490 บาท';
-            time = 'เวลาทำงาน: รอบ 1: 4–5 ชม. · รอบ 2: 2.5–3 ชม. (รวม 6.5–8 ชม.)';
+            title = '2–3 Bedroom / Duplex (61–80 ตร.ม.)';
+            sub = 'ตรวจ 1 รอบ (ตรวจละเอียดรอบแรก)';
+            price = '5,500 บาท';
+            time = 'เวลาทำงาน: 4–5 ชั่วโมง';
+            badge = 'ตรวจ 1 รอบ';
           } else {
-            title = 'พื้นที่เกิน 80 ตร.ม. / Penthouse';
-            sub = 'ประเมินราคาตามพื้นที่และความซับซ้อน';
-            price = 'ราคาประเมิน';
+            title = 'Penthouse / ขนาดพิเศษ (> 80 ตร.ม.)';
+            sub = 'ประเมินราคาตามพื้นที่จริง';
+            price = 'ประเมินตามพื้นที่';
             roundsText = '/ ตามพื้นที่จริง';
-            time = 'ระยะเวลาประเมินตามพื้นที่ จำนวนห้อง และความซับซ้อน';
-            deliverable = 'ใบเสนอราคาตามพื้นที่ + Defect Report ฉบับสมบูรณ์';
-            badge = 'ยูนิตขนาดใหญ่';
+            time = 'ประเมินระยะเวลาตามพื้นที่และความซับซ้อน';
+            badge = 'ยูนิตขนาดพิเศษ';
+          }
+        } else {
+          // ตรวจ 2 รอบ (ตรวจ + รีเช็กก่อนโอน แนะนำ) - Ground truth from LINE OA Master Card
+          roundsText = '/ ตรวจ 2 รอบ (ตรวจ + รีเช็กก่อนโอน)';
+          deliverable = 'สถาปนิกตรวจซ้ำจุดที่ช่างแก้ไข มั่นใจ 100% ก่อนเซ็นรับโอน + ทดสอบระบบน้ำ-ไฟ + เล่ม Defect Report สมบูรณ์';
+          if (area <= 30) {
+            title = 'Studio / 1 Bedroom (ไม่เกิน 30 ตร.ม.)';
+            sub = 'ตรวจ 2 รอบ (ตรวจละเอียด + รีเช็กก่อนโอน)';
+            price = '3,500 บาท';
+            time = 'เวลาทำงาน: รอบ 1: 2.5–3.5 ชม. · รอบ 2: 1.5–2 ชม. (รวม 4–5.5 ชม.)';
+            badge = 'ยอดนิยม';
+          } else if (area <= 45) {
+            title = '1 Bedroom / 1 Bed Plus (31–45 ตร.ม.)';
+            sub = 'ตรวจ 2 รอบ (ตรวจละเอียด + รีเช็กก่อนโอน)';
+            price = '4,500 บาท';
+            time = 'เวลาทำงาน: รอบ 1: 3–4 ชม. · รอบ 2: 2–2.5 ชม. (รวม 5–6.5 ชม.)';
+            badge = 'แนะนำ';
+          } else if (area <= 60) {
+            title = '2 Bedroom ขนาดกลาง (46–60 ตร.ม.)';
+            sub = 'ตรวจ 2 รอบ (ตรวจละเอียด + รีเช็กก่อนโอน)';
+            price = '5,800 บาท';
+            time = 'เวลาทำงาน: รอบ 1: 3.5–4.5 ชม. · รอบ 2: 2–2.5 ชม. (รวม 5.5–7 ชม.)';
+            badge = 'คุ้มค่า';
+          } else if (area <= 80) {
+            title = '2–3 Bedroom / Duplex (61–80 ตร.ม.)';
+            sub = 'ตรวจ 2 รอบ (ตรวจละเอียด + รีเช็กก่อนโอน)';
+            price = '6,900 บาท';
+            time = 'เวลาทำงาน: รอบ 1: 4–5 ชม. · รอบ 2: 2.5–3 ชม. (รวม 6.5–8 ชม.)';
+            badge = 'ตรวจละเอียดลึก';
+          } else {
+            title = 'Penthouse / ขนาดพิเศษ (> 80 ตร.ม.)';
+            sub = 'ประเมินราคาตามพื้นที่จริง';
+            price = 'ประเมินตามพื้นที่';
+            roundsText = '/ ตามพื้นที่จริง';
+            time = 'ประเมินระยะเวลาตามพื้นที่และความซับซ้อน';
+            badge = 'ยูนิตขนาดพิเศษ';
           }
         }
       } else if (currentPropType === 'townhome') {
@@ -1914,28 +2013,26 @@
           sub = 'พื้นที่ใช้สอย 151–250 ตร.ม. (ตรวจ 2 รอบ)';
           price = '6,990 บาท';
           roundsText = '/ ตรวจ 2 รอบ';
-          time = 'เวลาทำงาน: รอบ 1: 4.5–6 ชม. · รอบ 2: 2.5–3 ชม.';
-          equipment = 'สแกนความร้อน Thermal น้ำรั่วซึม, ตรวจใต้หลังคา, ทรุดตัวรอบบ้าน, ระบบไฟ 1/3 เฟส';
+          time = 'เวลาทำงาน: รอบ 1: 4.5–5.5 ชม. · รอบ 2: 2.5–3 ชม.';
         } else {
-          title = 'ตรวจรับบ้านเดี่ยวหลังใหญ่ / พูลวิลล่า';
-          sub = 'พื้นที่ใช้สอย 251–400 ตร.ม. (ตรวจ 2 รอบ)';
-          price = '9,490 บาท';
-          roundsText = '/ ตรวจ 2 รอบ (ทีมตรวจ 2-3 คน)';
-          time = 'เวลาทำงาน: รอบ 1: 6–8 ชม. · รอบ 2: 3–4 ชม.';
-          equipment = 'ตรวจพรีเมียมทุกโซน สวน สระว่ายน้ำ หลังคาละเอียด และระบบวิศวกรรมอาคาร';
-          badge = 'ทีมตรวจชุดใหญ่';
+          title = 'ตรวจรับบ้านเดี่ยว ขนาดใหญ่ / Luxury';
+          sub = 'พื้นที่ใช้สอยเกิน 250 ตร.ม. (ตรวจ 2 รอบ)';
+          price = '8,990 บาท';
+          roundsText = '/ ตรวจ 2 รอบ';
+          time = 'เวลาทำงาน: รอบ 1: 5.5–7 ชม. · รอบ 2: 3–4 ชม.';
         }
-      } else {
+        equipment = 'ตรวจงานโครงสร้าง หลังคา กล้องอินฟราเรด FLIR ตู้เมนไฟฟ้า และระบบสุขาภิบาลรอบบ้าน';
+      } else if (currentPropType === 'building') {
         title = 'ตรวจอาคารพาณิชย์ & โฮมออฟฟิศ';
-        sub = 'พื้นที่เกิน 200 ตร.ม. หรือตึกแถวหลายชั้น';
-        price = 'ประเมินราคาตามพื้นที่';
-        roundsText = '/ ตามขนาดอาคาร';
-        time = 'ระยะเวลาประเมินตามขนาดและจำนวนชั้นของอาคาร';
-        equipment = 'ตรวจโครงสร้าง ระบบทางหนีไฟ ตู้เมนไฟฟ้า 3 เฟส ดาดฟ้ารั่วซึม';
-        badge = 'Commercial';
+        sub = 'ประเมินราคาตามจำนวนชั้นและพื้นที่';
+        price = 'ราคาประเมิน';
+        roundsText = '/ ตามโครงสร้างอาคาร';
+        time = 'ระยะเวลาประเมินตามจำนวนคูหาและพื้นที่ใช้สอย';
+        deliverable = 'ใบเสนอราคาตามพื้นที่ + แผนการตรวจโครงสร้างและระบบอาคาร';
+        equipment = 'ตรวจความสมบูรณ์ของโครงสร้าง โหลดไฟฟ้า ระบบป้องกันอัคคีภัย และทางหนีไฟ';
+        badge = 'งานโครงการ';
       }
 
-      document.getElementById('calcBadge').textContent = badge;
       document.getElementById('calcPkgTitle').textContent = title;
       document.getElementById('calcPkgSub').textContent = sub;
       document.getElementById('calcPrice').textContent = price;
@@ -1943,39 +2040,42 @@
       document.getElementById('calcTime').textContent = time;
       document.getElementById('calcDeliverable').textContent = deliverable;
       document.getElementById('calcEquipment').textContent = equipment;
+      document.getElementById('calcBadge').textContent = badge;
+
+      currentCalculatedPkg = {
+        title: title,
+        sub: sub,
+        price: price,
+        rounds: roundsText,
+        propType: currentPropType,
+        area: area
+      };
     }
 
-    function applyPackageToBooking() {
-      const title = document.getElementById('calcPkgTitle').textContent;
-      const price = document.getElementById('calcPrice').textContent;
-      const area = document.getElementById('areaSlider').value;
-      
-      const pkgField = document.getElementById('custPackage');
-      pkgField.value = `${title} (${price})`;
-
-      const areaField = document.getElementById('custArea');
-      areaField.value = area;
-
-      const propSelect = document.getElementById('custPropertyType');
-      if (currentPropType === 'condo') propSelect.value = 'คอนโดมิเนียม';
-      else if (currentPropType === 'townhome') propSelect.value = 'ทาวน์โฮม';
-      else if (currentPropType === 'house') propSelect.value = 'บ้านเดี่ยว';
-      else propSelect.value = 'อาคารพาณิชย์/อื่นๆ';
-
-      // Update notice
+        function applyPackageToBooking() {
+      if (!currentCalculatedPkg) return;
+      const title = currentCalculatedPkg.title || 'ตรวจรับคอนโด';
+      const price = currentCalculatedPkg.price || '';
+      const rounds = currentCalculatedPkg.rounds || '';
+      const pkgString = `${title} ${rounds} - ${price}`;
+      const pkgInput = document.getElementById('custPackage');
+      if (pkgInput) pkgInput.value = pkgString;
       const notice = document.getElementById('bookingSummaryNotice');
-      notice.style.display = 'block';
-      document.getElementById('summaryPkgName').textContent = title;
-      document.getElementById('summaryPkgPrice').textContent = price;
-
-      // Smooth scroll to booking
-      document.getElementById('booking').scrollIntoView({ behavior: 'smooth' });
+      if (notice) {
+        notice.style.display = 'block';
+        const nameEl = document.getElementById('summaryPkgName');
+        const priceEl = document.getElementById('summaryPkgPrice');
+        if (nameEl) nameEl.textContent = title;
+        if (priceEl) priceEl.textContent = price;
+      }
+      const bookingEl = document.getElementById('booking');
+      if (bookingEl) bookingEl.scrollIntoView({ behavior: 'smooth' });
     }
 
     function switchPackageTab(cat) {
       document.getElementById('tabCondoBtn').classList.toggle('active', cat === 'condo');
       document.getElementById('tabHouseBtn').classList.toggle('active', cat === 'house');
-      document.getElementById('condoPackagesGrid').style.display = cat === 'condo' ? 'grid' : 'none';
+      document.getElementById('condoPackagesGrid').style.display = cat === 'condo' ? 'flex' : 'none';
       document.getElementById('housePackagesGrid').style.display = cat === 'house' ? 'grid' : 'none';
     }
 
