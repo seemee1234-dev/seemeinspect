@@ -248,6 +248,63 @@
     line-height: 1.5;
     margin-bottom: 12px;
   }
+
+  /* Keyword Bar & Tags */
+  .kw-bar {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    gap: 8px;
+    margin-bottom: 14px;
+    padding: 10px 14px;
+    background: rgba(15, 23, 42, 0.75);
+    border: 1px solid rgba(212, 175, 55, 0.35);
+    border-radius: 12px;
+  }
+  .kw-chip {
+    background: rgba(30, 41, 59, 0.85);
+    border: 1px solid rgba(255, 255, 255, 0.15);
+    color: #cbd5e1;
+    font-size: 12px;
+    padding: 5px 12px;
+    border-radius: 20px;
+    cursor: pointer;
+    font-family: inherit;
+    transition: all 0.2s;
+  }
+  .kw-chip:hover, .kw-chip.active {
+    background: var(--gold);
+    color: #040914;
+    border-color: var(--gold-light);
+    font-weight: 500;
+  }
+  .kw-list {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    gap: 6px;
+    margin: 6px 0 10px 0;
+  }
+  .kw-badge-title {
+    font-size: 11px;
+    color: #94a3b8;
+    font-weight: 400;
+  }
+  .kw-tag {
+    background: rgba(56, 189, 248, 0.12);
+    border: 1px solid rgba(56, 189, 248, 0.35);
+    color: #38bdf8;
+    padding: 2px 8px;
+    border-radius: 8px;
+    font-size: 11px;
+    cursor: pointer;
+    transition: all 0.15s;
+  }
+  .kw-tag:hover {
+    background: #38bdf8;
+    color: #040914;
+  }
+
 </style>
 </head>
 <body>
@@ -281,6 +338,19 @@
   </div>
 </div>
 
+<div class="kw-bar">
+  <span style="font-size: 12px; color: var(--gold); font-weight: 500;">🔑 คีย์เวิร์ดด่วน (Click to Filter):</span>
+  <button class="kw-chip active" onclick="quickFilter('')">ทั้งหมด</button>
+  <button class="kw-chip" onclick="quickFilter('ราคา')">💰 ราคา</button>
+  <button class="kw-chip" onclick="quickFilter('จองคิว')">📅 จองคิว</button>
+  <button class="kw-chip" onclick="quickFilter('โอนเงิน')">💳 โอนมัดจำ</button>
+  <button class="kw-chip" onclick="quickFilter('เตรียมตัว')">📋 เตรียมตัว</button>
+  <button class="kw-chip" onclick="quickFilter('5 ระบบ')">🔍 5 ระบบ</button>
+  <button class="kw-chip" onclick="quickFilter('ตัวอย่าง')">📄 ตัวอย่างรายงาน</button>
+  <button class="kw-chip" onclick="quickFilter('รอบสอง')">🔄 ตรวจรอบ 2</button>
+  <button class="kw-chip" onclick="quickFilter('สรุปงาน')">⏱️ สรุปหน้างาน</button>
+</div>
+
 <input type="text" class="search-box" id="search" placeholder="🔍 พิมพ์ค้นหา เช่น โอนเงิน, นัดวัน, ราคา, กุญแจ, สโลป, รายงาน..." onkeyup="filterCards()">
 
 <div id="card-container">
@@ -290,6 +360,7 @@
     <div class="card-header">
       <span class="badge badge-gold">1. แนะนำตัว & ขั้นตอนตรวจ</span>
       <div class="card-title">ข้อความที่ 1: ขั้นตอนตรวจ & เสนอคิวนัด (ฉบับเซฟสถาปนิก 100%)</div>
+      <div class="kw-list kw-list-t1"><span class="kw-badge-title">🔑 LINE OA คีย์เวิร์ด:</span><span class="kw-tag" onclick="quickFilter('ขั้นตอนตรวจ')">ขั้นตอนตรวจ</span><span class="kw-tag" onclick="quickFilter('มาตรฐาน')">มาตรฐาน</span><span class="kw-tag" onclick="quickFilter('เครื่องมือ')">เครื่องมือ</span><span class="kw-tag" onclick="quickFilter('นัดหมาย')">นัดหมาย</span><span class="kw-tag" onclick="quickFilter('สถาปนิก')">สถาปนิก</span></div>
       <div class="action-bar">
         <button class="btn btn-copy" onclick="copyText('t1')">📋 กดคัดลอก</button>
         <button class="btn btn-edit" id="btn-edit-t1" onclick="toggleEdit('t1')">✏️ แก้ไข</button>
@@ -332,6 +403,7 @@
     <div class="card-header">
       <span class="badge badge-green">2. บัญชีโอนมัดจำ & ชำระเงิน</span>
       <div class="card-title">ข้อความที่ 2: บัญชีโอนเงินมัดจำ / ช่องทางชำระเงิน (Quick Reply 1)</div>
+      <div class="kw-list kw-list-t2"><span class="kw-badge-title">🔑 LINE OA คีย์เวิร์ด:</span><span class="kw-tag" onclick="quickFilter('โอนเงิน')">โอนเงิน</span><span class="kw-tag" onclick="quickFilter('เลขบัญชี')">เลขบัญชี</span><span class="kw-tag" onclick="quickFilter('มัดจำ')">มัดจำ</span><span class="kw-tag" onclick="quickFilter('พร้อมเพย์')">พร้อมเพย์</span><span class="kw-tag" onclick="quickFilter('ชำระเงิน')">ชำระเงิน</span><span class="kw-tag" onclick="quickFilter('คิวมัดจำ')">คิวมัดจำ</span></div>
       <div class="action-bar">
         <button class="btn btn-copy" onclick="copyText('t2')">📋 กดคัดลอก</button>
         <button class="btn btn-edit" id="btn-edit-t2" onclick="toggleEdit('t2')">✏️ แก้ไข</button>
@@ -369,6 +441,7 @@
     <div class="card-header">
       <span class="badge badge-blue">3. การเตรียมตัวก่อนวันตรวจ</span>
       <div class="card-title">ข้อความที่ 3: คำชี้แจงสิ่งที่ลูกค้าต้องเตรียมก่อนวันตรวจ (Quick Reply 2)</div>
+      <div class="kw-list kw-list-t3"><span class="kw-badge-title">🔑 LINE OA คีย์เวิร์ด:</span><span class="kw-tag" onclick="quickFilter('เตรียมตัว')">เตรียมตัว</span><span class="kw-tag" onclick="quickFilter('สิ่งที่ต้องเตรียม')">สิ่งที่ต้องเตรียม</span><span class="kw-tag" onclick="quickFilter('ก่อนตรวจ')">ก่อนตรวจ</span><span class="kw-tag" onclick="quickFilter('เปิดมิเตอร์น้ำ')">เปิดมิเตอร์น้ำ</span><span class="kw-tag" onclick="quickFilter('เปิดไฟ')">เปิดไฟ</span><span class="kw-tag" onclick="quickFilter('กุญแจ')">กุญแจ</span></div>
       <div class="action-bar">
         <button class="btn btn-copy" onclick="copyText('t3')">📋 กดคัดลอก</button>
         <button class="btn btn-edit" id="btn-edit-t3" onclick="toggleEdit('t3')">✏️ แก้ไข</button>
@@ -403,6 +476,7 @@
     <div class="card-header">
       <span class="badge badge-gold">4. ตัวอย่างรายงานตรวจจริง</span>
       <div class="card-title">ข้อความที่ 4: ตัวอย่างรายงานการตรวจจริง (Defect Report PDF) (Quick Reply 3)</div>
+      <div class="kw-list kw-list-t4"><span class="kw-badge-title">🔑 LINE OA คีย์เวิร์ด:</span><span class="kw-tag" onclick="quickFilter('ตัวอย่างรายงาน')">ตัวอย่างรายงาน</span><span class="kw-tag" onclick="quickFilter('ขอดูตัวอย่าง')">ขอดูตัวอย่าง</span><span class="kw-tag" onclick="quickFilter('ตัวอย่างเล่ม')">ตัวอย่างเล่ม</span><span class="kw-tag" onclick="quickFilter('defect report')">defect report</span><span class="kw-tag" onclick="quickFilter('ผลงาน')">ผลงาน</span></div>
       <div class="action-bar">
         <button class="btn btn-copy" onclick="copyText('t4')">📋 กดคัดลอก</button>
         <button class="btn btn-edit" id="btn-edit-t4" onclick="toggleEdit('t4')">✏️ แก้ไข</button>
@@ -430,6 +504,7 @@ https://seemee1234-dev.github.io/seemeinspect/landing.html
     <div class="card-header">
       <span class="badge badge-gold">5. ตอบกลับอัตโนมัติ: ราคา & แพ็กเกจ (ริชเมนู B)</span>
       <div class="card-title">ข้อความที่ 5: ตารางอัตราค่าบริการตรวจรับมอบคอนโด (ปุ่มริชเมนู B)</div>
+      <div class="kw-list kw-list-t5"><span class="kw-badge-title">🔑 LINE OA คีย์เวิร์ด:</span><span class="kw-tag" onclick="quickFilter('ราคา')">ราคา</span><span class="kw-tag" onclick="quickFilter('ค่าบริการ')">ค่าบริการ</span><span class="kw-tag" onclick="quickFilter('แพ็กเกจ')">แพ็กเกจ</span><span class="kw-tag" onclick="quickFilter('ตารางราคา')">ตารางราคา</span><span class="kw-tag" onclick="quickFilter('กี่บาท')">กี่บาท</span><span class="kw-tag" onclick="quickFilter('ค่าตรวจ')">ค่าตรวจ</span></div>
       <div class="action-bar">
         <button class="btn btn-copy" onclick="copyText('t5')">📋 กดคัดลอก</button>
         <button class="btn btn-edit" id="btn-edit-t5" onclick="toggleEdit('t5')">✏️ แก้ไข</button>
@@ -485,6 +560,7 @@ https://seemee1234-dev.github.io/seemeinspect/landing.html
     <div class="card-header">
       <span class="badge badge-blue">6. ตอบกลับอัตโนมัติ: จองคิวตรวจ (ริชเมนู C)</span>
       <div class="card-title">ข้อความที่ 6: แบบฟอร์มนัดหมายจองคิวตรวจ (ปุ่มริชเมนู C)</div>
+      <div class="kw-list kw-list-t6"><span class="kw-badge-title">🔑 LINE OA คีย์เวิร์ด:</span><span class="kw-tag" onclick="quickFilter('จองคิว')">จองคิว</span><span class="kw-tag" onclick="quickFilter('นัดตรวจ')">นัดตรวจ</span><span class="kw-tag" onclick="quickFilter('นัดหมาย')">นัดหมาย</span><span class="kw-tag" onclick="quickFilter('คิวว่าง')">คิวว่าง</span><span class="kw-tag" onclick="quickFilter('ลงทะเบียน')">ลงทะเบียน</span></div>
       <div class="action-bar">
         <button class="btn btn-copy" onclick="copyText('t6')">📋 กดคัดลอก</button>
         <button class="btn btn-edit" id="btn-edit-t6" onclick="toggleEdit('t6')">✏️ แก้ไข</button>
@@ -515,6 +591,7 @@ https://seemee1234-dev.github.io/seemeinspect/landing.html
     <div class="card-header">
       <span class="badge badge-crimson">7. ตอบกลับอัตโนมัติ: เช็กลิสต์ 5 ระบบ (ริชเมนู D)</span>
       <div class="card-title">ข้อความที่ 7: รายการตรวจ 5 ระบบสถาปัตย์และวิศวกรรม (ปุ่มริชเมนู D)</div>
+      <div class="kw-list kw-list-t7"><span class="kw-badge-title">🔑 LINE OA คีย์เวิร์ด:</span><span class="kw-tag" onclick="quickFilter('เช็กลิสต์')">เช็กลิสต์</span><span class="kw-tag" onclick="quickFilter('5 ระบบ')">5 ระบบ</span><span class="kw-tag" onclick="quickFilter('ตรวจอะไรบ้าง')">ตรวจอะไรบ้าง</span><span class="kw-tag" onclick="quickFilter('รายการตรวจ')">รายการตรวจ</span><span class="kw-tag" onclick="quickFilter('flir')">flir</span><span class="kw-tag" onclick="quickFilter('เลเซอร์')">เลเซอร์</span></div>
       <div class="action-bar">
         <button class="btn btn-copy" onclick="copyText('t7')">📋 กดคัดลอก</button>
         <button class="btn btn-edit" id="btn-edit-t7" onclick="toggleEdit('t7')">✏️ แก้ไข</button>
@@ -560,6 +637,7 @@ https://seemee1234-dev.github.io/seemeinspect/landing.html
     <div class="card-header">
       <span class="badge badge-crimson">8. แก้เกม: ลูกค้าถามเรื่องฉีดน้ำหน้าต่าง</span>
       <div class="card-title">ข้อความที่ 8: คำตอบกรณีลูกค้าถาม "มีฉีดน้ำเทสหน้าต่างไหม?"</div>
+      <div class="kw-list kw-list-t8"><span class="kw-badge-title">🔑 LINE OA คีย์เวิร์ด:</span><span class="kw-tag" onclick="quickFilter('ฉีดน้ำ')">ฉีดน้ำ</span><span class="kw-tag" onclick="quickFilter('เทสรั่วซึม')">เทสรั่วซึม</span><span class="kw-tag" onclick="quickFilter('น้ำรั่วหน้าต่าง')">น้ำรั่วหน้าต่าง</span><span class="kw-tag" onclick="quickFilter('moisture meter')">moisture meter</span></div>
       <div class="action-bar">
         <button class="btn btn-copy" onclick="copyText('t8')">📋 กดคัดลอก</button>
         <button class="btn btn-edit" id="btn-edit-t8" onclick="toggleEdit('t8')">✏️ แก้ไข</button>
@@ -582,6 +660,7 @@ https://seemee1234-dev.github.io/seemeinspect/landing.html
     <div class="card-header">
       <span class="badge badge-green">9. สรุปผลหลังตรวจเสร็จ</span>
       <div class="card-title">ข้อความที่ 9: สรุปผลด่วนหลังตรวจเสร็จหน้างาน (Post-Inspection Immediate Summary)</div>
+      <div class="kw-list kw-list-t9"><span class="kw-badge-title">🔑 LINE OA คีย์เวิร์ด:</span><span class="kw-tag" onclick="quickFilter('สรุปงาน')">สรุปงาน</span><span class="kw-tag" onclick="quickFilter('ตรวจเสร็จ')">ตรวจเสร็จ</span><span class="kw-tag" onclick="quickFilter('หลังตรวจ')">หลังตรวจ</span><span class="kw-tag" onclick="quickFilter('สรุปหน้างาน')">สรุปหน้างาน</span><span class="kw-tag" onclick="quickFilter('ผลตรวจ')">ผลตรวจ</span></div>
       <div class="action-bar">
         <button class="btn btn-copy" onclick="copyText('t9')">📋 กดคัดลอก</button>
         <button class="btn btn-edit" id="btn-edit-t9" onclick="toggleEdit('t9')">✏️ แก้ไข</button>
@@ -613,6 +692,7 @@ https://seemee1234-dev.github.io/seemeinspect/landing.html
     <div class="card-header">
       <span class="badge badge-blue">10. นัดตรวจรอบ 2 (Re-check)</span>
       <div class="card-title">ข้อความที่ 10: ขั้นตอนนัดตรวจรอบ 2 Re-check (หลังโครงการแก้ไขเสร็จ)</div>
+      <div class="kw-list kw-list-t10"><span class="kw-badge-title">🔑 LINE OA คีย์เวิร์ด:</span><span class="kw-tag" onclick="quickFilter('รอบสอง')">รอบสอง</span><span class="kw-tag" onclick="quickFilter('ตรวจรอบ 2')">ตรวจรอบ 2</span><span class="kw-tag" onclick="quickFilter('รีเช็ก')">รีเช็ก</span><span class="kw-tag" onclick="quickFilter('recheck')">recheck</span><span class="kw-tag" onclick="quickFilter('แก้งานเสร็จ')">แก้งานเสร็จ</span><span class="kw-tag" onclick="quickFilter('ตรวจซ้ำ')">ตรวจซ้ำ</span></div>
       <div class="action-bar">
         <button class="btn btn-copy" onclick="copyText('t10')">📋 กดคัดลอก</button>
         <button class="btn btn-edit" id="btn-edit-t10" onclick="toggleEdit('t10')">✏️ แก้ไข</button>
@@ -648,6 +728,7 @@ https://seemee1234-dev.github.io/seemeinspect/landing.html
     <div class="card-header">
       <span class="badge badge-gold">11. ข้อกำหนดมาตรฐานท้ายเอกสาร</span>
       <div class="card-title">ข้อความที่ 11: ข้อกำหนดมาตรฐานการปฏิบัติงาน (ท้ายใบเสนอราคา/เล่มรายงาน)</div>
+      <div class="kw-list kw-list-t11"><span class="kw-badge-title">🔑 LINE OA คีย์เวิร์ด:</span><span class="kw-tag" onclick="quickFilter('เงื่อนไข')">เงื่อนไข</span><span class="kw-tag" onclick="quickFilter('ใบเสนอราคา')">ใบเสนอราคา</span><span class="kw-tag" onclick="quickFilter('สัญญา')">สัญญา</span><span class="kw-tag" onclick="quickFilter('ท้ายเล่ม')">ท้ายเล่ม</span><span class="kw-tag" onclick="quickFilter('มาตรฐานการตรวจ')">มาตรฐานการตรวจ</span></div>
       <div class="action-bar">
         <button class="btn btn-copy" onclick="copyText('t11')">📋 กดคัดลอก</button>
         <button class="btn btn-edit" id="btn-edit-t11" onclick="toggleEdit('t11')">✏️ แก้ไข</button>
@@ -755,6 +836,19 @@ function showToast(msg) {
   toast.innerText = msg;
   toast.style.display = 'block';
   setTimeout(() => { toast.style.display = 'none'; }, 2000);
+}
+
+
+function quickFilter(kw) {
+  document.getElementById('search').value = kw;
+  filterCards();
+  document.querySelectorAll('.kw-chip').forEach(b => {
+    if (kw === '') {
+      b.classList.toggle('active', b.innerText === 'ทั้งหมด');
+    } else {
+      b.classList.toggle('active', b.innerText.includes(kw));
+    }
+  });
 }
 
 function filterCards() {
