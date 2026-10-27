@@ -52,6 +52,7 @@
     align-items: center;
     margin-bottom: 14px;
     gap: 8px;
+    flex-wrap: wrap;
   }
   .nav-link {
     font-size: 12px;
@@ -119,6 +120,7 @@
   .badge-gold { background: rgba(212, 175, 55, 0.2); color: var(--gold-light); border: 1px solid var(--gold); }
   .badge-crimson { background: rgba(153, 27, 27, 0.3); color: var(--crimson-light); border: 1px solid var(--crimson); }
   .badge-blue { background: rgba(37, 99, 235, 0.2); color: #93c5fd; border: 1px solid var(--blue); }
+  .badge-green { background: rgba(16, 185, 129, 0.2); color: #6ee7b7; border: 1px solid var(--green); }
   
   .action-bar {
     display: flex;
@@ -246,35 +248,32 @@
     line-height: 1.5;
     margin-bottom: 12px;
   }
-  .qr-info strong {
-    color: var(--gold-light);
-  }
-
 </style>
 </head>
 <body>
 
 <div class="header">
   <div class="header-badge">🏛️ INSPECT Q ARCHITECTURAL STANDARD</div>
-  <h1>คลังข้อความด่วน LINE OA</h1>
+  <h1>คลังข้อความด่วน & เทมเพลต LINE OA</h1>
   <p>แตะ "📋 กดคัดลอก" แตะเดียวเข้าคลิปบอร์ด หรือกด "✏️ แก้ไข" เพื่อปรับคำได้ตามใจ</p>
 </div>
 
 <div class="nav-bar">
   <a href="index.html" class="nav-link">⬅️ กลับไประบบตรวจคอนโด</a>
-  <button class="nav-link" style="background:rgba(212,175,55,0.15); border-color:var(--gold); color:var(--gold-light); cursor:pointer;" onclick="openQrModal()">📱 ดู QR สแกน</button><span class="sync-status">● ใช้งานออนไลน์ได้ 100%</span>
+  <a href="landing.html" class="nav-link">🌐 หน้าแรก Landing Page</a>
+  <button class="nav-link" style="background:rgba(212,175,55,0.15); border-color:var(--gold); color:var(--gold-light); cursor:pointer;" onclick="openQrModal()">📱 ดู QR สแกน</button>
+  <span class="sync-status">● พร้อมใช้งาน 100%</span>
 </div>
 
-
-<!-- QR Code Hero Card (Directly in Page) -->
+<!-- QR Code Hero Card -->
 <div class="qr-banner">
   <div class="qr-thumb-box">
-    <img src="data:image/png;base64,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" alt="INSPECT Q QR Code">
+    <img src="qr_mobile.png" alt="INSPECT Q QR Code" onerror="this.src='qr_seemeinspect_permanent.png'">
   </div>
   <div class="qr-info">
     <div class="qr-tag">📱 สแกนพกพาไปใช้นอกบ้าน</div>
     <h3>สแกนเปิดคลังข้อความบนมือถือ</h3>
-    <p>ยิงกล้องมือถือหรือสแกนจาก LINE เพื่อเปิดหน้านี้บนมือถือได้ทันที แล้วกด <strong>"Add to Home Screen"</strong> เพื่อเก็บเป็นไอคอนแอปส่วนตัว ตอบลูกค้าไว 1 วินาทีครับ</p>
+    <p>ยิงกล้องมือถือหรือสแกนจาก LINE เพื่อเปิดหน้านี้บนมือถือได้ทันที แล้วกด <strong>"Add to Home Screen"</strong> เพื่อเก็บเป็นไอคอนแอปส่วนตัว ตอบลูกค้าไวใน 1 วินาทีครับ</p>
     <div style="display:flex; gap:8px; flex-wrap:wrap;">
       <button class="btn btn-copy" style="flex:none; padding:6px 14px; font-size:12px;" onclick="copyPageLink()">📋 คัดลอกลิงก์ส่งต่อ</button>
       <a href="qr.html" class="nav-link" style="font-size:12px; padding:6px 14px;">🔍 ดูภาพ QR ขนาดเต็ม</a>
@@ -282,21 +281,21 @@
   </div>
 </div>
 
-<input type="text" class="search-box" id="search" placeholder="🔍 พิมพ์ค้นหา เช่น นัดคิว, ฉีดน้ำ, สโลป, เลเซอร์..." onkeyup="filterCards()">
+<input type="text" class="search-box" id="search" placeholder="🔍 พิมพ์ค้นหา เช่น โอนเงิน, นัดวัน, ราคา, กุญแจ, สโลป, รายงาน..." onkeyup="filterCards()">
 
 <div id="card-container">
 
-  <!-- Card 1 -->
+  <!-- Card 1: ขั้นตอนตรวจ & เสนอคิวนัด -->
   <div class="card" data-tags="เปิดตัว นัดคิว แนะนำตัว มาตรฐาน เครื่องมือ สถาปนิก ปลอดภัย เลเซอร์">
     <div class="card-header">
-      <span class="badge badge-gold">นัดคิว & แนะนำตัว (มาตรฐานสถาปนิก)</span>
+      <span class="badge badge-gold">1. แนะนำตัว & ขั้นตอนตรวจ</span>
       <div class="card-title">ข้อความที่ 1: ขั้นตอนตรวจ & เสนอคิวนัด (ฉบับเซฟสถาปนิก 100%)</div>
       <div class="action-bar">
         <button class="btn btn-copy" onclick="copyText('t1')">📋 กดคัดลอก</button>
         <button class="btn btn-edit" id="btn-edit-t1" onclick="toggleEdit('t1')">✏️ แก้ไข</button>
         <button class="btn btn-reset" onclick="resetText('t1')">🔄 คืนค่าเดิม</button>
       </div>
-      <div class="edit-notice" id="notice-t1">✏️ กำลังอยู่ในโหมดแก้ไข แตะที่ข้อความด้านล่างเพื่อพิมพ์เปลี่ยนคำ แล้วกดปุ่ม "💾 บันทึก"</div>
+      <div class="edit-notice" id="notice-t1">✏️ กำลังอยู่ในโหมดแก้ไข แตะที่ข้อความเพื่อแก้ไข แล้วกด "💾 บันทึก"</div>
     </div>
     <div class="content-box" id="t1" contenteditable="false">🏛️ สวัสดีครับคุณ [ชื่อลูกค้า] / INSPECT Q ตรวจรับมอบคอนโดโดยสถาปนิก ยินดีให้บริการครับ 🔍
 
@@ -328,19 +327,222 @@
 📅 คุณ [ชื่อลูกค้า] เล็งวันและช่วงเวลาไหนไว้ แจ้งนัดคิวตรวจกับสถาปนิกได้เลยนะครับผม 🤝</div>
   </div>
 
-  <!-- Card 2 -->
-  <div class="card" data-tags="ฉีดน้ำ รั่วซึม หน้าต่าง กระจก ตอบคำถาม เสี่ยง นิติ สักหลาด ยาง epdm">
+  <!-- Card 2: บัญชีโอนเงินมัดจำ & ยืนยันการจองคิว (Quick Reply 1) -->
+  <div class="card" data-tags="โอนเงิน มัดจำ ชำระเงิน ธนาคาร บัญชี ล็อกคิว ยืนยัน">
     <div class="card-header">
-      <span class="badge badge-crimson">แก้เกม: ลูกค้าถามเรื่องฉีดน้ำหน้าต่าง</span>
-      <div class="card-title">ข้อความที่ 2: ชุดคำตอบแก้เกมกรณีลูกค้าถาม "มีฉีดน้ำเทสหน้าต่างไหม?"</div>
+      <span class="badge badge-green">2. บัญชีโอนมัดจำ & ชำระเงิน</span>
+      <div class="card-title">ข้อความที่ 2: บัญชีโอนเงินมัดจำ / ช่องทางชำระเงิน (Quick Reply 1)</div>
       <div class="action-bar">
         <button class="btn btn-copy" onclick="copyText('t2')">📋 กดคัดลอก</button>
         <button class="btn btn-edit" id="btn-edit-t2" onclick="toggleEdit('t2')">✏️ แก้ไข</button>
         <button class="btn btn-reset" onclick="resetText('t2')">🔄 คืนค่าเดิม</button>
       </div>
-      <div class="edit-notice" id="notice-t2">✏️ กำลังอยู่ในโหมดแก้ไข แตะที่ข้อความด้านล่างเพื่อพิมพ์เปลี่ยนคำ แล้วกดปุ่ม "💾 บันทึก"</div>
+      <div class="edit-notice" id="notice-t2">✏️ กำลังอยู่ในโหมดแก้ไข แตะที่ข้อความเพื่อแก้ไข แล้วกด "💾 บันทึก"</div>
     </div>
-    <div class="content-box" id="t2" contenteditable="false">เรียนคุณ [ชื่อลูกค้า] ครับ ทางสถาปนิกตรวจรับมอบคอนโดสูง จะใช้มาตรฐานการตรวจเชิงโครงสร้างสถาปัตย์ (Physical & Seal Integrity Inspection) แทนการฉีดน้ำภายนอก ด้วยเหตุผล 3 ข้อหลักครับ:
+    <div class="content-box" id="t2" contenteditable="false">🏛️ รายละเอียดการชำระเงินและล็อกคิวตรวจรับมอบคอนโด INSPECT Q 📋
+
+เพื่อล็อกคิวสถาปนิกเข้าตรวจตามวันและเวลาที่คุณ [ชื่อลูกค้า] เลือกไว้
+รบกวนโอนมัดจำเพื่อยืนยันคิวตรวจจำนวน [500] บาท ครับ
+
+💳 ช่องทางการชำระเงิน:
+• ธนาคาร: [ชื่อธนาคาร เช่น กสิกรไทย / ไทยพาณิชย์]
+• เลขที่บัญชี: [xxx-x-xxxxx-x]
+• ชื่อบัญชี: [ชื่อบัญชีผู้รับโอน]
+• พร้อมเพย์: [เบอร์โทรหรือเลขบัตร]
+
+📌 เงื่อนไขการชำระเงิน:
+1. ค่าบริการส่วนที่เหลือ ชำระหลังการตรวจเสร็จสิ้นหน้างาน
+2. หากต้องการเลื่อนวันนัดตรวจ สามารถแจ้งล่วงหน้าได้อย่างน้อย 24 ชั่วโมง โดยไม่มีค่าใช้จ่ายเพิ่มเติมครับ
+
+──────────────────────
+📸 เมื่อโอนเรียบร้อยแล้ว รบกวนส่งสลิปหลักฐานพร้อมแจ้ง:
+1. ชื่อผู้จอง / เบอร์โทรติดต่อ:
+2. ชื่อโครงการ / อาคาร / ชั้น / เลขที่ห้อง:
+3. วันที่และเวลาตรวจ:
+
+ทางทีมสถาปนิกจะออกใบยืนยันการล็อกคิวนัดหมายส่งกลับให้ทันทีครับ ขอบพระคุณครับ 🙏</div>
+  </div>
+
+  <!-- Card 3: คำชี้แจงสิ่งที่ลูกค้าต้องเตรียมก่อนวันตรวจ (Quick Reply 2) -->
+  <div class="card" data-tags="เตรียมตัว ก่อนตรวจ นัดโครงการ มิเตอร์น้ำ ไฟฟ้า กุญแจ คีย์การ์ด แอร์ นิติ">
+    <div class="card-header">
+      <span class="badge badge-blue">3. การเตรียมตัวก่อนวันตรวจ</span>
+      <div class="card-title">ข้อความที่ 3: คำชี้แจงสิ่งที่ลูกค้าต้องเตรียมก่อนวันตรวจ (Quick Reply 2)</div>
+      <div class="action-bar">
+        <button class="btn btn-copy" onclick="copyText('t3')">📋 กดคัดลอก</button>
+        <button class="btn btn-edit" id="btn-edit-t3" onclick="toggleEdit('t3')">✏️ แก้ไข</button>
+        <button class="btn btn-reset" onclick="resetText('t3')">🔄 คืนค่าเดิม</button>
+      </div>
+      <div class="edit-notice" id="notice-t3">✏️ กำลังอยู่ในโหมดแก้ไข แตะที่ข้อความเพื่อแก้ไข แล้วกด "💾 บันทึก"</div>
+    </div>
+    <div class="content-box" id="t3" contenteditable="false">🏛️ เช็กลิสต์การเตรียมความพร้อมก่อนวันตรวจรับมอบคอนโด 🔍
+
+เพื่อให้การตรวจระบบไฟฟ้า สุขาภิบาล และสถาปัตยกรรมดำเนินไปได้อย่างครบถ้วน 100% 
+รบกวนคุณ [ชื่อลูกค้า] ประสานงานกับทางโครงการล่วงหน้า 1–2 วัน ดังนี้ครับ:
+
+⚡ 1. ระบบไฟฟ้า: 
+• แจ้งโครงการให้ "เปิดเบรกเกอร์หลักและจ่ายกระแสไฟเข้าห้อง" เรียบร้อยแล้ว เพื่อให้สามารถเทสปลั๊กไฟ แอร์ แสงสว่าง และตู้ควบคุม (DB Box) ได้
+
+💧 2. ระบบประปาและสุขาภิบาล:
+• แจ้งโครงการให้ "เปิดวาล์วมิเตอร์น้ำหลักเข้าห้อง" เพื่อให้สถาปนิกสามารถทดสอบแรงดันน้ำ ก๊อกน้ำ ฝักบัว ชักโครก และขังน้ำเทสสโลปการระบายน้ำ
+
+🔑 3. กุญแจและอุปกรณ์ควบคุม:
+• รับกุญแจห้อง / คีย์การ์ดเปิดประตู / รีโมตแอร์ทุกเครื่อง / รีโมตพัดลมระบายอากาศ (ถ้ามี) ไว้พร้อมใช้งาน
+
+🏢 4. การประสานงานนิติบุคคล & ช่างโครงการ:
+• แจ้งนิติบุคคลหรือฝ่ายขายโครงการว่า "มีทีมสถาปนิกตรวจรับมอบห้องเข้าตรวจในวัน-เวลาดังกล่าว"
+• แนะนำให้นัดช่างโครงการหรือโฟร์แมนประจำตึกไว้ช่วง 30 นาทีสุดท้าย เพื่อเดินสรุปจุด Defect ร่วมกัน จะช่วยให้การเก็บงานรวดเร็วขึ้นครับ
+
+──────────────────────
+หากติดขัดจุดไหน แจ้งทางทีมสถาปนิกได้ตลอดเวลาเลยนะครับ แล้วพบกันวันตรวจครับผม 🤝</div>
+  </div>
+
+  <!-- Card 4: ตัวอย่างรายงานการตรวจจริง (Quick Reply 3) -->
+  <div class="card" data-tags="ตัวอย่าง รายงาน เล่ม pdf defect จุดบกพร่อง วงกลมแดง สรุป ผลงาน">
+    <div class="card-header">
+      <span class="badge badge-gold">4. ตัวอย่างรายงานตรวจจริง</span>
+      <div class="card-title">ข้อความที่ 4: ตัวอย่างรายงานการตรวจจริง (Defect Report PDF) (Quick Reply 3)</div>
+      <div class="action-bar">
+        <button class="btn btn-copy" onclick="copyText('t4')">📋 กดคัดลอก</button>
+        <button class="btn btn-edit" id="btn-edit-t4" onclick="toggleEdit('t4')">✏️ แก้ไข</button>
+        <button class="btn btn-reset" onclick="resetText('t4')">🔄 คืนค่าเดิม</button>
+      </div>
+      <div class="edit-notice" id="notice-t4">✏️ กำลังอยู่ในโหมดแก้ไข แตะที่ข้อความเพื่อแก้ไข แล้วกด "💾 บันทึก"</div>
+    </div>
+    <div class="content-box" id="t4" contenteditable="false">🏛️ ตัวอย่างเล่มรายงานการตรวจรับมอบคอนโดฉบับจริง (INSPECT Q Defect Report) 📄
+
+สถาปนิกจัดทำเล่มรายงานด้วยมาตรฐานสถาปัตยกรรม (ขนาด A4 แนวนอน อ่านง่าย คมชัด):
+• ระบุเลขที่ห้อง วันที่ตรวจ และรายชื่อผู้ตรวจชัดเจน
+• แยกหมวดหมู่ 6 โซนห้อง (ทางเข้า, รับแขก, ห้องนอน, ครัว, ห้องน้ำ, ระเบียง)
+• ระบุจุดบกพร่องด้วย **วงกลมสีแดงชัดเจน** พร้อมภาพระยะกว้างและระยะซูม
+• มีคำอธิบายอาการและแนวทางแก้ไขที่ช่างโครงการสามารถนำไปทำตามได้ทันที
+
+🔗 สามารถเปิดดูตัวอย่างเล่มรายงานฉบับสมบูรณ์ออนไลน์ได้ที่ลิงก์นี้ครับ:
+https://seemee1234-dev.github.io/seemeinspect/landing.html
+
+──────────────────────
+เล่มรายงานฉบับจริงจะจัดส่งเป็นไฟล์ PDF ความละเอียดสูงให้คุณ [ชื่อลูกค้า] ทาง LINE นี้ เพื่อใช้ส่งต่อให้นิติหรือช่างโครงการเข้าแก้ไขได้สะดวกรวดเร็วครับ 🤝</div>
+  </div>
+
+  <!-- Card 5: ตอบกลับอัตโนมัติปุ่มริชเมนู B - ตารางราคา -->
+  <div class="card" data-tags="ริชเมนู ราคา ค่าบริการ แพ็กเกจ ตารางราคา ตรวจกี่รอบ งบประมาณ">
+    <div class="card-header">
+      <span class="badge badge-gold">5. ตอบกลับอัตโนมัติ: ราคา & แพ็กเกจ (ริชเมนู B)</span>
+      <div class="card-title">ข้อความที่ 5: ตารางอัตราค่าบริการตรวจรับมอบคอนโด (ปุ่มริชเมนู B)</div>
+      <div class="action-bar">
+        <button class="btn btn-copy" onclick="copyText('t5')">📋 กดคัดลอก</button>
+        <button class="btn btn-edit" id="btn-edit-t5" onclick="toggleEdit('t5')">✏️ แก้ไข</button>
+        <button class="btn btn-reset" onclick="resetText('t5')">🔄 คืนค่าเดิม</button>
+      </div>
+      <div class="edit-notice" id="notice-t5">✏️ กำลังอยู่ในโหมดแก้ไข แตะที่ข้อความเพื่อแก้ไข แล้วกด "💾 บันทึก"</div>
+    </div>
+    <div class="content-box" id="t5" contenteditable="false">🏛️ อัตราค่าบริการตรวจรับมอบคอนโดโดยสถาปนิก (INSPECT Q Official Rates) 💰
+
+แพ็กเกจมาตรฐาน: รวมตรวจ 2 รอบ (รอบแรกตรวจละเอียด + รอบสอง Re-check หลังโครงการแก้ไขเสร็จ) พร้อมเล่ม Defect Report PDF ฉบับเต็ม:
+
+📏 ตารางราคาตามขนาดพื้นที่ห้อง:
+• พื้นที่ห้องไม่เกิน 30 ตร.ม. : 2,990 บาท (รวมตรวจ 2 รอบ)
+• พื้นที่ห้อง 31 – 45 ตร.ม.   : 3,490 บาท (รวมตรวจ 2 รอบ)
+• พื้นที่ห้อง 46 – 60 ตร.ม.   : 4,490 บาท (รวมตรวจ 2 รอบ)
+• พื้นที่ห้อง 61 – 80 ตร.ม.   : 5,490 บาท (รวมตรวจ 2 รอบ)
+• พื้นที่ห้องเกิน 80 ตร.ม. ขึ้นไป / เพนต์เฮาส์: ประเมินราคาตามพื้นที่
+
+✨ บริการพิเศษเพิ่มเติม:
+• ตรวจคอนโด 1 รอบ (ตรวจ Defect + สรุปเบื้องต้น): 1,990 บาท
+• บริการ "ดูคอนโดแทนคุณ" ผ่าน Video Call เรียลไทม์: 700 บาท
+
+──────────────────────
+💡 ทุกแพ็กเกจตรวจครบ 5 ระบบ (สถาปัตย์, ไฟฟ้า, สุขาภิบาล, พื้นผิว, รั่วซึม) ไร้ค่าใช้จ่ายแอบแฝง
+คุณ [ชื่อลูกค้า] แจ้งขนาดห้องและโครงการเพื่อรับข้อเสนอพิเศษได้เลยครับ 🤝</div>
+  </div>
+
+  <!-- Card 6: ตอบกลับอัตโนมัติปุ่มริชเมนู C - จองคิวตรวจ -->
+  <div class="card" data-tags="ริชเมนู จองคิว นัดหมาย ฟอร์ม นัดตรวจ วันเวลา ลงทะเบียน">
+    <div class="card-header">
+      <span class="badge badge-blue">6. ตอบกลับอัตโนมัติ: จองคิวตรวจ (ริชเมนู C)</span>
+      <div class="card-title">ข้อความที่ 6: แบบฟอร์มนัดหมายจองคิวตรวจ (ปุ่มริชเมนู C)</div>
+      <div class="action-bar">
+        <button class="btn btn-copy" onclick="copyText('t6')">📋 กดคัดลอก</button>
+        <button class="btn btn-edit" id="btn-edit-t6" onclick="toggleEdit('t6')">✏️ แก้ไข</button>
+        <button class="btn btn-reset" onclick="resetText('t6')">🔄 คืนค่าเดิม</button>
+      </div>
+      <div class="edit-notice" id="notice-t6">✏️ กำลังอยู่ในโหมดแก้ไข แตะที่ข้อความเพื่อแก้ไข แล้วกด "💾 บันทึก"</div>
+    </div>
+    <div class="content-box" id="t6" contenteditable="false">🏛️ แบบฟอร์มจองคิวตรวจรับมอบคอนโด INSPECT Q 📅
+
+เพื่อความสะดวกรวดเร็วในการล็อกคิวสถาปนิก คุณลูกค้าสามารถพิมพ์ข้อมูลส่งกลับมาได้เลยครับ:
+
+1. ชื่อ-นามสกุล:
+2. เบอร์โทรศัพท์ติดต่อ:
+3. ชื่อโครงการ / ทำเล:
+4. ขนาดห้อง (ตร.ม.) / ชั้น / เลขที่ห้อง:
+5. วันที่ต้องการตรวจ (ระบุวันและรอบเวลา):
+   • รอบเช้า: 09.30 – 12.00 น.
+   • รอบบ่าย: 13.30 – 16.00 น.
+6. โครงการนัดตรวจรอบแรก หรือรอบเก็บงาน (Re-check):
+
+──────────────────────
+เมื่อได้รับข้อมูลแล้ว สถาปนิกจะตรวจสอบตารางงานและยืนยันคิวให้ทันทีใน 5 นาทีครับผม 🙏</div>
+  </div>
+
+  <!-- Card 7: ตอบกลับอัตโนมัติปุ่มริชเมนู D - เช็กลิสต์ 5 ระบบ -->
+  <div class="card" data-tags="ริชเมนู เช็กลิสต์ 5 ระบบ ตรวจอะไรบ้าง ไฟฟ้า ประปา รั่วซึม สถาปัตย์">
+    <div class="card-header">
+      <span class="badge badge-crimson">7. ตอบกลับอัตโนมัติ: เช็กลิสต์ 5 ระบบ (ริชเมนู D)</span>
+      <div class="card-title">ข้อความที่ 7: รายการตรวจ 5 ระบบสถาปัตย์และวิศวกรรม (ปุ่มริชเมนู D)</div>
+      <div class="action-bar">
+        <button class="btn btn-copy" onclick="copyText('t7')">📋 กดคัดลอก</button>
+        <button class="btn btn-edit" id="btn-edit-t7" onclick="toggleEdit('t7')">✏️ แก้ไข</button>
+        <button class="btn btn-reset" onclick="resetText('t7')">🔄 คืนค่าเดิม</button>
+      </div>
+      <div class="edit-notice" id="notice-t7">✏️ กำลังอยู่ในโหมดแก้ไข แตะที่ข้อความเพื่อแก้ไข แล้วกด "💾 บันทึก"</div>
+    </div>
+    <div class="content-box" id="t7" contenteditable="false">🏛️ เช็กลิสต์การตรวจ 5 ระบบสถาปัตยกรรม & วิศวกรรมคอนโด (INSPECT Q) 🔍
+
+สถาปนิกจะเข้าตรวจละเอียดทั้ง 6 โซนในห้อง ครอบคลุม 5 ระบบหลัก:
+
+1. 🏗️ งานสถาปัตยกรรม & โครงสร้างผิวสัมผัส:
+   • พื้นลามิเนต / ไวนิล SPC: ตรวจการยวบ แอ่น โก่งตัว รอยต่อชิดสนิท
+   • ผนังและฉาก: ใช้เลเซอร์ 3D เช็กแนวดิ่ง ผนังลอน รอยร้าว สีด่าง
+   • ประตู-หน้าต่าง: เช็กการเปิด-ปิด ล็อคแน่นหนา แนวระนาบวงกบ ไม่ฝืด ไม่ตก
+   • กระเบื้อง: เคาะเช็กโพรงอากาศใต้กระเบื้องทุกแผ่น 100%
+
+2. ⚡ งานระบบไฟฟ้าและความปลอดภัย:
+   • ตู้ควบคุมไฟฟ้า (DB Box): เช็กขนาดเบรกเกอร์ ขันแน่น การจัดสายไฟ
+   • ระบบป้องกันไฟรั่ว (RCD / ELCB): ทดสอบการตัดกระแสไฟเมื่อเกิดไฟรั่ว
+   • เต้ารับไฟฟ้าทุกจุด: เช็กขั้วสาย L-N-G และความต่อเนื่องของสายดิน 100%
+
+3. 🚿 งานระบบสุขาภิบาลและการระบายน้ำ:
+   • ตรวจสโลป (Slope) พื้นห้องน้ำและระเบียง น้ำต้องไหลลง Floor Drain ไว ไม่ขังเป็นแอ่ง
+   • ขังน้ำทดสอบการรั่วซึมของท่อดักกลิ่นและข้อต่อใต้เคาน์เตอร์ซิงค์
+   • ระบบชักโครก: แรงดันน้ำชำระล้าง การตัดน้ำของลูกลอย และซีลกันกลิ่นย้อน
+
+4. ❄️ งานระบบปรับอากาศ & การระบายอากาศ:
+   • แอร์: วัดอุณหภูมิลมจ่าย ท่อน้ำทิ้งแอร์ไม่ตัน ไม่รั่วซึมหยดลงฝ้า
+   • พัดลมดูดอากาศห้องน้ำและครัว: เช็กท่อลมออกภายนอกอาคาร ไม่ให้กลิ่นวนในฝ้า
+
+5. 🌧️ งานป้องกันการรั่วซึมขอบอาคาร:
+   • ยางกันซึม EPDM และสักหลาดขอบหน้าต่าง
+   • ร่องระบายน้ำกรอบบาน (Weep Hole) ต้องไม่อุดตัน
+   • ใช้เครื่อง Moisture Meter ดิจิทัลสแกนหาความชื้นสะสมฝังลึกใต้ขอบผนัง
+
+──────────────────────
+🌐 ดูขั้นตอนและเครื่องมือตรวจอย่างละเอียดได้ที่: https://seemee1234-dev.github.io/seemeinspect/ 🤝</div>
+  </div>
+
+  <!-- Card 8: ชุดคำตอบแก้เกมเรื่องฉีดน้ำหน้าต่าง -->
+  <div class="card" data-tags="ฉีดน้ำ รั่วซึม หน้าต่าง กระจก ตอบคำถาม เสี่ยง นิติ สักหลาด ยาง epdm">
+    <div class="card-header">
+      <span class="badge badge-crimson">8. แก้เกม: ลูกค้าถามเรื่องฉีดน้ำหน้าต่าง</span>
+      <div class="card-title">ข้อความที่ 8: คำตอบกรณีลูกค้าถาม "มีฉีดน้ำเทสหน้าต่างไหม?"</div>
+      <div class="action-bar">
+        <button class="btn btn-copy" onclick="copyText('t8')">📋 กดคัดลอก</button>
+        <button class="btn btn-edit" id="btn-edit-t8" onclick="toggleEdit('t8')">✏️ แก้ไข</button>
+        <button class="btn btn-reset" onclick="resetText('t8')">🔄 คืนค่าเดิม</button>
+      </div>
+      <div class="edit-notice" id="notice-t8">✏️ กำลังอยู่ในโหมดแก้ไข แตะที่ข้อความเพื่อแก้ไข แล้วกด "💾 บันทึก"</div>
+    </div>
+    <div class="content-box" id="t8" contenteditable="false">เรียนคุณ [ชื่อลูกค้า] ครับ ทางสถาปนิกตรวจรับมอบคอนโดสูง จะใช้มาตรฐานการตรวจเชิงโครงสร้างสถาปัตย์ (Physical & Seal Integrity Inspection) แทนการฉีดน้ำภายนอก ด้วยเหตุผล 3 ข้อหลักครับ:
 
 1. 🏢 ระเบียบความปลอดภัยอาคารชุด: นิติบุคคลคอนโดส่วนใหญ่มีกฎห้ามฉีดน้ำออกนอกอาคารเด็ดขาด เพื่อป้องกันละอองน้ำกระเด็นตกใส่ห้องชั้นล่าง รถยนต์ลูกบ้าน หรือทางเดินส่วนกลางครับ
 2. 🔍 ตรวจตรงจุดโครงสร้างจริง 100%: จุดที่ทำให้น้ำรั่วเข้าห้อง 99% ไม่ได้เกิดจากบานกระจก แต่เกิดจาก 3 จุดวิกฤตที่สถาปนิกตรวจละเอียด:
@@ -350,34 +552,73 @@
 3. 📟 เครื่องวัดความชื้นดิจิทัล (Moisture Meter): สถาปนิกจะสแกนความชื้นสะสมใต้กรอบวงกบและผนังใต้หน้าต่างทุกบานเพื่อตรวจหารอยรั่วซึมฝังลึก ซึ่งแม่นยำกว่าการสาดน้ำชั่วคราวเพียงไม่กี่วินาทีครับ 🤝</div>
   </div>
 
-  <!-- Card 3 -->
-  <div class="card" data-tags="สโลป น้ำขัง ห้องน้ำ ระเบียง สุขาภิบาล ทางการ ท่อเดรน">
+  <!-- Card 9: สรุปงานหลังตรวจเสร็จหน้างาน -->
+  <div class="card" data-tags="สรุปงาน ตรวจเสร็จ หลังตรวจ หน้างาน บรีฟ ช่างโครงการ รีพอร์ต">
     <div class="card-header">
-      <span class="badge badge-blue">งานสโลปพื้น & การระบายน้ำ</span>
-      <div class="card-title">ข้อความที่ 3: คำอธิบายงานสโลปพื้นห้องน้ำ-ระเบียง (ทางการ สุภาพ ไร้คำว่าห้ามเด็ดขาด)</div>
+      <span class="badge badge-green">9. สรุปผลหลังตรวจเสร็จ</span>
+      <div class="card-title">ข้อความที่ 9: สรุปผลด่วนหลังตรวจเสร็จหน้างาน (Post-Inspection Immediate Summary)</div>
       <div class="action-bar">
-        <button class="btn btn-copy" onclick="copyText('t3')">📋 กดคัดลอก</button>
-        <button class="btn btn-edit" id="btn-edit-t3" onclick="toggleEdit('t3')">✏️ แก้ไข</button>
-        <button class="btn btn-reset" onclick="resetText('t3')">🔄 คืนค่าเดิม</button>
+        <button class="btn btn-copy" onclick="copyText('t9')">📋 กดคัดลอก</button>
+        <button class="btn btn-edit" id="btn-edit-t9" onclick="toggleEdit('t9')">✏️ แก้ไข</button>
+        <button class="btn btn-reset" onclick="resetText('t9')">🔄 คืนค่าเดิม</button>
       </div>
-      <div class="edit-notice" id="notice-t3">✏️ กำลังอยู่ในโหมดแก้ไข แตะที่ข้อความด้านล่างเพื่อพิมพ์เปลี่ยนคำ แล้วกดปุ่ม "💾 บันทึก"</div>
+      <div class="edit-notice" id="notice-t9">✏️ กำลังอยู่ในโหมดแก้ไข แตะที่ข้อความเพื่อแก้ไข แล้วกด "💾 บันทึก"</div>
     </div>
-    <div class="content-box" id="t3" contenteditable="false">• งานสุขาภิบาล & ระบายน้ำ: ตรวจระดับความลาดเอียง (Slope) ของพื้นห้องน้ำและระเบียงให้ระบายน้ำลง Floor Drain ได้อย่างรวดเร็วและแห้งเรียบสนิท พร้อมทดสอบขังน้ำเช็กการรั่วซึมของข้อต่อท่อน้ำทิ้งใต้เคาน์เตอร์ซิงค์ทุกจุด 100% ครับ</div>
+    <div class="content-box" id="t9" contenteditable="false">🏛️ รายงานผลการตรวจรับมอบคอนโดเบื้องต้น (INSPECT Q) 📋
+
+เรียนคุณ [ชื่อลูกค้า] ครับ วันนี้ทีมสถาปนิกได้เข้าตรวจห้อง [เลขห้อง] โครงการ [ชื่อโครงการ] เสร็จสิ้นเรียบร้อยแล้วครับ
+
+🔍 ภาพรวมการตรวจวันนี้:
+• สถานะห้องโดยรวม: [เรียบร้อยดี มีจุดเก็บงานตามมาตรฐาน / ต้องแก้ไขเรื่องระบบน้ำ-ไฟ]
+• จำนวนจุด Defect ที่พบทั้งหมดประมาณ: [xx] จุด
+• จุดสำคัญที่ต้องเน้นย้ำให้โครงการแก้ไขก่อนโอนกรรมสิทธิ์:
+  1. [เช่น สโลปพื้นห้องน้ำมีน้ำขังบางจุด / ซิลิโคนกรอบหน้าต่างระเบียง]
+  2. [เช่น ปลั๊กไฟผนังห้องนอนสายดินยังไม่ต่อ / ฝาครอบสวิตช์เอียง]
+  3. [เช่น กระเบื้องพื้นมีโพรงอากาศใต้แผ่น x แผ่น]
+
+📄 ขั้นตอนถัดไป:
+ทางทีมกำลังจัดทำ "เล่มรายงาน Defect Report ฉบับเต็ม (PDF A4 แนวนอน)" ระบุภาพถ่ายและตำแหน่งอย่างละเอียด จะจัดส่งเข้า LINE นี้ภายใน [ช่วงค่ำวันนี้ / ไม่เกิน 24 ชม.] เพื่อให้คุณลูกค้าใช้ส่งให้โครงการเข้าแก้ไขได้ทันทีครับ ขอบพระคุณครับ 🙏</div>
   </div>
 
-  <!-- Card 4 -->
-  <div class="card" data-tags="เงื่อนไข ใบเสนอราคา สัญญา ท้ายเล่ม หมายเหตุ กฎหมาย">
+  <!-- Card 10: นัดตรวจรอบ 2 Re-check -->
+  <div class="card" data-tags="รอบสอง recheck ตรวจซ้ำ ตรวจซ่อม โครงการแก้เสร็จ นัดหมาย">
     <div class="card-header">
-      <span class="badge badge-gold">เงื่อนไขท้ายเอกสาร/เล่ม PDF</span>
-      <div class="card-title">ข้อความที่ 4: ข้อกำหนดมาตรฐานการปฏิบัติงาน (สำหรับใส่ท้ายใบเสนอราคา/เล่มรายงาน)</div>
+      <span class="badge badge-blue">10. นัดตรวจรอบ 2 (Re-check)</span>
+      <div class="card-title">ข้อความที่ 10: ขั้นตอนนัดตรวจรอบ 2 Re-check (หลังโครงการแก้ไขเสร็จ)</div>
       <div class="action-bar">
-        <button class="btn btn-copy" onclick="copyText('t4')">📋 กดคัดลอก</button>
-        <button class="btn btn-edit" id="btn-edit-t4" onclick="toggleEdit('t4')">✏️ แก้ไข</button>
-        <button class="btn btn-reset" onclick="resetText('t4')">🔄 คืนค่าเดิม</button>
+        <button class="btn btn-copy" onclick="copyText('t10')">📋 กดคัดลอก</button>
+        <button class="btn btn-edit" id="btn-edit-t10" onclick="toggleEdit('t10')">✏️ แก้ไข</button>
+        <button class="btn btn-reset" onclick="resetText('t10')">🔄 คืนค่าเดิม</button>
       </div>
-      <div class="edit-notice" id="notice-t4">✏️ กำลังอยู่ในโหมดแก้ไข แตะที่ข้อความด้านล่างเพื่อพิมพ์เปลี่ยนคำ แล้วกดปุ่ม "💾 บันทึก"</div>
+      <div class="edit-notice" id="notice-t10">✏️ กำลังอยู่ในโหมดแก้ไข แตะที่ข้อความเพื่อแก้ไข แล้วกด "💾 บันทึก"</div>
     </div>
-    <div class="content-box" id="t4" contenteditable="false">ข้อกำหนดและมาตรฐานการปฏิบัติงาน (Inspection Terms & Conditions):
+    <div class="content-box" id="t10" contenteditable="false">🏛️ บริการตรวจรอบ 2 (Re-check) ก่อนลงนามรับมอบห้อง 🔍
+
+เมื่อโครงการแจ้งว่า "ดำเนินการแก้ไขจุด Defect ตามเล่มรายงานเสร็จสิ้นแล้ว"
+คุณ [ชื่อลูกค้า] สามารถนัดหมายสถาปนิกเข้าตรวจซ้ำได้ตามขั้นตอนนี้ครับ:
+
+📌 สิ่งที่ต้องเตรียมเพื่อนัดคิว:
+1. ขอให้โครงการส่งภาพถ่ายหรือรายการที่โครงการเซ็นยืนยันการแก้ไขเสร็จ (ถ้ามี)
+2. แจ้งวันและเวลาที่สะดวกเข้าตรวจรอบ 2 ล่วงหน้าอย่างน้อย 2–3 วันทำการ
+3. ทางสถาปนิกจะนำเล่มรายงานรอบแรกไปเทียบตรวจทุกจุด 100% ว่าได้รับการแก้ไขตามมาตรฐานวิศวกรรมแล้วหรือไม่
+
+──────────────────────
+📅 คุณ [ชื่อลูกค้า] สะดวกเป็นวันไหน แจ้งคิวเพื่อล็อกวันกับสถาปนิกได้เลยนะครับผม 🤝</div>
+  </div>
+
+  <!-- Card 11: เงื่อนไขท้ายเอกสาร/เล่ม PDF -->
+  <div class="card" data-tags="เงื่อนไข ใบเสนอราคา สัญญา ท้ายเล่ม หมายเหตุ กฎหมาย มาตรฐาน">
+    <div class="card-header">
+      <span class="badge badge-gold">11. ข้อกำหนดมาตรฐานท้ายเอกสาร</span>
+      <div class="card-title">ข้อความที่ 11: ข้อกำหนดมาตรฐานการปฏิบัติงาน (ท้ายใบเสนอราคา/เล่มรายงาน)</div>
+      <div class="action-bar">
+        <button class="btn btn-copy" onclick="copyText('t11')">📋 กดคัดลอก</button>
+        <button class="btn btn-edit" id="btn-edit-t11" onclick="toggleEdit('t11')">✏️ แก้ไข</button>
+        <button class="btn btn-reset" onclick="resetText('t11')">🔄 คืนค่าเดิม</button>
+      </div>
+      <div class="edit-notice" id="notice-t11">✏️ กำลังอยู่ในโหมดแก้ไข แตะที่ข้อความเพื่อแก้ไข แล้วกด "💾 บันทึก"</div>
+    </div>
+    <div class="content-box" id="t11" contenteditable="false">ข้อกำหนดและมาตรฐานการปฏิบัติงาน (Inspection Terms & Conditions):
 1. การทดสอบการระบายน้ำและสุขาภิบาล: สถาปนิกจะทำการทดสอบระดับความลาดเอียง (Slope) ของพื้นห้องน้ำและระเบียง รวมถึงการขังน้ำทดสอบการรั่วซึมของท่อน้ำทิ้งใต้เคาน์เตอร์ซิงค์ทุกจุด
 2. การตรวจสอบการรั่วซึมกรอบบานภายนอก: ยึดหลักวิศวกรรมสถาปัตย์ในการตรวจสอบแนวซีลยาง EPDM, ยาแนวซิลิโคนรอยต่อ และระบบร่องระบายน้ำกรอบบาน (Weep Hole) พร้อมตรวจวัดความชื้นสะสมด้วยเครื่องดิจิทัล ทั้งนี้การทดสอบในจุดเปิดโล่งจะดำเนินการภายใต้ขอบเขตที่ไม่ขัดต่อระเบียบความปลอดภัยและข้อกำหนดของนิติบุคคลอาคารชุด</div>
   </div>
@@ -386,20 +627,33 @@
 
 <div class="toast" id="toast">✅ คัดลอกข้อความสำเร็จแล้ว!</div>
 
-<script>
-const defaultTexts = {
-  t1: document.getElementById('t1').innerText,
-  t2: document.getElementById('t2').innerText,
-  t3: document.getElementById('t3').innerText,
-  t4: document.getElementById('t4').innerText
-};
+<!-- QR Code Modal -->
+<div id="qr-modal" style="display:none; position:fixed; top:0; left:0; width:100%; height:100%; background:rgba(0,0,0,0.85); z-index:9999; justify-content:center; align-items:center; padding:20px; backdrop-filter:blur(6px);">
+  <div style="background:#1e293b; border:2px solid #d4af37; border-radius:20px; padding:24px; text-align:center; max-width:340px; width:100%; box-shadow:0 12px 40px rgba(0,0,0,0.8);">
+    <div style="font-size:16px; font-weight:700; color:#d4af37; margin-bottom:4px;">🏛️ สแกนเปิดบนมือถือ</div>
+    <div style="font-size:12px; color:#94a3b8; margin-bottom:16px;">สแกนด้วยกล้องมือถือหรือ LINE ได้ทันที</div>
+    <div style="background:#fff; padding:10px; border-radius:14px; display:inline-block; border:2px solid #d4af37; margin-bottom:16px;">
+      <img src="qr_mobile.png" alt="QR Code" onerror="this.src='qr_seemeinspect_permanent.png'" style="width:220px; height:auto; display:block; border-radius:6px;">
+    </div>
+    <div style="display:flex; gap:8px;">
+      <button onclick="closeQrModal()" style="flex:1; padding:10px; border-radius:10px; border:none; background:#d4af37; color:#0b1120; font-weight:700; font-size:13px; cursor:pointer;">ปิดหน้าต่าง</button>
+    </div>
+  </div>
+</div>
 
-// Load saved edits from localStorage
+<script>
+const cardIds = ['t1', 't2', 't3', 't4', 't5', 't6', 't7', 't8', 't9', 't10', 't11'];
+const defaultTexts = {};
+
 window.addEventListener('DOMContentLoaded', () => {
-  ['t1', 't2', 't3', 't4'].forEach(id => {
-    const saved = localStorage.getItem('inspect_q_' + id);
-    if (saved) {
-      document.getElementById(id).innerText = saved;
+  cardIds.forEach(id => {
+    const el = document.getElementById(id);
+    if (el) {
+      defaultTexts[id] = el.innerText;
+      const saved = localStorage.getItem('inspect_q_' + id);
+      if (saved) {
+        el.innerText = saved;
+      }
     }
   });
 });
@@ -410,7 +664,6 @@ function copyText(id) {
   navigator.clipboard.writeText(text).then(() => {
     showToast("✅ คัดลอกข้อความสำเร็จแล้ว!");
   }).catch(() => {
-    // Fallback
     const ta = document.createElement('textarea');
     ta.value = text;
     document.body.appendChild(ta);
@@ -441,7 +694,7 @@ function toggleEdit(id) {
     btn.style.color = '#f8fafc';
     notice.style.display = 'none';
     localStorage.setItem('inspect_q_' + id, el.innerText);
-    showToast("💾 บันทึกการแก้ไขลงเครื่องเรียบร้อยแล้ว!");
+    showToast("💾 บันทึกการแก้ไขเรียบร้อยแล้ว!");
   }
 }
 
@@ -484,41 +737,12 @@ function copyPageLink() {
   });
 }
 
-</script>
-
-
-<!-- QR Code Popup Modal Embedded directly in HTML -->
-<div id="qr-modal" style="display:none; position:fixed; top:0; left:0; width:100%; height:100%; background:rgba(0,0,0,0.8); z-index:9999; justify-content:center; align-items:center; padding:20px; backdrop-filter:blur(6px);">
-  <div style="background:#1e293b; border:2px solid #d4af37; border-radius:20px; padding:24px; text-align:center; max-width:340px; width:100%; box-shadow:0 12px 40px rgba(0,0,0,0.8);">
-    <div style="font-size:16px; font-weight:700; color:#d4af37; margin-bottom:4px;">🏛️ สแกนเปิดบนมือถือ</div>
-    <div style="font-size:12px; color:#94a3b8; margin-bottom:16px;">สแกนด้วยกล้องมือถือหรือ LINE ได้ทันที</div>
-    <div style="background:#fff; padding:10px; border-radius:14px; display:inline-block; border:2px solid #d4af37; margin-bottom:16px;">
-      <img src="data:image/png;base64,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" alt="QR Code" style="width:220px; height:auto; display:block; border-radius:6px;">
-    </div>
-    <div style="display:flex; gap:8px;">
-      <button onclick="closeQrModal()" style="flex:1; padding:10px; border-radius:10px; border:none; background:#d4af37; color:#0b1120; font-weight:700; font-size:13px; cursor:pointer;">ปิดหน้าต่าง</button>
-    </div>
-  </div>
-</div>
-
-<script>
 function openQrModal() {
-  const m = document.getElementById('qr-modal');
-  m.style.display = 'flex';
+  document.getElementById('qr-modal').style.display = 'flex';
 }
 function closeQrModal() {
-  const m = document.getElementById('qr-modal');
-  m.style.display = 'none';
+  document.getElementById('qr-modal').style.display = 'none';
 }
-
-function copyPageLink() {
-  const url = window.location.href;
-  navigator.clipboard.writeText(url).then(() => {
-    showToast("✅ คัดลอกลิงก์หน้าเว็บสำเร็จแล้ว!");
-  });
-}
-
 </script>
 </body>
-
 </html>
