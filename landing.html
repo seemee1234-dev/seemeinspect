@@ -1028,9 +1028,8 @@
             <div class="calc-control-group">
               <label class="calc-label">3. ตัวเลือกรอบการตรวจ:</label>
               <select id="roundSelect" class="form-select" onchange="updateCalculator()">
-                <option value="2">ตรวจเต็มรูปแบบ 2 รอบ + Defect Report (แนะนำ)</option>
-                <option value="1">ตรวจเช็กภาพรวม 1 รอบเบื้องต้น</option>
-                <option value="video">ดูห้องแทนคุณผ่าน Video Call (เฉพาะคอนโด)</option>
+                <option value="2">ตรวจ 2 รอบ (ตรวจละเอียด + สถาปนิกตรวจซ้ำจุดแก้ไขก่อนโอน) [แนะนำ/ยอดนิยม]</option>
+                <option value="1">ตรวจ 1 รอบ (ตรวจละเอียดรอบแรก พร้อมเล่ม Defect Report ในวันตรวจ)</option>
               </select>
             </div>
           </div>
@@ -1121,41 +1120,10 @@
         <!-- 2. Individual Package Cards (Interactive Selectable) -->
         <div class="packages-grid">
           
-          <!-- Pkg 1: ดูคอนโดแทนคุณ (Video Call) -->
-          <div class="pkg-card">
-            <div class="pkg-header">
-              <span class="pkg-number">1</span>
-              <h3 class="pkg-title">ดูคอนโดแทนคุณ (Video Call)</h3>
-              <p class="pkg-sub">Video Call และเช็กภาพรวมเรียลไทม์</p>
-              <div class="pkg-price-row">
-                <span class="pkg-price">700 บาท</span>
-                <span style="font-size: 13px; color: #94a3b8; margin-left: 6px;">/ ครั้ง</span>
-              </div>
-            </div>
-            <div class="pkg-hours">⏱️ เวลาทำงาน: 1–1.5 ชั่วโมง / ห้อง / ครั้ง</div>
-            <div>
-              <div class="pkg-list-title">📌 ขอบเขตงาน:</div>
-              <ul class="pkg-list">
-                <li><span class="bullet">▪</span> Video Call สดตามเวลานัดหมาย</li>
-                <li><span class="bullet">▪</span> ผู้ตรวจพาชมห้องและเช็กสภาพทั่วไปมุมสำคัญ</li>
-                <li><span class="bullet">▪</span> แจ้งข้อสังเกตและจุดควรระวังเบื้องต้นระหว่างการโทร</li>
-              </ul>
-              <div class="pkg-list-title">🎁 สิ่งที่ได้รับ:</div>
-              <ul class="pkg-list">
-                <li><span class="bullet">✓</span> คำแนะนำจากผู้เชี่ยวชาญผ่าน Video Call</li>
-                <li><span class="bullet">✓</span> สรุปข้อสังเกตเบื้องต้นส่งให้ทาง LINE</li>
-              </ul>
-            </div>
-            <div class="pkg-terms">
-              <strong>เงื่อนไข:</strong> เป็นบริการพาชมและให้คำแนะนำเบื้องต้น ไม่รวมเล่ม Defect Report
-            </div>
-            <button class="btn btn-outline" onclick="selectSpecificPackage('ดูคอนโดแทนคุณ (Video Call)', '700 บาท')">จองบริการนี้</button>
-          </div>
-
           <!-- Pkg 2: Studio / 1 Bedroom (ไม่เกิน 30 ตร.ม.) -->
           <div class="pkg-card featured">
             <div class="pkg-header">
-              <span class="pkg-number">2</span>
+              <span class="pkg-number">1</span>
               <h3 class="pkg-title">Studio / 1 Bedroom</h3>
               <p class="pkg-sub">พื้นที่ไม่เกิน 30 ตร.ม. (สถาปนิกตรวจเอง)</p>
               <div class="pkg-price-row" style="flex-direction: column; align-items: flex-start; gap: 4px;">
@@ -1194,7 +1162,7 @@
           <!-- Pkg 3: 1 Bedroom / 1 Bed Plus (31–45 ตร.ม.) -->
           <div class="pkg-card featured">
             <div class="pkg-header">
-              <span class="pkg-number">3</span>
+              <span class="pkg-number">2</span>
               <h3 class="pkg-title">1 Bedroom / 1 Bed Plus</h3>
               <p class="pkg-sub">พื้นที่ 31–45 ตร.ม. (สถาปนิกตรวจเอง)</p>
               <div class="pkg-price-row" style="flex-direction: column; align-items: flex-start; gap: 4px;">
@@ -1233,7 +1201,7 @@
           <!-- Pkg 4: 2 Bedroom ขนาดกลาง (46–60 ตร.ม.) -->
           <div class="pkg-card">
             <div class="pkg-header">
-              <span class="pkg-number">4</span>
+              <span class="pkg-number">3</span>
               <h3 class="pkg-title">2 Bedroom ขนาดกลาง</h3>
               <p class="pkg-sub">พื้นที่ 46–60 ตร.ม. (สถาปนิกตรวจเอง)</p>
               <div class="pkg-price-row" style="flex-direction: column; align-items: flex-start; gap: 4px;">
@@ -1271,7 +1239,7 @@
           <!-- Pkg 5: 2–3 Bedroom / Duplex (61–80 ตร.ม.) -->
           <div class="pkg-card">
             <div class="pkg-header">
-              <span class="pkg-number">5</span>
+              <span class="pkg-number">4</span>
               <h3 class="pkg-title">2–3 Bedroom / Duplex</h3>
               <p class="pkg-sub">พื้นที่ 61–80 ตร.ม. (สถาปนิกตรวจเอง)</p>
               <div class="pkg-price-row" style="flex-direction: column; align-items: flex-start; gap: 4px;">
@@ -1309,7 +1277,7 @@
           <!-- Pkg 6: Penthouse / ขนาดพิเศษ (> 80 ตร.ม.) -->
           <div class="pkg-card">
             <div class="pkg-header">
-              <span class="pkg-number">6</span>
+              <span class="pkg-number">5</span>
               <h3 class="pkg-title">Penthouse / ขนาดพิเศษ</h3>
               <p class="pkg-sub">พื้นที่เกิน 80 ตร.ม. ขึ้นไป</p>
               <div class="pkg-price-row">
@@ -1919,15 +1887,7 @@
       let badge = 'แพ็กเกจแนะนำ';
 
       if (currentPropType === 'condo') {
-        if (rounds === 'video') {
-          title = 'ดูคอนโดแทนคุณ (Video Call)';
-          sub = 'Video Call และเช็กภาพรวมเรียลไทม์';
-          price = '700 บาท';
-          roundsText = '/ ตรวจ 1 ครั้ง';
-          time = 'เวลาทำงาน: 1–1.5 ชั่วโมง / ห้อง / ครั้ง';
-          deliverable = 'คำแนะนำผ่าน Video Call + ภาพถ่ายและสรุปจุดสังเกตเบื้องต้น';
-          badge = 'ราคาประหยัด';
-        } else if (rounds === '1') {
+        if (rounds === '1') {
           // ตรวจ 1 รอบ (ตรวจละเอียดรอบแรก) - Ground truth from LINE OA Master Card
           roundsText = '/ ตรวจ 1 รอบ (ตรวจละเอียดรอบแรก)';
           deliverable = 'สแกนครบ 5 ระบบ + สแกนจุดรั่วซึม FLIR & เลเซอร์ 360° + ติดสติกเกอร์ชี้จุด Defect + ออกเล่ม Defect Report ในวันตรวจ';
