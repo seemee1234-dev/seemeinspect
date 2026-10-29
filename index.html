@@ -31,6 +31,16 @@
     }
   </script>
 
+  <!-- PeerJS P2P Realtime Engine (Local with CDN fallback) -->
+  <script src="assets/js/peerjs.min.js"></script>
+  <script>
+    if (typeof Peer === 'undefined') {
+      document.write('<script src="https://unpkg.com/peerjs@1.5.4/dist/peerjs.min.js"><\/script>');
+    }
+  </script>
+  <!-- Inspect Q Cross-Device Auto-Sync Engine -->
+  <script src="assets/js/sync_engine.js"></script>
+
   <style>
     /* Default Page Setup (overridden dynamically during PDF export) */
     @page {
@@ -2990,6 +3000,10 @@
     <button type="button" id="wakelock-btn" onclick="toggleScreenWakeLock()" style="flex: 1.2; max-width: 105px; justify-content: center; background: rgba(16, 185, 129, 0.15); border: 1.5px solid #10b981; border-radius: 14px; color: #34d399; font-size: 12.5px; font-family: 'Kanit', sans-serif; font-weight: 300; padding: 6px 4px; cursor: pointer; display: flex; align-items: center; gap: 4px; white-space: nowrap;" title="ตั้งค่าไม่ให้หน้าจอดับไฟขณะตรวจงาน (แตะเพื่อเปิด/ปิด)">
       <span id="wakelock-icon" style="font-size: 14px;">🔆</span>
       <span id="wakelock-label">จอสว่าง</span>
+    </button>
+    <button type="button" id="cloud-sync-btn" onclick="openSyncModal()" style="flex: 1.1; max-width: 95px; justify-content: center; background: rgba(59, 130, 246, 0.15); border: 1.5px solid #3b82f6; border-radius: 14px; color: #60a5fa; font-size: 12.5px; font-family: 'Kanit', sans-serif; font-weight: 300; padding: 6px 4px; cursor: pointer; display: flex; align-items: center; gap: 4px; white-space: nowrap;" title="ระบบซิงก์ข้อมูลสดข้ามเครื่อง (P2P Live Auto-Sync)">
+      <span id="sync-icon" style="font-size: 14px;">🔄</span>
+      <span id="sync-label">ซิงก์</span>
     </button>
     <div class="badge-counter" id="total-badge" style="flex: 1; max-width: 85px; justify-content: center; font-size: 12.5px; padding: 6px 4px; border-radius: 14px; font-weight: 400; white-space: nowrap; background: #0b1f3a; color: #38bdf8; border: 1.5px solid #1e3a8a; display: flex; align-items: center; text-align: center;" title="จำนวนจุดที่ตรวจบันทึกแล้ว">0 จุด</div>
     <button type="button" onclick="logoutInspector()" style="flex: 1; max-width: 85px; justify-content: center; background: rgba(239, 68, 68, 0.15); border: 1.5px solid #ef4444; border-radius: 14px; color: #fca5a5; font-size: 12.5px; font-family: 'Kanit', sans-serif; font-weight: 300; padding: 6px 4px; cursor: pointer; display: flex; align-items: center; gap: 4px; white-space: nowrap;" title="ออกจากระบบทีมตรวจงาน (ล็อกแอป)">
@@ -7837,6 +7851,51 @@
       }
     }
 
+    function openSyncModal() {
+      const m = document.getElementById("sync-modal");
+      if (m) {
+        m.style.display = "flex";
+        if (window.SyncEngine) {
+          const pinInput = document.getElementById("sync-pin-input");
+          if (pinInput) pinInput.value = window.SyncEngine.pin;
+          window.SyncEngine.updateStatus(window.SyncEngine.status);
+        }
+      }
+    }
+
+    function closeSyncModal() {
+      const m = document.getElementById("sync-modal");
+      if (m) m.style.display = "none";
+    }
+
+    function saveSyncPinFromUI() {
+      const pinInput = document.getElementById("sync-pin-input");
+      if (pinInput && window.SyncEngine) {
+        window.SyncEngine.setPin(pinInput.value);
+      }
+    }
+
+    function triggerManualPush() {
+      if (window.SyncEngine) window.SyncEngine.pushNow();
+    }
+
+    function triggerManualPull() {
+      if (window.SyncEngine) window.SyncEngine.pullNow();
+    }
+
+    function triggerOfflineExport() {
+      if (window.SyncEngine) window.SyncEngine.exportOfflineBackup();
+    }
+
+    function triggerOfflineImport(event) {
+      const file = event.target.files && event.target.files[0];
+      if (file && window.SyncEngine) {
+        window.SyncEngine.importOfflineBackup(file);
+      }
+      event.target.value = "";
+    }
+
+
     /**
      * RENDER CLOSING 3D CHART SLIDE (แผ่นสุดท้าย สรุปภาพรวม 3 มิติแยกตามหมวดหมู่งาน)
      * Self-contained, non-invasive, zero side-effects.
@@ -9560,6 +9619,9 @@
       checkInspectorAuth();
       adjustStickyRoomBar();
       loadSavedData();
+      if (window.SyncEngine) {
+        window.SyncEngine.init();
+      }
       initSpeechRecognition();
       initLightboxGestures();
       if (typeof initWidePhotoPinEvents === 'function') initWidePhotoPinEvents();
@@ -9909,6 +9971,78 @@
           ปิด
         </button>
       </div>
+    </div>
+  </div>
+
+  <!-- Live Cross-Device Auto-Sync Modal (ซิงก์สดสองเครื่องอัตโนมัติ) -->
+  <div id="sync-modal" class="no-print" style="display: none; position: fixed; inset: 0; background: rgba(0,0,0,0.85); z-index: 9999999; align-items: center; justify-content: center; padding: 20px;">
+    <div style="background: #0b1528; border: 1.5px solid #3b82f6; border-radius: 16px; max-width: 420px; width: 100%; padding: 22px 20px; box-shadow: 0 10px 35px rgba(0,0,0,0.85); color: #ffffff; font-family: 'Kanit', sans-serif; font-weight: 300;">
+      
+      <!-- Top Title Bar -->
+      <div style="display: flex; justify-content: space-between; align-items: center; border-bottom: 1px solid #1e2e54; padding-bottom: 10px; margin-bottom: 14px;">
+        <div style="display: flex; align-items: center; gap: 8px;">
+          <span style="font-size: 20px;">🔄</span>
+          <span style="font-size: 16px; font-weight: 400; color: #60a5fa;">ซิงก์สดข้ามเครื่อง (Live Auto-Sync)</span>
+        </div>
+        <button type="button" onclick="closeSyncModal()" style="background: none; border: none; color: #94a3b8; font-size: 22px; cursor: pointer; line-height: 1;" title="ปิด">✕</button>
+      </div>
+
+      <!-- Live Status Pill -->
+      <div style="background: #070d1e; border: 1px solid #1e3a8a; border-radius: 10px; padding: 10px 14px; margin-bottom: 14px; display: flex; align-items: center; justify-content: space-between;">
+        <span style="font-size: 12.5px; color: #94a3b8;">สถานะเชื่อมต่อ:</span>
+        <span id="sync-modal-status" style="font-size: 13px; font-weight: 400; color: #10b981;">⚪ กำลังตรวจสอบการเชื่อมต่อ...</span>
+      </div>
+
+      <!-- PIN Code Box -->
+      <div style="background: rgba(30, 58, 138, 0.2); border: 1.5px dashed rgba(59, 130, 246, 0.4); border-radius: 10px; padding: 12px 14px; margin-bottom: 14px;">
+        <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 8px;">
+          <label for="sync-pin-input" style="font-size: 13px; color: #ffd700; font-weight: 400;">🔑 รหัสจับคู่เครื่อง (PIN เดียวกัน):</label>
+          <span style="font-size: 11px; color: #94a3b8;">(ค่าเริ่มต้น 8888)</span>
+        </div>
+        <div style="display: flex; gap: 8px;">
+          <input type="text" id="sync-pin-input" value="8888" maxlength="12" style="flex: 1; background: #070d1e; border: 1.5px solid #1e3a8a; border-radius: 8px; color: #ffffff; padding: 8px 12px; font-size: 15px; font-family: 'Kanit', sans-serif; font-weight: 400; text-align: center; letter-spacing: 2px;">
+          <button type="button" onclick="saveSyncPinFromUI()" style="background: linear-gradient(135deg, #3b82f6, #1d4ed8); border: none; border-radius: 8px; color: #ffffff; padding: 8px 14px; font-size: 13px; font-family: 'Kanit', sans-serif; cursor: pointer; white-space: nowrap;">
+            💾 เปลี่ยน PIN
+          </button>
+        </div>
+        <div style="font-size: 11.5px; color: #94a3b8; margin-top: 8px; line-height: 1.4;">
+          💡 <strong>วิธีใช้:</strong> เปิดหน้านี้บนมือถือและแท็บเล็ต/คอมพิวเตอร์ แล้วตั้งรหัส PIN ให้ตรงกัน ข้อมูลและรูปภาพจะอัปเดตให้อีกเครื่องอัตโนมัติทันที
+        </div>
+      </div>
+
+      <!-- Quick Push / Pull Buttons -->
+      <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 8px; margin-bottom: 14px;">
+        <button type="button" onclick="triggerManualPush()" style="background: rgba(16, 185, 129, 0.15); border: 1.5px solid #10b981; border-radius: 8px; color: #34d399; padding: 10px 8px; font-size: 12.5px; font-family: 'Kanit', sans-serif; font-weight: 300; cursor: pointer; display: flex; flex-direction: column; align-items: center; gap: 4px;">
+          <span style="font-size: 18px;">🚀</span>
+          <span>ส่งข้อมูลขึ้นเดี๋ยวนี้</span>
+        </button>
+        <button type="button" onclick="triggerManualPull()" style="background: rgba(0, 173, 242, 0.15); border: 1.5px solid #00adf2; border-radius: 8px; color: #38bdf8; padding: 10px 8px; font-size: 12.5px; font-family: 'Kanit', sans-serif; font-weight: 300; cursor: pointer; display: flex; flex-direction: column; align-items: center; gap: 4px;">
+          <span style="font-size: 18px;">🔄</span>
+          <span>ดึงข้อมูลล่าสุด</span>
+        </button>
+      </div>
+
+      <!-- 1-Click Offline Backup / Restore Section -->
+      <div style="background: #070d1e; border: 1px solid #1e2e54; border-radius: 10px; padding: 10px 14px; margin-bottom: 14px;">
+        <div style="font-size: 12px; color: #94a3b8; margin-bottom: 8px; font-weight: 400;">📦 ไฟล์สำรองฉุกเฉิน (Offline Bundle):</div>
+        <div style="display: flex; gap: 8px;">
+          <button type="button" onclick="triggerOfflineExport()" style="flex: 1; background: #0f1c3f; border: 1px solid #2563eb; border-radius: 6px; color: #93c5fd; padding: 8px 6px; font-size: 12px; font-family: 'Kanit', sans-serif; cursor: pointer;">
+            📥 ดาวน์โหลด .json
+          </button>
+          <button type="button" onclick="document.getElementById('sync-backup-file-input').click()" style="flex: 1; background: #0f1c3f; border: 1px solid #2563eb; border-radius: 6px; color: #93c5fd; padding: 8px 6px; font-size: 12px; font-family: 'Kanit', sans-serif; cursor: pointer;">
+            📤 เปิดไฟล์สำรอง
+          </button>
+          <input type="file" id="sync-backup-file-input" accept=".json" style="display: none;" onchange="triggerOfflineImport(event)">
+        </div>
+      </div>
+
+      <!-- Close Button -->
+      <div>
+        <button type="button" onclick="closeSyncModal()" style="width: 100%; background: rgba(255, 255, 255, 0.1); border: 1px solid #475569; border-radius: 8px; color: #ffffff; padding: 9px; font-size: 13px; font-family: 'Kanit', sans-serif; cursor: pointer;">
+          ✕ ปิดหน้าต่าง
+        </button>
+      </div>
+
     </div>
   </div>
 
