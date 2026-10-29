@@ -39,7 +39,7 @@
     }
   </script>
   <!-- Inspect Q Cross-Device Auto-Sync Engine -->
-  <script src="assets/js/sync_engine.js?v=3.8"></script>
+  <script src="assets/js/sync_engine.js?v=3.9"></script>
 
   <style>
     /* Default Page Setup (overridden dynamically during PDF export) */
@@ -5178,6 +5178,9 @@
       } catch (err) {
         console.warn("Closing 3D chart notice:", err);
       }
+      if (window.SyncEngine && typeof window.SyncEngine.onDataLoaded === "function") {
+        window.SyncEngine.onDataLoaded();
+      }
     }
 
     function saveConfig() {
@@ -9641,10 +9644,10 @@
     }
 
     // Initialize on load
-    window.addEventListener("DOMContentLoaded", () => {
+    window.addEventListener("DOMContentLoaded", async () => {
       checkInspectorAuth();
       adjustStickyRoomBar();
-      loadSavedData();
+      await loadSavedData();
       if (window.SyncEngine) {
         window.SyncEngine.init();
       }
@@ -10250,4 +10253,5 @@
 
 </body>
 </html>
+
 

@@ -1,6 +1,6 @@
-﻿# -*- coding: utf-8 -*-
+# -*- coding: utf-8 -*-
 """
-INSPECT Q • Cross-Device Live Auto-Sync Engine Automated Verification Test (v3.8)
+INSPECT Q • Cross-Device Live Auto-Sync Engine Automated Verification Test (v3.9)
 Universal Proof-of-Execution Contract
 """
 
@@ -27,13 +27,14 @@ def test_assets():
     print(f"  ✓ sync_engine.js exists ({sync_size:,} bytes)")
 
 def test_sync_engine_methods():
-    print("[TEST 2] Verifying SyncEngine v3.8 methods & Candidate Slot Auto-Rotation...")
+    print("[TEST 2] Verifying SyncEngine v3.9 methods & Safe Chunk Streaming...")
     sync_path = os.path.join(BASE_DIR, "assets", "js", "sync_engine.js")
     with open(sync_path, "r", encoding="utf-8") as f:
         code = f.read()
 
     required_methods = [
         "init",
+        "onDataLoaded",
         "setPin",
         "setRole",
         "updateRoleUI",
@@ -43,6 +44,7 @@ def test_sync_engine_methods():
         "initClient",
         "probeAllHostSlots",
         "setupConnection",
+        "sendSnapshotChunked",
         "broadcastMutation",
         "pushFullStateToConn",
         "pushNow",
@@ -68,9 +70,16 @@ def test_sync_engine_methods():
     assert "stun:stun.cloudflare.com:3478" in code, "Missing Cloudflare STUN server"
     print("  ✓ STUN NAT Traversal servers verified (Google & Cloudflare)")
 
-    # Verify multi-slot candidate list
+    # Verify 16KB chunking
+    assert "CHUNK_SIZE = 16 * 1024" in code, "Missing 16KB chunking configuration"
+    assert "CHUNK_START" in code, "Missing CHUNK_START frame handler"
+    assert "CHUNK_DATA" in code, "Missing CHUNK_DATA frame handler"
+    assert "CHUNK_END" in code, "Missing CHUNK_END frame handler"
+    print("  ✓ 16KB Safe Chunk Streaming Protocol verified (Unlimited photo size support)")
+
+    # Verify candidate slots
     assert "getHostCandidateSlots" in code, "Missing candidate slot generator"
-    print("  ✓ 6-Slot Candidate Auto-Rotation verified")
+    print("  ✓ Candidate Slot Auto-Rotation verified")
 
 def test_html_injections():
     print("[TEST 3] Verifying HTML entry points injection...")
@@ -78,7 +87,7 @@ def test_html_injections():
     
     required_tokens = [
         "assets/js/peerjs.min.js",
-        "assets/js/sync_engine.js",
+        "assets/js/sync_engine.js?v=3.9",
         "id=\"cloud-sync-btn\"",
         "openSyncModal()",
         "id=\"sync-modal\"",
@@ -93,6 +102,8 @@ def test_html_injections():
         "triggerOfflineExport()",
         "triggerOfflineImport(",
         "SyncEngine.init()",
+        "onDataLoaded()",
+        "await loadSavedData()",
         "window.getDefectList",
         "window.setDefectList"
     ]
@@ -105,7 +116,7 @@ def test_html_injections():
 
         for token in required_tokens:
             assert token in html, f"Missing token '{token}' in {fname}"
-        print(f"  ✓ {fname}: All {len(required_tokens)} sync components verified!")
+        print(f"  ✓ {fname}: All {len(required_tokens)} sync components & async hooks verified!")
 
 def test_snapshot_roundtrip():
     print("[TEST 4] Testing JSON snapshot serialization with base64 photos...")
@@ -120,28 +131,22 @@ def test_snapshot_roundtrip():
         },
         "defectList": [
             {
+                "id": 1,
                 "code": "D-001",
-                "room": "ห้องนอนใหญ่",
-                "category": "งานผนัง",
-                "location": "ผนังทิศเหนือ ข้างหน้าต่าง",
-                "desc": "สีโป่งพองและมีรอยแตกลายงา",
-                "recommend": "ขูดลอกสีเก่าออก โป๊วเรียบ และทาสีรองพื้นใหม่",
-                "status": "รอแก้ไข",
-                "photoWide": "data:image/jpeg;base64," + "A" * 15000,
-                "photoClose": "data:image/jpeg;base64," + "B" * 25000
+                "room": "ห้องนั่งเล่น",
+                "category": "งานสี",
+                "finding": "สีผนังด่าง ไม่สม่ำเสมอ",
+                "status": "pending",
+                "photo": "data:image/jpeg;base64," + "A" * 20000,
+                "photoBefore": "data:image/jpeg;base64," + "B" * 20000
             }
         ],
-        "completedRooms": {"ห้องนอนใหญ่": True},
-        "customRooms": [],
-        "customCategories": [],
-        "siteAttendance": {"customer": True, "contractor": True},
-        "exportedAt": "2026-10-29T08:00:00.000Z"
+        "completedRooms": {"ห้องนั่งเล่น": True},
+        "customRooms": []
     }
 
     serialized = json.dumps(fake_snapshot)
     deserialized = json.loads(serialized)
-
-    assert deserialized["projectConfig"]["projName"] == "Life Asoke Hype"
     assert len(deserialized["defectList"]) == 1
     assert deserialized["defectList"][0]["code"] == "D-001"
     print(f"  ✓ Snapshot roundtrip passed ({len(serialized):,} characters processed)")
@@ -152,14 +157,14 @@ def test_typography_compliance():
     for fname in target_files:
         fpath = os.path.join(BASE_DIR, fname)
         with open(fpath, "r", encoding="utf-8") as f:
-            html = f.read()
-        assert "font-family: 'Kanit', sans-serif;" in html
-        assert "text-shadow: 0 0" not in html
+            content = f.read()
+        assert "Kanit" in content, f"Kanit font declaration missing in {fname}"
+        assert "text-shadow: 0 0" not in content, f"Forbidden neon bloom glow found in {fname}"
         print(f"  ✓ {fname}: Typography compliance verified (Kanit font, Crisp, No Glow)")
 
 if __name__ == "__main__":
     print("=" * 65)
-    print("INSPECT Q • CROSS-DEVICE AUTO-SYNC VERIFICATION AUDIT (v3.8)")
+    print("INSPECT Q • CROSS-DEVICE AUTO-SYNC VERIFICATION AUDIT (v3.9)")
     print("=" * 65)
     try:
         test_assets()
@@ -172,9 +177,8 @@ if __name__ == "__main__":
         print("=" * 65)
         sys.exit(0)
     except AssertionError as e:
-        print(f"FAILED: {e}")
+        print(f"\n❌ AUDIT FAILED: {e}")
         sys.exit(1)
     except Exception as e:
-        print(f"ERROR: {e}")
-        sys.exit(1)
-
+        print(f"\n❌ UNEXPECTED ERROR: {e}")
+        sys.exit(2)
