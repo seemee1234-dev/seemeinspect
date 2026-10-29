@@ -1,6 +1,6 @@
 # -*- coding: utf-8 -*-
 """
-INSPECT Q • Cross-Device Live Auto-Sync Engine Automated Verification Test (v3.3)
+INSPECT Q • Cross-Device Live Auto-Sync Engine Automated Verification Test (v3.5)
 Universal Proof-of-Execution Contract
 """
 
@@ -27,7 +27,7 @@ def test_assets():
     print(f"  ✓ sync_engine.js exists ({sync_size:,} bytes)")
 
 def test_sync_engine_methods():
-    print("[TEST 2] Verifying SyncEngine v3.3 methods & STUN NAT configuration...")
+    print("[TEST 2] Verifying SyncEngine v3.5 methods & Dynamic Room Signaling...")
     sync_path = os.path.join(BASE_DIR, "assets", "js", "sync_engine.js")
     with open(sync_path, "r", encoding="utf-8") as f:
         code = f.read()
@@ -39,9 +39,11 @@ def test_sync_engine_methods():
         "updateRoleUI",
         "connectP2P",
         "initHost",
+        "announceHostPresence",
+        "listenForClients",
         "initClient",
+        "discoverAndConnectToHost",
         "attemptConnectToHost",
-        "scheduleClientRetry",
         "setupConnection",
         "broadcastMutation",
         "pushFullStateToConn",
@@ -51,6 +53,7 @@ def test_sync_engine_methods():
         "applyIncomingSnapshot",
         "setupAutoSyncHooks",
         "setupUnloadHandler",
+        "cleanup",
         "exportOfflineBackup",
         "importOfflineBackup",
         "updateStatus",
@@ -66,6 +69,10 @@ def test_sync_engine_methods():
     assert "stun:stun.l.google.com:19302" in code, "Missing Google STUN server"
     assert "stun:stun.cloudflare.com:3478" in code, "Missing Cloudflare STUN server"
     print("  ✓ STUN NAT Traversal servers verified (Google & Cloudflare)")
+
+    # Verify ntfy signal room
+    assert "ntfy.sh" in code, "Missing ntfy room signaling"
+    print("  ✓ Zero-fail dynamic room signaling verified (ntfy.sh)")
 
 def test_html_injections():
     print("[TEST 3] Verifying HTML entry points injection...")
@@ -87,7 +94,9 @@ def test_html_injections():
         "triggerManualPull()",
         "triggerOfflineExport()",
         "triggerOfflineImport(",
-        "SyncEngine.init()"
+        "SyncEngine.init()",
+        "window.getDefectList",
+        "window.setDefectList"
     ]
 
     for fname in target_files:
@@ -152,7 +161,7 @@ def test_typography_compliance():
 
 if __name__ == "__main__":
     print("=" * 65)
-    print("INSPECT Q • CROSS-DEVICE AUTO-SYNC VERIFICATION AUDIT (v3.3)")
+    print("INSPECT Q • CROSS-DEVICE AUTO-SYNC VERIFICATION AUDIT (v3.5)")
     print("=" * 65)
     try:
         test_assets()
