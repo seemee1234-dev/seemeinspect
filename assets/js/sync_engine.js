@@ -602,15 +602,10 @@
 
         if (!snapshot || !snapshot.timestamp) return false;
 
-        // If Host has Master data (defects or existing project name), don't overwrite Host from cloud
+        // If Host has Master data, NEVER overwrite Host from background cloud polling
         if (!forceApply && _role === "host") {
-          const localCount = getLocalDefectCount();
-          const remoteCount = (snapshot.defectList || []).length;
-          const localName = (document.getElementById("cfg-proj-name") ? document.getElementById("cfg-proj-name").value : "").trim();
-          if (localCount >= remoteCount && localName) {
-            console.log(`☁️ [SyncEngine] Host has Master data (${localCount} defects, "${localName}"), skipping cloud overwrite.`);
-            return false;
-          }
+          console.log("🛡️ [SyncEngine] Host is Master Provider. Skipping incoming cloud overwrite.");
+          return false;
         }
 
         // Apply if forced, newer timestamp, or local has 0 defects
@@ -906,7 +901,15 @@
           localStorage.setItem("condo_site_attendance", JSON.stringify(snapshot.siteAttendance));
         }
 
-        // 5. Trigger all UI updates
+        // 5. Custom Rooms
+        if (Array.isArray(snapshot.customRooms)) {
+          if (typeof window.setCustomRooms === "function") {
+            window.setCustomRooms(snapshot.customRooms);
+          }
+          localStorage.setItem("condo_custom_rooms", JSON.stringify(snapshot.customRooms));
+        }
+
+        // 6. Trigger all UI updates
         if (typeof window.renderRoomButtons === "function") window.renderRoomButtons();
         if (typeof window.renderCategoryButtons === "function") window.renderCategoryButtons();
         if (typeof window.updateCurrentRoomDisplay === "function") window.updateCurrentRoomDisplay();
