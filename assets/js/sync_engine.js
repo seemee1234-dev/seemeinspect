@@ -20,7 +20,7 @@
 
   const STORAGE_PIN_KEY = "inspectq_sync_pin";
   const STORAGE_ROLE_KEY = "inspectq_sync_role";
-  const SYNC_VERSION = "5.5";
+  const SYNC_VERSION = "6.0";
   const CHUNK_SIZE = 16 * 1024; // 16 KB safe WebRTC chunk size
 
   function getLocalDefectCount() {
@@ -36,9 +36,12 @@
 
   function resolveActiveRole() {
     const saved = localStorage.getItem(STORAGE_ROLE_KEY);
-    // Only the explicit Master phone is host. Everything else in the universe defaults to client:
+    // Explicit user role choice strictly wins:
     if (saved === "host") return "host";
-    return "client";
+    if (saved === "client") return "client";
+
+    // Auto-detection based on presence of inspection data:
+    return getLocalDefectCount() > 0 ? "host" : "client";
   }
 
   let _pin = localStorage.getItem(STORAGE_PIN_KEY) || "8888";
@@ -93,7 +96,14 @@
       const saved = localStorage.getItem(STORAGE_ROLE_KEY);
       const count = getLocalDefectCount();
       console.log(`💾 [SyncEngine v${SYNC_VERSION}] onDataLoaded: count=${count}, savedRole=${saved}, currentRole=${_role}`);
-      // Single Master Rule: Never auto-promote a secondary device to host just because it received defects.
+
+      // If user hasn't explicitly set role to client, and we have defects, ensure we are Host!
+      if (!saved && count > 0 && _role !== "host") {
+        console.log("🚀 [SyncEngine] Auto-promoting to Host (Provider) as defects exist in memory!");
+        _role = "host";
+        this.updateRoleUI();
+        this.reconnect();
+      }
     },
 
     setupUnloadHandler: function () {
@@ -145,72 +155,33 @@
     updateRoleUI: function () {
       const hostBtn = document.getElementById("role-btn-host");
       const clientBtn = document.getElementById("role-btn-client");
-      const hostBadge = document.getElementById("host-badge");
-      const clientBadge = document.getElementById("client-badge");
-      const roleCurrentTag = document.getElementById("role-current-tag");
-      const roleBanner = document.getElementById("role-feedback-banner");
+      const autoBtn = document.getElementById("role-btn-auto");
+      const saved = localStorage.getItem(STORAGE_ROLE_KEY);
 
       if (hostBtn && clientBtn) {
         if (_role === "host") {
           hostBtn.style.border = "2px solid #10b981";
           hostBtn.style.background = "rgba(16, 185, 129, 0.25)";
           hostBtn.style.color = "#34d399";
-          clientBtn.style.border = "1.5px solid #1e293b";
+          clientBtn.style.border = "1.5px solid #1e3a8a";
           clientBtn.style.background = "#070d1e";
-          clientBtn.style.color = "#64748b";
-
-          if (hostBadge) {
-            hostBadge.textContent = "✓ เครื่องนี้คือเครื่องหลัก";
-            hostBadge.style.background = "#059669";
-            hostBadge.style.color = "#ffffff";
-            hostBadge.style.display = "inline-block";
-          }
-          if (clientBadge) {
-            clientBadge.textContent = "ไม่ได้เลือก";
-            clientBadge.style.background = "transparent";
-            clientBadge.style.color = "#64748b";
-            clientBadge.style.display = "inline-block";
-          }
-          if (roleCurrentTag) {
-            roleCurrentTag.textContent = "👑 เครื่องตรวจหลัก";
-            roleCurrentTag.style.background = "#059669";
-          }
-          if (roleBanner) {
-            roleBanner.style.background = "rgba(16, 185, 129, 0.15)";
-            roleBanner.style.border = "1px solid #10b981";
-            roleBanner.style.color = "#a7f3d0";
-            roleBanner.innerHTML = "👑 <strong>เครื่องนี้คือ 'เครื่องตรวจหลักเครื่องเดียว':</strong> ทุก Defect และภาพถ่ายที่บันทึกจะส่งไปยังเครื่องรองทั้งหมดทันที";
-          }
+          clientBtn.style.color = "#94a3b8";
         } else {
           clientBtn.style.border = "2px solid #00adf2";
           clientBtn.style.background = "rgba(0, 173, 242, 0.25)";
           clientBtn.style.color = "#38bdf8";
-          hostBtn.style.border = "1.5px solid #1e293b";
+          hostBtn.style.border = "1.5px solid #1e3a8a";
           hostBtn.style.background = "#070d1e";
-          hostBtn.style.color = "#64748b";
-
-          if (clientBadge) {
-            clientBadge.textContent = "✓ เครื่องนี้คือเครื่องรอง";
-            clientBadge.style.background = "#0284c7";
-            clientBadge.style.color = "#ffffff";
-            clientBadge.style.display = "inline-block";
-          }
-          if (hostBadge) {
-            hostBadge.textContent = "ไม่ได้เลือก";
-            hostBadge.style.background = "transparent";
-            hostBadge.style.color = "#64748b";
-            hostBadge.style.display = "inline-block";
-          }
-          if (roleCurrentTag) {
-            roleCurrentTag.textContent = "📲 เครื่องรอง";
-            roleCurrentTag.style.background = "#0284c7";
-          }
-          if (roleBanner) {
-            roleBanner.style.background = "rgba(2, 132, 199, 0.15)";
-            roleBanner.style.border = "1px solid #0284c7";
-            roleBanner.style.color = "#bae6fd";
-            roleBanner.innerHTML = "📲 <strong>เครื่องนี้ถูกตั้งเป็น 'เครื่องรอง' เรียบร้อย:</strong> พร้อมรับข้อมูลอัตโนมัติจากเครื่องหลัก PIN " + _pin;
-          }
+          hostBtn.style.color = "#94a3b8";
+        }
+      }
+      if (autoBtn) {
+        if (!saved) {
+          autoBtn.style.color = "#ffd700";
+          autoBtn.style.borderColor = "#ffd700";
+        } else {
+          autoBtn.style.color = "#94a3b8";
+          autoBtn.style.borderColor = "#334155";
         }
       }
     },
@@ -683,7 +654,7 @@
       if (status === "connected") {
         color = "#10b981";
         icon = "🟢";
-        text = note || (_role === "host" ? `👑 เครื่องหลัก (เชื่อมต่อเครื่องรองแล้ว ${_activeConnections.length} เครื่อง)` : "📲 เครื่องรอง (ซิงก์สดเรียบร้อย)");
+        text = note || (_role === "host" ? "📱 เครื่องหลัก (พร้อมส่งข้อมูล)" : "📲 เครื่องรอง (ซิงก์สดเรียบร้อย)");
       } else if (status === "connecting") {
         color = "#f59e0b";
         icon = "🟡";

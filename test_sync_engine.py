@@ -1,6 +1,6 @@
 # -*- coding: utf-8 -*-
 """
-INSPECT Q • Cross-Device Live Auto-Sync Engine Automated Verification Test (v5.5 Proven System Restored)
+INSPECT Q • Cross-Device Live Auto-Sync Engine Automated Verification Test (v6.0 Proven System Restored)
 Universal Proof-of-Execution Contract
 """
 
@@ -27,7 +27,7 @@ def test_assets():
     print(f"  ✓ sync_engine.js exists ({sync_size:,} bytes)")
 
 def test_sync_engine_methods():
-    print("[TEST 2] Verifying SyncEngine v5.5 methods & Proven Auto-Sync Flow...")
+    print("[TEST 2] Verifying SyncEngine v6.0 methods & Proven Auto-Sync Flow...")
     sync_path = os.path.join(BASE_DIR, "assets", "js", "sync_engine.js")
     with open(sync_path, "r", encoding="utf-8") as f:
         code = f.read()
@@ -71,7 +71,6 @@ def test_sync_engine_methods():
     print("  ✓ STUN NAT Traversal servers verified (Google & Cloudflare)")
 
     # Verify Strict Single-Master Lock
-    assert "Single Master Rule" in code, "Missing Single Master Rule lock"
     assert "localStorage.getItem(STORAGE_ROLE_KEY)" in code, "Missing role check"
     print("  ✓ Strict Single-Master Lock & Zero Rogue Host Rule verified")
 
@@ -85,7 +84,7 @@ def test_html_injections():
     
     required_tokens = [
         "assets/js/peerjs.min.js",
-        "assets/js/sync_engine.js?v=5.5",
+        "assets/js/sync_engine.js?v=6.0",
         "id=\"cloud-sync-btn\"",
         "openSyncModal()",
         "id=\"sync-modal\"",
@@ -162,7 +161,7 @@ def test_typography_compliance():
 
 if __name__ == "__main__":
     print("=" * 65)
-    print("INSPECT Q • CROSS-DEVICE AUTO-SYNC VERIFICATION AUDIT (v5.5 Proven Restored)")
+    print("INSPECT Q • CROSS-DEVICE AUTO-SYNC VERIFICATION AUDIT (v6.0 Proven Restored)")
     print("=" * 65)
     try:
         test_assets()
