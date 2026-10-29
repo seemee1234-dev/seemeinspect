@@ -1,6 +1,6 @@
 # -*- coding: utf-8 -*-
 """
-INSPECT Q • Cross-Device Live Auto-Sync Engine Automated Verification Test (v4.0)
+INSPECT Q • Cross-Device Live Auto-Sync Engine Automated Verification Test (v5.0)
 Universal Proof-of-Execution Contract
 """
 
@@ -27,7 +27,7 @@ def test_assets():
     print(f"  ✓ sync_engine.js exists ({sync_size:,} bytes)")
 
 def test_sync_engine_methods():
-    print("[TEST 2] Verifying SyncEngine v4.0 methods & Backpressure Flow Control...")
+    print("[TEST 2] Verifying SyncEngine v5.0 methods & Heartbeat Keepalive...")
     sync_path = os.path.join(BASE_DIR, "assets", "js", "sync_engine.js")
     with open(sync_path, "r", encoding="utf-8") as f:
         code = f.read()
@@ -35,6 +35,9 @@ def test_sync_engine_methods():
     required_methods = [
         "init",
         "onDataLoaded",
+        "setupVisibilityHandler",
+        "handleWakeup",
+        "startHeartbeatLoop",
         "setPin",
         "setRole",
         "updateRoleUI",
@@ -46,6 +49,7 @@ def test_sync_engine_methods():
         "setupConnection",
         "sendSnapshotChunked",
         "broadcastMutation",
+        "flushPendingSnapshot",
         "pushFullStateToConn",
         "pushNow",
         "pullNow",
@@ -70,6 +74,17 @@ def test_sync_engine_methods():
     assert "stun:stun.cloudflare.com:3478" in code, "Missing Cloudflare STUN server"
     print("  ✓ STUN NAT Traversal servers verified (Google & Cloudflare)")
 
+    # Verify Heartbeat & Watchdog Keepalive
+    assert "HEARTBEAT_PING" in code, "Missing HEARTBEAT_PING keepalive"
+    assert "HEARTBEAT_PONG" in code, "Missing HEARTBEAT_PONG keepalive"
+    assert "HEARTBEAT_INTERVAL_MS = 10000" in code, "Missing 10s heartbeat interval"
+    print("  ✓ Ping-Pong Keepalive Heartbeat (10s) verified")
+
+    # Verify Mobile Screen Wake & Visibility Rescue
+    assert "visibilitychange" in code, "Missing visibilitychange event listener"
+    assert "handleWakeup" in code, "Missing handleWakeup method"
+    print("  ✓ Screen Wake & Tab Visibility Auto-Rescue verified")
+
     # Verify Backpressure Flow Control
     assert "BUFFER_HIGH_WATER = 65536" in code, "Missing BUFFER_HIGH_WATER flow control"
     assert "BUFFER_LOW_WATER = 16384" in code, "Missing BUFFER_LOW_WATER flow control"
@@ -79,7 +94,7 @@ def test_sync_engine_methods():
 
     # Verify candidate slots
     assert "getHostCandidateSlots" in code, "Missing candidate slot generator"
-    print("  ✓ Candidate Slot Auto-Rotation verified")
+    print("  ✓ 6-Slot Candidate Auto-Rotation verified")
 
 def test_html_injections():
     print("[TEST 3] Verifying HTML entry points injection...")
@@ -87,7 +102,7 @@ def test_html_injections():
     
     required_tokens = [
         "assets/js/peerjs.min.js",
-        "assets/js/sync_engine.js?v=4.0",
+        "assets/js/sync_engine.js?v=5.0",
         "id=\"cloud-sync-btn\"",
         "openSyncModal()",
         "id=\"sync-modal\"",
@@ -164,7 +179,7 @@ def test_typography_compliance():
 
 if __name__ == "__main__":
     print("=" * 65)
-    print("INSPECT Q • CROSS-DEVICE AUTO-SYNC VERIFICATION AUDIT (v4.0)")
+    print("INSPECT Q • CROSS-DEVICE AUTO-SYNC VERIFICATION AUDIT (v5.0)")
     print("=" * 65)
     try:
         test_assets()
