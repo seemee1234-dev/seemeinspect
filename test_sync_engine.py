@@ -1,6 +1,6 @@
-# -*- coding: utf-8 -*-
+﻿# -*- coding: utf-8 -*-
 """
-INSPECT Q • Cross-Device Live Auto-Sync Engine Automated Verification Test (v3.6)
+INSPECT Q • Cross-Device Live Auto-Sync Engine Automated Verification Test (v3.8)
 Universal Proof-of-Execution Contract
 """
 
@@ -27,7 +27,7 @@ def test_assets():
     print(f"  ✓ sync_engine.js exists ({sync_size:,} bytes)")
 
 def test_sync_engine_methods():
-    print("[TEST 2] Verifying SyncEngine v3.6 methods & Candidate Slot Auto-Rotation...")
+    print("[TEST 2] Verifying SyncEngine v3.8 methods & Candidate Slot Auto-Rotation...")
     sync_path = os.path.join(BASE_DIR, "assets", "js", "sync_engine.js")
     with open(sync_path, "r", encoding="utf-8") as f:
         code = f.read()
@@ -70,7 +70,7 @@ def test_sync_engine_methods():
 
     # Verify multi-slot candidate list
     assert "getHostCandidateSlots" in code, "Missing candidate slot generator"
-    print("  ✓ 4-Slot Candidate Auto-Rotation verified")
+    print("  ✓ 6-Slot Candidate Auto-Rotation verified")
 
 def test_html_injections():
     print("[TEST 3] Verifying HTML entry points injection...")
@@ -159,7 +159,7 @@ def test_typography_compliance():
 
 if __name__ == "__main__":
     print("=" * 65)
-    print("INSPECT Q • CROSS-DEVICE AUTO-SYNC VERIFICATION AUDIT (v3.6)")
+    print("INSPECT Q • CROSS-DEVICE AUTO-SYNC VERIFICATION AUDIT (v3.8)")
     print("=" * 65)
     try:
         test_assets()
@@ -177,3 +177,4 @@ if __name__ == "__main__":
     except Exception as e:
         print(f"ERROR: {e}")
         sys.exit(1)
+

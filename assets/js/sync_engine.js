@@ -1,11 +1,13 @@
 /**
- * INSPECT Q • Cross-Device Live Auto-Sync Engine (v3.6)
- * BULLETPROOF MULTI-SLOT PEER ARCHITECTURE:
- * 1. Zero external HTTP dependencies (eliminates HTTP 429 Too Many Requests entirely).
- * 2. 4-Slot Candidate Auto-Rotation (inspectq_host_PIN, _a, _b, _c) - eliminates unavailable-id error on reload.
- * 3. Client auto-probes all candidate host slots in parallel; locks onto active host within 100ms.
- * 4. Full Google & Cloudflare STUN NAT Traversal for cross-carrier mobile 4G/5G <-> Wi-Fi pairing.
- * 5. Scope-safe data extraction via window.getDefectList() & window.setDefectList() with IndexedDB persistence.
+ * INSPECT Q • Cross-Device Live Auto-Sync Engine (v3.8)
+ * ZERO-TOUCH AUTO-ROLE ARCHITECTURE:
+ * 1. Smart Data-Presence Detection:
+ *    - Device with 0 defects (secondary mobile phone / PC / tablet) automatically acts as CLIENT / RECEIVER (Puller).
+ *    - Device with existing defects (>0) automatically acts as HOST / PROVIDER (Sender).
+ *    - Even if localStorage has a stale "host" from previous sessions, 0-defect secondary devices auto-pull without manual intervention.
+ * 2. 6-Slot Candidate Parallel Probing (inspectq_host_PIN, _a, _b, _c, _d, _e) - eliminates unavailable-id.
+ * 3. Bidirectional WebRTC DataChannel with Google & Cloudflare STUN NAT Traversal (works across 4G/5G mobile & Wi-Fi).
+ * 4. 100% Scope-safe data extraction via window.getDefectList() & window.setDefectList() with IndexedDB persistence.
  */
 
 (function (window) {
@@ -13,12 +15,47 @@
 
   const STORAGE_PIN_KEY = "inspectq_sync_pin";
   const STORAGE_ROLE_KEY = "inspectq_sync_role";
+  const SYNC_VERSION = "3.8";
 
-  // Auto-detect role: PC/Desktop (>900px) defaults to Client, Mobile defaults to Host
-  const isDesktop = window.innerWidth > 900 || !(/Mobi|Android|iPhone/i.test(navigator.userAgent));
-  let _role = localStorage.getItem(STORAGE_ROLE_KEY) || (isDesktop ? "client" : "host");
+  function getLocalDefectCount() {
+    try {
+      if (typeof window.getDefectList === "function") {
+        const l = window.getDefectList();
+        if (Array.isArray(l)) return l.length;
+      }
+      if (Array.isArray(window.defectList)) return window.defectList.length;
+    } catch (e) {}
+    return 0;
+  }
+
+  function resolveActiveRole() {
+    const defectCount = getLocalDefectCount();
+
+    // Secondary device with 0 defects MUST be client/receiver so it pulls data from primary device!
+    if (defectCount === 0) {
+      return "client";
+    }
+
+    const saved = localStorage.getItem(STORAGE_ROLE_KEY);
+    if (saved === "host" || saved === "client") {
+      return saved;
+    }
+
+    return "host";
+  }
+
+  // Version check: if upgrading to v3.8, clear stale role if device has 0 defects
+  try {
+    if (localStorage.getItem("inspectq_sync_engine_ver") !== SYNC_VERSION) {
+      localStorage.setItem("inspectq_sync_engine_ver", SYNC_VERSION);
+      if (getLocalDefectCount() === 0) {
+        localStorage.removeItem(STORAGE_ROLE_KEY);
+      }
+    }
+  } catch (e) {}
+
   let _pin = localStorage.getItem(STORAGE_PIN_KEY) || "8888";
-
+  let _role = resolveActiveRole();
   let _peer = null;
   let _activeConnections = [];
   let _status = "offline"; // "offline", "connecting", "connected"
@@ -41,12 +78,14 @@
   };
 
   function getHostCandidateSlots(pin) {
-    const clean = pin.replace(/[^a-zA-Z0-9]/g, "").toLowerCase() || "8888";
+    const clean = (pin || "8888").toString().replace(/[^a-zA-Z0-9]/g, "").toLowerCase() || "8888";
     return [
       `inspectq_host_${clean}`,
       `inspectq_host_${clean}_a`,
       `inspectq_host_${clean}_b`,
-      `inspectq_host_${clean}_c`
+      `inspectq_host_${clean}_c`,
+      `inspectq_host_${clean}_d`,
+      `inspectq_host_${clean}_e`
     ];
   }
 
@@ -57,7 +96,8 @@
     get connectedCount() { return _activeConnections.length; },
 
     init: function () {
-      console.log("📡 [SyncEngine v3.6] Initializing. Role:", _role, "PIN:", _pin, "isDesktop:", isDesktop);
+      _role = resolveActiveRole();
+      console.log(`📡 [SyncEngine v${SYNC_VERSION}] Initializing. Resolved Role:`, _role, "PIN:", _pin, "LocalDefects:", getLocalDefectCount());
       this.setupAutoSyncHooks();
       this.setupUnloadHandler();
       this.connectP2P();
@@ -96,15 +136,24 @@
 
     setRole: function (newRole) {
       _role = newRole;
-      localStorage.setItem(STORAGE_ROLE_KEY, _role);
+      if (newRole === "auto") {
+        localStorage.removeItem(STORAGE_ROLE_KEY);
+        _role = resolveActiveRole();
+      } else {
+        localStorage.setItem(STORAGE_ROLE_KEY, _role);
+      }
       this.updateRoleUI();
       this.reconnect();
-      this.showToast(_role === "host" ? "📱 ตั้งเป็น: เครื่องตรวจหลัก (มือถือ)" : "💻 ตั้งเป็น: เครื่องรับข้อมูล (คอม/แท็บเล็ต)");
+      const roleMsg = _role === "host" ? "📱 ตั้งเป็น: เครื่องตรวจหลัก (ส่งข้อมูล)" : "📲 ตั้งเป็น: เครื่องรอง / จอรับ (ดึงข้อมูลอัตโนมัติ)";
+      this.showToast(roleMsg);
     },
 
     updateRoleUI: function () {
       const hostBtn = document.getElementById("role-btn-host");
       const clientBtn = document.getElementById("role-btn-client");
+      const autoBtn = document.getElementById("role-btn-auto");
+      const saved = localStorage.getItem(STORAGE_ROLE_KEY);
+
       if (hostBtn && clientBtn) {
         if (_role === "host") {
           hostBtn.style.border = "2px solid #10b981";
@@ -122,10 +171,20 @@
           hostBtn.style.color = "#94a3b8";
         }
       }
+      if (autoBtn) {
+        if (!saved) {
+          autoBtn.style.color = "#ffd700";
+          autoBtn.style.borderColor = "#ffd700";
+        } else {
+          autoBtn.style.color = "#94a3b8";
+          autoBtn.style.borderColor = "#334155";
+        }
+      }
     },
 
     reconnect: function () {
       this.cleanup();
+      _role = resolveActiveRole();
       this.updateStatus("connecting", "กำลังเริ่มการเชื่อมต่อใหม่...");
       this.connectP2P();
     },
@@ -151,19 +210,24 @@
     },
 
     /**
-     * HOST: Claim free candidate slot with auto-rotation on unavailable-id
+     * HOST / PROVIDER: Claim free candidate slot with auto-rotation on unavailable-id
      */
     tryClaimHostSlot: function (slotIndex) {
       const slots = getHostCandidateSlots(_pin);
       const targetSlot = slots[slotIndex % slots.length];
 
       this.updateStatus("connecting", `กำลังเปิดห้องเครื่องหลัก (${targetSlot})...`);
-      console.log(`📱 [SyncEngine] Attempting to claim Host slot [${slotIndex}]:`, targetSlot);
+      console.log(`📱 [SyncEngine v${SYNC_VERSION}] Attempting Host slot [${slotIndex}]:`, targetSlot);
+
+      if (_peer) {
+        try { _peer.destroy(); } catch (e) {}
+        _peer = null;
+      }
 
       _peer = new Peer(targetSlot, PEER_CONFIG);
 
       _peer.on("open", (id) => {
-        console.log("📱 [SyncEngine] HOST Registered on slot:", id);
+        console.log("📱 [SyncEngine] HOST Active on slot:", id);
         this.updateStatus("connected", `📱 เครื่องหลักหน้างาน (ห้อง ${id} พร้อมส่ง)`);
         this.listenForClients();
       });
@@ -171,15 +235,14 @@
       _peer.on("error", (err) => {
         console.warn(`Host Peer error on slot ${targetSlot}:`, err);
         if (err.type === "unavailable-id") {
-          console.log(`⚠️ Slot ${targetSlot} taken. Rotating to next slot...`);
-          try { _peer.destroy(); } catch (e) {}
+          console.log(`⚠️ Slot ${targetSlot} taken. Rotating to next candidate slot...`);
+          try { if (_peer) _peer.destroy(); } catch (e) {}
           _peer = null;
-          // Immediately try next slot
           setTimeout(() => {
             if (_role === "host") {
               this.tryClaimHostSlot(slotIndex + 1);
             }
-          }, 300);
+          }, 200);
         } else {
           this.updateStatus("offline", "ข้อผิดพลาดเครื่องหลัก: " + err.type);
         }
@@ -189,37 +252,41 @@
     listenForClients: function () {
       if (!_peer) return;
       _peer.on("connection", (conn) => {
-        console.log("🔗 [SyncEngine] Client connected:", conn.peer);
+        console.log("🔗 [SyncEngine] Secondary device connected:", conn.peer);
         this.setupConnection(conn, true);
       });
     },
 
     /**
-     * CLIENT: Create dynamic peer and probe all candidate host slots in parallel
+     * CLIENT / RECEIVER: Probe all candidate host slots in parallel
      */
     initClient: function () {
-      this.updateStatus("connecting", `💻 กำลังค้นหาเครื่องหลัก (PIN ${_pin})...`);
+      this.updateStatus("connecting", `📲 กำลังค้นหาเครื่องหลัก (PIN ${_pin})...`);
 
       const clean = _pin.replace(/[^a-zA-Z0-9]/g, "").toLowerCase() || "8888";
       const clientPeerId = `inspectq_c_${clean}_${Math.random().toString(36).substring(2, 7)}`;
 
+      if (_peer) {
+        try { _peer.destroy(); } catch (e) {}
+        _peer = null;
+      }
+
       _peer = new Peer(clientPeerId, PEER_CONFIG);
 
       _peer.on("open", (myId) => {
-        console.log("💻 [SyncEngine] CLIENT Registered:", myId);
+        console.log(`📲 [SyncEngine v${SYNC_VERSION}] RECEIVER Active:`, myId);
         this.probeAllHostSlots();
-        // Keep probing every 3 seconds until connected
         if (_probeTimer) clearInterval(_probeTimer);
         _probeTimer = setInterval(() => {
           if (_activeConnections.length === 0 && _role === "client") {
             this.probeAllHostSlots();
           }
-        }, 3000);
+        }, 2500);
       });
 
       _peer.on("error", (err) => {
-        console.warn("Client Peer error:", err);
-        // Client errors on specific host slot connections are normal when probing
+        if (err.type === "peer-unavailable") return;
+        console.warn("Client Peer notice:", err);
       });
     },
 
@@ -228,7 +295,7 @@
       if (_activeConnections.some(c => c.open)) return;
 
       const slots = getHostCandidateSlots(_pin);
-      console.log("🔍 [SyncEngine] Client probing candidate host slots:", slots);
+      console.log("🔍 [SyncEngine] Probing candidate host slots in parallel:", slots);
 
       slots.forEach(slotId => {
         try {
@@ -241,57 +308,45 @@
     },
 
     setupConnection: function (conn, isHost) {
+      if (!conn) return;
+
       conn.on("open", () => {
-        console.log("🟢 [SyncEngine] DataChannel OPEN with:", conn.peer);
+        console.log("⚡ [SyncEngine] DataChannel OPEN with:", conn.peer);
         if (!_activeConnections.includes(conn)) {
           _activeConnections.push(conn);
         }
-        if (_probeTimer) {
-          clearInterval(_probeTimer);
-          _probeTimer = null;
-        }
+        this.updateStatus("connected");
 
-        this.updateStatus("connected", `🟢 ซิงก์สดเรียบร้อย (${_activeConnections.length} เครื่อง)`);
-
-        if (isHost) {
-          // Push current state to client immediately
+        // Smart Data Exchange: device with defects shares, device with 0 defects pulls
+        const myDefects = getLocalDefectCount();
+        if (isHost || myDefects > 0) {
           this.pushFullStateToConn(conn);
-          this.showToast("🔗 เครื่องรับเชื่อมต่อแล้ว! ส่งข้อมูลสดเรียบร้อย");
+          this.showToast("🔗 เครื่องรองเชื่อมต่อแล้ว! ส่งข้อมูลสดเรียบร้อย");
         } else {
-          // Request current state from host immediately
           conn.send({ type: "REQ_FULL_STATE" });
-          this.showToast("🔗 เชื่อมต่อเครื่องหลักแล้ว! ดึงข้อมูลล่าสุดเรียบร้อย");
+          this.showToast("🔗 เชื่อมต่อเครื่องหลักแล้ว! กำลังดึงข้อมูลล่าสุด...");
         }
       });
 
-      conn.on("data", (payload) => {
-        this.handleIncomingData(payload, conn);
+      conn.on("data", (data) => {
+        this.handleIncomingData(data, conn);
       });
 
       conn.on("close", () => {
-        console.log("🔴 [SyncEngine] Connection closed with:", conn.peer);
+        console.log("🔌 Connection closed with:", conn.peer);
         _activeConnections = _activeConnections.filter(c => c !== conn);
         if (_activeConnections.length === 0) {
-          if (isHost) {
-            this.updateStatus("connected", "📱 เครื่องหลักหน้างาน (รอเครื่องรับเชื่อมต่อ...)");
-          } else {
-            this.updateStatus("connecting", `🟡 เครื่องหลักตัดการเชื่อมต่อ กำลังรอเชื่อมต่อใหม่...`);
-            this.probeAllHostSlots();
-            if (!_probeTimer) {
-              _probeTimer = setInterval(() => {
-                if (_activeConnections.length === 0 && _role === "client") {
-                  this.probeAllHostSlots();
-                }
-              }, 3000);
-            }
+          this.updateStatus("connecting", _role === "host" ? "📱 รอเครื่องรองเชื่อมต่อ..." : "📲 กำลังเชื่อมต่อเครื่องหลักใหม่...");
+          if (_role === "client") {
+            setTimeout(() => this.probeAllHostSlots(), 1000);
           }
         } else {
-          this.updateStatus("connected", `🟢 ซิงก์สดเรียบร้อย (${_activeConnections.length} เครื่อง)`);
+          this.updateStatus("connected");
         }
       });
 
-      conn.on("error", (e) => {
-        // Individual slot probe errors are silenced
+      conn.on("error", (err) => {
+        console.warn("DataChannel connection error with " + conn.peer, err);
       });
     },
 
@@ -329,7 +384,7 @@
 
     pushNow: function () {
       if (_activeConnections.length === 0) {
-        alert("⚠️ ยังไม่มีเครื่องอื่นเชื่อมต่ออยู่ในรหัส PIN นี้ครับ\nกรุณาตั้งเครื่องตรวจเป็น 'เครื่องหลัก' และตั้งคอมเป็น 'เครื่องรับ' โดยใช้ PIN เดียวกัน: " + _pin);
+        alert("⚠️ ยังไม่มีเครื่องอื่นเชื่อมต่ออยู่ในรหัส PIN นี้ครับ\nกรุณาเปิดหน้าเว็บนี้บนเครื่องหลักและเครื่องรองโดยใช้ PIN เดียวกัน: " + _pin);
         return;
       }
       const fullSnapshot = this.getFullSnapshot();
@@ -401,7 +456,7 @@
           this.fillConfigInputs(snapshot.projectConfig);
         }
 
-        // 2. Defect List (CRITICAL: Save to both scope variable and IndexedDB)
+        // 2. Defect List (Save to both scope variable and IndexedDB)
         if (Array.isArray(snapshot.defectList)) {
           if (typeof window.setDefectList === "function") {
             window.setDefectList(snapshot.defectList);
@@ -491,102 +546,126 @@
         defectList: dList,
         completedRooms: cRooms,
         customRooms: cCustom,
-        customCategories: window.customCategories || [],
         siteAttendance: sAtt,
-        exportedAt: new Date().toISOString()
+        version: SYNC_VERSION,
+        timestamp: Date.now()
       };
     },
 
     setupAutoSyncHooks: function () {
-      // Direct broadcast hooks are wired inside saveDefectsToStorage() and saveConfig()
-    },
-
-    exportOfflineBackup: function () {
-      const snapshot = this.getFullSnapshot();
-      const pName = (snapshot.projectConfig.projName || "Condo").replace(/\s+/g, "_");
-      const rNo = (snapshot.projectConfig.roomNo || "Room").replace(/[\s\/]/g, "-");
-      const dateStr = new Date().toISOString().split("T")[0];
-      const filename = `INSPECT_Q_${pName}_${rNo}_${dateStr}_FULL_BACKUP.json`;
-
-      const blob = new Blob([JSON.stringify(snapshot, null, 2)], { type: "application/json" });
-      const a = document.createElement("a");
-      a.href = URL.createObjectURL(blob);
-      a.download = filename;
-      document.body.appendChild(a);
-      a.click();
-      document.body.removeChild(a);
-      URL.revokeObjectURL(a.href);
-      this.showToast(`💾 บันทึกไฟล์สำรอง ${filename} เรียบร้อย!`);
-    },
-
-    importOfflineBackup: function (file) {
-      if (!file) return;
-      const reader = new FileReader();
-      reader.onload = async (e) => {
-        try {
-          const data = JSON.parse(e.target.result);
-          await this.applyIncomingSnapshot(data);
-          this.broadcastMutation("SAVE_DEFECTS", this.getFullSnapshot());
-          const count = Array.isArray(data.defectList) ? data.defectList.length : 0;
-          this.showToast(`🎉 นำเข้าข้อมูลห้องสำเร็จ! (${count} จุด)`);
-        } catch (err) {
-          alert("❌ ไฟล์ไม่ถูกต้องหรือเกิดข้อผิดพลาด: " + err.message);
-        }
-      };
-      reader.readAsText(file);
+      console.log("🔗 [SyncEngine] Auto-Sync event hooks active.");
     },
 
     updateStatus: function (status, note) {
       _status = status;
-      const iconEl = document.getElementById("sync-icon");
-      const labelEl = document.getElementById("sync-label");
-      const modalStatusEl = document.getElementById("sync-modal-status");
+      const topBadge = document.getElementById("cloud-sync-btn");
+      const modalStatus = document.getElementById("sync-modal-status");
 
-      let color = "#94a3b8";
+      let color = "#ef4444";
       let icon = "🔄";
       let text = "ออฟไลน์";
 
-      const roleThai = _role === "host" ? "หลัก" : "รับ";
+      const roleThai = _role === "host" ? "หลัก" : "รอง";
 
       if (status === "connected") {
         color = "#10b981";
         icon = "🟢";
-        text = note || (_role === "host" ? "📱 เครื่องหลัก (พร้อมส่งข้อมูล)" : "💻 ซิงก์สดเรียบร้อย");
+        text = note || (_role === "host" ? "📱 เครื่องหลัก (พร้อมส่งข้อมูล)" : "📲 เครื่องรอง (ซิงก์สดเรียบร้อย)");
       } else if (status === "connecting") {
         color = "#f59e0b";
         icon = "🟡";
-        text = note || "กำลังเชื่อมต่อ...";
+        text = note || (_role === "host" ? "กำลังรอเครื่องรองเชื่อมต่อ..." : "กำลังค้นหาเครื่องหลัก...");
       } else {
         color = "#ef4444";
         icon = "⚪";
-        text = note || "ยังไม่เชื่อมต่อ";
+        text = note || "ออฟไลน์";
       }
 
-      if (iconEl) iconEl.textContent = icon;
-      if (labelEl) labelEl.textContent = status === "connected" ? `ซิงก์สด (${roleThai})` : `ซิงก์ (${roleThai})`;
-      if (modalStatusEl) {
-        modalStatusEl.innerHTML = `<span style="color: ${color}; font-weight: 400;">${icon} ${text}</span>`;
+      if (topBadge) {
+        topBadge.innerHTML = `${icon} ซิงก์ (${roleThai})`;
+        topBadge.style.borderColor = color;
+        topBadge.style.color = color;
+      }
+
+      if (modalStatus) {
+        modalStatus.innerHTML = `${icon} ${text}`;
+        modalStatus.style.color = color;
       }
     },
 
     showToast: function (msg) {
-      let toast = document.getElementById("sync-engine-toast");
+      let toast = document.getElementById("sync-toast-notice");
       if (!toast) {
         toast = document.createElement("div");
-        toast.id = "sync-engine-toast";
-        toast.style.cssText = "position: fixed; top: 75px; left: 50%; transform: translateX(-50%); background: rgba(8, 16, 36, 0.95); border: 1.5px solid #10b981; color: #ffffff; padding: 8px 18px; border-radius: 20px; font-size: 13px; font-family: 'Kanit', sans-serif; font-weight: 300; z-index: 99999; box-shadow: 0 4px 16px rgba(0,0,0,0.6); display: flex; align-items: center; gap: 8px; transition: opacity 0.3s ease; pointer-events: none;";
+        toast.id = "sync-toast-notice";
+        toast.style.cssText = `
+          position: fixed;
+          bottom: 75px;
+          right: 20px;
+          background: rgba(12, 10, 6, 0.92);
+          border: 1.5px solid rgba(212, 175, 55, 0.85);
+          color: #ffd700;
+          font-family: 'Kanit', sans-serif;
+          font-weight: 300;
+          font-size: 13.5px;
+          padding: 8px 18px;
+          border-radius: 16px;
+          z-index: 100000;
+          box-shadow: 0 4px 18px rgba(0,0,0,0.6);
+          pointer-events: none;
+          opacity: 0;
+          transition: opacity 0.25s ease, transform 0.25s ease;
+          transform: translateY(10px);
+        `;
         document.body.appendChild(toast);
       }
-      toast.textContent = msg;
-      toast.style.display = "flex";
+      toast.innerHTML = msg;
       toast.style.opacity = "1";
-      setTimeout(() => {
+      toast.style.transform = "translateY(0)";
+
+      clearTimeout(this._toastTimer);
+      this._toastTimer = setTimeout(() => {
         toast.style.opacity = "0";
-        setTimeout(() => { toast.style.display = "none"; }, 350);
-      }, 3000);
+        toast.style.transform = "translateY(10px)";
+      }, 3500);
+    },
+
+    exportOfflineBackup: function () {
+      const snapshot = this.getFullSnapshot();
+      const blob = new Blob([JSON.stringify(snapshot, null, 2)], { type: "application/json" });
+      const a = document.createElement("a");
+      const cleanProj = (snapshot.projectConfig.projName || "Condo").replace(/\s+/g, "_");
+      const cleanRoom = (snapshot.projectConfig.roomNo || "Room").replace(/\s+/g, "_");
+      a.href = URL.createObjectURL(blob);
+      a.download = `InspectQ_Backup_${cleanProj}_${cleanRoom}_${Date.now()}.json`;
+      a.click();
+      URL.revokeObjectURL(a.href);
+    },
+
+    importOfflineBackup: function (fileInput) {
+      const file = fileInput.files[0];
+      if (!file) return;
+      const reader = new FileReader();
+      reader.onload = async (e) => {
+        try {
+          const snapshot = JSON.parse(e.target.result);
+          await this.applyIncomingSnapshot(snapshot);
+          this.showToast("📦 กู้คืนข้อมูลจากไฟล์สำรองสำเร็จแล้ว!");
+        } catch (err) {
+          alert("❌ ไม่สามารถเปิดไฟล์สำรองได้: " + err.message);
+        }
+      };
+      reader.readAsText(file);
     }
   };
 
   window.SyncEngine = SyncEngine;
+
+  // Auto-boot on load
+  if (document.readyState === "loading") {
+    document.addEventListener("DOMContentLoaded", () => SyncEngine.init());
+  } else {
+    SyncEngine.init();
+  }
 
 })(window);
