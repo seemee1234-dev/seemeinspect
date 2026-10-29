@@ -3725,6 +3725,14 @@
     let defectList = [];
     window.getDefectList = () => defectList;
     window.setDefectList = (val) => { defectList = val; };
+    window.getProjectConfig = () => (typeof projectConfig !== 'undefined' ? projectConfig : {});
+    window.setProjectConfig = (val) => { if (typeof projectConfig !== 'undefined') Object.assign(projectConfig, val); };
+    window.getCompletedRooms = () => (typeof completedRooms !== 'undefined' ? completedRooms : {});
+    window.setCompletedRooms = (val) => { if (typeof completedRooms !== 'undefined') completedRooms = val; };
+    window.getSiteAttendance = () => (typeof siteAttendance !== 'undefined' ? siteAttendance : {});
+    window.setSiteAttendance = (val) => { if (typeof siteAttendance !== 'undefined') Object.assign(siteAttendance, val); };
+    window.getCustomRooms = () => (typeof customRooms !== 'undefined' ? customRooms : []);
+    window.setCustomRooms = (val) => { if (typeof customRooms !== 'undefined') customRooms = val; };
 
     /**
      * DYNAMIC FINDINGS & RECOMMENDATIONS DICTIONARIES (BY CATEGORY)
@@ -5185,6 +5193,9 @@
       flashOfflineSavedIndicator();
       updateSummaryUI();
       triggerAutoSaveToRoomLibrary();
+      if (window.SyncEngine && typeof window.SyncEngine.broadcastMutation === 'function') {
+        window.SyncEngine.broadcastMutation('SAVE_CONFIG', { projectConfig });
+      }
     }
 
     /**
@@ -5268,6 +5279,9 @@
       flashOfflineSavedIndicator();
       updateCurrentRoomDisplay();
       triggerAutoSaveToRoomLibrary();
+      if (window.SyncEngine && typeof window.SyncEngine.broadcastMutation === 'function') {
+        window.SyncEngine.broadcastMutation('SAVE_DEFECTS', window.SyncEngine.getFullSnapshot());
+      }
     }
 
     /**

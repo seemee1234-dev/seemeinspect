@@ -1,9 +1,10 @@
 /**
- * INSPECT Q • Cross-Device Live Auto-Sync Engine (v3.3)
+ * INSPECT Q • Cross-Device Live Auto-Sync Engine (v3.4)
  * Supports:
  * 1. P2P Realtime WebRTC Live Sync via PeerJS (Host / Client mode with STUN NAT Traversal)
- * 2. 1-Click Offline Backup Export & Import (.json full bundle with high-res photos)
- * 3. Continuous Retry & Zero-Ghost-Lock disconnect handling
+ * 2. Smart Device Role Detection: Mobile defaults to Host, PC/Desktop defaults to Client
+ * 3. 100% Scope-Safe Snapshot Extraction via window.getDefectList() & window.setDefectList()
+ * 4. 1-Click Offline Backup Export & Import (.json full bundle with high-res photos)
  */
 
 (function (window) {
@@ -12,8 +13,11 @@
   const STORAGE_PIN_KEY = "inspectq_sync_pin";
   const STORAGE_ROLE_KEY = "inspectq_sync_role";
 
+  // Smart Device Role: Mobile defaults to Host (sender), PC/Desktop defaults to Client (receiver)
+  const isDesktop = window.innerWidth > 900 || !(/Mobi|Android|iPhone/i.test(navigator.userAgent));
+  let _role = localStorage.getItem(STORAGE_ROLE_KEY) || (isDesktop ? "client" : "host");
   let _pin = localStorage.getItem(STORAGE_PIN_KEY) || "8888";
-  let _role = localStorage.getItem(STORAGE_ROLE_KEY) || "host"; // Default mobile to host
+
   let _peer = null;
   let _activeConnections = [];
   let _status = "offline"; // "offline", "connecting", "connected"
@@ -41,7 +45,7 @@
     get connectedCount() { return _activeConnections.length; },
 
     init: function () {
-      console.log("📡 [SyncEngine v3.3] Initializing with PIN:", _pin, "Role:", _role);
+      console.log("📡 [SyncEngine v3.4] Initializing. Role:", _role, "PIN:", _pin, "isDesktop:", isDesktop);
       this.setupAutoSyncHooks();
       this.setupUnloadHandler();
       this.connectP2P();
@@ -73,6 +77,7 @@
       localStorage.setItem(STORAGE_ROLE_KEY, _role);
       this.updateRoleUI();
       this.reconnect();
+      this.showToast(_role === "host" ? "📱 เปลี่ยนเป็น: เครื่องตรวจหลัก (มือถือ)" : "💻 เปลี่ยนเป็น: เครื่องรับข้อมูล (คอม/แท็บเล็ต)");
     },
 
     updateRoleUI: function () {
@@ -80,14 +85,14 @@
       const clientBtn = document.getElementById("role-btn-client");
       if (hostBtn && clientBtn) {
         if (_role === "host") {
-          hostBtn.style.border = "1.5px solid #10b981";
+          hostBtn.style.border = "2px solid #10b981";
           hostBtn.style.background = "rgba(16, 185, 129, 0.25)";
           hostBtn.style.color = "#34d399";
           clientBtn.style.border = "1.5px solid #1e3a8a";
           clientBtn.style.background = "#070d1e";
           clientBtn.style.color = "#94a3b8";
         } else {
-          clientBtn.style.border = "1.5px solid #00adf2";
+          clientBtn.style.border = "2px solid #00adf2";
           clientBtn.style.background = "rgba(0, 173, 242, 0.25)";
           clientBtn.style.color = "#38bdf8";
           hostBtn.style.border = "1.5px solid #1e3a8a";
@@ -136,7 +141,7 @@
       }
     },
 
-    initHost: function (hostPeerId, fallbackClientPeerId) {
+    initHost: function (hostPeerId) {
       this.updateStatus("connecting", "กำลังลงทะเบียนเครื่องหลัก...");
       _peer = new Peer(hostPeerId, PEER_CONFIG);
 
@@ -170,7 +175,7 @@
 
     initClient: function (clientPeerId, hostPeerId) {
       if (_clientRetryTimer) clearTimeout(_clientRetryTimer);
-      this.updateStatus("connecting", `💻 กำลังค้นหาเครื่องหลัก (${_pin})...`);
+      this.updateStatus("connecting", `💻 กำลังค้นหาเครื่องหลัก (PIN ${_pin})...`);
 
       _peer = new Peer(clientPeerId, PEER_CONFIG);
 
@@ -227,11 +232,13 @@
         this.updateStatus("connected", `🟢 ซิงก์สดเรียบร้อย (${_activeConnections.length} เครื่อง)`);
 
         if (isHost) {
+          // Push current state to newly connected client immediately
           this.pushFullStateToConn(conn);
-          this.showToast("🔗 เครื่องรับเชื่อมต่อสำเร็จ! ส่งข้อมูลเรียบร้อย");
+          this.showToast("🔗 เครื่องรับเชื่อมต่อแล้ว! ส่งข้อมูลสดเรียบร้อย");
         } else {
+          // Request current state from host immediately
           conn.send({ type: "REQ_FULL_STATE" });
-          this.showToast("🔗 เชื่อมต่อเครื่องหลักสำเร็จ! กำลังดึงข้อมูลล่าสุด");
+          this.showToast("🔗 เชื่อมต่อเครื่องหลักแล้ว! กำลังดึงข้อมูลล่าสุด...");
         }
       });
 
@@ -289,7 +296,7 @@
         payload: fullSnapshot,
         timestamp: Date.now()
       });
-      console.log("📤 [SyncEngine] Sent FULL_STATE_SNAPSHOT to:", conn.peer);
+      console.log("📤 [SyncEngine] Sent FULL_STATE_SNAPSHOT with", fullSnapshot.defectList.length, "defects to:", conn.peer);
     },
 
     pushNow: function () {
@@ -331,18 +338,21 @@
       }
 
       if (msg.type === "FULL_STATE_SNAPSHOT" || (msg.type === "MUTATION" && msg.action === "SAVE_DEFECTS")) {
-        console.log("📥 [SyncEngine] Applying incoming defects state...");
         const snapshot = msg.payload || msg.data;
         if (!snapshot) return;
 
+        const count = Array.isArray(snapshot.defectList) ? snapshot.defectList.length : 0;
+        console.log("📥 [SyncEngine] Received defects state with", count, "defects!");
         await this.applyIncomingSnapshot(snapshot);
-        this.showToast(`✨ รับข้อมูลอัปเดตอัตโนมัติแล้ว (${window.defectList ? window.defectList.length : 0} จุด)`);
+        this.showToast(`✨ รับข้อมูลอัปเดตอัตโนมัติแล้ว (${count} จุด)`);
       }
 
       if (msg.type === "MUTATION" && msg.action === "SAVE_CONFIG") {
         if (msg.data && msg.data.projectConfig) {
-          window.projectConfig = Object.assign(window.projectConfig || {}, msg.data.projectConfig);
-          localStorage.setItem("condo_inspect_cfg", JSON.stringify(window.projectConfig));
+          if (typeof window.setProjectConfig === "function") {
+            window.setProjectConfig(msg.data.projectConfig);
+          }
+          localStorage.setItem("condo_inspect_cfg", JSON.stringify(msg.data.projectConfig));
           if (typeof window.updateSummaryUI === "function") window.updateSummaryUI();
           this.showToast("📝 อัปเดตข้อมูลห้องและลูกค้าอัตโนมัติแล้ว");
         }
@@ -351,37 +361,65 @@
 
     applyIncomingSnapshot: async function (snapshot) {
       try {
-        if (snapshot.projectConfig && window.projectConfig) {
-          window.projectConfig = Object.assign(window.projectConfig, snapshot.projectConfig);
-          localStorage.setItem("condo_inspect_cfg", JSON.stringify(window.projectConfig));
-          this.fillConfigInputs(window.projectConfig);
-        }
+        if (!snapshot) return;
 
-        if (Array.isArray(snapshot.defectList)) {
-          window.defectList = snapshot.defectList;
-          if (typeof window.openInspectorDB === "function") {
-            const db = await window.openInspectorDB();
-            await new Promise((resolve) => {
-              const tx = db.transaction("defects", "readwrite");
-              const store = tx.objectStore("defects");
-              store.put({ key: "condo_defect_list", data: window.defectList });
-              tx.oncomplete = () => resolve();
-              tx.onerror = () => resolve();
-            });
+        // 1. Project Config
+        if (snapshot.projectConfig) {
+          if (typeof window.setProjectConfig === "function") {
+            window.setProjectConfig(snapshot.projectConfig);
           }
+          localStorage.setItem("condo_inspect_cfg", JSON.stringify(snapshot.projectConfig));
+          this.fillConfigInputs(snapshot.projectConfig);
         }
 
-        if (snapshot.completedRooms && window.completedRooms) {
-          window.completedRooms = snapshot.completedRooms;
-          localStorage.setItem("condo_completed_rooms", JSON.stringify(window.completedRooms));
+        // 2. Defect List (CRITICAL: Save to both scope variable and IndexedDB)
+        if (Array.isArray(snapshot.defectList)) {
+          if (typeof window.setDefectList === "function") {
+            window.setDefectList(snapshot.defectList);
+          }
+          window.defectList = snapshot.defectList;
+
+          // Save to IndexedDB so refresh (F5) retains data permanently
+          if (typeof window.openInspectorDB === "function") {
+            try {
+              const db = await window.openInspectorDB();
+              await new Promise((resolve) => {
+                const tx = db.transaction("defects", "readwrite");
+                const store = tx.objectStore("defects");
+                store.put({ key: "condo_defect_list", data: snapshot.defectList });
+                tx.oncomplete = () => resolve();
+                tx.onerror = () => resolve();
+              });
+            } catch (idbErr) {
+              console.warn("Sync IDB save error:", idbErr);
+            }
+          }
+
+          // Fallback to localStorage if small
+          try {
+            if (snapshot.defectList.length <= 20) {
+              localStorage.setItem("condo_defect_list", JSON.stringify(snapshot.defectList));
+            }
+          } catch (e) {}
         }
 
-        if (snapshot.siteAttendance && window.siteAttendance) {
-          window.siteAttendance = Object.assign(window.siteAttendance, snapshot.siteAttendance);
-          localStorage.setItem("condo_site_attendance", JSON.stringify(window.siteAttendance));
+        // 3. Completed Rooms
+        if (snapshot.completedRooms) {
+          if (typeof window.setCompletedRooms === "function") {
+            window.setCompletedRooms(snapshot.completedRooms);
+          }
+          localStorage.setItem("condo_completed_rooms", JSON.stringify(snapshot.completedRooms));
         }
 
-        // Re-render all views
+        // 4. Site Attendance
+        if (snapshot.siteAttendance) {
+          if (typeof window.setSiteAttendance === "function") {
+            window.setSiteAttendance(snapshot.siteAttendance);
+          }
+          localStorage.setItem("condo_site_attendance", JSON.stringify(snapshot.siteAttendance));
+        }
+
+        // 5. Trigger all UI updates
         if (typeof window.renderRoomButtons === "function") window.renderRoomButtons();
         if (typeof window.renderCategoryButtons === "function") window.renderCategoryButtons();
         if (typeof window.updateCurrentRoomDisplay === "function") window.updateCurrentRoomDisplay();
@@ -414,35 +452,24 @@
     },
 
     getFullSnapshot: function () {
+      const dList = typeof window.getDefectList === "function" ? window.getDefectList() : (window.defectList || []);
+      const pCfg = typeof window.getProjectConfig === "function" ? window.getProjectConfig() : (window.projectConfig || {});
+      const cRooms = typeof window.getCompletedRooms === "function" ? window.getCompletedRooms() : (window.completedRooms || {});
+      const sAtt = typeof window.getSiteAttendance === "function" ? window.getSiteAttendance() : (window.siteAttendance || {});
+      const cCustom = typeof window.getCustomRooms === "function" ? window.getCustomRooms() : (window.customRooms || []);
       return {
-        projectConfig: window.projectConfig || {},
-        defectList: window.defectList || [],
-        completedRooms: window.completedRooms || {},
-        customRooms: window.customRooms || [],
+        projectConfig: pCfg,
+        defectList: dList,
+        completedRooms: cRooms,
+        customRooms: cCustom,
         customCategories: window.customCategories || [],
-        siteAttendance: window.siteAttendance || {},
+        siteAttendance: sAtt,
         exportedAt: new Date().toISOString()
       };
     },
 
     setupAutoSyncHooks: function () {
-      if (typeof window.saveDefectsToStorage === "function") {
-        const origSaveDefects = window.saveDefectsToStorage;
-        window.saveDefectsToStorage = async (...args) => {
-          const res = await origSaveDefects.apply(window, args);
-          this.broadcastMutation("SAVE_DEFECTS", this.getFullSnapshot());
-          return res;
-        };
-      }
-
-      if (typeof window.saveConfig === "function") {
-        const origSaveConfig = window.saveConfig;
-        window.saveConfig = (...args) => {
-          const res = origSaveConfig.apply(window, args);
-          this.broadcastMutation("SAVE_CONFIG", { projectConfig: window.projectConfig });
-          return res;
-        };
-      }
+      // Direct broadcast hooks are also wired inside saveDefectsToStorage() and saveConfig()
     },
 
     exportOfflineBackup: function () {
@@ -471,7 +498,8 @@
           const data = JSON.parse(e.target.result);
           await this.applyIncomingSnapshot(data);
           this.broadcastMutation("SAVE_DEFECTS", this.getFullSnapshot());
-          this.showToast(`🎉 นำเข้าข้อมูลห้องสำเร็จ! (${window.defectList.length} จุด)`);
+          const count = Array.isArray(data.defectList) ? data.defectList.length : 0;
+          this.showToast(`🎉 นำเข้าข้อมูลห้องสำเร็จ! (${count} จุด)`);
         } catch (err) {
           alert("❌ ไฟล์ไม่ถูกต้องหรือเกิดข้อผิดพลาด: " + err.message);
         }
@@ -489,6 +517,8 @@
       let icon = "🔄";
       let text = "ออฟไลน์";
 
+      const roleThai = _role === "host" ? "หลัก" : "รับ";
+
       if (status === "connected") {
         color = "#10b981";
         icon = "🟢";
@@ -504,7 +534,7 @@
       }
 
       if (iconEl) iconEl.textContent = icon;
-      if (labelEl) labelEl.textContent = status === "connected" ? "ซิงก์สด" : "ซิงก์";
+      if (labelEl) labelEl.textContent = status === "connected" ? `ซิงก์สด (${roleThai})` : `ซิงก์ (${roleThai})`;
       if (modalStatusEl) {
         modalStatusEl.innerHTML = `<span style="color: ${color}; font-weight: 400;">${icon} ${text}</span>`;
       }
