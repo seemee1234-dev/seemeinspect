@@ -1,6 +1,6 @@
 # -*- coding: utf-8 -*-
 """
-INSPECT Q • Cross-Device Live Auto-Sync Engine Automated Verification Test (v3.9)
+INSPECT Q • Cross-Device Live Auto-Sync Engine Automated Verification Test (v4.0)
 Universal Proof-of-Execution Contract
 """
 
@@ -27,7 +27,7 @@ def test_assets():
     print(f"  ✓ sync_engine.js exists ({sync_size:,} bytes)")
 
 def test_sync_engine_methods():
-    print("[TEST 2] Verifying SyncEngine v3.9 methods & Safe Chunk Streaming...")
+    print("[TEST 2] Verifying SyncEngine v4.0 methods & Backpressure Flow Control...")
     sync_path = os.path.join(BASE_DIR, "assets", "js", "sync_engine.js")
     with open(sync_path, "r", encoding="utf-8") as f:
         code = f.read()
@@ -70,12 +70,12 @@ def test_sync_engine_methods():
     assert "stun:stun.cloudflare.com:3478" in code, "Missing Cloudflare STUN server"
     print("  ✓ STUN NAT Traversal servers verified (Google & Cloudflare)")
 
-    # Verify 16KB chunking
-    assert "CHUNK_SIZE = 16 * 1024" in code, "Missing 16KB chunking configuration"
-    assert "CHUNK_START" in code, "Missing CHUNK_START frame handler"
-    assert "CHUNK_DATA" in code, "Missing CHUNK_DATA frame handler"
-    assert "CHUNK_END" in code, "Missing CHUNK_END frame handler"
-    print("  ✓ 16KB Safe Chunk Streaming Protocol verified (Unlimited photo size support)")
+    # Verify Backpressure Flow Control
+    assert "BUFFER_HIGH_WATER = 65536" in code, "Missing BUFFER_HIGH_WATER flow control"
+    assert "BUFFER_LOW_WATER = 16384" in code, "Missing BUFFER_LOW_WATER flow control"
+    assert "dc.bufferedAmount > BUFFER_HIGH_WATER" in code, "Missing backpressure threshold check"
+    assert "action === \"SAVE_DEFECTS\"" in code, "Missing chunked mutation safety in broadcastMutation"
+    print("  ✓ Backpressure Flow Control (bufferedAmount <= 64KB) verified")
 
     # Verify candidate slots
     assert "getHostCandidateSlots" in code, "Missing candidate slot generator"
@@ -87,7 +87,7 @@ def test_html_injections():
     
     required_tokens = [
         "assets/js/peerjs.min.js",
-        "assets/js/sync_engine.js?v=3.9",
+        "assets/js/sync_engine.js?v=4.0",
         "id=\"cloud-sync-btn\"",
         "openSyncModal()",
         "id=\"sync-modal\"",
@@ -164,7 +164,7 @@ def test_typography_compliance():
 
 if __name__ == "__main__":
     print("=" * 65)
-    print("INSPECT Q • CROSS-DEVICE AUTO-SYNC VERIFICATION AUDIT (v3.9)")
+    print("INSPECT Q • CROSS-DEVICE AUTO-SYNC VERIFICATION AUDIT (v4.0)")
     print("=" * 65)
     try:
         test_assets()

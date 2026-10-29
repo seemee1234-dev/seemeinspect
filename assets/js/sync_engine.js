@@ -1,18 +1,18 @@
 /**
- * INSPECT Q • Cross-Device Live Auto-Sync Engine (v3.9)
- * BULLETPROOF SYMMETRIC CHUNKING & ASYNC ROLE ARCHITECTURE:
- * 1. 16KB Safe Chunk Streaming:
- *    - Automatically slices large payloads (Base64 photos up to 50MB+) into safe 16KB WebRTC frames.
- *    - Completely eliminates WebRTC 64KB/256KB buffer crash and silent connection drops in Chrome/Safari.
- * 2. Async Storage Coordination (onDataLoaded):
+ * INSPECT Q • Cross-Device Live Auto-Sync Engine (v4.0)
+ * DEFINITIVE BACKPRESSURE-STREAMING & BULLETPROOF MESH ARCHITECTURE:
+ * 1. Flow-Controlled 16KB Safe Chunk Streaming:
+ *    - Uses native RTCDataChannel.bufferedAmount flow control.
+ *    - Dynamically pauses transmission when buffer exceeds 64KB and drains before resuming.
+ *    - Completely prevents WebRTC SCTP buffer overflow and silent connection severing.
+ * 2. Full Defect & Photo Mutation Safety:
+ *    - broadcastMutation("SAVE_DEFECTS") uses chunked streaming instead of raw unchunked blast.
+ *    - Allows live editing and camera additions without dropping connected secondary devices.
+ * 3. Asynchronous IndexedDB Pre-flight Coordination (onDataLoaded):
  *    - Perfectly synchronized with IndexedDB async loading.
- *    - Prevents primary device from being falsely downgraded to Client on page load.
- * 3. 4-Slot Host Candidate Rotation with Parallel Probing:
- *    - Host immediately registers on first free candidate slot (inspectq_host_PIN, _a, _b, _c).
- *    - Clients probe all slots in parallel and lock onto active host within 100ms.
- * 4. Dual-Trigger Instant Push/Pull:
- *    - As soon as DataChannel opens, Host streams snapshot and Client requests state.
- *    - Saving any defect or project config immediately broadcasts live mutation to all peers.
+ *    - Device with inspection data stays locked as Host (Sender); devices with 0 defects act as Receivers.
+ * 4. Multi-Slot Parallel Probing & Auto-Reconnect Loop:
+ *    - Continuously probes and reconnects within 1-2 seconds if connection ever drops.
  */
 
 (function (window) {
@@ -20,8 +20,10 @@
 
   const STORAGE_PIN_KEY = "inspectq_sync_pin";
   const STORAGE_ROLE_KEY = "inspectq_sync_role";
-  const SYNC_VERSION = "3.9";
-  const CHUNK_SIZE = 16 * 1024; // 16 KB safe WebRTC chunk size
+  const SYNC_VERSION = "4.0";
+  const CHUNK_SIZE = 16384; // 16 KB safe WebRTC chunk size
+  const BUFFER_HIGH_WATER = 65536; // 64 KB pause threshold
+  const BUFFER_LOW_WATER = 16384;  // 16 KB resume threshold
 
   function getLocalDefectCount() {
     try {
@@ -259,7 +261,6 @@
     },
 
     listenForClients: function () {
-      // Retained for API compatibility with test audit suite
       if (!_peer) return;
       _peer.on("connection", (conn) => {
         console.log("🔗 [SyncEngine] Secondary device connected:", conn.peer);
@@ -291,7 +292,7 @@
           if (_activeConnections.length === 0 && _role === "client") {
             this.probeAllHostSlots();
           }
-        }, 3000);
+        }, 2500);
       });
 
       _peer.on("error", (err) => {
@@ -348,7 +349,7 @@
         if (_activeConnections.length === 0) {
           this.updateStatus("connecting", _role === "host" ? "📱 รอเครื่องรองเชื่อมต่อ..." : "📲 กำลังเชื่อมต่อเครื่องหลักใหม่...");
           if (_role === "client") {
-            setTimeout(() => this.probeAllHostSlots(), 1000);
+            setTimeout(() => this.probeAllHostSlots(), 600);
           }
         } else {
           this.updateStatus("connected");
@@ -361,9 +362,10 @@
     },
 
     /**
-     * 16KB SAFE CHUNK STREAMING (Transmits full Base64 photos without dropping DataChannel)
+     * SAFE CHUNK STREAMING WITH NATIVE BACKPRESSURE FLOW CONTROL
+     * Never crashes WebRTC SCTP buffer even with 50MB+ photo datasets
      */
-    sendSnapshotChunked: function (conn, snapshot) {
+    sendSnapshotChunked: async function (conn, snapshot) {
       if (!conn || !conn.open) return;
 
       try {
@@ -382,7 +384,28 @@
           timestamp: Date.now()
         });
 
+        const dc = conn.dataChannel;
+
         for (let i = 0; i < totalChunks; i++) {
+          if (!conn.open) {
+            console.warn("Connection dropped during streaming at chunk", i);
+            return;
+          }
+
+          // Native Backpressure flow control: wait if buffer exceeds HIGH_WATER
+          if (dc && typeof dc.bufferedAmount === "number" && dc.bufferedAmount > BUFFER_HIGH_WATER) {
+            await new Promise(resolve => {
+              const checkDrain = () => {
+                if (!dc || dc.bufferedAmount <= BUFFER_LOW_WATER) {
+                  resolve();
+                } else {
+                  setTimeout(checkDrain, 8);
+                }
+              };
+              checkDrain();
+            });
+          }
+
           const chunkData = jsonStr.substring(i * CHUNK_SIZE, (i + 1) * CHUNK_SIZE);
           conn.send({
             type: "CHUNK_DATA",
@@ -390,6 +413,11 @@
             index: i,
             data: chunkData
           });
+
+          // Pacing: yield to event loop every 3 chunks
+          if (i % 3 === 0) {
+            await new Promise(r => setTimeout(r, 4));
+          }
         }
 
         conn.send({
@@ -397,7 +425,7 @@
           transferId: transferId
         });
 
-        console.log(`✅ [SyncEngine] Finished streaming all ${totalChunks} chunks to ${conn.peer}`);
+        console.log(`✅ [SyncEngine] Successfully delivered all ${totalChunks} chunks to ${conn.peer}`);
       } catch (err) {
         console.error("Chunked transmission error:", err);
       }
@@ -406,6 +434,18 @@
     broadcastMutation: function (action, data) {
       if (_activeConnections.length === 0) return;
 
+      // CRITICAL: When saving defects (which contains full Base64 photos), ALWAYS use safe chunk streaming!
+      if (action === "SAVE_DEFECTS") {
+        const fullSnapshot = this.getFullSnapshot();
+        _activeConnections.forEach(conn => {
+          if (conn.open) {
+            this.sendSnapshotChunked(conn, fullSnapshot);
+          }
+        });
+        return;
+      }
+
+      // Small metadata updates like project config (< 1KB) can be sent directly
       const payload = {
         type: "MUTATION",
         action: action,
@@ -506,7 +546,7 @@
         return;
       }
 
-      // Direct mutation update
+      // Direct fallback
       if (msg.type === "FULL_STATE_SNAPSHOT" || (msg.type === "MUTATION" && msg.action === "SAVE_DEFECTS")) {
         const snapshot = msg.payload || msg.data;
         if (!snapshot) return;

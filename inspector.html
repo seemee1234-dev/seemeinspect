@@ -39,7 +39,7 @@
     }
   </script>
   <!-- Inspect Q Cross-Device Auto-Sync Engine -->
-  <script src="assets/js/sync_engine.js?v=3.9"></script>
+  <script src="assets/js/sync_engine.js?v=4.0"></script>
 
   <style>
     /* Default Page Setup (overridden dynamically during PDF export) */
@@ -4318,12 +4318,6 @@
 
       const modal = document.getElementById("room-summary-modal");
       if (modal) modal.style.display = "flex";
-      setLiveCamZoom(1.0);
-      initLiveCamGestures();
-      const closeHint = document.getElementById("live-cam-close-hint");
-      if (closeHint) {
-        closeHint.style.display = (mode === 'close' || mode === 'edit_close' || mode === 'edit_before') ? "block" : "none";
-      }
     }
 
     function closeRoomSummaryModal() {
@@ -5858,6 +5852,12 @@
 
       applyLiveCamAspectUI();
       modal.style.display = "flex";
+      setLiveCamZoom(1.0);
+      initLiveCamGestures();
+      const closeHint = document.getElementById("live-cam-close-hint");
+      if (closeHint) {
+        closeHint.style.display = (mode === 'close' || mode === 'edit_close' || mode === 'edit_before') ? "block" : "none";
+      }
 
       try {
         if (liveCamStream) {
