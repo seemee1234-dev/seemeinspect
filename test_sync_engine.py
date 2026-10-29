@@ -1,6 +1,6 @@
 # -*- coding: utf-8 -*-
 """
-INSPECT Q • Cross-Device Live Auto-Sync Engine Automated Verification Test (v6.0 Proven System Restored)
+INSPECT Q • Cross-Device Live Auto-Sync Engine Automated Verification Test (v7.0 Dual-Engine Architecture)
 Universal Proof-of-Execution Contract
 """
 
@@ -27,7 +27,7 @@ def test_assets():
     print(f"  ✓ sync_engine.js exists ({sync_size:,} bytes)")
 
 def test_sync_engine_methods():
-    print("[TEST 2] Verifying SyncEngine v6.0 methods & Proven Auto-Sync Flow...")
+    print("[TEST 2] Verifying SyncEngine v7.0 Dual-Engine methods & Auto-Sync Flow...")
     sync_path = os.path.join(BASE_DIR, "assets", "js", "sync_engine.js")
     with open(sync_path, "r", encoding="utf-8") as f:
         code = f.read()
@@ -57,7 +57,11 @@ def test_sync_engine_methods():
         "exportOfflineBackup",
         "importOfflineBackup",
         "updateStatus",
-        "showToast"
+        "showToast",
+        "initCloudRoomListener",
+        "uploadToCloud",
+        "pollLatestCloudSnapshot",
+        "fetchAndApplyFromUrl"
     ]
 
     for m in required_methods:
@@ -69,6 +73,11 @@ def test_sync_engine_methods():
     assert "stun:stun.l.google.com:19302" in code, "Missing Google STUN server"
     assert "stun:stun.cloudflare.com:3478" in code, "Missing Cloudflare STUN server"
     print("  ✓ STUN NAT Traversal servers verified (Google & Cloudflare)")
+
+    # Verify Dual-Engine Cloud Room SSE & Persistence
+    assert "EventSource" in code, "Missing Cloud Room SSE EventSource"
+    assert "inspectq_cloud_" in code, "Missing Cloud Room topic name pattern"
+    print("  ✓ Dual-Engine Cloud Room SSE & Persistence stream verified")
 
     # Verify Strict Single-Master Lock
     assert "localStorage.getItem(STORAGE_ROLE_KEY)" in code, "Missing role check"
@@ -84,7 +93,7 @@ def test_html_injections():
     
     required_tokens = [
         "assets/js/peerjs.min.js",
-        "assets/js/sync_engine.js?v=6.0",
+        "assets/js/sync_engine.js?v=7.0",
         "id=\"cloud-sync-btn\"",
         "openSyncModal()",
         "id=\"sync-modal\"",
@@ -161,7 +170,7 @@ def test_typography_compliance():
 
 if __name__ == "__main__":
     print("=" * 65)
-    print("INSPECT Q • CROSS-DEVICE AUTO-SYNC VERIFICATION AUDIT (v6.0 Proven Restored)")
+    print("INSPECT Q • CROSS-DEVICE AUTO-SYNC VERIFICATION AUDIT (v7.0 Dual-Engine)")
     print("=" * 65)
     try:
         test_assets()
