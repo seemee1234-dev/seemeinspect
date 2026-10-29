@@ -1,5 +1,5 @@
 /**
- * INSPECT Q • Cross-Device Live Auto-Sync Engine (v5.1 - Single Master Lock)
+ * INSPECT Q • Cross-Device Live Auto-Sync Engine (v5.2 - Live Auto-Sync Rock Solid)
  * DEFINITIVE BULLETPROOF RELIABILITY ARCHITECTURE:
  * 1. Ping-Pong Keepalive Heartbeat (10s intervals):
  *    - Keeps carrier UDP NAT bindings (AIS, True, DTAC) permanently open.
@@ -22,7 +22,7 @@
 
   const STORAGE_PIN_KEY = "inspectq_sync_pin";
   const STORAGE_ROLE_KEY = "inspectq_sync_role";
-  const SYNC_VERSION = "5.1";
+  const SYNC_VERSION = "5.2";
   const CHUNK_SIZE = 16384; // 16 KB safe WebRTC chunk size
   const BUFFER_HIGH_WATER = 65536; // 64 KB pause threshold
   const BUFFER_LOW_WATER = 16384;  // 16 KB resume threshold
@@ -702,8 +702,7 @@
     pushNow: function () {
       const openConns = _activeConnections.filter(c => c && c.open);
       if (openConns.length === 0) {
-        alert("⚠️ ยังไม่มีเครื่องอื่นเชื่อมต่ออยู่ในรหัส PIN นี้ครับ
-กรุณาเปิดหน้าเว็บนี้บนเครื่องหลักและเครื่องรองโดยใช้ PIN เดียวกัน: " + _pin);
+        alert("⚠️ ยังไม่มีเครื่องอื่นเชื่อมต่ออยู่ในรหัส PIN นี้ครับ\nกรุณาเปิดหน้าเว็บนี้บนเครื่องหลักและเครื่องรองโดยใช้ PIN เดียวกัน: " + _pin);
         return;
       }
       const fullSnapshot = this.getFullSnapshot();
@@ -928,7 +927,7 @@
     },
 
     setupAutoSyncHooks: function () {
-      console.log("🔗 [SyncEngine v5.1] Auto-Sync event hooks active.");
+      console.log("🔗 [SyncEngine v5.2] Auto-Sync event hooks active.");
     },
 
     updateStatus: function (status, note) {

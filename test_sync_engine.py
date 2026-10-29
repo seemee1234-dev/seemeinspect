@@ -1,6 +1,6 @@
 # -*- coding: utf-8 -*-
 """
-INSPECT Q • Cross-Device Live Auto-Sync Engine Automated Verification Test (v5.1 Single Master Lock)
+INSPECT Q • Cross-Device Live Auto-Sync Engine Automated Verification Test (v5.2 Live Auto-Sync Rock Solid)
 Universal Proof-of-Execution Contract
 """
 
@@ -27,7 +27,7 @@ def test_assets():
     print(f"  ✓ sync_engine.js exists ({sync_size:,} bytes)")
 
 def test_sync_engine_methods():
-    print("[TEST 2] Verifying SyncEngine v5.1 methods & Heartbeat Keepalive...")
+    print("[TEST 2] Verifying SyncEngine v5.2 methods & Heartbeat Keepalive...")
     sync_path = os.path.join(BASE_DIR, "assets", "js", "sync_engine.js")
     with open(sync_path, "r", encoding="utf-8") as f:
         code = f.read()
@@ -107,7 +107,7 @@ def test_html_injections():
     
     required_tokens = [
         "assets/js/peerjs.min.js",
-        "assets/js/sync_engine.js?v=5.1",
+        "assets/js/sync_engine.js?v=5.2",
         "id=\"cloud-sync-btn\"",
         "openSyncModal()",
         "id=\"sync-modal\"",
@@ -184,7 +184,7 @@ def test_typography_compliance():
 
 if __name__ == "__main__":
     print("=" * 65)
-    print("INSPECT Q • CROSS-DEVICE AUTO-SYNC VERIFICATION AUDIT (v5.1 Single Master Lock)")
+    print("INSPECT Q • CROSS-DEVICE AUTO-SYNC VERIFICATION AUDIT (v5.2 Live Auto-Sync Rock Solid)")
     print("=" * 65)
     try:
         test_assets()
