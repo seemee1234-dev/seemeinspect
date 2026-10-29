@@ -285,33 +285,78 @@
     updateRoleUI: function () {
       const hostBtn = document.getElementById("role-btn-host");
       const clientBtn = document.getElementById("role-btn-client");
-      const autoBtn = document.getElementById("role-btn-auto");
-      const saved = localStorage.getItem(STORAGE_ROLE_KEY);
+      const hostBadge = document.getElementById("host-badge");
+      const clientBadge = document.getElementById("client-badge");
+      const roleCurrentTag = document.getElementById("role-current-tag");
+      const roleBanner = document.getElementById("role-feedback-banner");
 
       if (hostBtn && clientBtn) {
         if (_role === "host") {
           hostBtn.style.border = "2px solid #10b981";
-          hostBtn.style.background = "rgba(16, 185, 129, 0.25)";
+          hostBtn.style.background = "linear-gradient(135deg, rgba(16, 185, 129, 0.35), rgba(5, 150, 105, 0.2))";
           hostBtn.style.color = "#34d399";
-          clientBtn.style.border = "1.5px solid #1e3a8a";
+          hostBtn.style.boxShadow = "0 0 12px rgba(16, 185, 129, 0.3)";
+          if (hostBadge) {
+            hostBadge.textContent = "✓ เครื่องนี้คือเครื่องหลัก";
+            hostBadge.style.background = "#059669";
+            hostBadge.style.color = "#ffffff";
+            hostBadge.style.display = "inline-block";
+          }
+
+          clientBtn.style.border = "1.5px solid #1e293b";
           clientBtn.style.background = "#070d1e";
-          clientBtn.style.color = "#94a3b8";
+          clientBtn.style.color = "#64748b";
+          clientBtn.style.boxShadow = "none";
+          if (clientBadge) {
+            clientBadge.textContent = "ไม่ได้เลือก";
+            clientBadge.style.background = "transparent";
+            clientBadge.style.color = "#64748b";
+            clientBadge.style.display = "inline-block";
+          }
+
+          if (roleCurrentTag) {
+            roleCurrentTag.textContent = "👑 เครื่องตรวจหลัก";
+            roleCurrentTag.style.background = "#059669";
+          }
+          if (roleBanner) {
+            roleBanner.style.background = "rgba(16, 185, 129, 0.15)";
+            roleBanner.style.border = "1px solid #10b981";
+            roleBanner.style.color = "#a7f3d0";
+            roleBanner.innerHTML = "👑 <strong>เครื่องนี้คือ 'เครื่องตรวจหลักเครื่องเดียว':</strong> ทุก Defect และภาพถ่ายที่บันทึกจะส่งไปยังเครื่องรองทั้งหมดทันที";
+          }
         } else {
           clientBtn.style.border = "2px solid #00adf2";
-          clientBtn.style.background = "rgba(0, 173, 242, 0.25)";
+          clientBtn.style.background = "linear-gradient(135deg, rgba(2, 132, 199, 0.4), rgba(14, 165, 233, 0.2))";
           clientBtn.style.color = "#38bdf8";
-          hostBtn.style.border = "1.5px solid #1e3a8a";
+          clientBtn.style.boxShadow = "0 0 12px rgba(0, 173, 242, 0.3)";
+          if (clientBadge) {
+            clientBadge.textContent = "✓ เครื่องนี้คือเครื่องรอง";
+            clientBadge.style.background = "#0284c7";
+            clientBadge.style.color = "#ffffff";
+            clientBadge.style.display = "inline-block";
+          }
+
+          hostBtn.style.border = "1.5px solid #1e293b";
           hostBtn.style.background = "#070d1e";
-          hostBtn.style.color = "#94a3b8";
-        }
-      }
-      if (autoBtn) {
-        if (!saved) {
-          autoBtn.style.color = "#ffd700";
-          autoBtn.style.borderColor = "#ffd700";
-        } else {
-          autoBtn.style.color = "#94a3b8";
-          autoBtn.style.borderColor = "#334155";
+          hostBtn.style.color = "#64748b";
+          hostBtn.style.boxShadow = "none";
+          if (hostBadge) {
+            hostBadge.textContent = "ไม่ได้เลือก";
+            hostBadge.style.background = "transparent";
+            hostBadge.style.color = "#64748b";
+            hostBadge.style.display = "inline-block";
+          }
+
+          if (roleCurrentTag) {
+            roleCurrentTag.textContent = "📲 เครื่องรอง";
+            roleCurrentTag.style.background = "#0284c7";
+          }
+          if (roleBanner) {
+            roleBanner.style.background = "rgba(2, 132, 199, 0.15)";
+            roleBanner.style.border = "1px solid #0284c7";
+            roleBanner.style.color = "#bae6fd";
+            roleBanner.innerHTML = "📲 <strong>เครื่องนี้ถูกตั้งเป็น 'เครื่องรอง' เรียบร้อย:</strong> พร้อมรับข้อมูลอัตโนมัติจากเครื่องหลัก PIN " + _pin + "<br><span style=\"font-size: 11px; color: #94a3b8;\">👉 เมื่อเครื่องหลักเปิดหน้าเว็บ ข้อมูลจะเชื่อมต่อสด 🟢 อัตโนมัติทันที</span>";
+          }
         }
       }
     },
