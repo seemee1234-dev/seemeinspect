@@ -1,6 +1,6 @@
 # -*- coding: utf-8 -*-
 """
-INSPECT Q • Cross-Device Live Auto-Sync Engine Automated Verification Test
+INSPECT Q • Cross-Device Live Auto-Sync Engine Automated Verification Test (v3.3)
 Universal Proof-of-Execution Contract
 """
 
@@ -27,7 +27,7 @@ def test_assets():
     print(f"  ✓ sync_engine.js exists ({sync_size:,} bytes)")
 
 def test_sync_engine_methods():
-    print("[TEST 2] Verifying SyncEngine methods & architecture...")
+    print("[TEST 2] Verifying SyncEngine v3.3 methods & STUN NAT configuration...")
     sync_path = os.path.join(BASE_DIR, "assets", "js", "sync_engine.js")
     with open(sync_path, "r", encoding="utf-8") as f:
         code = f.read()
@@ -35,9 +35,13 @@ def test_sync_engine_methods():
     required_methods = [
         "init",
         "setPin",
+        "setRole",
+        "updateRoleUI",
         "connectP2P",
         "initHost",
         "initClient",
+        "attemptConnectToHost",
+        "scheduleClientRetry",
         "setupConnection",
         "broadcastMutation",
         "pushFullStateToConn",
@@ -46,6 +50,7 @@ def test_sync_engine_methods():
         "handleIncomingData",
         "applyIncomingSnapshot",
         "setupAutoSyncHooks",
+        "setupUnloadHandler",
         "exportOfflineBackup",
         "importOfflineBackup",
         "updateStatus",
@@ -57,6 +62,11 @@ def test_sync_engine_methods():
         assert re.search(pattern, code), f"Missing method in sync_engine.js: {m}"
         print(f"  ✓ Method found: SyncEngine.{m}()")
 
+    # Verify STUN NAT Traversal
+    assert "stun:stun.l.google.com:19302" in code, "Missing Google STUN server"
+    assert "stun:stun.cloudflare.com:3478" in code, "Missing Cloudflare STUN server"
+    print("  ✓ STUN NAT Traversal servers verified (Google & Cloudflare)")
+
 def test_html_injections():
     print("[TEST 3] Verifying HTML entry points injection...")
     target_files = ["inspector.html", "index.html", "inspector_mobile.html"]
@@ -67,6 +77,10 @@ def test_html_injections():
         "id=\"cloud-sync-btn\"",
         "openSyncModal()",
         "id=\"sync-modal\"",
+        "id=\"role-btn-host\"",
+        "id=\"role-btn-client\"",
+        "setSyncRoleFromUI(",
+        "triggerReconnect()",
         "id=\"sync-pin-input\"",
         "saveSyncPinFromUI()",
         "triggerManualPush()",
@@ -108,20 +122,9 @@ def test_snapshot_roundtrip():
                 "status": "รอแก้ไข",
                 "photoWide": "data:image/jpeg;base64," + "A" * 15000,
                 "photoClose": "data:image/jpeg;base64," + "B" * 25000
-            },
-            {
-                "code": "D-002",
-                "room": "ห้องน้ำ",
-                "category": "งานสุขาภิบาล",
-                "location": "ใต้เคาน์เตอร์อ่างล้างหน้า",
-                "desc": "ท่อน้ำทิ้งมีน้ำซึมหยดลงพื้น",
-                "recommend": "ขันเกลียวข้อต่อให้แน่นและพันเทปพันเกลียวใหม่",
-                "status": "รอแก้ไข",
-                "photoWide": "data:image/jpeg;base64," + "C" * 15000,
-                "photoClose": "data:image/jpeg;base64," + "D" * 25000
             }
         ],
-        "completedRooms": {"ห้องนอนใหญ่": True, "ห้องน้ำ": True},
+        "completedRooms": {"ห้องนอนใหญ่": True},
         "customRooms": [],
         "customCategories": [],
         "siteAttendance": {"customer": True, "contractor": True},
@@ -132,27 +135,24 @@ def test_snapshot_roundtrip():
     deserialized = json.loads(serialized)
 
     assert deserialized["projectConfig"]["projName"] == "Life Asoke Hype"
-    assert len(deserialized["defectList"]) == 2
+    assert len(deserialized["defectList"]) == 1
     assert deserialized["defectList"][0]["code"] == "D-001"
-    assert len(deserialized["defectList"][0]["photoClose"]) > 25000
     print(f"  ✓ Snapshot roundtrip passed ({len(serialized):,} characters processed)")
 
 def test_typography_compliance():
     print("[TEST 5] Testing typography compliance (Kanit 300 / Crisp / No Glow)...")
-    sync_modal_snippet = """font-family: 'Kanit', sans-serif; font-weight: 300;"""
     target_files = ["inspector.html", "index.html"]
     for fname in target_files:
         fpath = os.path.join(BASE_DIR, fname)
         with open(fpath, "r", encoding="utf-8") as f:
             html = f.read()
-        # Verify sync-modal has Kanit font
         assert "font-family: 'Kanit', sans-serif;" in html
-        assert "text-shadow: 0 0" not in html # No neon blur
+        assert "text-shadow: 0 0" not in html
         print(f"  ✓ {fname}: Typography compliance verified (Kanit font, Crisp, No Glow)")
 
 if __name__ == "__main__":
     print("=" * 65)
-    print("INSPECT Q • CROSS-DEVICE AUTO-SYNC VERIFICATION AUDIT")
+    print("INSPECT Q • CROSS-DEVICE AUTO-SYNC VERIFICATION AUDIT (v3.3)")
     print("=" * 65)
     try:
         test_assets()

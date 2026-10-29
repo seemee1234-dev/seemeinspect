@@ -7868,6 +7868,18 @@
       if (m) m.style.display = "none";
     }
 
+    function setSyncRoleFromUI(role) {
+      if (window.SyncEngine) {
+        window.SyncEngine.setRole(role);
+      }
+    }
+
+    function triggerReconnect() {
+      if (window.SyncEngine) {
+        window.SyncEngine.reconnect();
+      }
+    }
+
     function saveSyncPinFromUI() {
       const pinInput = document.getElementById("sync-pin-input");
       if (pinInput && window.SyncEngine) {
@@ -9991,6 +10003,30 @@
       <div style="background: #070d1e; border: 1px solid #1e3a8a; border-radius: 10px; padding: 10px 14px; margin-bottom: 14px; display: flex; align-items: center; justify-content: space-between;">
         <span style="font-size: 12.5px; color: #94a3b8;">สถานะเชื่อมต่อ:</span>
         <span id="sync-modal-status" style="font-size: 13px; font-weight: 400; color: #10b981;">⚪ กำลังตรวจสอบการเชื่อมต่อ...</span>
+      </div>
+
+      <!-- Device Role Selector (เลือกบทบาทเครื่องนี้: เครื่องหลัก vs เครื่องรับ) -->
+      <div style="background: rgba(15, 28, 63, 0.7); border: 1.5px solid #2563eb; border-radius: 12px; padding: 12px 14px; margin-bottom: 14px;">
+        <div style="font-size: 13px; color: #ffd700; font-weight: 400; margin-bottom: 8px; display: flex; justify-content: space-between; align-items: center;">
+          <span>📱 เลือกบทบาทของเครื่องนี้:</span>
+          <span style="font-size: 11px; color: #38bdf8; cursor: pointer;" onclick="triggerReconnect()">🔄 เชื่อมต่อใหม่</span>
+        </div>
+        <div style="display: flex; gap: 8px;">
+          <button type="button" id="role-btn-host" onclick="setSyncRoleFromUI('host')" style="flex: 1; padding: 10px 8px; border-radius: 8px; font-family: 'Kanit', sans-serif; font-size: 13px; cursor: pointer; border: 1.5px solid #10b981; background: rgba(16, 185, 129, 0.25); color: #34d399; display: flex; flex-direction: column; align-items: center; gap: 2px;">
+            <span style="font-size: 16px;">📱</span>
+            <strong>เครื่องตรวจหลัก</strong>
+            <span style="font-size: 10.5px; opacity: 0.85;">(มือถือส่งข้อมูล)</span>
+          </button>
+          <button type="button" id="role-btn-client" onclick="setSyncRoleFromUI('client')" style="flex: 1; padding: 10px 8px; border-radius: 8px; font-family: 'Kanit', sans-serif; font-size: 13px; cursor: pointer; border: 1.5px solid #1e3a8a; background: #070d1e; color: #94a3b8; display: flex; flex-direction: column; align-items: center; gap: 2px;">
+            <span style="font-size: 16px;">💻</span>
+            <strong>เครื่องรับข้อมูล</strong>
+            <span style="font-size: 10.5px; opacity: 0.85;">(คอม / แท็บเล็ตจอใหญ่)</span>
+          </button>
+        </div>
+        <div style="font-size: 11.5px; color: #94a3b8; margin-top: 8px; line-height: 1.4;">
+          👉 <strong>เครื่องที่ใช้เดินตรวจ:</strong> แตะเลือก <strong>"เครื่องตรวจหลัก"</strong><br>
+          👉 <strong>เครื่องเปิดดู/พิมพ์รายงาน:</strong> แตะเลือก <strong>"เครื่องรับข้อมูล"</strong>
+        </div>
       </div>
 
       <!-- PIN Code Box -->

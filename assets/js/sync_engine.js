@@ -1,9 +1,9 @@
 /**
- * INSPECT Q • Cross-Device Live Auto-Sync Engine (v3.2)
+ * INSPECT Q • Cross-Device Live Auto-Sync Engine (v3.3)
  * Supports:
- * 1. P2P Realtime WebRTC Live Sync via PeerJS (Instant cross-device auto-update, zero server quota)
+ * 1. P2P Realtime WebRTC Live Sync via PeerJS (Host / Client mode with STUN NAT Traversal)
  * 2. 1-Click Offline Backup Export & Import (.json full bundle with high-res photos)
- * 3. Cloud Sync Extension Ready (Google Firebase Firestore / Realtime DB)
+ * 3. Continuous Retry & Zero-Ghost-Lock disconnect handling
  */
 
 (function (window) {
@@ -11,14 +11,28 @@
 
   const STORAGE_PIN_KEY = "inspectq_sync_pin";
   const STORAGE_ROLE_KEY = "inspectq_sync_role";
-  const STORAGE_FIREBASE_KEY = "inspectq_firebase_cfg";
 
   let _pin = localStorage.getItem(STORAGE_PIN_KEY) || "8888";
-  let _role = localStorage.getItem(STORAGE_ROLE_KEY) || "auto"; // "auto", "host", "client"
+  let _role = localStorage.getItem(STORAGE_ROLE_KEY) || "host"; // Default mobile to host
   let _peer = null;
   let _activeConnections = [];
   let _status = "offline"; // "offline", "connecting", "connected"
+  let _clientRetryTimer = null;
   let _lastSyncTimestamp = 0;
+
+  const PEER_CONFIG = {
+    debug: 1,
+    config: {
+      iceServers: [
+        { urls: "stun:stun.l.google.com:19302" },
+        { urls: "stun:stun1.l.google.com:19302" },
+        { urls: "stun:stun2.l.google.com:19302" },
+        { urls: "stun:stun3.l.google.com:19302" },
+        { urls: "stun:stun4.l.google.com:19302" },
+        { urls: "stun:stun.cloudflare.com:3478" }
+      ]
+    }
+  };
 
   const SyncEngine = {
     get pin() { return _pin; },
@@ -27,9 +41,21 @@
     get connectedCount() { return _activeConnections.length; },
 
     init: function () {
-      console.log("📡 [SyncEngine] Initializing with PIN:", _pin, "Role:", _role);
+      console.log("📡 [SyncEngine v3.3] Initializing with PIN:", _pin, "Role:", _role);
       this.setupAutoSyncHooks();
+      this.setupUnloadHandler();
       this.connectP2P();
+    },
+
+    setupUnloadHandler: function () {
+      window.addEventListener("beforeunload", () => {
+        if (_peer) {
+          try {
+            _peer.disconnect();
+            _peer.destroy();
+          } catch (e) {}
+        }
+      });
     },
 
     setPin: function (newPin) {
@@ -45,22 +71,49 @@
     setRole: function (newRole) {
       _role = newRole;
       localStorage.setItem(STORAGE_ROLE_KEY, _role);
+      this.updateRoleUI();
       this.reconnect();
     },
 
+    updateRoleUI: function () {
+      const hostBtn = document.getElementById("role-btn-host");
+      const clientBtn = document.getElementById("role-btn-client");
+      if (hostBtn && clientBtn) {
+        if (_role === "host") {
+          hostBtn.style.border = "1.5px solid #10b981";
+          hostBtn.style.background = "rgba(16, 185, 129, 0.25)";
+          hostBtn.style.color = "#34d399";
+          clientBtn.style.border = "1.5px solid #1e3a8a";
+          clientBtn.style.background = "#070d1e";
+          clientBtn.style.color = "#94a3b8";
+        } else {
+          clientBtn.style.border = "1.5px solid #00adf2";
+          clientBtn.style.background = "rgba(0, 173, 242, 0.25)";
+          clientBtn.style.color = "#38bdf8";
+          hostBtn.style.border = "1.5px solid #1e3a8a";
+          hostBtn.style.background = "#070d1e";
+          hostBtn.style.color = "#94a3b8";
+        }
+      }
+    },
+
     reconnect: function () {
+      if (_clientRetryTimer) {
+        clearTimeout(_clientRetryTimer);
+        _clientRetryTimer = null;
+      }
       if (_peer) {
-        try { _peer.destroy(); } catch (e) { }
+        try {
+          _peer.disconnect();
+          _peer.destroy();
+        } catch (e) { }
         _peer = null;
       }
       _activeConnections = [];
-      this.updateStatus("connecting");
+      this.updateStatus("connecting", "กำลังเริ่มการเชื่อมต่อใหม่...");
       this.connectP2P();
     },
 
-    /**
-     * Connect via PeerJS (WebRTC P2P DataChannel)
-     */
     connectP2P: function () {
       if (typeof Peer === "undefined") {
         console.warn("PeerJS library not loaded, attempting CDN fallback...");
@@ -71,53 +124,44 @@
         return;
       }
 
-      this.updateStatus("connecting");
-
+      this.updateRoleUI();
       const cleanPin = _pin.replace(/[^a-zA-Z0-9]/g, "").toLowerCase() || "8888";
       const hostPeerId = `inspectq_host_${cleanPin}`;
       const clientPeerId = `inspectq_client_${cleanPin}_${Math.random().toString(36).substring(2, 7)}`;
 
       if (_role === "client") {
         this.initClient(clientPeerId, hostPeerId);
-      } else if (_role === "host") {
-        this.initHost(hostPeerId);
       } else {
-        // AUTO MODE: Try Host first. If host ID is taken, automatically switch to Client
-        _peer = new Peer(hostPeerId, { debug: 1 });
-
-        _peer.on("open", (id) => {
-          console.log("📱 [SyncEngine] Registered as PRIMARY HOST:", id);
-          this.updateStatus("connected", "โหมดเครื่องหลัก (รอเชื่อมต่อ)");
-          this.listenForClients();
-        });
-
-        _peer.on("error", (err) => {
-          if (err.type === "unavailable-id") {
-            console.log("💻 [SyncEngine] Host already active, registering as VIEWER CLIENT...");
-            try { _peer.destroy(); } catch (e) { }
-            this.initClient(clientPeerId, hostPeerId);
-          } else {
-            console.warn("Peer error:", err);
-            this.updateStatus("offline", "เชื่อมต่อไม่ได้ (" + err.type + ")");
-          }
-        });
+        this.initHost(hostPeerId, clientPeerId);
       }
     },
 
-    initHost: function (hostPeerId) {
-      _peer = new Peer(hostPeerId, { debug: 1 });
+    initHost: function (hostPeerId, fallbackClientPeerId) {
+      this.updateStatus("connecting", "กำลังลงทะเบียนเครื่องหลัก...");
+      _peer = new Peer(hostPeerId, PEER_CONFIG);
+
       _peer.on("open", (id) => {
         console.log("📱 [SyncEngine] HOST Active:", id);
-        this.updateStatus("connected", "เครื่องหลักหน้างาน (พร้อมส่งข้อมูล)");
+        this.updateStatus("connected", "📱 เครื่องหลักหน้างาน (รอเครื่องรับเชื่อมต่อ...)");
         this.listenForClients();
       });
+
       _peer.on("error", (err) => {
         console.warn("Host Peer error:", err);
-        this.updateStatus("offline", "ข้อผิดพลาดเครื่องหลัก: " + err.type);
+        if (err.type === "unavailable-id") {
+          console.log("⚠️ Host ID locked by previous session. Retrying in 2.5s...");
+          this.updateStatus("connecting", "รหัสเครื่องหลักกำลังรีเซ็ต... กำลังลองใหม่ใน 2.5 วิ");
+          setTimeout(() => {
+            if (_role === "host") this.reconnect();
+          }, 2500);
+        } else {
+          this.updateStatus("offline", "เครื่องหลักเกิดข้อผิดพลาด: " + err.type);
+        }
       });
     },
 
     listenForClients: function () {
+      if (!_peer) return;
       _peer.on("connection", (conn) => {
         console.log("🔗 [SyncEngine] Client connected:", conn.peer);
         this.setupConnection(conn, true);
@@ -125,16 +169,53 @@
     },
 
     initClient: function (clientPeerId, hostPeerId) {
-      _peer = new Peer(clientPeerId, { debug: 1 });
+      if (_clientRetryTimer) clearTimeout(_clientRetryTimer);
+      this.updateStatus("connecting", `💻 กำลังค้นหาเครื่องหลัก (${_pin})...`);
+
+      _peer = new Peer(clientPeerId, PEER_CONFIG);
+
       _peer.on("open", (myId) => {
         console.log("💻 [SyncEngine] CLIENT Active:", myId, "connecting to host:", hostPeerId);
-        const conn = _peer.connect(hostPeerId, { reliable: true });
-        this.setupConnection(conn, false);
+        this.attemptConnectToHost(hostPeerId);
       });
+
       _peer.on("error", (err) => {
         console.warn("Client Peer error:", err);
-        this.updateStatus("offline", "ไม่พบเครื่องหลัก (" + hostPeerId + ")");
+        if (err.type === "peer-unavailable") {
+          this.updateStatus("connecting", `🟡 ยังไม่พบเครื่องหลัก PIN ${_pin} (กำลังค้นหาต่อ...)`);
+          this.scheduleClientRetry(hostPeerId);
+        } else {
+          this.updateStatus("offline", "เครื่องรับเกิดข้อผิดพลาด: " + err.type);
+        }
       });
+    },
+
+    attemptConnectToHost: function (hostPeerId) {
+      if (!_peer || _peer.destroyed) return;
+      try {
+        console.log("🔄 [SyncEngine] Calling host:", hostPeerId);
+        const conn = _peer.connect(hostPeerId, { reliable: true });
+        this.setupConnection(conn, false);
+
+        setTimeout(() => {
+          if (_activeConnections.length === 0 && _status !== "connected" && _role === "client") {
+            this.scheduleClientRetry(hostPeerId);
+          }
+        }, 5000);
+      } catch (e) {
+        console.warn("connect error:", e);
+        this.scheduleClientRetry(hostPeerId);
+      }
+    },
+
+    scheduleClientRetry: function (hostPeerId) {
+      if (_clientRetryTimer) clearTimeout(_clientRetryTimer);
+      _clientRetryTimer = setTimeout(() => {
+        if (_activeConnections.length === 0 && _role === "client") {
+          console.log("🔄 [SyncEngine] Auto-retrying to find host...");
+          this.attemptConnectToHost(hostPeerId);
+        }
+      }, 3500);
     },
 
     setupConnection: function (conn, isHost) {
@@ -143,14 +224,14 @@
         if (!_activeConnections.includes(conn)) {
           _activeConnections.push(conn);
         }
-        this.updateStatus("connected", `ซิงก์สดแล้ว (${_activeConnections.length} เครื่อง)`);
+        this.updateStatus("connected", `🟢 ซิงก์สดเรียบร้อย (${_activeConnections.length} เครื่อง)`);
 
         if (isHost) {
-          // As host, immediately push our full dataset to the newly connected client
           this.pushFullStateToConn(conn);
+          this.showToast("🔗 เครื่องรับเชื่อมต่อสำเร็จ! ส่งข้อมูลเรียบร้อย");
         } else {
-          // Request initial state from host
           conn.send({ type: "REQ_FULL_STATE" });
+          this.showToast("🔗 เชื่อมต่อเครื่องหลักสำเร็จ! กำลังดึงข้อมูลล่าสุด");
         }
       });
 
@@ -162,9 +243,15 @@
         console.log("🔴 [SyncEngine] Connection closed:", conn.peer);
         _activeConnections = _activeConnections.filter(c => c !== conn);
         if (_activeConnections.length === 0) {
-          this.updateStatus("connected", "รอเครื่องอื่นเชื่อมต่อ...");
+          if (isHost) {
+            this.updateStatus("connected", "📱 เครื่องหลักหน้างาน (รอเครื่องรับเชื่อมต่อ...)");
+          } else {
+            this.updateStatus("connecting", `🟡 เครื่องหลักตัดการเชื่อมต่อ กำลังรอเชื่อมต่อใหม่...`);
+            const cleanPin = _pin.replace(/[^a-zA-Z0-9]/g, "").toLowerCase() || "8888";
+            this.scheduleClientRetry(`inspectq_host_${cleanPin}`);
+          }
         } else {
-          this.updateStatus("connected", `ซิงก์สดแล้ว (${_activeConnections.length} เครื่อง)`);
+          this.updateStatus("connected", `🟢 ซิงก์สดเรียบร้อย (${_activeConnections.length} เครื่อง)`);
         }
       });
 
@@ -173,9 +260,6 @@
       });
     },
 
-    /**
-     * Broadcast mutation event to all connected peers
-     */
     broadcastMutation: function (action, data) {
       if (_activeConnections.length === 0) return;
 
@@ -186,7 +270,6 @@
         timestamp: Date.now()
       };
 
-      console.log(`📡 [SyncEngine] Broadcasting ${action} to ${_activeConnections.length} peers...`);
       _activeConnections.forEach(conn => {
         if (conn.open) {
           try {
@@ -198,9 +281,6 @@
       });
     },
 
-    /**
-     * Push full snapshot to a specific connection
-     */
     pushFullStateToConn: function (conn) {
       if (!conn || !conn.open) return;
       const fullSnapshot = this.getFullSnapshot();
@@ -212,12 +292,9 @@
       console.log("📤 [SyncEngine] Sent FULL_STATE_SNAPSHOT to:", conn.peer);
     },
 
-    /**
-     * Push full snapshot to all active connections
-     */
     pushNow: function () {
       if (_activeConnections.length === 0) {
-        alert("⚠️ ยังไม่มีเครื่องอื่นเชื่อมต่ออยู่ในรหัส PIN นี้ครับ\nกรุณาเปิดหน้าเว็บนี้บนอีกเครื่องและใส่ PIN เดียวกัน: " + _pin);
+        alert("⚠️ ยังไม่มีเครื่องอื่นเชื่อมต่ออยู่ในรหัส PIN นี้ครับ\nกรุณาตั้งเครื่องตรวจเป็น 'เครื่องหลัก' และตั้งคอมเป็น 'เครื่องรับ' โดยใช้ PIN เดียวกัน: " + _pin);
         return;
       }
       const fullSnapshot = this.getFullSnapshot();
@@ -233,12 +310,9 @@
       this.showToast(`🚀 ส่งข้อมูล ${fullSnapshot.defectList.length} จุดไปยังเครื่องอื่นสำเร็จ!`);
     },
 
-    /**
-     * Request full state from host
-     */
     pullNow: function () {
       if (_activeConnections.length === 0) {
-        alert("⚠️ ยังไม่มีเครื่องหลักเชื่อมต่ออยู่ครับ");
+        alert("⚠️ ยังไม่ได้เชื่อมต่อกับเครื่องหลักครับ\nระบบกำลังค้นหาเครื่องหลัก PIN: " + _pin);
         return;
       }
       _activeConnections.forEach(conn => {
@@ -247,9 +321,6 @@
       this.showToast("🔄 ส่งคำขอดึงข้อมูลล่าสุดจากเครื่องตรวจแล้ว...");
     },
 
-    /**
-     * Handle incoming data packet
-     */
     handleIncomingData: async function (msg, senderConn) {
       if (!msg || !msg.type) return;
 
@@ -278,9 +349,6 @@
       }
     },
 
-    /**
-     * Apply snapshot to local IndexedDB and DOM
-     */
     applyIncomingSnapshot: async function (snapshot) {
       try {
         if (snapshot.projectConfig && window.projectConfig) {
@@ -291,7 +359,6 @@
 
         if (Array.isArray(snapshot.defectList)) {
           window.defectList = snapshot.defectList;
-          // Save to IndexedDB
           if (typeof window.openInspectorDB === "function") {
             const db = await window.openInspectorDB();
             await new Promise((resolve) => {
@@ -314,13 +381,15 @@
           localStorage.setItem("condo_site_attendance", JSON.stringify(window.siteAttendance));
         }
 
-        // Trigger UI refresh
-        if (typeof window.updateSummaryUI === "function") {
-          window.updateSummaryUI();
-        }
-        if (typeof window.flashOfflineSavedIndicator === "function") {
-          window.flashOfflineSavedIndicator();
-        }
+        // Re-render all views
+        if (typeof window.renderRoomButtons === "function") window.renderRoomButtons();
+        if (typeof window.renderCategoryButtons === "function") window.renderCategoryButtons();
+        if (typeof window.updateCurrentRoomDisplay === "function") window.updateCurrentRoomDisplay();
+        if (typeof window.updateNextDefectCode === "function") window.updateNextDefectCode();
+        if (typeof window.updateSummaryUI === "function") window.updateSummaryUI();
+        if (typeof window.renderSavedRoomsList === "function") window.renderSavedRoomsList();
+        if (typeof window.flashOfflineSavedIndicator === "function") window.flashOfflineSavedIndicator();
+
         _lastSyncTimestamp = Date.now();
       } catch (err) {
         console.error("Failed to apply snapshot:", err);
@@ -356,11 +425,7 @@
       };
     },
 
-    /**
-     * Intercept app mutations and auto-broadcast
-     */
     setupAutoSyncHooks: function () {
-      // 1. Hook saveDefectsToStorage
       if (typeof window.saveDefectsToStorage === "function") {
         const origSaveDefects = window.saveDefectsToStorage;
         window.saveDefectsToStorage = async (...args) => {
@@ -370,7 +435,6 @@
         };
       }
 
-      // 2. Hook saveConfig
       if (typeof window.saveConfig === "function") {
         const origSaveConfig = window.saveConfig;
         window.saveConfig = (...args) => {
@@ -381,9 +445,6 @@
       }
     },
 
-    /**
-     * 1-Click Offline Backup: Export full bundle (.json)
-     */
     exportOfflineBackup: function () {
       const snapshot = this.getFullSnapshot();
       const pName = (snapshot.projectConfig.projName || "Condo").replace(/\s+/g, "_");
@@ -399,12 +460,9 @@
       a.click();
       document.body.removeChild(a);
       URL.revokeObjectURL(a.href);
-      this.showToast(`💾 ส่งออกไฟล์สำรอง ${filename} เรียบร้อย!`);
+      this.showToast(`💾 บันทึกไฟล์สำรอง ${filename} เรียบร้อย!`);
     },
 
-    /**
-     * 1-Click Offline Backup: Import bundle (.json)
-     */
     importOfflineBackup: function (file) {
       if (!file) return;
       const reader = new FileReader();
@@ -412,7 +470,6 @@
         try {
           const data = JSON.parse(e.target.result);
           await this.applyIncomingSnapshot(data);
-          // Broadcast to connected peers if any
           this.broadcastMutation("SAVE_DEFECTS", this.getFullSnapshot());
           this.showToast(`🎉 นำเข้าข้อมูลห้องสำเร็จ! (${window.defectList.length} จุด)`);
         } catch (err) {
@@ -435,11 +492,11 @@
       if (status === "connected") {
         color = "#10b981";
         icon = "🟢";
-        text = note || "ซิงก์สดเรียบร้อย";
+        text = note || (_role === "host" ? "📱 เครื่องหลัก (พร้อมส่งข้อมูล)" : "💻 ซิงก์สดเรียบร้อย");
       } else if (status === "connecting") {
         color = "#f59e0b";
         icon = "🟡";
-        text = "กำลังเชื่อมต่อ...";
+        text = note || "กำลังเชื่อมต่อ...";
       } else {
         color = "#ef4444";
         icon = "⚪";
