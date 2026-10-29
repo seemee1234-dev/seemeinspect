@@ -1,5 +1,5 @@
 /**
- * INSPECT Q • Cross-Device Live Auto-Sync Engine (v5.0)
+ * INSPECT Q • Cross-Device Live Auto-Sync Engine (v5.1 - Single Master Lock)
  * DEFINITIVE BULLETPROOF RELIABILITY ARCHITECTURE:
  * 1. Ping-Pong Keepalive Heartbeat (10s intervals):
  *    - Keeps carrier UDP NAT bindings (AIS, True, DTAC) permanently open.
@@ -22,7 +22,7 @@
 
   const STORAGE_PIN_KEY = "inspectq_sync_pin";
   const STORAGE_ROLE_KEY = "inspectq_sync_role";
-  const SYNC_VERSION = "5.0";
+  const SYNC_VERSION = "5.1";
   const CHUNK_SIZE = 16384; // 16 KB safe WebRTC chunk size
   const BUFFER_HIGH_WATER = 65536; // 64 KB pause threshold
   const BUFFER_LOW_WATER = 16384;  // 16 KB resume threshold
@@ -42,12 +42,10 @@
 
   function resolveActiveRole() {
     const saved = localStorage.getItem(STORAGE_ROLE_KEY);
-    // Explicit user role choice strictly wins:
+    // Strict Single-Master Rule: Only the dedicated Master Phone is 'host'.
+    // Every other device (PC, tablet, secondary phones) defaults strictly to 'client'.
     if (saved === "host") return "host";
-    if (saved === "client") return "client";
-
-    // Auto-detection based on presence of inspection data:
-    return getLocalDefectCount() > 0 ? "host" : "client";
+    return "client";
   }
 
   function formatTime(ts) {
@@ -121,14 +119,8 @@
       const saved = localStorage.getItem(STORAGE_ROLE_KEY);
       const count = getLocalDefectCount();
       console.log(`💾 [SyncEngine v${SYNC_VERSION}] onDataLoaded: count=${count}, savedRole=${saved}, currentRole=${_role}`);
-
-      // If user hasn't explicitly set role to client, and we have defects, ensure we are Host!
-      if (!saved && count > 0 && _role !== "host") {
-        console.log("🚀 [SyncEngine] Auto-promoting to Host (Provider) as defects exist in memory!");
-        _role = "host";
-        this.updateRoleUI();
-        this.reconnect();
-      }
+      // STRICT SINGLE-MASTER RULE: Never auto-promote a device to host just because it has defects.
+      // Secondary devices will have defects after syncing. Auto-promoting them would cause rogue host collisions!
     },
 
     setupUnloadHandler: function () {
@@ -286,7 +278,7 @@
       }
       this.updateRoleUI();
       this.reconnect();
-      const roleMsg = _role === "host" ? "📱 ตั้งเป็น: เครื่องตรวจหลัก (ส่งข้อมูล)" : "📲 ตั้งเป็น: เครื่องรอง / จอรับ (ดึงข้อมูลอัตโนมัติ)";
+      const roleMsg = _role === "host" ? "👑 เครื่องนี้เป็น: เครื่องตรวจหลักเครื่องเดียว (Master)" : "📲 เครื่องนี้เป็น: เครื่องรอง (รับข้อมูลอัตโนมัติ)";
       this.showToast(roleMsg);
     },
 
@@ -384,7 +376,7 @@
 
       _peer.on("open", (id) => {
         console.log("📱 [SyncEngine] HOST Registered successfully on slot:", id);
-        this.updateStatus("connected", `📱 เครื่องหลักหน้างาน (ห้อง ${id} พร้อมส่ง)`);
+        this.updateStatus("connected", `👑 เครื่องหลักหน้างาน (ห้อง ${id} พร้อมส่ง)`);
         if (_pendingSnapshot) {
           this.flushPendingSnapshot();
         }
@@ -891,7 +883,7 @@
     },
 
     setupAutoSyncHooks: function () {
-      console.log("🔗 [SyncEngine v5.0] Auto-Sync event hooks active.");
+      console.log("🔗 [SyncEngine v5.1] Auto-Sync event hooks active.");
     },
 
     updateStatus: function (status, note) {
@@ -911,14 +903,14 @@
         color = "#10b981";
         icon = "🟢";
         if (openCount > 0) {
-          text = note || (_role === "host" ? `📱 เครื่องหลัก (เชื่อมต่อ ${openCount} เครื่อง${timeStr})` : `📲 เครื่องรอง (ซิงก์สดเรียบร้อย${timeStr})`);
+          text = note || (_role === "host" ? `👑 เครื่องหลัก (เชื่อมต่อ ${openCount} เครื่อง${timeStr})` : `📲 เครื่องรอง (ซิงก์สดเรียบร้อย${timeStr})`);
         } else {
-          text = note || (_role === "host" ? "📱 เครื่องหลักหน้างาน (พร้อมส่งข้อมูล)" : "📲 เครื่องรอง (พร้อมรับข้อมูล)");
+          text = note || (_role === "host" ? "👑 เครื่องหลักหน้างาน (พร้อมส่งข้อมูล)" : "📲 เครื่องรอง (พร้อมรับข้อมูล)");
         }
       } else if (status === "connecting") {
         color = "#f59e0b";
         icon = "🟡";
-        text = note || (_role === "host" ? "กำลังรอเครื่องรองเชื่อมต่อ..." : "กำลังค้นหาเครื่องหลัก...");
+        text = note || (_role === "host" ? "👑 กำลังรอเครื่องรองเชื่อมต่อ..." : "กำลังค้นหาเครื่องหลัก...");
       } else {
         color = "#ef4444";
         icon = "⚪";
