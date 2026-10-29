@@ -93,7 +93,7 @@ def test_html_injections():
     
     required_tokens = [
         "assets/js/peerjs.min.js",
-        "assets/js/sync_engine.js?v=7.0",
+        "assets/js/sync_engine.js?v=7.1",
         "id=\"cloud-sync-btn\"",
         "openSyncModal()",
         "id=\"sync-modal\"",

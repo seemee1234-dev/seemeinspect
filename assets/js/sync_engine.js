@@ -26,7 +26,7 @@
 
   const STORAGE_PIN_KEY = "inspectq_sync_pin";
   const STORAGE_ROLE_KEY = "inspectq_sync_role";
-  const SYNC_VERSION = "7.0";
+  const SYNC_VERSION = "7.1";
   const CHUNK_SIZE = 16 * 1024; // 16 KB safe WebRTC chunk size
 
   function getLocalDefectCount() {
@@ -554,19 +554,33 @@
 
         const text = await res.text();
         const lines = text.trim().split("\n");
+        const deletedIds = new Set();
+
+        for (const line of lines) {
+          if (!line) continue;
+          try {
+            const parsed = JSON.parse(line);
+            if (parsed.event === "message_delete" && parsed.sequence_id) {
+              deletedIds.add(parsed.sequence_id);
+            }
+          } catch (e) {}
+        }
+
         const messages = [];
         for (const line of lines) {
           if (!line) continue;
           try {
             const parsed = JSON.parse(line);
             if (parsed.event === "message" && parsed.attachment && parsed.attachment.url) {
-              messages.push(parsed);
+              if (!deletedIds.has(parsed.id)) {
+                messages.push(parsed);
+              }
             }
           } catch (e) {}
         }
 
         if (messages.length === 0) {
-          console.log("☁️ [SyncEngine] No cloud snapshot found in topic yet.");
+          console.log("☁️ [SyncEngine] No valid non-deleted cloud snapshot found in topic.");
           return false;
         }
 
@@ -588,12 +602,13 @@
 
         if (!snapshot || !snapshot.timestamp) return false;
 
-        // If Host has more defects in local memory, don't overwrite unless forced
+        // If Host has Master data (defects or existing project name), don't overwrite Host from cloud
         if (!forceApply && _role === "host") {
           const localCount = getLocalDefectCount();
           const remoteCount = (snapshot.defectList || []).length;
-          if (localCount > remoteCount) {
-            console.log(`☁️ [SyncEngine] Local host has ${localCount} defects > remote ${remoteCount}, skipping overwrite.`);
+          const localName = (document.getElementById("cfg-proj-name") ? document.getElementById("cfg-proj-name").value : "").trim();
+          if (localCount >= remoteCount && localName) {
+            console.log(`☁️ [SyncEngine] Host has Master data (${localCount} defects, "${localName}"), skipping cloud overwrite.`);
             return false;
           }
         }
@@ -826,13 +841,21 @@
       console.log(`📥 [SyncEngine v${SYNC_VERSION}] Applying incoming snapshot... Defects:`, (snapshot.defectList || []).length);
 
       try {
-        // 1. Project Config
-        if (snapshot.projectConfig) {
-          if (typeof window.setProjectConfig === "function") {
-            window.setProjectConfig(snapshot.projectConfig);
+        // 1. Project Config (Host is strictly Master and must never be clobbered by cloud)
+        if (snapshot.projectConfig && typeof snapshot.projectConfig === "object") {
+          const currentLocalName = (document.getElementById("cfg-proj-name") ? document.getElementById("cfg-proj-name").value : "").trim();
+          const isHost = _role === "host";
+
+          // Never clobber Host's local project config if user already entered a condo name
+          if (!isHost || !currentLocalName) {
+            if (typeof window.setProjectConfig === "function") {
+              window.setProjectConfig(snapshot.projectConfig);
+            }
+            this.fillConfigInputs(snapshot.projectConfig);
+            localStorage.setItem("condo_inspect_cfg", JSON.stringify(snapshot.projectConfig));
+          } else {
+            console.log("🛡️ [SyncEngine] Preserved local Master condo name:", currentLocalName);
           }
-          this.fillConfigInputs(snapshot.projectConfig);
-          localStorage.setItem("condo_project_config", JSON.stringify(snapshot.projectConfig));
         }
 
         // 2. Defect List (with full base64 photos)
