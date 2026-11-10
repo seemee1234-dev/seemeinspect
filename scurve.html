@@ -370,20 +370,25 @@
     .chart-wrapper {
       position: relative;
       width: 100%;
-      height: 440px;
+      height: 480px;
+      min-height: 480px;
       background: rgba(7, 13, 30, 0.6);
-      border: 1px solid rgba(30, 46, 84, 0.6);
+      border: 1.5px solid rgba(30, 46, 84, 0.8);
       border-radius: 12px;
-      padding: 14px 12px 10px 12px;
+      padding: 16px 14px 28px 14px;
+      overflow: hidden;
     }
 
     /* Cut-off week indicator bar */
     .cutoff-bar {
-      margin-top: 14px;
-      background: rgba(17, 28, 56, 0.6);
-      border: 1px solid var(--border-subtle);
+      margin-top: 28px !important;
+      clear: both !important;
+      position: relative !important;
+      z-index: 10;
+      background: rgba(17, 28, 56, 0.85);
+      border: 1.5px solid var(--border-subtle);
       border-radius: 10px;
-      padding: 10px 16px;
+      padding: 12px 18px;
       display: flex;
       justify-content: space-between;
       align-items: center;
@@ -656,8 +661,15 @@
       }
       .chart-wrapper {
         background: #ffffff !important;
-        border: 1px solid #cbd5e1 !important;
-        height: 380px !important;
+        border: 1.5px solid #000000 !important;
+        height: 420px !important;
+        min-height: 420px !important;
+        padding-bottom: 30px !important;
+        overflow: hidden !important;
+        page-break-inside: avoid !important;
+      }
+      .cutoff-bar {
+        display: none !important;
       }
       .table-responsive {
         overflow: visible !important;
@@ -923,8 +935,9 @@
           <div class="section-sub">เส้นสะสม S-Curve (เส้นทอง = แผนงาน, เส้นฟ้า = ผลงานจริง) ควบคู่แท่งรายสัปดาห์ (Weekly %)</div>
         </div>
         <div class="header-actions">
-          <button class="pill-btn" onclick="toggleDataset(0)">🟡 สลับดูเส้นแผนงาน</button>
-          <button class="pill-btn" onclick="toggleDataset(1)">🔵 สลับดูเส้นผลงานจริง</button>
+          <span class="pill-btn cyan" style="cursor:default; font-weight:400;">📍 ตัดยอด: <strong id="cutoffWeekHeadText" style="color:#ffffff; margin-left:4px;">สัปดาห์ที่ 4 (15 ก.ค.)</strong></span>
+          <button class="pill-btn" onclick="toggleDataset(0)">🟡 สลับเส้นแผน</button>
+          <button class="pill-btn" onclick="toggleDataset(1)">🔵 สลับเส้นจริง</button>
         </div>
       </div>
 
@@ -1541,6 +1554,8 @@
 
       // DOM Updates
       document.getElementById('cutoffWeekText').textContent = `${currWeekMeta.label} (${currWeekMeta.date})`;
+      const headCutoff = document.getElementById('cutoffWeekHeadText');
+      if (headCutoff) headCutoff.textContent = `${currWeekMeta.label} (${currWeekMeta.date.split('-')[0]} ${currWeekMeta.month})`;
       document.getElementById('kpiPlanVal').textContent = `${planVal.toFixed(2)}%`;
       document.getElementById('kpiActualVal').textContent = `${actualVal.toFixed(2)}%`;
       document.getElementById('kpiActualSub').textContent = `คิดเป็นมูลค่า ${formatMoney(earnedCost)} บาท`;
@@ -1665,6 +1680,14 @@
         options: {
           responsive: true,
           maintainAspectRatio: false,
+          layout: {
+            padding: {
+              top: 10,
+              bottom: 30,
+              left: 10,
+              right: 15
+            }
+          },
           interaction: {
             mode: 'index',
             intersect: false
