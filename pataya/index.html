@@ -503,13 +503,15 @@
     /* Gantt & Master Schedule Table (Excel Layout in Modern Dark UI) */
     .table-responsive {
       overflow-x: auto;
-      border: 1px solid var(--border-subtle);
+      border: 1.5px solid #2d4474;
       border-radius: 12px;
+      background: #091124;
     }
 
     .scurve-table {
       width: 100%;
       border-collapse: collapse;
+      border-spacing: 0;
       font-size: 12.5px;
       text-align: left;
       white-space: nowrap;
@@ -517,52 +519,51 @@
 
     .scurve-table th, .scurve-table td {
       padding: 7px 10px;
-      border: 1px solid #1a2747;
+      border: 1px solid #283e6b !important; /* เส้นตารางคมชัดครบทุกช่อง 100% */
     }
 
     .scurve-table th {
-      background: #091124;
-      color: #cbd5e1;
-      font-weight: 400;
+      background: #0d1a38;
+      color: #ffffff;
+      font-weight: 500;
       text-align: center;
-      position: sticky;
-      top: 0;
-      z-index: 10;
+      border: 1px solid #3b5998 !important;
     }
 
     .scurve-table th.task-col {
       text-align: left;
       min-width: 220px;
-      position: sticky;
-      left: 0;
-      background: #070d1e;
-      z-index: 12;
+      background: #0d1a38;
+      border: 1px solid #3b5998 !important;
     }
 
     .scurve-table td.task-col {
-      position: sticky;
-      left: 0;
-      background: var(--bg-card);
-      z-index: 5;
+      background: #0e1a36;
       font-weight: 400;
       color: #ffffff;
+      border: 1px solid #283e6b !important;
     }
 
     .scurve-table tr:hover td {
-      background: rgba(22, 36, 71, 0.7);
+      background: rgba(30, 50, 95, 0.7);
     }
 
     .scurve-table tr.summary-row {
-      background: #091226;
-      font-weight: 400;
+      background: #0a142c;
+      font-weight: 500;
     }
 
     .scurve-table tr.summary-row td {
-      border-top: 2px solid var(--border-gold);
+      border: 1px solid #3b5998 !important;
+      border-top: 2px solid var(--gold) !important;
     }
 
     .scurve-table tr.summary-row.actual-row {
-      background: rgba(0, 173, 242, 0.08);
+      background: rgba(0, 173, 242, 0.12);
+    }
+
+    .scurve-table tr.summary-row.actual-row td {
+      border: 1px solid rgba(0, 173, 242, 0.5) !important;
     }
 
     .scurve-table .gantt-cell {
@@ -658,12 +659,34 @@
         border: 1px solid #cbd5e1 !important;
         height: 380px !important;
       }
-      .scurve-table th, .scurve-table td {
-        border-color: #cbd5e1 !important;
-        color: #0f172a !important;
+      .table-responsive {
+        overflow: visible !important;
+        border: 1.5px solid #000000 !important;
       }
-      .scurve-table th, .scurve-table th.task-col, .scurve-table td.task-col {
+      .scurve-table {
+        border-collapse: collapse !important;
+        width: 100% !important;
+        border: 1.5px solid #000000 !important;
+      }
+      .scurve-table th, .scurve-table td {
+        border: 1px solid #334155 !important; /* เส้นตารางตอนพิมพ์ชัดครบทุกช่อง 100% */
+        color: #000000 !important;
+        position: static !important;
+      }
+      .scurve-table th, .scurve-table th.task-col {
+        background: #e2e8f0 !important;
+        border: 1px solid #000000 !important;
+        color: #000000 !important;
+      }
+      .scurve-table td.task-col {
+        background: #ffffff !important;
+        border: 1px solid #334155 !important;
+        color: #000000 !important;
+      }
+      .scurve-table tr.summary-row td {
         background: #f1f5f9 !important;
+        border: 1px solid #000000 !important;
+        color: #000000 !important;
       }
       .gantt-bar {
         background: #e2e8f0 !important;
