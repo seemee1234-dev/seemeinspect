@@ -431,6 +431,18 @@
       background: rgba(0, 173, 242, 0.05);
     }
 
+    .week-input-card.next-up {
+      border-color: var(--gold) !important;
+      background: rgba(255, 215, 0, 0.08) !important;
+      box-shadow: 0 0 12px rgba(255, 215, 0, 0.35);
+      animation: pulseGold 2s infinite ease-in-out;
+    }
+
+    @keyframes pulseGold {
+      0%, 100% { box-shadow: 0 0 6px rgba(255, 215, 0, 0.25); }
+      50% { box-shadow: 0 0 16px rgba(255, 215, 0, 0.6); }
+    }
+
     .week-input-head {
       display: flex;
       justify-content: space-between;
@@ -915,8 +927,16 @@
           <div class="section-sub">พิมพ์ตัวเลข % ในแต่ละสัปดาห์ แล้วระบบจะคำนวณ % สะสมและปรับกราฟ S-Curve ให้อัตโนมัติ</div>
         </div>
         <div class="header-actions">
-          <button class="pill-btn cyan" onclick="fillNextWeekPrompt()">➕ กรอกสัปดาห์ถัดไป</button>
+          <button class="pill-btn cyan" onclick="fillNextWeekPrompt()">➕ กรอกสัปดาห์ถัดไป (ปุ่มลัด)</button>
           <button class="pill-btn" onclick="clearFutureWeeks()">🧹 เคลียร์สัปดาห์ในอนาคต</button>
+        </div>
+      </div>
+
+      <!-- Quick Guidance Callout -->
+      <div style="background: rgba(0, 173, 242, 0.1); border: 1.5px dashed var(--cyan); border-radius: 10px; padding: 10px 14px; margin-bottom: 14px; display: flex; align-items: center; gap: 10px; font-size: 13px;">
+        <span style="font-size: 18px;">💡</span>
+        <div>
+          <strong>จุดกรอกข้อมูล:</strong> แตะหรือคลิกที่ <strong>"กล่องสี่เหลี่ยมตรงกลางการ์ดแต่ละสัปดาห์"</strong> (กล่องที่กระพริบกรอบสีทอง <span style="color:var(--gold);">● รอคีย์</span> คือสัปดาห์ถัดไป) หรือกดปุ่มฟ้า <strong>"➕ กรอกสัปดาห์ถัดไป"</strong> เพื่อพิมพ์ตัวเลข % ได้ทันที
         </div>
       </div>
 
@@ -1261,18 +1281,20 @@
     function renderInputGrid() {
       const container = document.getElementById('inputGridContainer');
       container.innerHTML = '';
+      const nextUpIdx = findLastEnteredWeekIndex() + 1;
 
       WEEKS_META.forEach((w, idx) => {
         const val = actualWeekly[idx];
         const hasVal = (val !== null && val !== undefined && !isNaN(val));
+        const isNextUp = (idx === nextUpIdx);
         const plan = PLAN_WEEKLY[idx];
         const card = document.createElement('div');
-        card.className = `week-input-card ${hasVal ? 'has-data' : ''}`;
+        card.className = `week-input-card ${hasVal ? 'has-data' : ''} ${isNextUp ? 'next-up' : ''}`;
         card.id = `inputCard_${idx}`;
 
         card.innerHTML = `
           <div class="week-input-head">
-            <span class="week-input-title">${w.label}</span>
+            <span class="week-input-title">${w.label} ${isNextUp ? '<span style="color:var(--gold); font-size:9.5px;">● รอคีย์</span>' : ''}</span>
             <span class="week-input-date">${w.date}</span>
           </div>
           <div class="week-input-plan">
@@ -1282,7 +1304,7 @@
           <input type="number" step="0.01" min="0" max="100" 
                  class="week-input-field" 
                  id="actualInput_${idx}" 
-                 placeholder="-" 
+                 placeholder="${isNextUp ? 'พิมพ์ %' : '-'}" 
                  value="${hasVal ? val.toFixed(2) : ''}"
                  onfocus="this.select()"
                  oninput="onActualInputChange(${idx}, this.value)"
