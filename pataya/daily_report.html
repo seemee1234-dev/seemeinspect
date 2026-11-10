@@ -1,0 +1,1264 @@
+<!doctype html>
+<html lang="th">
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="Cache-Control" content="no-cache, no-store, must-revalidate">
+  <meta http-equiv="Pragma" content="no-cache">
+  <meta http-equiv="Expires" content="0">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+  <title>INSPECT Q • DAILY REPORT | รายงานประจำวันงานก่อสร้าง โครงการพัทยา</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Kanit:wght@300;400;500;600&display=swap" rel="stylesheet">
+
+  <style>
+    /* ========================================================
+       MANDATORY UNIVERSAL TYPOGRAPHY & EXECUTIVE DARK THEME
+       Kanit 300 Light, Crisp, No Glow, Inspect Q Signature
+       ======================================================== */
+    *, *::before, *::after {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+      -webkit-tap-highlight-color: transparent;
+    }
+
+    :root {
+      --bg-base: #070d1e;
+      --bg-dark: #0b1329;
+      --bg-card: #111c38;
+      --bg-card-sub: #162447;
+      --border-subtle: #1e2e54;
+      --border-strong: #283e6b;
+      --border-gold: rgba(212, 175, 55, 0.45);
+      --border-blue: rgba(0, 173, 242, 0.4);
+      --gold: #ffd700;
+      --gold-deep: #d4af37;
+      --cyan: #00adf2;
+      --cyan-light: #38bdf8;
+      --green: #10b981;
+      --rose: #ef4444;
+      --amber: #f59e0b;
+      --purple: #a855f7;
+      --text-main: #f1f5f9;
+      --text-muted: #94a3b8;
+      --text-dim: #64748b;
+    }
+
+    body {
+      font-family: 'Kanit', sans-serif;
+      font-weight: 300;
+      font-size: 13.5px;
+      background: var(--bg-dark);
+      color: var(--text-main);
+      line-height: 1.5;
+      padding-bottom: 90px;
+      -webkit-font-smoothing: antialiased;
+    }
+
+    /* Top Navigation Header */
+    .app-header {
+      position: sticky;
+      top: 0;
+      z-index: 100;
+      background: var(--bg-base);
+      border-bottom: 1.5px solid var(--border-gold);
+      padding: 12px 20px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      box-shadow: 0 4px 18px rgba(0, 0, 0, 0.5);
+    }
+
+    .brand-box {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+    }
+
+    .brand-logo-badge {
+      width: 42px;
+      height: 42px;
+      border-radius: 10px;
+      background: linear-gradient(135deg, rgba(212,175,55,0.25), rgba(0,173,242,0.25));
+      border: 1.5px solid var(--gold);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 22px;
+    }
+
+    .brand-title {
+      font-size: 18px;
+      font-weight: 500;
+      color: #ffffff;
+      letter-spacing: 0.5px;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      flex-wrap: wrap;
+    }
+
+    .brand-title .ver-pill {
+      font-size: 11px;
+      font-weight: 400;
+      background: rgba(212, 175, 55, 0.15);
+      border: 1px solid var(--gold);
+      color: var(--gold);
+      padding: 2px 8px;
+      border-radius: 10px;
+    }
+
+    .brand-sub {
+      font-size: 12px;
+      color: var(--cyan);
+      letter-spacing: 0.3px;
+    }
+
+    .header-actions {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      flex-wrap: wrap;
+    }
+
+    .pill-btn {
+      background: rgba(17, 28, 56, 0.85);
+      border: 1px solid var(--border-subtle);
+      color: var(--text-main);
+      font-family: 'Kanit', sans-serif;
+      font-weight: 300;
+      font-size: 12.5px;
+      padding: 6px 14px;
+      border-radius: 20px;
+      cursor: pointer;
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      transition: all 0.2s ease;
+      text-decoration: none;
+    }
+
+    .pill-btn:hover {
+      background: rgba(0, 173, 242, 0.2);
+      border-color: var(--cyan);
+      color: #ffffff;
+    }
+
+    .pill-btn.gold {
+      background: linear-gradient(135deg, rgba(212,175,55,0.25), rgba(245,158,11,0.25));
+      border: 1.5px solid var(--gold);
+      color: var(--gold);
+      font-weight: 400;
+    }
+
+    .pill-btn.cyan {
+      background: rgba(0, 173, 242, 0.18);
+      border: 1.5px solid var(--cyan);
+      color: var(--cyan);
+      font-weight: 400;
+    }
+
+    .container {
+      max-width: 1440px;
+      margin: 0 auto;
+      padding: 16px 20px;
+    }
+
+    /* Suite Switcher Bar */
+    .suite-nav-bar {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      margin-bottom: 18px;
+      background: #091124;
+      border: 1px solid var(--border-subtle);
+      border-radius: 12px;
+      padding: 8px 12px;
+      overflow-x: auto;
+      white-space: nowrap;
+    }
+
+    .suite-nav-link {
+      font-size: 12.5px;
+      padding: 6px 14px;
+      border-radius: 20px;
+      text-decoration: none;
+      color: var(--text-muted);
+      border: 1px solid transparent;
+      transition: all 0.2s;
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+    }
+
+    .suite-nav-link:hover {
+      color: #ffffff;
+      background: rgba(255,255,255,0.05);
+    }
+
+    .suite-nav-link.active {
+      background: rgba(212, 175, 55, 0.2);
+      border-color: var(--gold);
+      color: var(--gold);
+      font-weight: 400;
+    }
+
+    /* Date & Weather Control Bar */
+    .control-card {
+      background: var(--bg-card);
+      border: 1.5px solid var(--border-strong);
+      border-radius: 14px;
+      padding: 14px 20px;
+      margin-bottom: 20px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      flex-wrap: wrap;
+      gap: 16px;
+    }
+
+    .ctrl-group {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      flex-wrap: wrap;
+    }
+
+    .ctrl-group label {
+      font-size: 13px;
+      color: var(--gold);
+      font-weight: 400;
+    }
+
+    .ctrl-input {
+      background: rgba(7, 13, 30, 0.8);
+      border: 1px solid var(--border-strong);
+      border-radius: 8px;
+      padding: 6px 12px;
+      color: #ffffff;
+      font-family: 'Kanit', sans-serif;
+      font-size: 13px;
+      outline: none;
+    }
+
+    .ctrl-input:focus {
+      border-color: var(--cyan);
+    }
+
+    /* KPI Summary Cards */
+    .kpi-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+      gap: 14px;
+      margin-bottom: 20px;
+    }
+
+    .kpi-card {
+      background: var(--bg-card);
+      border: 1px solid var(--border-subtle);
+      border-radius: 12px;
+      padding: 14px 18px;
+      display: flex;
+      flex-direction: column;
+      gap: 4px;
+      position: relative;
+      overflow: hidden;
+    }
+
+    .kpi-card::before {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 4px;
+      height: 100%;
+    }
+
+    .kpi-card.gold::before { background: var(--gold); }
+    .kpi-card.cyan::before { background: var(--cyan); }
+    .kpi-card.green::before { background: var(--green); }
+    .kpi-card.rose::before { background: var(--rose); }
+
+    .kpi-label {
+      font-size: 12px;
+      color: var(--text-muted);
+    }
+
+    .kpi-val {
+      font-size: 26px;
+      font-weight: 500;
+      color: #ffffff;
+      letter-spacing: -0.5px;
+    }
+
+    .kpi-sub {
+      font-size: 11.5px;
+      color: var(--text-dim);
+    }
+
+    /* Section Header */
+    .section-box {
+      background: var(--bg-card);
+      border: 1.5px solid var(--border-strong);
+      border-radius: 14px;
+      padding: 18px 20px;
+      margin-bottom: 22px;
+      box-shadow: 0 4px 16px rgba(0, 0, 0, 0.35);
+    }
+
+    .section-title-bar {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: 14px;
+      padding-bottom: 10px;
+      border-bottom: 1px solid var(--border-subtle);
+      flex-wrap: wrap;
+      gap: 10px;
+    }
+
+    .section-title {
+      font-size: 16px;
+      font-weight: 500;
+      color: #ffffff;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+
+    .section-title .badge {
+      font-size: 11px;
+      padding: 2px 8px;
+      border-radius: 10px;
+      background: rgba(0, 173, 242, 0.15);
+      color: var(--cyan);
+      border: 1px solid var(--cyan);
+      font-weight: 400;
+    }
+
+    /* Data Table Styling */
+    .table-container {
+      overflow-x: auto;
+      border-radius: 8px;
+      border: 1px solid var(--border-strong);
+    }
+
+    .data-table {
+      width: 100%;
+      border-collapse: collapse;
+      font-size: 12.5px;
+      white-space: nowrap;
+    }
+
+    .data-table th {
+      background: #0d1a38;
+      color: var(--cyan-light);
+      padding: 10px 12px;
+      text-align: left;
+      font-weight: 500;
+      border: 1px solid var(--border-strong);
+    }
+
+    .data-table td {
+      padding: 8px 12px;
+      border: 1px solid var(--border-strong);
+      background: var(--bg-card);
+      color: var(--text-main);
+    }
+
+    .data-table tr:hover td {
+      background: rgba(30, 50, 95, 0.4);
+    }
+
+    .data-table input, .data-table select {
+      width: 100%;
+      background: rgba(7, 13, 30, 0.7);
+      border: 1px solid var(--border-subtle);
+      border-radius: 4px;
+      padding: 4px 8px;
+      color: #ffffff;
+      font-family: 'Kanit', sans-serif;
+      font-size: 12.5px;
+      font-weight: 300;
+      outline: none;
+    }
+
+    .data-table input:focus, .data-table select:focus {
+      border-color: var(--cyan);
+      background: #000000;
+    }
+
+    /* Status Badges */
+    .badge-status {
+      display: inline-block;
+      padding: 3px 8px;
+      border-radius: 6px;
+      font-size: 11.5px;
+      font-weight: 400;
+      text-align: center;
+    }
+
+    .badge-status.done { background: rgba(16, 185, 129, 0.2); color: var(--green); border: 1px solid var(--green); }
+    .badge-status.progress { background: rgba(0, 173, 242, 0.2); color: var(--cyan); border: 1px solid var(--cyan); }
+    .badge-status.pending { background: rgba(245, 158, 11, 0.2); color: var(--amber); border: 1px solid var(--amber); }
+    .badge-status.delay { background: rgba(239, 68, 68, 0.2); color: var(--rose); border: 1px solid var(--rose); }
+
+    /* Action Buttons */
+    .btn-action-icon {
+      background: none;
+      border: none;
+      color: var(--rose);
+      cursor: pointer;
+      font-size: 15px;
+      padding: 4px 6px;
+      border-radius: 4px;
+      transition: background 0.2s;
+    }
+
+    .btn-action-icon:hover {
+      background: rgba(239, 68, 68, 0.2);
+    }
+
+    /* Responsive grid for photos / notes */
+    .notes-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 16px;
+    }
+
+    @media (max-width: 860px) {
+      .notes-grid {
+        grid-template-columns: 1fr;
+      }
+    }
+
+    .note-card {
+      background: var(--bg-card-sub);
+      border: 1px solid var(--border-subtle);
+      border-radius: 10px;
+      padding: 14px 16px;
+    }
+
+    .note-card h4 {
+      font-size: 13.5px;
+      color: var(--gold);
+      margin-bottom: 8px;
+      display: flex;
+      align-items: center;
+      gap: 6px;
+    }
+
+    .note-textarea {
+      width: 100%;
+      height: 90px;
+      background: rgba(7, 13, 30, 0.8);
+      border: 1px solid var(--border-subtle);
+      border-radius: 6px;
+      padding: 8px 10px;
+      color: #ffffff;
+      font-family: 'Kanit', sans-serif;
+      font-size: 13px;
+      font-weight: 300;
+      resize: vertical;
+      outline: none;
+    }
+
+    .note-textarea:focus {
+      border-color: var(--cyan);
+    }
+
+    /* Mobile Bottom Navigation */
+    .bottom-nav {
+      position: fixed;
+      bottom: 0;
+      left: 0;
+      right: 0;
+      z-index: 100;
+      background: var(--bg-base);
+      border-top: 1px solid var(--border-subtle);
+      display: flex;
+      justify-content: space-around;
+      padding: 8px 6px calc(env(safe-area-inset-bottom, 8px) + 8px);
+      box-shadow: 0 -4px 20px rgba(0, 0, 0, 0.5);
+    }
+
+    .nav-btn {
+      flex: 1;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 3px;
+      background: none;
+      border: none;
+      color: var(--text-muted);
+      font-family: 'Kanit', sans-serif;
+      font-size: 11px;
+      font-weight: 300;
+      text-decoration: none;
+      cursor: pointer;
+    }
+
+    .nav-btn .nav-icon {
+      font-size: 18px;
+    }
+
+    .nav-btn.active, .nav-btn:hover {
+      color: var(--gold);
+    }
+
+    /* Toast */
+    .toast {
+      position: fixed;
+      bottom: 80px;
+      right: 20px;
+      background: rgba(11, 19, 41, 0.95);
+      border: 1.5px solid var(--gold);
+      color: #ffffff;
+      padding: 10px 18px;
+      border-radius: 8px;
+      font-size: 13px;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      box-shadow: 0 4px 20px rgba(0,0,0,0.5);
+      z-index: 1000;
+      opacity: 0;
+      transform: translateY(20px);
+      transition: all 0.3s ease;
+      pointer-events: none;
+    }
+
+    .toast.show {
+      opacity: 1;
+      transform: translateY(0);
+    }
+
+    /* Print Styles */
+    @media print {
+      body {
+        background: #ffffff !important;
+        color: #000000 !important;
+        padding-bottom: 0 !important;
+      }
+      .app-header, .suite-nav-bar, .bottom-nav, .header-actions, .no-print {
+        display: none !important;
+      }
+      .section-box, .control-card, .kpi-card {
+        background: #ffffff !important;
+        border: 1px solid #000000 !important;
+        color: #000000 !important;
+        box-shadow: none !important;
+      }
+      .data-table th, .data-table td {
+        border: 1px solid #334155 !important;
+        color: #000000 !important;
+      }
+      .data-table th {
+        background: #e2e8f0 !important;
+      }
+      .data-table input, .data-table select, .note-textarea {
+        border: none !important;
+        background: transparent !important;
+        color: #000000 !important;
+      }
+      @page {
+        size: A4 portrait;
+        margin: 8mm;
+      }
+    }
+  </style>
+</head>
+<body>
+
+  <!-- Top Header -->
+  <header class="app-header">
+    <div class="brand-box">
+      <div class="brand-logo-badge">📋</div>
+      <div>
+        <div class="brand-title">
+          INSPECT Q <span class="ver-pill">DAILY REPORT</span>
+        </div>
+        <div class="brand-sub">รายงานประจำวันงานก่อสร้าง ควบคุมคุณภาพและสถิติแรงงาน • โครงการพัทยา</div>
+      </div>
+    </div>
+    <div class="header-actions">
+      <button class="pill-btn gold" onclick="saveReportData()">💾 บันทึกรายงาน</button>
+      <button class="pill-btn cyan" onclick="window.print()">🖨️ พิมพ์ / PDF</button>
+      <button class="pill-btn" onclick="exportJSON()">📥 ส่งออกข้อมูล</button>
+    </div>
+  </header>
+
+  <main class="container">
+
+    <!-- Suite Switcher Bar -->
+    <div class="suite-nav-bar no-print">
+      <a href="scurve.html" class="suite-nav-link">📈 S-Curve 18 สัปดาห์</a>
+      <a href="3week.html" class="suite-nav-link">📅 แผน 3 สัปดาห์</a>
+      <a href="1week.html" class="suite-nav-link">📆 แผน 1 สัปดาห์</a>
+      <a href="daily_report.html" class="suite-nav-link active">📋 รายงานประจำวัน</a>
+      <a href="procurement_plan.html" class="suite-nav-link">🛒 แผนสั่งของ 5 ช่วง</a>
+      <a href="logistics_manpower.html" class="suite-nav-link">🚚 นำของเข้า & จัดคน</a>
+    </div>
+
+    <!-- Control Bar: Date, Weather, Shift, Site Condition -->
+    <section class="control-card">
+      <div class="ctrl-group">
+        <label>📅 วันที่รายงาน:</label>
+        <input type="date" id="reportDate" class="ctrl-input" onchange="onDateChanged()">
+      </div>
+      <div class="ctrl-group">
+        <label>🌤️ สภาพอากาศ:</label>
+        <select id="weatherSelect" class="ctrl-input" onchange="calcStats()">
+          <option value="sunny">☀️ ท้องฟ้าโปร่ง / แดดดี (ทำงานได้ 100%)</option>
+          <option value="partly_cloudy">⛅ มีเมฆเป็นส่วนมาก (ทำงานได้ปกติ)</option>
+          <option value="light_rain">🌦️ ฝนตกปรอยๆ (งานภายนอกชะลอ)</option>
+          <option value="heavy_rain">⛈️ ฝนตกหนัก / พายุ (หยุดงานภายนอก)</option>
+        </select>
+      </div>
+      <div class="ctrl-group">
+        <label>🌡️ อุณหภูมิ:</label>
+        <input type="text" id="tempInput" class="ctrl-input" style="width: 80px;" value="31°C">
+      </div>
+      <div class="ctrl-group">
+        <label>👷 วิศวกรผู้บันทึก:</label>
+        <input type="text" id="engineerName" class="ctrl-input" value="วิศวกรควบคุมงาน (Inspect Q)">
+      </div>
+    </section>
+
+    <!-- KPI Summary Grid -->
+    <div class="kpi-grid">
+      <div class="kpi-card gold">
+        <div class="kpi-label">แรงงานและช่างทั้งหมดวันนี้</div>
+        <div class="kpi-val" id="kpiTotalWorkers">0 <span style="font-size:14px; font-weight:300;">คน</span></div>
+        <div class="kpi-sub" id="kpiSubWorkers">กะกลางวัน: 0 | กะ OT: 0</div>
+      </div>
+      <div class="kpi-card green">
+        <div class="kpi-label">งานที่เสร็จสมบูรณ์วันนี้</div>
+        <div class="kpi-val" id="kpiCompletedTasks">0 <span style="font-size:14px; font-weight:300;">รายการ</span></div>
+        <div class="kpi-sub">ผลงานตรงตามเกณฑ์คุณภาพ</div>
+      </div>
+      <div class="kpi-card cyan">
+        <div class="kpi-label">งานกำลังดำเนินการ</div>
+        <div class="kpi-val" id="kpiInProgressTasks">0 <span style="font-size:14px; font-weight:300;">รายการ</span></div>
+        <div class="kpi-sub">ความคืบหน้าภาพรวมหน้างาน</div>
+      </div>
+      <div class="kpi-card rose">
+        <div class="kpi-label">จุดบกพร่อง / รอแก้ไข (Defects)</div>
+        <div class="kpi-val" id="kpiDefectsCount">0 <span style="font-size:14px; font-weight:300;">จุด</span></div>
+        <div class="kpi-sub">บันทึกตรวจรับคุณภาพประจำวัน</div>
+      </div>
+    </div>
+
+    <!-- Section 1: Manpower & Labor Count (แรงงานประจำวัน) -->
+    <section class="section-box">
+      <div class="section-title-bar">
+        <div class="section-title">
+          <span>👷 1. สรุปกำลังพลและช่างเข้าทำงานประจำวัน</span>
+          <span class="badge" id="manpowerBadge">10 หมวดงาน</span>
+        </div>
+        <button class="pill-btn" onclick="addManpowerRow()">➕ เพิ่มหมวดช่าง</button>
+      </div>
+      <div class="table-container">
+        <table class="data-table" id="manpowerTable">
+          <thead>
+            <tr>
+              <th style="width: 40px; text-align:center;">#</th>
+              <th>หมวดงาน / ประเภททีมช่าง</th>
+              <th>ผู้รับเหมา / บริษัท</th>
+              <th style="text-align:center; width:90px;">กะกลางวัน</th>
+              <th style="text-align:center; width:90px;">กะล่วงเวลา (OT)</th>
+              <th style="text-align:center; width:90px;">รวมช่าง (คน)</th>
+              <th>พื้นที่ปฏิบัติงาน (โซน/ชั้น/ห้อง)</th>
+              <th style="width: 40px; text-align:center;" class="no-print">ลบ</th>
+            </tr>
+          </thead>
+          <tbody id="manpowerTbody">
+            <!-- Dynamic rows generated by JS -->
+          </tbody>
+          <tfoot>
+            <tr style="background:#091228; font-weight:500;">
+              <td colspan="3" style="text-align:right; color:var(--gold);">รวมยอดกำลังพลทั้งโครงการวันนี้:</td>
+              <td id="footDayWorkers" style="text-align:center; color:var(--cyan); font-weight:500;">0</td>
+              <td id="footOtWorkers" style="text-align:center; color:var(--amber); font-weight:500;">0</td>
+              <td id="footTotalWorkers" style="text-align:center; color:var(--gold); font-size:14px; font-weight:600;">0</td>
+              <td colspan="2">คนทำงานจริง</td>
+            </tr>
+          </tfoot>
+        </table>
+      </div>
+    </section>
+
+    <!-- Section 2: Daily Work Activities & Progress (รายการงานประจำวัน) -->
+    <section class="section-box">
+      <div class="section-title-bar">
+        <div class="section-title">
+          <span>🔨 2. ผลการดำเนินงานประจำวันและปริมาณงาน</span>
+          <span class="badge" id="tasksBadge">0 งาน</span>
+        </div>
+        <button class="pill-btn" onclick="addActivityRow()">➕ เพิ่มรายการงาน</button>
+      </div>
+      <div class="table-container">
+        <table class="data-table" id="activityTable">
+          <thead>
+            <tr>
+              <th style="width: 40px; text-align:center;">#</th>
+              <th>หัวข้องานที่ดำเนินการ</th>
+              <th>หมวดงาน</th>
+              <th>พื้นที่ / โซน</th>
+              <th>ปริมาณงานเป้าหมาย</th>
+              <th>ผลงานที่ทำได้จริงวันนี้</th>
+              <th style="width: 90px; text-align:center;">% งาน</th>
+              <th style="width: 140px; text-align:center;">สถานะ</th>
+              <th>หัวหน้าช่าง / ผู้ควบคุม</th>
+              <th style="width: 40px; text-align:center;" class="no-print">ลบ</th>
+            </tr>
+          </thead>
+          <tbody id="activityTbody">
+            <!-- Dynamic activity rows -->
+          </tbody>
+        </table>
+      </div>
+    </section>
+
+    <!-- Section 3: Heavy Machinery & Equipment (เครื่องจักรและยานพาหนะ) -->
+    <section class="section-box">
+      <div class="section-title-bar">
+        <div class="section-title">
+          <span>🚜 3. เครื่องจักร เครื่องมือหนัก และยานพาหนะเข้าไซต์</span>
+        </div>
+        <button class="pill-btn" onclick="addEquipmentRow()">➕ เพิ่มเครื่องจักร</button>
+      </div>
+      <div class="table-container">
+        <table class="data-table" id="equipmentTable">
+          <thead>
+            <tr>
+              <th style="width: 40px; text-align:center;">#</th>
+              <th>รายการเครื่องจักร / เครื่องมือหนัก</th>
+              <th>ทะเบียน / รหัส</th>
+              <th>พนักงานขับ / ผู้ควบคุม</th>
+              <th style="text-align:center; width:110px;">ชั่วโมงทำงาน</th>
+              <th>สถานะความพร้อม</th>
+              <th>หมายเหตุ / บำรุงรักษา</th>
+              <th style="width: 40px; text-align:center;" class="no-print">ลบ</th>
+            </tr>
+          </thead>
+          <tbody id="equipmentTbody">
+            <!-- Dynamic equipment rows -->
+          </tbody>
+        </table>
+      </div>
+    </section>
+
+    <!-- Section 4: Daily Material Inflow (วัสดุเข้าหน้างานวันนี้) -->
+    <section class="section-box">
+      <div class="section-title-bar">
+        <div class="section-title">
+          <span>📦 4. วัสดุและอุปกรณ์เข้าหน้างานประจำวัน</span>
+        </div>
+        <button class="pill-btn" onclick="addMaterialRow()">➕ เพิ่มรายการวัสดุ</button>
+      </div>
+      <div class="table-container">
+        <table class="data-table" id="materialTable">
+          <thead>
+            <tr>
+              <th style="width: 40px; text-align:center;">#</th>
+              <th>รายการวัสดุ / สินค้า</th>
+              <th>ซัพพลายเออร์ / ร้านค้า</th>
+              <th>จำนวน / หน่วย</th>
+              <th>เวลาของเข้า</th>
+              <th>เลขที่ใบส่งของ / PO</th>
+              <th>ผลการตรวจรับคุณภาพ</th>
+              <th>จุดจัดเก็บ / กองพักของ</th>
+              <th style="width: 40px; text-align:center;" class="no-print">ลบ</th>
+            </tr>
+          </thead>
+          <tbody id="materialTbody">
+            <!-- Dynamic material rows -->
+          </tbody>
+        </table>
+      </div>
+    </section>
+
+    <!-- Section 5: QC Inspection & Daily Defects (การตรวจสอบคุณภาพและจุดบกพร่อง) -->
+    <section class="section-box">
+      <div class="section-title-bar">
+        <div class="section-title">
+          <span>🔍 5. การตรวจสอบคุณภาพงานและจุดบกพร่อง (Defects & Safety)</span>
+        </div>
+        <button class="pill-btn" onclick="addDefectRow()">➕ เพิ่มจุดตรวจสอบ</button>
+      </div>
+      <div class="table-container">
+        <table class="data-table" id="defectTable">
+          <thead>
+            <tr>
+              <th style="width: 40px; text-align:center;">#</th>
+              <th>รายการที่ตรวจพบ / จุดบกพร่อง</th>
+              <th>ตำแหน่ง / ห้อง</th>
+              <th>ระดับความเร่งด่วน</th>
+              <th>แนวทางแก้ไข (Corrective Action)</th>
+              <th>ผู้รับผิดชอบแก้ไข</th>
+              <th>กำหนดเสร็จ</th>
+              <th>สถานะการแก้ไข</th>
+              <th style="width: 40px; text-align:center;" class="no-print">ลบ</th>
+            </tr>
+          </thead>
+          <tbody id="defectTbody">
+            <!-- Dynamic defect rows -->
+          </tbody>
+        </table>
+      </div>
+    </section>
+
+    <!-- Section 6: Tomorrow's Plan & General Notes -->
+    <div class="notes-grid">
+      <div class="note-card">
+        <h4>🎯 แผนงานและเป้าหมายสำหรับวันพรุ่งนี้ (Tomorrow's Work Plan)</h4>
+        <textarea id="tomorrowPlanNotes" class="note-textarea" placeholder="ระบุงานสำคัญที่ต้องดำเนินการพรุ่งนี้, งานเทปูน, งานติดตั้งพิเศษ, หรือการเตรียมพื้นที่..."></textarea>
+      </div>
+      <div class="note-card">
+        <h4>⚠️ ปัญหา อุปสรรค และแนวทางแก้ไข (Issues & Actions)</h4>
+        <textarea id="issuesNotes" class="note-textarea" placeholder="ระบุอุปสรรคหน้างาน เช่น ฝนตกกระทบงานสี, ของเข้าล่าช้า, หรือการประสานงานสาธารณูปโภค..."></textarea>
+      </div>
+    </div>
+
+    <!-- Executive Footer -->
+    <footer style="margin-top: 28px; padding: 16px; border-top: 1px solid var(--border-subtle); text-align: center; font-size: 12px; color: var(--text-muted);">
+      <div>INSPECT Q • ระบบควบคุมงานก่อสร้างและรายงานประจำวัน โครงการพัทยา</div>
+      <div style="margin-top: 4px;">
+        LINE OA: <a href="https://line.me/R/ti/p/@inspectq" style="color:var(--gold);">@inspectq</a> | 
+        โทรศัพท์: <strong style="color:#ffffff;">081-449-9499</strong>
+      </div>
+    </footer>
+  </main>
+
+  <!-- Mobile Bottom Navigation Bar -->
+  <nav class="bottom-nav no-print">
+    <a href="scurve.html" class="nav-btn">
+      <span class="nav-icon">📈</span>
+      <span>S-Curve</span>
+    </a>
+    <a href="3week.html" class="nav-btn">
+      <span class="nav-icon">📅</span>
+      <span>แผน 3 วีค</span>
+    </a>
+    <a href="1week.html" class="nav-btn">
+      <span class="nav-icon">📆</span>
+      <span>แผน 1 วีค</span>
+    </a>
+    <a href="daily_report.html" class="nav-btn active">
+      <span class="nav-icon">📋</span>
+      <span>รายงานวัน</span>
+    </a>
+    <a href="procurement_plan.html" class="nav-btn">
+      <span class="nav-icon">🛒</span>
+      <span>สั่งของ 5 ช่วง</span>
+    </a>
+    <a href="logistics_manpower.html" class="nav-btn">
+      <span class="nav-icon">🚚</span>
+      <span>นำของ & คน</span>
+    </a>
+  </nav>
+
+  <!-- Toast Notification -->
+  <div class="toast" id="toastBox">
+    <span>💾</span>
+    <span id="toastMsg">บันทึกข้อมูลเรียบร้อย</span>
+  </div>
+
+  <script>
+    // Initial Pattaya Default Data for Daily Construction
+    const DEFAULT_MANPOWER = [
+      { cat: "1. งานโครงสร้าง (Structure)", contractor: "ทีมช่างโครงสร้างหลัก", day: 12, ot: 4, area: "อาคาร A ชั้น 2-3" },
+      { cat: "2. งานสถาปัตยกรรม (Architecture)", contractor: "ทีมก่อฉาบ-ปูกระเบื้อง", day: 14, ot: 0, area: "ชั้น 1 โซนโถงทางเดิน" },
+      { cat: "3. งานตกแต่งภายใน (Interior)", contractor: "ผู้รับเหมาบิ้วท์อินพัทยา", day: 8, ot: 2, area: "ห้องพัก Type A ชั้น 2" },
+      { cat: "4. งานครัวและเครื่องใช้ไฟฟ้า", contractor: "ทีมช่างครัว & Exhaust", day: 4, ot: 0, area: "ห้องครัวส่วนกลาง" },
+      { cat: "5. งานระบบไฟฟ้าและสื่อสาร", contractor: "ช่างไฟเมน & Low Voltage", day: 6, ot: 2, area: "ห้อง MDB & ชั้น 1-2" },
+      { cat: "6. งานระบบสุขาภิบาล (Sanitary)", contractor: "ช่างท่อสุขาภิบาล", day: 5, ot: 0, area: "แนวท่อระบายน้ำรอบอาคาร" },
+      { cat: "7. งานระบบป้องกันอัคคีภัย (Fire)", contractor: "ช่างหัวสปริงเกลอร์", day: 2, ot: 0, area: "โถงบันไดหนีไฟ" },
+      { cat: "8. งานระบบปรับอากาศ (HVAC)", contractor: "ทีมติดตั้งแอร์ VRV", day: 6, ot: 0, area: "ระเบียงคอมเพรสเซอร์แอร์" },
+      { cat: "9. งานภายนอกอาคาร (External)", contractor: "ช่างรั้วและถนน", day: 5, ot: 0, area: "ทางเข้าโครงการ" },
+      { cat: "10. งานภูมิทัศน์ (Landscape)", contractor: "ทีมจัดสวนและดินปลูก", day: 4, ot: 0, area: "สวนหน้าอาคาร" },
+      { cat: "ทีมวิศวกรและควบคุมงาน", contractor: "Inspect Q Supervision", day: 3, ot: 1, area: "ทั่วทั้งโครงการ" }
+    ];
+
+    const DEFAULT_ACTIVITIES = [
+      { title: "เทคอนกรีตคานและพื้นชั้น 3 โซน A", cat: "Structure", area: "ชั้น 3 โซน A", planned: "100 ตร.ม.", actual: "100 ตร.ม.", pct: 100, status: "done", foreman: "ช่างสมหมาย" },
+      { title: "ก่ออิฐมวลเบาผนังห้องพัก Unit 201-204", cat: "Architecture", area: "ชั้น 2", planned: "80 ตร.ม.", actual: "70 ตร.ม.", pct: 88, status: "progress", foreman: "ช่างวิชัย" },
+      { title: "เดินท่อร้อยสายไฟเมนเข้าตู้ DB ชั้น 2", cat: "Electrical", area: "ชั้น 2", planned: "4 จุด", actual: "4 จุด", pct: 100, status: "done", foreman: "ช่างประสิทธิ์" },
+      { title: "ติดตั้งโครงคร่าวฝ้าเพดานห้องรับแขก", cat: "Interior", area: "ชั้น 1", planned: "120 ตร.ม.", actual: "85 ตร.ม.", pct: 70, status: "progress", foreman: "ช่างอำนาจ" },
+      { title: "ทดสอบแรงดันน้ำระบบท่อสุขาภิบาล (Pressure Test)", cat: "Sanitary", area: "ชั้น 1-2", planned: "1 ระบบ", actual: "1 ระบบ", pct: 100, status: "done", foreman: "วิศวกรประเสริฐ" }
+    ];
+
+    const DEFAULT_EQUIPMENT = [
+      { name: "รถเครนเคลื่อนที่ 25 ตัน", plate: "พัทยา-7782", operator: "นายมนัส", hours: "7.5", status: "พร้อมใช้งาน 100%", notes: "ยกระบายวัสดุขึ้นชั้น 3" },
+      { name: "รถโม่คอนกรีตผสมเสร็จ (CPAC)", plate: "ชลบุรี-3341", operator: "พนักงานซีแพค", hours: "4.0", status: "เข้าเทคอนกรีตเสร็จสิ้น", notes: "เข้า 4 คัน (24 คิว)" },
+      { name: "นั่งร้านเหล็กมาตรฐาน 40 ชุด", plate: "ชุด A1-A4", operator: "ทีมช่างก่อฉาบ", hours: "8.0", status: "ตรวจความปลอดภัยผ่าน", notes: "ติดตั้งรอบผนังชั้น 2" }
+    ];
+
+    const DEFAULT_MATERIALS = [
+      { item: "คอนกรีตผสมเสร็จ 280 ksc", supplier: "CPAC พัทยา", qty: "24 คิว", time: "09:30 น.", po: "PO-PTY-2026-088", qc: "ผ่านเกณฑ์ Slump 10 cm", loc: "เทเข้าคานพื้นชั้น 3" },
+      { item: "อิฐมวลเบา Q-Con 7.5 cm", supplier: "ไทวัสดุ พัทยา", qty: "1,200 ก้อน", time: "11:15 น.", po: "PO-PTY-2026-092", qc: "ตรวจนับครบ ไม่แตกหัก", loc: "ลานกองพักชั้น 2" },
+      { item: "ท่อร้อยสายไฟ EMT 1/2 นิ้ว", supplier: "โฮมโปร พัทยาเหนือ", qty: "60 เส้น", time: "14:00 น.", po: "PO-PTY-2026-095", qc: "ได้มาตรฐาน มอก.", loc: "ห้องเก็บเครื่องมือช่างไฟ" }
+    ];
+
+    const DEFAULT_DEFECTS = [
+      { desc: "รอยร้าวลายงาผิวฉาบผนังภายนอก", loc: "ผนังทิศตะวันออก ชั้น 1", sev: "medium", action: "ขัดสกัดแล้วฉาบซ่อมด้วยปูนแต่งผิวสกิมโค้ท", resp: "ช่างวิชัย", due: "2026-11-14", status: "กำลังแก้ไข" },
+      { desc: "แนวท่อระบายน้ำแอร์มีระดับ Slope ไม่พอ", loc: "ห้อง 203", sev: "high", action: "ปรับแก้แคลมป์รัดท่อเพิ่มองศาความชันน้ำไหล", resp: "ช่างแอร์", due: "2026-11-12", status: "รอดำเนินการ" }
+    ];
+
+    let reportData = {
+      date: new Date().toISOString().slice(0, 10),
+      weather: "sunny",
+      temp: "31°C",
+      engineer: "วิศวกรควบคุมงาน (Inspect Q)",
+      tomorrowPlan: "1. เทคอนกรีตเสาชั้น 3 ต่อเนื่อง\n2. งานติดตั้งโครงฝ้าฉาบเรียบชั้น 2\n3. งานเดินท่อน้ำดีเข้าห้องน้ำห้อง 201-204",
+      issues: "- ช่วงบ่ายแดดจัด จัดจุดพักน้ำดื่มให้ช่างทำงานปลอดภัย\n- การจราจรหน้าโครงการคล่องตัว การขนส่งวัสดุตรงตามกำหนด",
+      manpower: [...DEFAULT_MANPOWER],
+      activities: [...DEFAULT_ACTIVITIES],
+      equipment: [...DEFAULT_EQUIPMENT],
+      materials: [...DEFAULT_MATERIALS],
+      defects: [...DEFAULT_DEFECTS]
+    };
+
+    function initPage() {
+      // Set today's date if not loaded
+      const todayStr = new Date().toISOString().slice(0, 10);
+      document.getElementById('reportDate').value = todayStr;
+      loadSavedData(todayStr);
+      renderAll();
+    }
+
+    function onDateChanged() {
+      const selectedDate = document.getElementById('reportDate').value;
+      loadSavedData(selectedDate);
+      renderAll();
+    }
+
+    function getStorageKey(dateStr) {
+      return `inspectq_daily_report_pataya_${dateStr}`;
+    }
+
+    function loadSavedData(dateStr) {
+      const saved = localStorage.getItem(getStorageKey(dateStr));
+      if (saved) {
+        try {
+          reportData = JSON.parse(saved);
+          showToast(`📂 โหลดข้อมูลรายงานวันที่ ${dateStr} เรียบร้อย`);
+        } catch(e) {
+          console.error(e);
+        }
+      } else {
+        // default template
+        reportData.date = dateStr;
+      }
+      document.getElementById('reportDate').value = reportData.date || dateStr;
+      document.getElementById('weatherSelect').value = reportData.weather || "sunny";
+      document.getElementById('tempInput').value = reportData.temp || "31°C";
+      document.getElementById('engineerName').value = reportData.engineer || "วิศวกรควบคุมงาน (Inspect Q)";
+      document.getElementById('tomorrowPlanNotes').value = reportData.tomorrowPlan || "";
+      document.getElementById('issuesNotes').value = reportData.issues || "";
+    }
+
+    function saveReportData(showToastMsg = true) {
+      reportData.date = document.getElementById('reportDate').value;
+      reportData.weather = document.getElementById('weatherSelect').value;
+      reportData.temp = document.getElementById('tempInput').value;
+      reportData.engineer = document.getElementById('engineerName').value;
+      reportData.tomorrowPlan = document.getElementById('tomorrowPlanNotes').value;
+      reportData.issues = document.getElementById('issuesNotes').value;
+
+      localStorage.setItem(getStorageKey(reportData.date), JSON.stringify(reportData));
+      calcStats();
+      if (showToastMsg) showToast("💾 บันทึกรายงานประจำวันโครงการพัทยาเรียบร้อย");
+    }
+
+    function renderAll() {
+      renderManpower();
+      renderActivities();
+      renderEquipment();
+      renderMaterials();
+      renderDefects();
+      calcStats();
+    }
+
+    // 1. Manpower Render
+    function renderManpower() {
+      const tbody = document.getElementById('manpowerTbody');
+      tbody.innerHTML = '';
+      reportData.manpower.forEach((m, idx) => {
+        const total = (parseInt(m.day) || 0) + (parseInt(m.ot) || 0);
+        const tr = document.createElement('tr');
+        tr.innerHTML = `
+          <td style="text-align:center;">${idx + 1}</td>
+          <td><input type="text" value="${escapeHtml(m.cat)}" onchange="updateManpower(${idx}, 'cat', this.value)"></td>
+          <td><input type="text" value="${escapeHtml(m.contractor)}" onchange="updateManpower(${idx}, 'contractor', this.value)"></td>
+          <td style="text-align:center;"><input type="number" min="0" style="text-align:center; width:65px;" value="${m.day}" onchange="updateManpower(${idx}, 'day', this.value)"></td>
+          <td style="text-align:center;"><input type="number" min="0" style="text-align:center; width:65px;" value="${m.ot}" onchange="updateManpower(${idx}, 'ot', this.value)"></td>
+          <td style="text-align:center; font-weight:500; color:var(--gold);">${total}</td>
+          <td><input type="text" value="${escapeHtml(m.area)}" onchange="updateManpower(${idx}, 'area', this.value)"></td>
+          <td style="text-align:center;" class="no-print">
+            <button class="btn-action-icon" onclick="deleteManpowerRow(${idx})" title="ลบแถว">🗑️</button>
+          </td>
+        `;
+        tbody.appendChild(tr);
+      });
+      calcStats();
+    }
+
+    function updateManpower(idx, field, val) {
+      reportData.manpower[idx][field] = val;
+      renderManpower();
+      saveReportData(false);
+    }
+
+    function addManpowerRow() {
+      reportData.manpower.push({ cat: "หมวดงานใหม่", contractor: "ผู้รับเหมา", day: 0, ot: 0, area: "พื้นที่หน้างาน" });
+      renderManpower();
+      saveReportData(false);
+    }
+
+    function deleteManpowerRow(idx) {
+      if (confirm("ต้องการลบหมวดช่างนี้ใช่หรือไม่?")) {
+        reportData.manpower.splice(idx, 1);
+        renderManpower();
+        saveReportData(false);
+      }
+    }
+
+    // 2. Activities Render
+    function renderActivities() {
+      const tbody = document.getElementById('activityTbody');
+      tbody.innerHTML = '';
+      reportData.activities.forEach((a, idx) => {
+        const statusMap = {
+          done: '<span class="badge-status done">เสร็จสมบูรณ์ 100%</span>',
+          progress: '<span class="badge-status progress">กำลังทำ</span>',
+          pending: '<span class="badge-status pending">รอดำเนินการ</span>',
+          delay: '<span class="badge-status delay">ล่าช้ากว่าแผน</span>'
+        };
+        const tr = document.createElement('tr');
+        tr.innerHTML = `
+          <td style="text-align:center;">${idx + 1}</td>
+          <td><input type="text" style="min-width:200px;" value="${escapeHtml(a.title)}" onchange="updateActivity(${idx}, 'title', this.value)"></td>
+          <td><input type="text" style="width:120px;" value="${escapeHtml(a.cat)}" onchange="updateActivity(${idx}, 'cat', this.value)"></td>
+          <td><input type="text" style="width:110px;" value="${escapeHtml(a.area)}" onchange="updateActivity(${idx}, 'area', this.value)"></td>
+          <td><input type="text" style="width:90px;" value="${escapeHtml(a.planned)}" onchange="updateActivity(${idx}, 'planned', this.value)"></td>
+          <td><input type="text" style="width:90px;" value="${escapeHtml(a.actual)}" onchange="updateActivity(${idx}, 'actual', this.value)"></td>
+          <td style="text-align:center;"><input type="number" min="0" max="100" style="width:60px; text-align:center;" value="${a.pct}" onchange="updateActivity(${idx}, 'pct', this.value)">%</td>
+          <td style="text-align:center;">
+            <select style="width:125px;" onchange="updateActivity(${idx}, 'status', this.value)">
+              <option value="done" ${a.status === 'done' ? 'selected' : ''}>เสร็จสมบูรณ์</option>
+              <option value="progress" ${a.status === 'progress' ? 'selected' : ''}>กำลังทำ</option>
+              <option value="pending" ${a.status === 'pending' ? 'selected' : ''}>รอดำเนินการ</option>
+              <option value="delay" ${a.status === 'delay' ? 'selected' : ''}>ล่าช้า</option>
+            </select>
+          </td>
+          <td><input type="text" style="width:110px;" value="${escapeHtml(a.foreman)}" onchange="updateActivity(${idx}, 'foreman', this.value)"></td>
+          <td style="text-align:center;" class="no-print">
+            <button class="btn-action-icon" onclick="deleteActivityRow(${idx})">🗑️</button>
+          </td>
+        `;
+        tbody.appendChild(tr);
+      });
+      document.getElementById('tasksBadge').innerText = `${reportData.activities.length} รายการ`;
+      calcStats();
+    }
+
+    function updateActivity(idx, field, val) {
+      if (field === 'pct') {
+        val = parseInt(val) || 0;
+        if (val >= 100) reportData.activities[idx].status = 'done';
+      }
+      reportData.activities[idx][field] = val;
+      renderActivities();
+      saveReportData(false);
+    }
+
+    function addActivityRow() {
+      reportData.activities.push({ title: "กิจกรรมงานใหม่", cat: "Structure", area: "ชั้น 2", planned: "10 หน่วย", actual: "0 หน่วย", pct: 0, status: "pending", foreman: "ช่างคุมงาน" });
+      renderActivities();
+      saveReportData(false);
+    }
+
+    function deleteActivityRow(idx) {
+      if (confirm("ต้องการลบกิจกรรมงานนี้ใช่หรือไม่?")) {
+        reportData.activities.splice(idx, 1);
+        renderActivities();
+        saveReportData(false);
+      }
+    }
+
+    // 3. Equipment Render
+    function renderEquipment() {
+      const tbody = document.getElementById('equipmentTbody');
+      tbody.innerHTML = '';
+      reportData.equipment.forEach((e, idx) => {
+        const tr = document.createElement('tr');
+        tr.innerHTML = `
+          <td style="text-align:center;">${idx + 1}</td>
+          <td><input type="text" value="${escapeHtml(e.name)}" onchange="updateEquipment(${idx}, 'name', this.value)"></td>
+          <td><input type="text" style="width:110px;" value="${escapeHtml(e.plate)}" onchange="updateEquipment(${idx}, 'plate', this.value)"></td>
+          <td><input type="text" style="width:110px;" value="${escapeHtml(e.operator)}" onchange="updateEquipment(${idx}, 'operator', this.value)"></td>
+          <td style="text-align:center;"><input type="text" style="text-align:center; width:80px;" value="${escapeHtml(e.hours)}" onchange="updateEquipment(${idx}, 'hours', this.value)"></td>
+          <td><input type="text" value="${escapeHtml(e.status)}" onchange="updateEquipment(${idx}, 'status', this.value)"></td>
+          <td><input type="text" value="${escapeHtml(e.notes)}" onchange="updateEquipment(${idx}, 'notes', this.value)"></td>
+          <td style="text-align:center;" class="no-print"><button class="btn-action-icon" onclick="deleteEquipmentRow(${idx})">🗑️</button></td>
+        `;
+        tbody.appendChild(tr);
+      });
+    }
+
+    function updateEquipment(idx, field, val) {
+      reportData.equipment[idx][field] = val;
+      saveReportData(false);
+    }
+
+    function addEquipmentRow() {
+      reportData.equipment.push({ name: "เครื่องจักรใหม่", plate: "-", operator: "ช่าง", hours: "8.0", status: "พร้อมใช้งาน", notes: "-" });
+      renderEquipment();
+      saveReportData(false);
+    }
+
+    function deleteEquipmentRow(idx) {
+      reportData.equipment.splice(idx, 1);
+      renderEquipment();
+      saveReportData(false);
+    }
+
+    // 4. Material Render
+    function renderMaterials() {
+      const tbody = document.getElementById('materialTbody');
+      tbody.innerHTML = '';
+      reportData.materials.forEach((m, idx) => {
+        const tr = document.createElement('tr');
+        tr.innerHTML = `
+          <td style="text-align:center;">${idx + 1}</td>
+          <td><input type="text" value="${escapeHtml(m.item)}" onchange="updateMaterial(${idx}, 'item', this.value)"></td>
+          <td><input type="text" style="width:130px;" value="${escapeHtml(m.supplier)}" onchange="updateMaterial(${idx}, 'supplier', this.value)"></td>
+          <td><input type="text" style="width:90px;" value="${escapeHtml(m.qty)}" onchange="updateMaterial(${idx}, 'qty', this.value)"></td>
+          <td><input type="text" style="width:85px;" value="${escapeHtml(m.time)}" onchange="updateMaterial(${idx}, 'time', this.value)"></td>
+          <td><input type="text" style="width:120px;" value="${escapeHtml(m.po)}" onchange="updateMaterial(${idx}, 'po', this.value)"></td>
+          <td><input type="text" value="${escapeHtml(m.qc)}" onchange="updateMaterial(${idx}, 'qc', this.value)"></td>
+          <td><input type="text" value="${escapeHtml(m.loc)}" onchange="updateMaterial(${idx}, 'loc', this.value)"></td>
+          <td style="text-align:center;" class="no-print"><button class="btn-action-icon" onclick="deleteMaterialRow(${idx})">🗑️</button></td>
+        `;
+        tbody.appendChild(tr);
+      });
+    }
+
+    function updateMaterial(idx, field, val) {
+      reportData.materials[idx][field] = val;
+      saveReportData(false);
+    }
+
+    function addMaterialRow() {
+      reportData.materials.push({ item: "วัสดุใหม่", supplier: "ซัพพลายเออร์", qty: "1 หน่วย", time: "10:00 น.", po: "-", qc: "ผ่านเกณฑ์", loc: "ลานพักของ" });
+      renderMaterials();
+      saveReportData(false);
+    }
+
+    function deleteMaterialRow(idx) {
+      reportData.materials.splice(idx, 1);
+      renderMaterials();
+      saveReportData(false);
+    }
+
+    // 5. Defects Render
+    function renderDefects() {
+      const tbody = document.getElementById('defectTbody');
+      tbody.innerHTML = '';
+      reportData.defects.forEach((d, idx) => {
+        const tr = document.createElement('tr');
+        tr.innerHTML = `
+          <td style="text-align:center;">${idx + 1}</td>
+          <td><input type="text" value="${escapeHtml(d.desc)}" onchange="updateDefect(${idx}, 'desc', this.value)"></td>
+          <td><input type="text" style="width:110px;" value="${escapeHtml(d.loc)}" onchange="updateDefect(${idx}, 'loc', this.value)"></td>
+          <td>
+            <select style="width:95px;" onchange="updateDefect(${idx}, 'sev', this.value)">
+              <option value="low" ${d.sev === 'low' ? 'selected' : ''}>ต่ำ (Low)</option>
+              <option value="medium" ${d.sev === 'medium' ? 'selected' : ''}>ปานกลาง</option>
+              <option value="high" ${d.sev === 'high' ? 'selected' : ''}>สูง (ด่วน)</option>
+            </select>
+          </td>
+          <td><input type="text" value="${escapeHtml(d.action)}" onchange="updateDefect(${idx}, 'action', this.value)"></td>
+          <td><input type="text" style="width:100px;" value="${escapeHtml(d.resp)}" onchange="updateDefect(${idx}, 'resp', this.value)"></td>
+          <td><input type="date" style="width:110px;" value="${d.due}" onchange="updateDefect(${idx}, 'due', this.value)"></td>
+          <td><input type="text" style="width:100px;" value="${escapeHtml(d.status)}" onchange="updateDefect(${idx}, 'status', this.value)"></td>
+          <td style="text-align:center;" class="no-print"><button class="btn-action-icon" onclick="deleteDefectRow(${idx})">🗑️</button></td>
+        `;
+        tbody.appendChild(tr);
+      });
+      calcStats();
+    }
+
+    function updateDefect(idx, field, val) {
+      reportData.defects[idx][field] = val;
+      renderDefects();
+      saveReportData(false);
+    }
+
+    function addDefectRow() {
+      reportData.defects.push({ desc: "จุดตรวจสอบใหม่", loc: "โซนหน้างาน", sev: "medium", action: "แก้ไขตามมาตรฐาน", resp: "ช่าง", due: new Date().toISOString().slice(0,10), status: "รอตรวจ" });
+      renderDefects();
+      saveReportData(false);
+    }
+
+    function deleteDefectRow(idx) {
+      reportData.defects.splice(idx, 1);
+      renderDefects();
+      saveReportData(false);
+    }
+
+    // Calculations & KPIs
+    function calcStats() {
+      let dayTotal = 0;
+      let otTotal = 0;
+      reportData.manpower.forEach(m => {
+        dayTotal += parseInt(m.day) || 0;
+        otTotal += parseInt(m.ot) || 0;
+      });
+      const grandTotal = dayTotal + otTotal;
+      document.getElementById('footDayWorkers').innerText = dayTotal;
+      document.getElementById('footOtWorkers').innerText = otTotal;
+      document.getElementById('footTotalWorkers').innerText = grandTotal;
+      document.getElementById('kpiTotalWorkers').innerHTML = `${grandTotal} <span style="font-size:14px; font-weight:300;">คน</span>`;
+      document.getElementById('kpiSubWorkers').innerText = `กะกลางวัน: ${dayTotal} คน | กะ OT: ${otTotal} คน`;
+
+      // Tasks stats
+      let completed = 0;
+      let inProgress = 0;
+      reportData.activities.forEach(a => {
+        if (a.status === 'done' || (parseInt(a.pct) || 0) >= 100) completed++;
+        else if (a.status === 'progress' || (parseInt(a.pct) || 0) > 0) inProgress++;
+      });
+      document.getElementById('kpiCompletedTasks').innerHTML = `${completed} <span style="font-size:14px; font-weight:300;">รายการ</span>`;
+      document.getElementById('kpiInProgressTasks').innerHTML = `${inProgress} <span style="font-size:14px; font-weight:300;">รายการ</span>`;
+      document.getElementById('kpiDefectsCount').innerHTML = `${reportData.defects.length} <span style="font-size:14px; font-weight:300;">จุด</span>`;
+    }
+
+    function showToast(msg) {
+      const toast = document.getElementById('toastBox');
+      document.getElementById('toastMsg').innerText = msg;
+      toast.classList.add('show');
+      setTimeout(() => toast.classList.remove('show'), 2800);
+    }
+
+    function exportJSON() {
+      saveReportData(false);
+      const dataStr = "data:text/json;charset=utf-8," + encodeURIComponent(JSON.stringify(reportData, null, 2));
+      const a = document.createElement('a');
+      a.href = dataStr;
+      a.download = `INSPECT_Q_DAILY_REPORT_PATAYA_${reportData.date}.json`;
+      a.click();
+    }
+
+    function escapeHtml(str) {
+      if (!str) return '';
+      return String(str).replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;').replace(/"/g, '&quot;');
+    }
+
+    window.addEventListener('DOMContentLoaded', initPage);
+  </script>
+</body>
+</html>

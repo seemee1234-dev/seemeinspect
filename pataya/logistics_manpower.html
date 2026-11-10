@@ -1,0 +1,1008 @@
+<!doctype html>
+<html lang="th">
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="Cache-Control" content="no-cache, no-store, must-revalidate">
+  <meta http-equiv="Pragma" content="no-cache">
+  <meta http-equiv="Expires" content="0">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+  <title>INSPECT Q • SITE LOGISTICS & MANPOWER | แผนนำของเข้าและจัดคน โครงการพัทยา</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Kanit:wght@300;400;500;600&display=swap" rel="stylesheet">
+
+  <style>
+    /* ========================================================
+       MANDATORY UNIVERSAL TYPOGRAPHY & EXECUTIVE DARK THEME
+       Kanit 300 Light, Crisp, No Glow, Inspect Q Signature
+       ======================================================== */
+    *, *::before, *::after {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+      -webkit-tap-highlight-color: transparent;
+    }
+
+    :root {
+      --bg-base: #070d1e;
+      --bg-dark: #0b1329;
+      --bg-card: #111c38;
+      --bg-card-sub: #162447;
+      --border-subtle: #1e2e54;
+      --border-strong: #283e6b;
+      --border-gold: rgba(212, 175, 55, 0.45);
+      --border-blue: rgba(0, 173, 242, 0.4);
+      --gold: #ffd700;
+      --gold-deep: #d4af37;
+      --cyan: #00adf2;
+      --cyan-light: #38bdf8;
+      --green: #10b981;
+      --rose: #ef4444;
+      --amber: #f59e0b;
+      --purple: #a855f7;
+      --text-main: #f1f5f9;
+      --text-muted: #94a3b8;
+      --text-dim: #64748b;
+    }
+
+    body {
+      font-family: 'Kanit', sans-serif;
+      font-weight: 300;
+      font-size: 13px;
+      background: var(--bg-dark);
+      color: var(--text-main);
+      line-height: 1.5;
+      padding-bottom: 90px;
+      -webkit-font-smoothing: antialiased;
+    }
+
+    .app-header {
+      position: sticky;
+      top: 0;
+      z-index: 100;
+      background: var(--bg-base);
+      border-bottom: 1.5px solid var(--border-gold);
+      padding: 12px 20px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      box-shadow: 0 4px 18px rgba(0, 0, 0, 0.5);
+    }
+
+    .brand-box {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+    }
+
+    .brand-logo-badge {
+      width: 42px;
+      height: 42px;
+      border-radius: 10px;
+      background: linear-gradient(135deg, rgba(212,175,55,0.25), rgba(0,173,242,0.25));
+      border: 1.5px solid var(--gold);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 22px;
+    }
+
+    .brand-title {
+      font-size: 18px;
+      font-weight: 500;
+      color: #ffffff;
+      letter-spacing: 0.5px;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      flex-wrap: wrap;
+    }
+
+    .brand-title .ver-pill {
+      font-size: 11px;
+      font-weight: 400;
+      background: rgba(0, 173, 242, 0.15);
+      border: 1px solid var(--cyan);
+      color: var(--cyan);
+      padding: 2px 8px;
+      border-radius: 10px;
+    }
+
+    .brand-sub {
+      font-size: 12px;
+      color: var(--gold);
+      letter-spacing: 0.3px;
+    }
+
+    .header-actions {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      flex-wrap: wrap;
+    }
+
+    .pill-btn {
+      background: rgba(17, 28, 56, 0.85);
+      border: 1px solid var(--border-subtle);
+      color: var(--text-main);
+      font-family: 'Kanit', sans-serif;
+      font-weight: 300;
+      font-size: 12.5px;
+      padding: 6px 14px;
+      border-radius: 20px;
+      cursor: pointer;
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      transition: all 0.2s ease;
+      text-decoration: none;
+    }
+
+    .pill-btn:hover {
+      background: rgba(0, 173, 242, 0.2);
+      border-color: var(--cyan);
+      color: #ffffff;
+    }
+
+    .pill-btn.gold {
+      background: linear-gradient(135deg, rgba(212,175,55,0.25), rgba(245,158,11,0.25));
+      border: 1.5px solid var(--gold);
+      color: var(--gold);
+      font-weight: 400;
+    }
+
+    .pill-btn.cyan {
+      background: rgba(0, 173, 242, 0.18);
+      border: 1.5px solid var(--cyan);
+      color: var(--cyan);
+      font-weight: 400;
+    }
+
+    .container {
+      max-width: 1540px;
+      margin: 0 auto;
+      padding: 16px 20px;
+    }
+
+    /* Suite Switcher Bar */
+    .suite-nav-bar {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      margin-bottom: 18px;
+      background: #091124;
+      border: 1px solid var(--border-subtle);
+      border-radius: 12px;
+      padding: 8px 12px;
+      overflow-x: auto;
+      white-space: nowrap;
+    }
+
+    .suite-nav-link {
+      font-size: 12.5px;
+      padding: 6px 14px;
+      border-radius: 20px;
+      text-decoration: none;
+      color: var(--text-muted);
+      border: 1px solid transparent;
+      transition: all 0.2s;
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+    }
+
+    .suite-nav-link:hover {
+      color: #ffffff;
+      background: rgba(255,255,255,0.05);
+    }
+
+    .suite-nav-link.active {
+      background: rgba(0, 173, 242, 0.2);
+      border-color: var(--cyan);
+      color: var(--cyan);
+      font-weight: 400;
+    }
+
+    /* KPI Summary Cards */
+    .kpi-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(210px, 1fr));
+      gap: 14px;
+      margin-bottom: 20px;
+    }
+
+    .kpi-card {
+      background: var(--bg-card);
+      border: 1px solid var(--border-subtle);
+      border-radius: 12px;
+      padding: 14px 18px;
+      display: flex;
+      flex-direction: column;
+      gap: 4px;
+      position: relative;
+      overflow: hidden;
+    }
+
+    .kpi-card::before {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 4px;
+      height: 100%;
+    }
+
+    .kpi-card.gold::before { background: var(--gold); }
+    .kpi-card.cyan::before { background: var(--cyan); }
+    .kpi-card.green::before { background: var(--green); }
+    .kpi-card.purple::before { background: var(--purple); }
+
+    .kpi-label {
+      font-size: 12px;
+      color: var(--text-muted);
+    }
+
+    .kpi-val {
+      font-size: 26px;
+      font-weight: 500;
+      color: #ffffff;
+      letter-spacing: -0.5px;
+    }
+
+    .kpi-sub {
+      font-size: 11.5px;
+      color: var(--text-dim);
+    }
+
+    /* Section Header */
+    .section-box {
+      background: var(--bg-card);
+      border: 1.5px solid var(--border-strong);
+      border-radius: 14px;
+      padding: 18px 20px;
+      margin-bottom: 22px;
+      box-shadow: 0 4px 16px rgba(0, 0, 0, 0.35);
+    }
+
+    .section-title-bar {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: 14px;
+      padding-bottom: 10px;
+      border-bottom: 1px solid var(--border-subtle);
+      flex-wrap: wrap;
+      gap: 10px;
+    }
+
+    .section-title {
+      font-size: 16px;
+      font-weight: 500;
+      color: #ffffff;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+
+    .section-title .badge {
+      font-size: 11px;
+      padding: 2px 8px;
+      border-radius: 10px;
+      background: rgba(0, 173, 242, 0.15);
+      color: var(--cyan);
+      border: 1px solid var(--cyan);
+      font-weight: 400;
+    }
+
+    /* Data Table Styling */
+    .table-container {
+      overflow-x: auto;
+      border-radius: 8px;
+      border: 1px solid var(--border-strong);
+    }
+
+    .data-table {
+      width: 100%;
+      border-collapse: collapse;
+      font-size: 12px;
+      white-space: nowrap;
+    }
+
+    .data-table th {
+      background: #0d1a38;
+      color: var(--cyan-light);
+      padding: 9px 10px;
+      text-align: left;
+      font-weight: 500;
+      border: 1px solid var(--border-strong);
+    }
+
+    .data-table td {
+      padding: 6px 10px;
+      border: 1px solid var(--border-strong);
+      background: var(--bg-card);
+      color: var(--text-main);
+    }
+
+    .data-table tr:hover td {
+      background: rgba(30, 50, 95, 0.45);
+    }
+
+    .data-table input, .data-table select {
+      background: rgba(7, 13, 30, 0.7);
+      border: 1px solid var(--border-subtle);
+      border-radius: 4px;
+      padding: 4px 6px;
+      color: #ffffff;
+      font-family: 'Kanit', sans-serif;
+      font-size: 12px;
+      font-weight: 300;
+      outline: none;
+    }
+
+    .data-table input:focus, .data-table select:focus {
+      border-color: var(--cyan);
+      background: #000000;
+    }
+
+    /* Badges */
+    .badge-status {
+      display: inline-block;
+      padding: 3px 8px;
+      border-radius: 6px;
+      font-size: 11px;
+      font-weight: 400;
+      text-align: center;
+    }
+
+    .badge-status.done { background: rgba(16, 185, 129, 0.2); color: var(--green); border: 1px solid var(--green); }
+    .badge-status.progress { background: rgba(0, 173, 242, 0.2); color: var(--cyan); border: 1px solid var(--cyan); }
+    .badge-status.scheduled { background: rgba(245, 158, 11, 0.2); color: var(--amber); border: 1px solid var(--amber); }
+    .badge-status.transit { background: rgba(168, 85, 247, 0.2); color: var(--purple); border: 1px solid var(--purple); }
+
+    .btn-action-icon {
+      background: none;
+      border: none;
+      color: var(--rose);
+      cursor: pointer;
+      font-size: 14px;
+      padding: 3px 5px;
+      border-radius: 4px;
+    }
+
+    .btn-action-icon:hover {
+      background: rgba(239, 68, 68, 0.2);
+    }
+
+    /* Mobile Bottom Navigation */
+    .bottom-nav {
+      position: fixed;
+      bottom: 0;
+      left: 0;
+      right: 0;
+      z-index: 100;
+      background: var(--bg-base);
+      border-top: 1px solid var(--border-subtle);
+      display: flex;
+      justify-content: space-around;
+      padding: 8px 6px calc(env(safe-area-inset-bottom, 8px) + 8px);
+      box-shadow: 0 -4px 20px rgba(0, 0, 0, 0.5);
+    }
+
+    .nav-btn {
+      flex: 1;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 3px;
+      background: none;
+      border: none;
+      color: var(--text-muted);
+      font-family: 'Kanit', sans-serif;
+      font-size: 11px;
+      font-weight: 300;
+      text-decoration: none;
+      cursor: pointer;
+    }
+
+    .nav-btn .nav-icon {
+      font-size: 18px;
+    }
+
+    .nav-btn.active, .nav-btn:hover {
+      color: var(--cyan);
+    }
+
+    /* Toast */
+    .toast {
+      position: fixed;
+      bottom: 80px;
+      right: 20px;
+      background: rgba(11, 19, 41, 0.95);
+      border: 1.5px solid var(--gold);
+      color: #ffffff;
+      padding: 10px 18px;
+      border-radius: 8px;
+      font-size: 13px;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      box-shadow: 0 4px 20px rgba(0,0,0,0.5);
+      z-index: 1000;
+      opacity: 0;
+      transform: translateY(20px);
+      transition: all 0.3s ease;
+      pointer-events: none;
+    }
+
+    .toast.show {
+      opacity: 1;
+      transform: translateY(0);
+    }
+
+    @media print {
+      body {
+        background: #ffffff !important;
+        color: #000000 !important;
+        padding-bottom: 0 !important;
+      }
+      .app-header, .suite-nav-bar, .bottom-nav, .header-actions, .no-print {
+        display: none !important;
+      }
+      .section-box, .kpi-card {
+        background: #ffffff !important;
+        border: 1px solid #000000 !important;
+        color: #000000 !important;
+        box-shadow: none !important;
+      }
+      .data-table th, .data-table td {
+        border: 1px solid #334155 !important;
+        color: #000000 !important;
+      }
+      .data-table th {
+        background: #e2e8f0 !important;
+      }
+      .data-table input, .data-table select {
+        border: none !important;
+        background: transparent !important;
+        color: #000000 !important;
+      }
+      @page {
+        size: A4 landscape;
+        margin: 6mm;
+      }
+    }
+  </style>
+</head>
+<body>
+
+  <!-- Top Header -->
+  <header class="app-header">
+    <div class="brand-box">
+      <div class="brand-logo-badge">🚚</div>
+      <div>
+        <div class="brand-title">
+          INSPECT Q <span class="ver-pill">SITE LOGISTICS & MANPOWER</span>
+        </div>
+        <div class="brand-sub">แผนการนำของเข้าหน้างาน • การจัดสรรคนทำงานแต่ละหัวข้องาน • ช่วงเวลากะงาน โครงการพัทยา</div>
+      </div>
+    </div>
+    <div class="header-actions">
+      <button class="pill-btn gold" onclick="saveAllData()">💾 บันทึกแผนงาน</button>
+      <button class="pill-btn cyan" onclick="window.print()">🖨️ พิมพ์ / PDF</button>
+      <button class="pill-btn" onclick="exportJSON()">📥 ส่งออกข้อมูล</button>
+    </div>
+  </header>
+
+  <main class="container">
+
+    <!-- Suite Switcher Bar -->
+    <div class="suite-nav-bar no-print">
+      <a href="scurve.html" class="suite-nav-link">📈 S-Curve 18 สัปดาห์</a>
+      <a href="3week.html" class="suite-nav-link">📅 แผน 3 สัปดาห์</a>
+      <a href="1week.html" class="suite-nav-link">📆 แผน 1 สัปดาห์</a>
+      <a href="daily_report.html" class="suite-nav-link">📋 รายงานประจำวัน</a>
+      <a href="procurement_plan.html" class="suite-nav-link">🛒 แผนสั่งของ 5 ช่วง</a>
+      <a href="logistics_manpower.html" class="suite-nav-link active">🚚 นำของเข้า & จัดคน</a>
+    </div>
+
+    <!-- Executive KPI Grid -->
+    <div class="kpi-grid">
+      <div class="kpi-card cyan">
+        <div class="kpi-label">รอบรถขนส่งของเข้าหน้างานสัปดาห์นี้</div>
+        <div class="kpi-val" id="kpiTotalShipments">0 <span style="font-size:14px; font-weight:300;">เที่ยว</span></div>
+        <div class="kpi-sub" id="kpiShipmentSub">กำหนดเวลาเข้าไม่ซ้อนทับกัน</div>
+      </div>
+      <div class="kpi-card gold">
+        <div class="kpi-label">กำลังพลช่างที่จัดสรรเข้าทำงาน</div>
+        <div class="kpi-val" id="kpiTotalManpower">0 <span style="font-size:14px; font-weight:300;">คน</span></div>
+        <div class="kpi-sub">รวมทุกหัวข้องาน 10 หมวด</div>
+      </div>
+      <div class="kpi-card green">
+        <div class="kpi-label">หัวข้องานที่เปิดพื้นที่ปฏิบัติงาน</div>
+        <div class="kpi-val" id="kpiActiveWorkFronts">0 <span style="font-size:14px; font-weight:300;">โซน</span></div>
+        <div class="kpi-sub">มีแผนความปลอดภัยรองรับ 100%</div>
+      </div>
+      <div class="kpi-card purple">
+        <div class="kpi-label">ดัชนีความแออัดพื้นที่ (Congestion Index)</div>
+        <div class="kpi-val" style="color:var(--green); font-size:22px;">🟢 ปกติ คล่องตัว</div>
+        <div class="kpi-sub">การจัดสรรพื้นที่ Staging Zone มีระเบียบ</div>
+      </div>
+    </div>
+
+    <!-- PART 1: Site Inbound Logistics & Material Delivery Schedule -->
+    <section class="section-box">
+      <div class="section-title-bar">
+        <div class="section-title">
+          <span>🚚 1. แผนนำของเข้าหน้างานและตารางการจัดส่งวัสดุ (Inbound Logistics & Staging Area)</span>
+          <span class="badge" id="logisticsBadge">0 เที่ยว</span>
+        </div>
+        <button class="pill-btn cyan" onclick="addLogisticsRow()">➕ เพิ่มรอบขนส่ง</button>
+      </div>
+
+      <div class="table-container">
+        <table class="data-table" id="logisticsTable">
+          <thead>
+            <tr>
+              <th style="width: 35px; text-align:center;">#</th>
+              <th style="text-align:center; width:100px;">วันที่จะเข้า</th>
+              <th style="text-align:center; width:110px;">ช่วงเวลา (Time Slot)</th>
+              <th>รายการวัสดุ / สินค้า</th>
+              <th>ซัพพลายเออร์ / ร้านค้า</th>
+              <th>ประเภทรถขนส่ง / ทะเบียน</th>
+              <th>จุดลงของ / กองพักวัสดุ (Staging Zone)</th>
+              <th>อุปกรณ์ช่วยยกขน</th>
+              <th>วิศวกรผู้ตรวจรับ</th>
+              <th style="text-align:center; width:120px;">สถานะการเข้า</th>
+              <th style="width: 40px; text-align:center;" class="no-print">ลบ</th>
+            </tr>
+          </thead>
+          <tbody id="logisticsTbody">
+            <!-- Dynamic logistics rows -->
+          </tbody>
+        </table>
+      </div>
+    </section>
+
+    <!-- PART 2: Manpower Resource Allocation & Work Shifts per Task -->
+    <section class="section-box">
+      <div class="section-title-bar">
+        <div class="section-title">
+          <span>👷 2. การจัดคนและช่างเข้าทำงานแต่ละหัวข้องาน และช่วงเวลางาน (Work Shift & Craft Allocation)</span>
+          <span class="badge" id="manpowerBadge">0 งาน</span>
+        </div>
+        <button class="pill-btn gold" onclick="addManpowerTaskRow()">➕ เพิ่มหัวข้องานจัดคน</button>
+      </div>
+
+      <div class="table-container">
+        <table class="data-table" id="manpowerTable">
+          <thead>
+            <tr>
+              <th style="width: 35px; text-align:center;">#</th>
+              <th>หัวข้องานที่ดำเนินงาน</th>
+              <th>หมวดงาน</th>
+              <th>พื้นที่ / ชั้น / โซน</th>
+              <th>ทีมช่าง / ผู้รับเหมาช่วง</th>
+              <th style="text-align:center; width:80px;">จำนวนช่าง</th>
+              <th style="text-align:center; width:135px;">ช่วงเวลางาน (กะทำงาน)</th>
+              <th>ผลผลิตเป้าหมายประจำกะ</th>
+              <th style="text-align:center; width:80px;">% ก้าวหน้า</th>
+              <th style="text-align:center; width:120px;">สถานะงาน</th>
+              <th>มาตรการความปลอดภัย / PPE</th>
+              <th style="width: 40px; text-align:center;" class="no-print">ลบ</th>
+            </tr>
+          </thead>
+          <tbody id="manpowerTbody">
+            <!-- Dynamic manpower rows -->
+          </tbody>
+          <tfoot>
+            <tr style="background:#091228; font-weight:500;">
+              <td colspan="5" style="text-align:right; color:var(--gold);">รวมกำลังพลช่างที่จัดสรรทั้งหมด:</td>
+              <td id="footTotalAllocated" style="text-align:center; color:var(--cyan); font-size:14px; font-weight:600;">0</td>
+              <td colspan="6">คนทำงานจริงในโครงการ</td>
+            </tr>
+          </tfoot>
+        </table>
+      </div>
+    </section>
+
+    <!-- Executive Footer -->
+    <footer style="margin-top: 28px; padding: 16px; border-top: 1px solid var(--border-subtle); text-align: center; font-size: 12px; color: var(--text-muted);">
+      <div>INSPECT Q • ระบบบริหารการนำของเข้าและจัดสรรกำลังคน โครงการพัทยา</div>
+      <div style="margin-top: 4px;">
+        LINE OA: <a href="https://line.me/R/ti/p/@inspectq" style="color:var(--gold);">@inspectq</a> | 
+        โทรศัพท์: <strong style="color:#ffffff;">081-449-9499</strong>
+      </div>
+    </footer>
+  </main>
+
+  <!-- Mobile Bottom Navigation Bar -->
+  <nav class="bottom-nav no-print">
+    <a href="scurve.html" class="nav-btn">
+      <span class="nav-icon">📈</span>
+      <span>S-Curve</span>
+    </a>
+    <a href="3week.html" class="nav-btn">
+      <span class="nav-icon">📅</span>
+      <span>แผน 3 วีค</span>
+    </a>
+    <a href="1week.html" class="nav-btn">
+      <span class="nav-icon">📆</span>
+      <span>แผน 1 วีค</span>
+    </a>
+    <a href="daily_report.html" class="nav-btn">
+      <span class="nav-icon">📋</span>
+      <span>รายงานวัน</span>
+    </a>
+    <a href="procurement_plan.html" class="nav-btn">
+      <span class="nav-icon">🛒</span>
+      <span>สั่งของ 5 ช่วง</span>
+    </a>
+    <a href="logistics_manpower.html" class="nav-btn active">
+      <span class="nav-icon">🚚</span>
+      <span>นำของ & คน</span>
+    </a>
+  </nav>
+
+  <!-- Toast Notification -->
+  <div class="toast" id="toastBox">
+    <span>💾</span>
+    <span id="toastMsg">บันทึกข้อมูลเรียบร้อย</span>
+  </div>
+
+  <script>
+    // Initial Pattaya Logistics Shipments
+    const DEFAULT_LOGISTICS = [
+      {
+        date: "2026-11-12", timeSlot: "08:30 - 10:30 น.",
+        material: "เหล็กเส้นข้ออ้อย SD40 มัดละ 2 ตัน (รวม 8 ตัน)",
+        vendor: "สยามยามาโตะ / ตัวแทนพัทยา",
+        vehicle: "รถสิบล้อพ่วง (ทะเบียน 70-8812)",
+        zone: "ลานพักเหล็ก Zone A หน้าตึก",
+        equipment: "รถเครนเคลื่อนที่ 25 ตัน ยกขึ้นลานพัก",
+        receiver: "วิศวกรสมศักดิ์ (Inspect Q)",
+        status: "arrived"
+      },
+      {
+        date: "2026-11-13", timeSlot: "09:00 - 12:00 น.",
+        material: "คอนกรีตผสมเสร็จ 280 ksc (4 คัน รวม 24 คิว)",
+        vendor: "CPAC พัทยากลาง",
+        vehicle: "รถโม่คอนกรีต 4 คัน",
+        zone: "จุดจอดรถโม่ฝั่งทิศตะวันออก",
+        equipment: "บูมปั๊มคอนกรีตขนาด 36 เมตร",
+        receiver: "วิศวกรประเสริฐ (Inspect Q)",
+        status: "arrived"
+      },
+      {
+        date: "2026-11-15", timeSlot: "13:00 - 15:00 น.",
+        material: "อิฐมวลเบา Q-Con 7.5 cm (1,500 ก้อน)",
+        vendor: "ไทวัสดุ สาขาพัทยาใต้",
+        vehicle: "รถ 6 ล้อติดเฮี๊ยบ (ทะเบียน 82-4410)",
+        zone: "ลานพักของชั้น 1 โซน B",
+        equipment: "รถเฮี๊ยบยกลงพาเลท + ลิฟต์ก่อสร้าง",
+        receiver: "หัวหน้าช่างวิชัย",
+        status: "scheduled"
+      },
+      {
+        date: "2026-11-16", timeSlot: "10:00 - 11:30 น.",
+        material: "ท่อร้อยสายไฟ EMT และสายไฟ THW 50 ขด",
+        vendor: "โฮมโปร พัทยาเหนือ",
+        vehicle: "รถกระบะตอนเดียว (ทะเบียน 1ฒข-2284)",
+        zone: "ห้องสโตร์วัสดุไฟฟ้าล็อคกุญแจ",
+        equipment: "รถเข็นพาเลทแจ็ค",
+        receiver: "ช่างประสิทธิ์ (หัวหน้าช่างไฟ)",
+        status: "scheduled"
+      },
+      {
+        date: "2026-11-18", timeSlot: "14:00 - 16:30 น.",
+        material: "ชุดเฟอร์นิเจอร์ Built-in โครงตู้ไม้และหน้าบาน",
+        vendor: "โรงงานชลบุรีอินทีเรีย",
+        vehicle: "รถ 6 ล้อตู้ทึบกันฝน",
+        zone: "ห้องพัก Unit 201-204 ชั้น 2",
+        equipment: "ทีมยกแบกหาม 6 คนขึ้นทางบันไดหลัก",
+        receiver: "วิศวกรควบคุมงานตกแต่ง",
+        status: "transit"
+      }
+    ];
+
+    // Initial Pattaya Manpower & Shifts per Task
+    const DEFAULT_MANPOWER_TASKS = [
+      {
+        task: "งานเข้าแบบและผูกเหล็กคานพื้นชั้น 3 โซน A",
+        cat: "Structure", zone: "อาคารหลัก ชั้น 3",
+        team: "ทีมช่างโครงสร้างเหล็ก & ไม้แบบ",
+        count: 14,
+        shift: "08:00 - 17:00 (กะกลางวัน)",
+        target: "ผูกเหล็กคานและปูแผ่นพื้นสำเร็จ 120 ตร.ม.",
+        pct: 90, status: "progress",
+        safety: "สวมหมวกนิรภัย + สายรัดกันตก Full Body Harness 100%"
+      },
+      {
+        task: "งานเทคอนกรีตคานพื้นชั้น 3 โซน A",
+        cat: "Structure", zone: "อาคารหลัก ชั้น 3",
+        team: "ทีมเทและขัดคอนกรีต",
+        count: 8,
+        shift: "17:30 - 21:00 (กะพิเศษ OT)",
+        target: "เทคอนกรีตเสร็จสิ้น 24 ลบ.ม. ขัดผิวหยาบ",
+        pct: 100, status: "done",
+        safety: "ไฟส่องสว่างสปอตไลท์ LED 400W รอบจุดเท + บู๊ทยาง"
+      },
+      {
+        task: "งานก่ออิฐมวลเบาผนังห้องพัก Type A",
+        cat: "Architecture", zone: "ชั้น 2 Unit 201-204",
+        team: "ทีมช่างก่อฉาบมืออาชีพ",
+        count: 10,
+        shift: "08:00 - 17:00 (กะกลางวัน)",
+        target: "ก่อผนังพร้อมดักเอ็นทับหลัง 75 ตร.ม.",
+        pct: 75, status: "progress",
+        safety: "แว่นตานิรภัยกันฝุ่นปูน + ถุงมือผ้าเคลือบยาง"
+      },
+      {
+        task: "งานติดตั้งท่อร้อยสายไฟฟ้าบนฝ้าเพดาน",
+        cat: "Electrical", zone: "ชั้น 1 โถงทางเดิน",
+        team: "ช่างไฟฟ้าและสื่อสาร",
+        count: 6,
+        shift: "08:00 - 17:00 (กะกลางวัน)",
+        target: "เดินท่อ EMT 150 เมตร พร้อมกล่อง Pull Box",
+        pct: 80, status: "progress",
+        safety: "บันไดอลูมิเนียมมาตรฐานพร้อมคนจับขาบันได"
+      },
+      {
+        task: "งานประกอบและติดตั้งตู้ Built-in ห้องนอน",
+        cat: "Interior", zone: "ชั้น 2 ห้อง 201",
+        team: "ช่างเฟอร์นิเจอร์อินทีเรีย",
+        count: 6,
+        shift: "08:30 - 17:30 (กะกลางวัน)",
+        target: "ยึดโครงตู้เสื้อผ้าและปรับระนาบ 4 ชุด",
+        pct: 45, status: "progress",
+        safety: "หน้ากากกันฝุ่นละอองไม้ N95 + ถังดับเพลิงประจำจุด"
+      },
+      {
+        task: "งานติดตั้งท่อน้ำดีและสุขภัณฑ์ห้องน้ำ",
+        cat: "Sanitary", zone: "ชั้น 2 โซนห้องน้ำ",
+        team: "ช่างประปาและสุขาภิบาล",
+        count: 5,
+        shift: "08:00 - 17:00 (กะกลางวัน)",
+        target: "เดินท่อ PPR และติดตั้งโถสุขภัณฑ์ 4 ห้อง",
+        pct: 60, status: "progress",
+        safety: "รองเท้าเซฟตี้หัวเหล็ก + ถุงมือหนังกันบาด"
+      },
+      {
+        task: "งานติดตั้งโครงสร้างคอยล์ร้อนแอร์ VRV",
+        cat: "HVAC", zone: "ดาดฟ้าชั้นบนสุด",
+        team: "ทีมช่างระบบปรับอากาศ",
+        count: 6,
+        shift: "08:00 - 17:00 (กะกลางวัน)",
+        target: "วางแท่นสปริงกันสะเทือนและเดินท่อน้ำยา",
+        pct: 50, status: "progress",
+        safety: "ราวกันตกชั่วคราวรอบดาดฟ้า + หมวกนิรภัย"
+      }
+    ];
+
+    let logisticsData = [];
+    let manpowerData = [];
+
+    function initPage() {
+      loadSavedData();
+      renderLogistics();
+      renderManpowerTasks();
+      calcKPIs();
+    }
+
+    function getStorageKey() {
+      return 'inspectq_logistics_manpower_pataya';
+    }
+
+    function loadSavedData() {
+      const saved = localStorage.getItem(getStorageKey());
+      if (saved) {
+        try {
+          const parsed = JSON.parse(saved);
+          logisticsData = parsed.logistics || [...DEFAULT_LOGISTICS];
+          manpowerData = parsed.manpower || [...DEFAULT_MANPOWER_TASKS];
+        } catch(e) {
+          logisticsData = [...DEFAULT_LOGISTICS];
+          manpowerData = [...DEFAULT_MANPOWER_TASKS];
+        }
+      } else {
+        logisticsData = [...DEFAULT_LOGISTICS];
+        manpowerData = [...DEFAULT_MANPOWER_TASKS];
+      }
+    }
+
+    function saveAllData(showToastMsg = true) {
+      const payload = {
+        logistics: logisticsData,
+        manpower: manpowerData,
+        updatedAt: new Date().toISOString()
+      };
+      localStorage.setItem(getStorageKey(), JSON.stringify(payload));
+      calcKPIs();
+      if (showToastMsg) showToast("💾 บันทึกแผนการนำของเข้าและจัดคนเรียบร้อย");
+    }
+
+    // 1. Logistics Table Render
+    function renderLogistics() {
+      const tbody = document.getElementById('logisticsTbody');
+      tbody.innerHTML = '';
+
+      logisticsData.forEach((item, idx) => {
+        const tr = document.createElement('tr');
+        tr.innerHTML = `
+          <td style="text-align:center;">${idx + 1}</td>
+          <td><input type="date" style="width:110px;" value="${item.date}" onchange="updateLogistics(${idx}, 'date', this.value)"></td>
+          <td><input type="text" style="width:115px; text-align:center;" value="${escapeHtml(item.timeSlot)}" onchange="updateLogistics(${idx}, 'timeSlot', this.value)"></td>
+          <td><input type="text" style="min-width:180px;" value="${escapeHtml(item.material)}" onchange="updateLogistics(${idx}, 'material', this.value)"></td>
+          <td><input type="text" style="width:140px;" value="${escapeHtml(item.vendor)}" onchange="updateLogistics(${idx}, 'vendor', this.value)"></td>
+          <td><input type="text" style="width:140px;" value="${escapeHtml(item.vehicle)}" onchange="updateLogistics(${idx}, 'vehicle', this.value)"></td>
+          <td><input type="text" style="width:150px;" value="${escapeHtml(item.zone)}" onchange="updateLogistics(${idx}, 'zone', this.value)"></td>
+          <td><input type="text" style="width:140px;" value="${escapeHtml(item.equipment)}" onchange="updateLogistics(${idx}, 'equipment', this.value)"></td>
+          <td><input type="text" style="width:130px;" value="${escapeHtml(item.receiver)}" onchange="updateLogistics(${idx}, 'receiver', this.value)"></td>
+          <td style="text-align:center;">
+            <select style="width:115px;" onchange="updateLogistics(${idx}, 'status', this.value)">
+              <option value="scheduled" ${item.status === 'scheduled' ? 'selected' : ''}>นัดหมายแล้ว</option>
+              <option value="transit" ${item.status === 'transit' ? 'selected' : ''}>กำลังเดินทาง</option>
+              <option value="arrived" ${item.status === 'arrived' ? 'selected' : ''}>ลงของแล้ว</option>
+            </select>
+          </td>
+          <td style="text-align:center;" class="no-print">
+            <button class="btn-action-icon" onclick="deleteLogisticsRow(${idx})">🗑️</button>
+          </td>
+        `;
+        tbody.appendChild(tr);
+      });
+      document.getElementById('logisticsBadge').innerText = `${logisticsData.length} เที่ยวรถ`;
+    }
+
+    function updateLogistics(idx, field, val) {
+      logisticsData[idx][field] = val;
+      renderLogistics();
+      calcKPIs();
+      saveAllData(false);
+    }
+
+    function addLogisticsRow() {
+      const today = new Date().toISOString().slice(0, 10);
+      logisticsData.push({
+        date: today, timeSlot: "10:00 - 12:00 น.",
+        material: "รายการวัสดุใหม่", vendor: "ซัพพลายเออร์",
+        vehicle: "รถ 6 ล้อ", zone: "ลานพักของหน้างาน",
+        equipment: "แรงงานคน", receiver: "วิศวกรผู้ตรวจ",
+        status: "scheduled"
+      });
+      renderLogistics();
+      calcKPIs();
+      saveAllData(false);
+    }
+
+    function deleteLogisticsRow(idx) {
+      if (confirm("ต้องการลบแถวรอบขนส่งนี้ใช่หรือไม่?")) {
+        logisticsData.splice(idx, 1);
+        renderLogistics();
+        calcKPIs();
+        saveAllData(false);
+      }
+    }
+
+    // 2. Manpower Tasks Table Render
+    function renderManpowerTasks() {
+      const tbody = document.getElementById('manpowerTbody');
+      tbody.innerHTML = '';
+      let totalAllocated = 0;
+
+      manpowerData.forEach((task, idx) => {
+        const count = parseInt(task.count) || 0;
+        totalAllocated += count;
+
+        const tr = document.createElement('tr');
+        tr.innerHTML = `
+          <td style="text-align:center;">${idx + 1}</td>
+          <td><input type="text" style="min-width:180px;" value="${escapeHtml(task.task)}" onchange="updateManpowerTask(${idx}, 'task', this.value)"></td>
+          <td>
+            <select style="width:115px;" onchange="updateManpowerTask(${idx}, 'cat', this.value)">
+              <option value="Structure" ${task.cat === 'Structure' ? 'selected' : ''}>โครงสร้าง</option>
+              <option value="Architecture" ${task.cat === 'Architecture' ? 'selected' : ''}>สถาปัตย์</option>
+              <option value="Interior" ${task.cat === 'Interior' ? 'selected' : ''}>ตกแต่งภายใน</option>
+              <option value="Kitchen" ${task.cat === 'Kitchen' ? 'selected' : ''}>ครัว/เครื่องใช้</option>
+              <option value="Electrical" ${task.cat === 'Electrical' ? 'selected' : ''}>ไฟฟ้า/สื่อสาร</option>
+              <option value="Sanitary" ${task.cat === 'Sanitary' ? 'selected' : ''}>สุขาภิบาล</option>
+              <option value="Fire" ${task.cat === 'Fire' ? 'selected' : ''}>ดับเพลิง</option>
+              <option value="HVAC" ${task.cat === 'HVAC' ? 'selected' : ''}>ปรับอากาศ</option>
+              <option value="External" ${task.cat === 'External' ? 'selected' : ''}>ภายนอก</option>
+              <option value="Landscape" ${task.cat === 'Landscape' ? 'selected' : ''}>ภูมิทัศน์</option>
+            </select>
+          </td>
+          <td><input type="text" style="width:125px;" value="${escapeHtml(task.zone)}" onchange="updateManpowerTask(${idx}, 'zone', this.value)"></td>
+          <td><input type="text" style="width:140px;" value="${escapeHtml(task.team)}" onchange="updateManpowerTask(${idx}, 'team', this.value)"></td>
+          <td style="text-align:center;"><input type="number" min="0" style="width:60px; text-align:center;" value="${task.count}" onchange="updateManpowerTask(${idx}, 'count', this.value)"></td>
+          <td><input type="text" style="width:135px; text-align:center;" value="${escapeHtml(task.shift)}" onchange="updateManpowerTask(${idx}, 'shift', this.value)"></td>
+          <td><input type="text" style="min-width:170px;" value="${escapeHtml(task.target)}" onchange="updateManpowerTask(${idx}, 'target', this.value)"></td>
+          <td style="text-align:center;"><input type="number" min="0" max="100" style="width:55px; text-align:center;" value="${task.pct}" onchange="updateManpowerTask(${idx}, 'pct', this.value)">%</td>
+          <td style="text-align:center;">
+            <select style="width:115px;" onchange="updateManpowerTask(${idx}, 'status', this.value)">
+              <option value="progress" ${task.status === 'progress' ? 'selected' : ''}>กำลังทำ</option>
+              <option value="done" ${task.status === 'done' ? 'selected' : ''}>เสร็จสมบูรณ์</option>
+              <option value="delay" ${task.status === 'delay' ? 'selected' : ''}>ล่าช้า</option>
+            </select>
+          </td>
+          <td><input type="text" style="min-width:160px;" value="${escapeHtml(task.safety)}" onchange="updateManpowerTask(${idx}, 'safety', this.value)"></td>
+          <td style="text-align:center;" class="no-print">
+            <button class="btn-action-icon" onclick="deleteManpowerTaskRow(${idx})">🗑️</button>
+          </td>
+        `;
+        tbody.appendChild(tr);
+      });
+
+      document.getElementById('footTotalAllocated').innerText = totalAllocated;
+      document.getElementById('manpowerBadge').innerText = `${manpowerData.length} งาน`;
+    }
+
+    function updateManpowerTask(idx, field, val) {
+      if (field === 'pct') {
+        val = parseInt(val) || 0;
+        if (val >= 100) manpowerData[idx].status = 'done';
+      }
+      manpowerData[idx][field] = val;
+      renderManpowerTasks();
+      calcKPIs();
+      saveAllData(false);
+    }
+
+    function addManpowerTaskRow() {
+      manpowerData.push({
+        task: "หัวข้องานใหม่", cat: "Architecture",
+        zone: "ชั้น 2", team: "ทีมช่างเฉพาะทาง",
+        count: 4, shift: "08:00 - 17:00 (กะกลางวัน)",
+        target: "ปริมาณงานประจำกะ", pct: 0, status: "progress",
+        safety: "สวมหมวกและรองเท้าเซฟตี้"
+      });
+      renderManpowerTasks();
+      calcKPIs();
+      saveAllData(false);
+    }
+
+    function deleteManpowerTaskRow(idx) {
+      if (confirm("ต้องการลบหัวข้องานจัดคนนี้ใช่หรือไม่?")) {
+        manpowerData.splice(idx, 1);
+        renderManpowerTasks();
+        calcKPIs();
+        saveAllData(false);
+      }
+    }
+
+    function calcKPIs() {
+      document.getElementById('kpiTotalShipments').innerHTML = `${logisticsData.length} <span style="font-size:14px; font-weight:300;">เที่ยว</span>`;
+      let arrivedCount = logisticsData.filter(l => l.status === 'arrived').length;
+      document.getElementById('kpiShipmentSub').innerText = `ลงของแล้ว: ${arrivedCount} | รอเข้า: ${logisticsData.length - arrivedCount}`;
+
+      let totalMen = 0;
+      manpowerData.forEach(m => totalMen += (parseInt(m.count) || 0));
+      document.getElementById('kpiTotalManpower').innerHTML = `${totalMen} <span style="font-size:14px; font-weight:300;">คน</span>`;
+      document.getElementById('kpiActiveWorkFronts').innerHTML = `${manpowerData.length} <span style="font-size:14px; font-weight:300;">งาน</span>`;
+    }
+
+    function showToast(msg) {
+      const toast = document.getElementById('toastBox');
+      document.getElementById('toastMsg').innerText = msg;
+      toast.classList.add('show');
+      setTimeout(() => toast.classList.remove('show'), 2800);
+    }
+
+    function exportJSON() {
+      saveAllData(false);
+      const dataStr = "data:text/json;charset=utf-8," + encodeURIComponent(JSON.stringify({ logistics: logisticsData, manpower: manpowerData }, null, 2));
+      const a = document.createElement('a');
+      a.href = dataStr;
+      a.download = `INSPECT_Q_LOGISTICS_MANPOWER_PATAYA_${new Date().toISOString().slice(0,10)}.json`;
+      a.click();
+    }
+
+    function escapeHtml(str) {
+      if (!str) return '';
+      return String(str).replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;').replace(/"/g, '&quot;');
+    }
+
+    window.addEventListener('DOMContentLoaded', initPage);
+  </script>
+</body>
+</html>

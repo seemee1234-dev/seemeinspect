@@ -1,25 +1,51 @@
 ================================================================================
-INSPECT Q • PATTAYA EXECUTIVE SUITE (S-CURVE & 3-WEEK LOOKAHEAD)
+INSPECT Q • PATTAYA EXECUTIVE MASTER SUITE (6 ระบบแผนงานครบวงจร)
+โครงการก่อสร้างและปรับปรุงอาคาร (พัทยา) | มูลค่า 10,351,000.00 บาท
 ================================================================================
 
 ช่องทางติดต่อ Inspect Q (LINE OA 100%):
 - ลิงก์ตรง: https://line.me/R/ti/p/@inspectq
 - LINE ID: @inspectq (มี @ ด้วยครับ)
 - เบอร์ติดต่อ: 081-449-9499
-- เว็บไซต์ระบบ (ออนไลน์): https://seemee1234-dev.github.io/seemeinspect/pataya/3week.html
 
-ระบบงานโครงการพัทยา:
-1. แผนงาน 3 สัปดาห์ (3-Week Lookahead Schedule):
-   - ไฟล์ในเครื่อง: C:\Users\ADMIN\Documents\pataya\3week.html
-   - ทางลัด Desktop: C:\Users\ADMIN\Desktop\05_เปิดแผนงาน_3Week_พัทยา.bat
-   - ฟีเจอร์: กรอกหัวข้องาน, หมวดงาน, วันเริ่ม-วันจบ, % ความคืบหน้า, ผู้รับผิดชอบ พร้อม Gantt Bar 21 วันอัตโนมัติ
+ลิงก์เปิดใช้งานบนเว็บจริง (GitHub Pages 100% เปิดดูบนมือถือได้ทันที ไร้ปัญหา 404):
+🌐 ศูนย์รวมระบบแผนงาน (Portal):
+   👉 https://seemee1234-dev.github.io/seemeinspect/pataya/index.html
 
-2. แผนงาน S-Curve รวม (Executive S-Curve Suite):
-   - ไฟล์ในเครื่อง: C:\Users\ADMIN\Documents\pataya\scurve.html
-   - ทางลัด Desktop: C:\Users\ADMIN\Desktop\04_เปิดแผนงาน_SCurve_พัทยา.bat
+1. แผนรายงานประจำวัน (Daily Construction & QC Report):
+   👉 https://seemee1234-dev.github.io/seemeinspect/pataya/daily_report.html
+   - บันทึกสภาพอากาศ, ยอดช่างกะกลางวัน-OT ทุกหมวดงาน, ผลงานจริง, เครื่องจักร, วัสดุเข้า, Defect ประจำวัน
 
-ภาพและเอกสารส่งมอบ (ในโฟลเดอร์ Screenshots/New folder):
-- 01_SCURVE_PATTAYA_SNAPSHOT.png (ภาพรวม S-Curve โครงการพัทยา)
-- 02_3WEEK_LOOKAHEAD_PATTAYA_SNAPSHOT.png (ภาพรวมแผนงาน 3 สัปดาห์)
-- 3week.html, scurve.html
+2. แผนการสั่งของ 5 ช่วงเวลา (Material Procurement & Supply Chain):
+   👉 https://seemee1234-dev.github.io/seemeinspect/pataya/procurement_plan.html
+   - ควบคุม 5 ช่วง: สั่งซื้อ(PO) • ทำสัญญา • สั่งผลิต(Factory) • ขนส่ง • จัดลงพื้นที่หน้างาน
+   - แถบ Visual Pipeline 5 สี คำนวณ Lead Time และ % ความก้าวหน้าสด
+
+3. แผนนำของเข้าหน้างาน และการจัดคนเข้าทำงาน (Site Logistics & Manpower):
+   👉 https://seemee1234-dev.github.io/seemeinspect/pataya/logistics_manpower.html
+   - ตารางนำของเข้าหน้างาน (Time Slot + จุด Staging Zone ป้องกันรถติด)
+   - การจัดคนเข้าทำงานแต่ละหัวข้อ และช่วงเวลากะงาน (08:00-17:00 / OT)
+
+4. แผนปฏิบัติงาน 1 สัปดาห์ (1-Week Daily Work Plan 7 วัน):
+   👉 https://seemee1234-dev.github.io/seemeinspect/pataya/1week.html
+
+5. แผนงาน 3 สัปดาห์ (3-Week Lookahead Schedule 21 วัน):
+   👉 https://seemee1234-dev.github.io/seemeinspect/pataya/3week.html
+
+6. แผนงาน S-Curve รวมผู้บริหาร (Executive 18-Week S-Curve Dashboard):
+   👉 https://seemee1234-dev.github.io/seemeinspect/pataya/scurve.html
+
+--------------------------------------------------------------------------------
+ทางลัดเปิดใช้งานบนหน้าจอคอมพิวเตอร์ Desktop:
+- 00_เปิดศูนย์รวมแผนงานโครงการพัทยา.bat
+- 00_เปิดแผนรายงานประจำวัน_พัทยา.bat
+- 00_เปิดแผนการสั่งของ_พัทยา.bat
+- 00_เปิดแผนนำของเข้าและจัดคน_พัทยา.bat
+- 06_เปิดแผนงาน_1Week_พัทยา.bat
+- 05_เปิดแผนงาน_3Week_พัทยา.bat
+- 04_เปิดแผนงาน_SCurve_พัทยา.bat
+
+โฟลเดอร์เก็บข้อมูลในเครื่อง:
+- C:\Users\ADMIN\Documents\pataya\
+- C:\Users\ADMIN\Pictures\Screenshots\New folder\pataya\
 ================================================================================
