@@ -1,0 +1,25 @@
+================================================================================
+INSPECT Q • PATTAYA EXECUTIVE SUITE (S-CURVE & 3-WEEK LOOKAHEAD)
+================================================================================
+
+ช่องทางติดต่อ Inspect Q (LINE OA 100%):
+- ลิงก์ตรง: https://line.me/R/ti/p/@inspectq
+- LINE ID: @inspectq (มี @ ด้วยครับ)
+- เบอร์ติดต่อ: 081-449-9499
+- เว็บไซต์ระบบ (ออนไลน์): https://seemee1234-dev.github.io/seemeinspect/pataya/3week.html
+
+ระบบงานโครงการพัทยา:
+1. แผนงาน 3 สัปดาห์ (3-Week Lookahead Schedule):
+   - ไฟล์ในเครื่อง: C:\Users\ADMIN\Documents\pataya\3week.html
+   - ทางลัด Desktop: C:\Users\ADMIN\Desktop\05_เปิดแผนงาน_3Week_พัทยา.bat
+   - ฟีเจอร์: กรอกหัวข้องาน, หมวดงาน, วันเริ่ม-วันจบ, % ความคืบหน้า, ผู้รับผิดชอบ พร้อม Gantt Bar 21 วันอัตโนมัติ
+
+2. แผนงาน S-Curve รวม (Executive S-Curve Suite):
+   - ไฟล์ในเครื่อง: C:\Users\ADMIN\Documents\pataya\scurve.html
+   - ทางลัด Desktop: C:\Users\ADMIN\Desktop\04_เปิดแผนงาน_SCurve_พัทยา.bat
+
+ภาพและเอกสารส่งมอบ (ในโฟลเดอร์ Screenshots/New folder):
+- 01_SCURVE_PATTAYA_SNAPSHOT.png (ภาพรวม S-Curve โครงการพัทยา)
+- 02_3WEEK_LOOKAHEAD_PATTAYA_SNAPSHOT.png (ภาพรวมแผนงาน 3 สัปดาห์)
+- 3week.html, scurve.html
+================================================================================
