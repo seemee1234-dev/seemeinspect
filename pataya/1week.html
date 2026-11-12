@@ -388,17 +388,19 @@
 
     /* Gantt Daily Active Bars */
     .gantt-day-block {
-      height: 24px;
+      height: 26px;
       border-radius: 5px;
       display: flex;
       align-items: center;
       justify-content: center;
-      font-size: 11px;
-      font-weight: 400;
+      font-size: 14px;
+      font-weight: 700;
       color: #ffffff;
-      box-shadow: 0 1px 4px rgba(0, 0, 0, 0.3);
+      box-shadow: 0 1px 4px rgba(0, 0, 0, 0.4);
       padding: 0 4px;
       white-space: nowrap;
+      letter-spacing: -0.2px;
+      text-shadow: 0 1px 2px rgba(0, 0, 0, 0.95);
     }
 
     .gantt-day-block.status-done {
@@ -422,6 +424,19 @@
     }
 
     /* Form Controls inside table */
+    .col-category {
+      width: 110px !important;
+      min-width: 110px !important;
+      max-width: 125px !important;
+    }
+    .tbl-input-category {
+      width: 100% !important;
+      min-width: 95px !important;
+      max-width: 120px !important;
+      font-size: 12.5px !important;
+      padding-right: 28px !important;
+    }
+
     .tbl-input-text {
       width: 100%;
       min-width: 160px;
@@ -546,6 +561,8 @@
       .gantt-day-block {
         border: 1px solid #000000 !important;
         color: #000000 !important;
+        font-size: 11px !important;
+        font-weight: 700 !important;
       }
       .gantt-day-block.status-done { background: #cbd5e1 !important; }
       .gantt-day-block.status-progress { background: #93c5fd !important; }
@@ -833,17 +850,7 @@
       </div>
     </section>
 
-    <!-- Footer Lock & Inspect Q Line Contact -->
-    <footer class="exec-footer">
-      <div style="margin-bottom:6px; font-weight:400; color:#ffffff;">
-        INSPECT Q • ระบบแผนปฏิบัติงานรายสัปดาห์ (1-Week Work Plan) โครงการพัทยา
-      </div>
-      <div>
-         
-        แผน 3 สัปดาห์: <a href="3week.html">3week.html</a> | 
-        แผน S-Curve: <a href="scurve.html">scurve.html</a>
-      </div>
-    </footer>
+    
   </main>
 
   <!-- Mobile Bottom Navigation Bar -->
@@ -1030,7 +1037,7 @@
       let row1 = `
         <tr>
           <th rowspan="2" style="width:36px;">#</th>
-          <th rowspan="2" style="min-width:130px;">หมวดงาน (Category)</th>
+          <th rowspan="2" class="col-category">หมวดงาน (Category)</th>
           <th rowspan="2" style="min-width:210px;">หัวข้องาน / รายการกิจกรรม</th>
           <th rowspan="2" style="min-width:110px;">ช่วงเวลา (Shift)</th>
           <th rowspan="2" style="width:55px;">ช่าง (คน)</th>
@@ -1104,7 +1111,7 @@
           <td style="text-align:center; color:var(--text-dim);">${tIdx + 1}</td>
           <td>
             <div class="input-with-mic">
-              <input type="text" class="tbl-input-text" id="cat_input_${tIdx}" value="${escapeHtml(t.category)}" 
+              <input type="text" class="tbl-input-text tbl-input-category" id="cat_input_${tIdx}" value="${escapeHtml(t.category)}" 
                      placeholder="เช่น งานโครงสร้าง" onchange="updateTaskField(${tIdx}, 'category', this.value)" />
               <button type="button" class="btn-input-mic no-print" onclick="toggleVoice('cat_input_${tIdx}', ${tIdx}, 'category', this)" title="แตะเพื่อพูดสั่งข้อความด้วยเสียง">🎙️</button>
             </div>
