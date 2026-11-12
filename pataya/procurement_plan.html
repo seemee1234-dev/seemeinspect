@@ -6,7 +6,7 @@
   <meta http-equiv="Pragma" content="no-cache">
   <meta http-equiv="Expires" content="0">
   <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-  <title>INSPECT Q • PROCUREMENT PLAN | แผนการสั่งของ 5 ช่วงเวลา โครงการพัทยา</title>
+  <title>THE ORIGIN PATTAYA • PROCUREMENT PLAN | แผนการสั่งของ 5 ช่วงเวลา โครงการพัทยา</title>
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Kanit:wght@300;400;500;600&display=swap" rel="stylesheet">
@@ -532,9 +532,104 @@
         margin: 6mm;
       }
     }
-  </style>
+  
+    /* Voice Dictation (สั่งงานด้วยเสียงภาษาไทย) */
+    .input-with-mic {
+      position: relative;
+      display: flex;
+      align-items: center;
+      width: 100%;
+    }
+    .input-with-mic input {
+      padding-right: 32px !important;
+    }
+    .btn-input-mic {
+      position: absolute;
+      right: 3px;
+      top: 50%;
+      transform: translateY(-50%);
+      background: rgba(255, 215, 0, 0.12);
+      border: 1px solid rgba(255, 215, 0, 0.4);
+      color: #ffd700;
+      border-radius: 6px;
+      width: 24px;
+      height: 24px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 12px;
+      cursor: pointer;
+      transition: all 0.2s ease;
+      padding: 0;
+      line-height: 1;
+      z-index: 2;
+    }
+    .btn-input-mic:hover {
+      background: rgba(255, 215, 0, 0.25);
+      border-color: #ffd700;
+      transform: translateY(-50%) scale(1.08);
+    }
+    .btn-input-mic.listening {
+      background: #ef4444 !important;
+      border-color: #f87171 !important;
+      color: #ffffff !important;
+      animation: micPulse 1.2s infinite ease-in-out;
+      box-shadow: 0 0 10px rgba(239, 68, 68, 0.8);
+    }
+    @keyframes micPulse {
+      0% { transform: translateY(-50%) scale(1); box-shadow: 0 0 0 0 rgba(239, 68, 68, 0.7); }
+      50% { transform: translateY(-50%) scale(1.15); box-shadow: 0 0 0 8px rgba(239, 68, 68, 0); }
+      100% { transform: translateY(-50%) scale(1); box-shadow: 0 0 0 0 rgba(239, 68, 68, 0); }
+    }
+    .voice-status-bar {
+      display: none;
+      position: fixed;
+      top: 12px;
+      left: 50%;
+      transform: translateX(-50%);
+      z-index: 9999;
+      background: rgba(15, 23, 42, 0.95);
+      border: 1.5px solid #ef4444;
+      border-radius: 30px;
+      padding: 8px 20px;
+      color: #ffffff;
+      font-size: 13.5px;
+      font-weight: 400;
+      box-shadow: 0 10px 25px rgba(0,0,0,0.5), 0 0 15px rgba(239,68,68,0.4);
+      align-items: center;
+      gap: 10px;
+      backdrop-filter: blur(8px);
+    }
+    .voice-status-bar.show {
+      display: flex;
+    }
+    .voice-pulse-dot {
+      width: 10px;
+      height: 10px;
+      background: #ef4444;
+      border-radius: 50%;
+      animation: dotBlink 1s infinite;
+    }
+    @keyframes dotBlink {
+      0%, 100% { opacity: 1; transform: scale(1); }
+      50% { opacity: 0.3; transform: scale(0.7); }
+    }
+    @media print {
+      .btn-input-mic, .voice-status-bar, .input-with-mic button {
+        display: none !important;
+      }
+    }
+
+</style>
 </head>
 <body>
+
+  <!-- Voice Status Banner -->
+  <div class="voice-status-bar" id="voiceStatusBar">
+    <div class="voice-pulse-dot"></div>
+    <span id="voiceStatusText">🎙️ กำลังฟังเสียงภาษาไทย... พูดได้เลยครับ</span>
+  </div>
+
 
   <!-- Top Header -->
   <header class="app-header">
@@ -542,7 +637,7 @@
       <div class="brand-logo-badge">🛒</div>
       <div>
         <div class="brand-title">
-          INSPECT Q <span class="ver-pill">PROCUREMENT PLAN</span>
+          THE ORIGIN PATTAYA <span class="ver-pill">PROCUREMENT PLAN</span>
         </div>
         <div class="brand-sub">แผนการสั่งของ 5 ช่วงเวลา (สั่งซื้อ • ทำสัญญา • สั่งผลิต • ขนส่ง • จัดลงพื้นที่หน้างาน) โครงการพัทยา</div>
       </div>
@@ -924,7 +1019,13 @@
         const tr = document.createElement('tr');
         tr.innerHTML = `
           <td style="text-align:center;">${idx + 1}</td>
-          <td><input type="text" style="min-width:180px;" value="${escapeHtml(item.item)}" onchange="updateItem(${idx}, 'item', this.value)"></td>
+          <td>
+            <div class="input-with-mic">
+              <input type="text" id="item_input_${idx}" style="min-width:180px;" value="${escapeHtml(item.item)}" 
+                     placeholder="ระบุรายการวัสดุ/อุปกรณ์..." onchange="updateItem(${idx}, 'item', this.value)">
+              <button type="button" class="btn-input-mic no-print" onclick="toggleVoice('item_input_${idx}', ${idx}, 'item', this)" title="แตะเพื่อพูดสั่งข้อความด้วยเสียง">🎙️</button>
+            </div>
+          </td>
           <td>
             <select style="width:115px;" onchange="updateItem(${idx}, 'cat', this.value)">
               <option value="Structure" ${item.cat === 'Structure' ? 'selected' : ''}>1. โครงสร้าง</option>
@@ -1086,6 +1187,108 @@
     }
 
     window.addEventListener('DOMContentLoaded', initPage);
-  </script>
+  
+    /* ========================================================
+       VOICE DICTATION ENGINE (THAI SPEECH-TO-TEXT)
+       ======================================================== */
+    let activeRecognition = null;
+    let activeMicBtn = null;
+
+    function initSpeechEngine() {
+      const SpeechRecognition = window.SpeechRecognition || window.webkitSpeechRecognition;
+      if (!SpeechRecognition) return null;
+      const rec = new SpeechRecognition();
+      rec.lang = 'th-TH';
+      rec.continuous = false;
+      rec.interimResults = true;
+      return rec;
+    }
+
+    function setVoiceBanner(show, text) {
+      const bar = document.getElementById('voiceStatusBar');
+      const txt = document.getElementById('voiceStatusText');
+      if (!bar) return;
+      if (show) {
+        if (text) txt.textContent = text;
+        bar.classList.add('show');
+      } else {
+        bar.classList.remove('show');
+      }
+    }
+
+    function toggleVoice(inputId, itemIdx, field, btnElement) {
+      if (activeRecognition) {
+        try { activeRecognition.stop(); } catch(e) {}
+        activeRecognition = null;
+        if (activeMicBtn) {
+          activeMicBtn.classList.remove('listening');
+          activeMicBtn = null;
+        }
+        setVoiceBanner(false);
+        return;
+      }
+
+      const rec = initSpeechEngine();
+      if (!rec) {
+        alert('เบราว์เซอร์นี้ไม่รองรับการแปลงเสียงเป็นข้อความโดยตรง\nกรุณาแตะที่ช่องข้อความ แล้วกดปุ่มไมโครโฟนบนแป้นพิมพ์มือถือของคุณเพื่อพูดได้เลยครับ');
+        return;
+      }
+
+      activeRecognition = rec;
+      activeMicBtn = btnElement;
+      btnElement.classList.add('listening');
+      setVoiceBanner(true, '🎙️ กำลังฟังเสียงภาษาไทย... พูดรายการวัสดุได้เลยครับ');
+
+      rec.onresult = (event) => {
+        let interim = '';
+        let final = '';
+        for (let i = event.resultIndex; i < event.results.length; ++i) {
+          if (event.results[i].isFinal) {
+            final += event.results[i][0].transcript;
+          } else {
+            interim += event.results[i][0].transcript;
+          }
+        }
+        const inputEl = document.getElementById(inputId);
+        if (final) {
+          const currentVal = inputEl.value ? inputEl.value.trim() : '';
+          const updatedVal = currentVal ? `${currentVal} ${final.trim()}` : final.trim();
+          inputEl.value = updatedVal;
+          updateItem(itemIdx, field, updatedVal);
+          setVoiceBanner(false);
+          showToast(`🎙️ บันทึกเสียง: "${final.trim()}" สำเร็จ`);
+        } else if (interim) {
+          setVoiceBanner(true, `🎙️ ได้ยิน: "${interim.trim()}"`);
+        }
+      };
+
+      rec.onerror = (event) => {
+        setVoiceBanner(false);
+        if (activeMicBtn) activeMicBtn.classList.remove('listening');
+        activeRecognition = null;
+        activeMicBtn = null;
+        if (event.error !== 'no-speech') {
+          showToast(`⚠️ การรับฟังเสียง: ${event.error}`);
+        }
+      };
+
+      rec.onend = () => {
+        setVoiceBanner(false);
+        if (activeMicBtn) activeMicBtn.classList.remove('listening');
+        activeRecognition = null;
+        activeMicBtn = null;
+      };
+
+      try {
+        rec.start();
+      } catch (err) {
+        setVoiceBanner(false);
+        if (activeMicBtn) activeMicBtn.classList.remove('listening');
+        activeRecognition = null;
+        activeMicBtn = null;
+      }
+    }
+
+</script>
 </body>
 </html>
