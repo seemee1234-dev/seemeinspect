@@ -364,7 +364,7 @@
             <li>ดัชนีชี้วัดประสิทธิภาพงานและสถานะโครงการ</li>
           </ul>
         </div>
-        <a href="https://seemee1234-dev.github.io/seemeinspect/pataya/scurve.html" class="btn-launch gold">🚀 เปิดระบบ S-Curve Dashboard</a>
+        <a href="https://seemee1234-dev.github.io/seemeinspect/pataya/scurve.html" target="_blank" rel="noopener noreferrer" class="btn-launch gold">🚀 เปิดระบบ S-Curve Dashboard</a>
       </div>
 
       <!-- 2. 3-Week Lookahead -->
@@ -384,7 +384,7 @@
             <li>จำแนกสถานะ: กำลังทำ / เสร็จแล้ว / ล่าช้า</li>
           </ul>
         </div>
-        <a href="https://seemee1234-dev.github.io/seemeinspect/pataya/3week.html" class="btn-launch">🚀 เปิดระบบแผน 3 สัปดาห์</a>
+        <a href="https://seemee1234-dev.github.io/seemeinspect/pataya/3week.html" target="_blank" rel="noopener noreferrer" class="btn-launch">🚀 เปิดระบบแผน 3 สัปดาห์</a>
       </div>
 
       <!-- 3. 1-Week Daily Work Plan -->
@@ -404,7 +404,7 @@
             <li>ไฮไลต์วันปัจจุบัน (Today Indicator) อัตโนมัติ</li>
           </ul>
         </div>
-        <a href="https://seemee1234-dev.github.io/seemeinspect/pataya/1week.html" class="btn-launch">🚀 เปิดระบบแผน 1 สัปดาห์</a>
+        <a href="https://seemee1234-dev.github.io/seemeinspect/pataya/1week.html" target="_blank" rel="noopener noreferrer" class="btn-launch">🚀 เปิดระบบแผน 1 สัปดาห์</a>
       </div>
 
       <!-- 4. Daily Report -->
@@ -424,7 +424,7 @@
             <li>บันทึกจุดบกพร่อง Defect และเป้าหมายวันพรุ่งนี้</li>
           </ul>
         </div>
-        <a href="https://seemee1234-dev.github.io/seemeinspect/pataya/daily_report.html" class="btn-launch">🚀 เปิดระบบรายงานประจำวัน</a>
+        <a href="https://seemee1234-dev.github.io/seemeinspect/pataya/daily_report.html" target="_blank" rel="noopener noreferrer" class="btn-launch">🚀 เปิดระบบรายงานประจำวัน</a>
       </div>
 
       <!-- 5. Procurement Plan -->
@@ -444,7 +444,7 @@
             <li>ครอบคลุม 10 หมวดงานหลัก (เหล็ก, ปูน, บิ้วท์อิน, แอร์)</li>
           </ul>
         </div>
-        <a href="https://seemee1234-dev.github.io/seemeinspect/pataya/procurement_plan.html" class="btn-launch gold">🚀 เปิดระบบแผนสั่งของ 5 ช่วง</a>
+        <a href="https://seemee1234-dev.github.io/seemeinspect/pataya/procurement_plan.html" target="_blank" rel="noopener noreferrer" class="btn-launch gold">🚀 เปิดระบบแผนสั่งของ 5 ช่วง</a>
       </div>
 
       <!-- 6. Logistics & Manpower -->
@@ -464,7 +464,7 @@
             <li>จัดสรรจำนวนช่างและช่วงเวลากะงานแต่ละหัวข้อ</li>
           </ul>
         </div>
-        <a href="https://seemee1234-dev.github.io/seemeinspect/pataya/logistics_manpower.html" class="btn-launch">🚀 เปิดระบบนำของเข้า & จัดคน</a>
+        <a href="https://seemee1234-dev.github.io/seemeinspect/pataya/logistics_manpower.html" target="_blank" rel="noopener noreferrer" class="btn-launch">🚀 เปิดระบบนำของเข้า & จัดคน</a>
       </div>
 
     </div>
@@ -473,27 +473,36 @@
 
   </main>
 
-  <!-- Smart Navigation Interceptor: prevents ERR_FILE_NOT_FOUND when opened in Telegram or local sandboxes -->
+  <!-- Smart Navigation Interceptor: guarantees link clicks work 100% in Telegram (content://), offline files, and mobile browsers -->
   <script>
-    document.addEventListener('DOMContentLoaded', function() {
+    (function() {
       const baseLiveUrl = 'https://seemee1234-dev.github.io/seemeinspect/pataya/';
-      document.querySelectorAll('a').forEach(function(el) {
-        const h = el.getAttribute('href');
-        if (!h || h.startsWith('#') || h.startsWith('javascript:')) return;
-        
-        // If link ends with .html and does not start with http
-        if (h.endsWith('.html') && !h.startsWith('http')) {
-          el.href = baseLiveUrl + h;
-        }
-        
-        // If opened inside Telegram content:// or file without siblings
-        if (window.location.protocol === 'content:' || !window.location.hostname.includes('github.io')) {
-          if (!el.href.startsWith('http')) {
+      function fixLinks() {
+        const isSandboxed = window.location.protocol === 'content:' || window.location.protocol === 'file:' || !window.location.hostname.includes('github.io');
+        document.querySelectorAll('a').forEach(function(el) {
+          const h = el.getAttribute('href');
+          if (!h || h.startsWith('#') || h.startsWith('javascript:')) return;
+          
+          if (!h.startsWith('http')) {
             el.href = baseLiveUrl + h;
           }
-        }
-      });
-    });
+          
+          if (isSandboxed) {
+            el.target = '_blank';
+            el.rel = 'noopener noreferrer';
+            el.onclick = function(e) {
+              e.preventDefault();
+              window.open(this.href, '_blank');
+            };
+          }
+        });
+      }
+      if (document.readyState === 'loading') {
+        document.addEventListener('DOMContentLoaded', fixLinks);
+      } else {
+        fixLinks();
+      }
+    })();
   </script>
 
 </body>

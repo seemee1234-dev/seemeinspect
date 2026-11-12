@@ -653,12 +653,12 @@
 
     <!-- Suite Switcher Bar -->
     <div class="suite-nav-bar no-print">
-      <a href="https://seemee1234-dev.github.io/seemeinspect/pataya/scurve.html" class="suite-nav-link">📈 S-Curve 18 สัปดาห์</a>
-      <a href="https://seemee1234-dev.github.io/seemeinspect/pataya/3week.html" class="suite-nav-link">📅 แผน 3 สัปดาห์</a>
-      <a href="https://seemee1234-dev.github.io/seemeinspect/pataya/1week.html" class="suite-nav-link">📆 แผน 1 สัปดาห์</a>
-      <a href="https://seemee1234-dev.github.io/seemeinspect/pataya/daily_report.html" class="suite-nav-link">📋 รายงานประจำวัน</a>
-      <a href="https://seemee1234-dev.github.io/seemeinspect/pataya/procurement_plan.html" class="suite-nav-link active">🛒 แผนสั่งของ 5 ช่วง</a>
-      <a href="https://seemee1234-dev.github.io/seemeinspect/pataya/logistics_manpower.html" class="suite-nav-link">🚚 นำของเข้า & จัดคน</a>
+      <a href="https://seemee1234-dev.github.io/seemeinspect/pataya/scurve.html" target="_blank" rel="noopener noreferrer" class="suite-nav-link">📈 S-Curve 18 สัปดาห์</a>
+      <a href="https://seemee1234-dev.github.io/seemeinspect/pataya/3week.html" target="_blank" rel="noopener noreferrer" class="suite-nav-link">📅 แผน 3 สัปดาห์</a>
+      <a href="https://seemee1234-dev.github.io/seemeinspect/pataya/1week.html" target="_blank" rel="noopener noreferrer" class="suite-nav-link">📆 แผน 1 สัปดาห์</a>
+      <a href="https://seemee1234-dev.github.io/seemeinspect/pataya/daily_report.html" target="_blank" rel="noopener noreferrer" class="suite-nav-link">📋 รายงานประจำวัน</a>
+      <a href="https://seemee1234-dev.github.io/seemeinspect/pataya/procurement_plan.html" target="_blank" rel="noopener noreferrer" class="suite-nav-link active">🛒 แผนสั่งของ 5 ช่วง</a>
+      <a href="https://seemee1234-dev.github.io/seemeinspect/pataya/logistics_manpower.html" target="_blank" rel="noopener noreferrer" class="suite-nav-link">🚚 นำของเข้า & จัดคน</a>
     </div>
 
     <!-- Executive KPI Grid -->
@@ -770,27 +770,27 @@
 
   <!-- Mobile Bottom Navigation Bar -->
   <nav class="bottom-nav no-print">
-    <a href="https://seemee1234-dev.github.io/seemeinspect/pataya/scurve.html" class="nav-btn">
+    <a href="https://seemee1234-dev.github.io/seemeinspect/pataya/scurve.html" target="_blank" rel="noopener noreferrer" class="nav-btn">
       <span class="nav-icon">📈</span>
       <span>S-Curve</span>
     </a>
-    <a href="https://seemee1234-dev.github.io/seemeinspect/pataya/3week.html" class="nav-btn">
+    <a href="https://seemee1234-dev.github.io/seemeinspect/pataya/3week.html" target="_blank" rel="noopener noreferrer" class="nav-btn">
       <span class="nav-icon">📅</span>
       <span>แผน 3 วีค</span>
     </a>
-    <a href="https://seemee1234-dev.github.io/seemeinspect/pataya/1week.html" class="nav-btn">
+    <a href="https://seemee1234-dev.github.io/seemeinspect/pataya/1week.html" target="_blank" rel="noopener noreferrer" class="nav-btn">
       <span class="nav-icon">📆</span>
       <span>แผน 1 วีค</span>
     </a>
-    <a href="https://seemee1234-dev.github.io/seemeinspect/pataya/daily_report.html" class="nav-btn">
+    <a href="https://seemee1234-dev.github.io/seemeinspect/pataya/daily_report.html" target="_blank" rel="noopener noreferrer" class="nav-btn">
       <span class="nav-icon">📋</span>
       <span>รายงานวัน</span>
     </a>
-    <a href="https://seemee1234-dev.github.io/seemeinspect/pataya/procurement_plan.html" class="nav-btn active">
+    <a href="https://seemee1234-dev.github.io/seemeinspect/pataya/procurement_plan.html" target="_blank" rel="noopener noreferrer" class="nav-btn active">
       <span class="nav-icon">🛒</span>
       <span>สั่งของ 5 ช่วง</span>
     </a>
-    <a href="https://seemee1234-dev.github.io/seemeinspect/pataya/logistics_manpower.html" class="nav-btn">
+    <a href="https://seemee1234-dev.github.io/seemeinspect/pataya/logistics_manpower.html" target="_blank" rel="noopener noreferrer" class="nav-btn">
       <span class="nav-icon">🚚</span>
       <span>นำของ & คน</span>
     </a>
@@ -1291,27 +1291,36 @@
 
 </script>
 
-  <!-- Smart Navigation Interceptor: prevents ERR_FILE_NOT_FOUND when opened in Telegram or local sandboxes -->
+  <!-- Smart Navigation Interceptor: guarantees link clicks work 100% in Telegram (content://), offline files, and mobile browsers -->
   <script>
-    document.addEventListener('DOMContentLoaded', function() {
+    (function() {
       const baseLiveUrl = 'https://seemee1234-dev.github.io/seemeinspect/pataya/';
-      document.querySelectorAll('a').forEach(function(el) {
-        const h = el.getAttribute('href');
-        if (!h || h.startsWith('#') || h.startsWith('javascript:')) return;
-        
-        // If link ends with .html and does not start with http
-        if (h.endsWith('.html') && !h.startsWith('http')) {
-          el.href = baseLiveUrl + h;
-        }
-        
-        // If opened inside Telegram content:// or file without siblings
-        if (window.location.protocol === 'content:' || !window.location.hostname.includes('github.io')) {
-          if (!el.href.startsWith('http')) {
+      function fixLinks() {
+        const isSandboxed = window.location.protocol === 'content:' || window.location.protocol === 'file:' || !window.location.hostname.includes('github.io');
+        document.querySelectorAll('a').forEach(function(el) {
+          const h = el.getAttribute('href');
+          if (!h || h.startsWith('#') || h.startsWith('javascript:')) return;
+          
+          if (!h.startsWith('http')) {
             el.href = baseLiveUrl + h;
           }
-        }
-      });
-    });
+          
+          if (isSandboxed) {
+            el.target = '_blank';
+            el.rel = 'noopener noreferrer';
+            el.onclick = function(e) {
+              e.preventDefault();
+              window.open(this.href, '_blank');
+            };
+          }
+        });
+      }
+      if (document.readyState === 'loading') {
+        document.addEventListener('DOMContentLoaded', fixLinks);
+      } else {
+        fixLinks();
+      }
+    })();
   </script>
 
 </body>
