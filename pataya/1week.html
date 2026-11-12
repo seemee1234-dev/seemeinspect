@@ -424,16 +424,25 @@
     }
 
     /* Form Controls inside table */
-    .col-category {
-      width: 110px !important;
+    .th-no { width: 36px; min-width: 36px; }
+    .th-cat, .col-category {
+      width: 115px !important;
       min-width: 110px !important;
       max-width: 125px !important;
     }
+    .th-name { min-width: 200px; }
+    .th-shift { min-width: 105px; }
+    .th-craft { width: 55px; min-width: 50px; }
+    .th-start { min-width: 100px; }
+    .th-end { min-width: 100px; }
+    .th-status { min-width: 85px; }
+    .th-pct { width: 50px; min-width: 45px; }
+    .th-note { min-width: 130px; }
     .tbl-input-category {
       width: 100% !important;
       min-width: 95px !important;
       max-width: 120px !important;
-      font-size: 12.5px !important;
+      font-size: 11.5px !important;
       padding-right: 28px !important;
     }
 
@@ -514,19 +523,11 @@
       color: #ffffff;
     }
 
-    /* Print Setup */
-    @media print {
-      body {
-        background: #ffffff !important;
-        color: #000000 !important;
-        padding-bottom: 0;
-        font-size: 10px;
-      }
-    /* Print Styles: A4 Landscape Full Width Without Scrollbar */
+    /* Print Setup & Styles: A4 Landscape Full Width Without Scrollbar */
     @media print {
       @page {
         size: A4 landscape;
-        margin: 5mm;
+        margin: 4mm 5mm;
       }
       *, *::before, *::after {
         box-sizing: border-box !important;
@@ -539,7 +540,7 @@
         padding: 0 !important;
         background: #ffffff !important;
         color: #000000 !important;
-        font-size: 9.5px !important;
+        font-size: 8.5px !important;
       }
       .app-header, .header-actions, .bottom-nav, .no-print, .del-btn, .suite-nav-bar, #addBtn, .btn-input-mic, .voice-status-bar, .input-with-mic button {
         display: none !important;
@@ -547,6 +548,7 @@
       .container {
         width: 100% !important;
         max-width: 100% !important;
+        min-width: 100% !important;
         margin: 0 !important;
         padding: 0 !important;
       }
@@ -555,15 +557,24 @@
         border: 1px solid #000000 !important;
         color: #000000 !important;
         box-shadow: none !important;
-        padding: 6px 8px !important;
-        margin-bottom: 8px !important;
+        padding: 4px 6px !important;
+        margin-bottom: 6px !important;
         width: 100% !important;
       }
       .table-container {
         overflow: visible !important;
+        overflow-x: visible !important;
+        overflow-y: visible !important;
+        scrollbar-width: none !important;
+        -ms-overflow-style: none !important;
         border: none !important;
         width: 100% !important;
         max-width: 100% !important;
+      }
+      .table-container::-webkit-scrollbar {
+        display: none !important;
+        width: 0 !important;
+        height: 0 !important;
       }
       .week-table {
         border: 1.5px solid #000000 !important;
@@ -571,14 +582,14 @@
         max-width: 100% !important;
         table-layout: fixed !important;
         border-collapse: collapse !important;
-        font-size: 9px !important;
+        font-size: 8.5px !important;
       }
       .week-table th, 
       .week-table td {
         border: 1px solid #000000 !important;
         color: #000000 !important;
         position: static !important;
-        padding: 3px 2px !important;
+        padding: 2px 2px !important;
         min-width: 0 !important;
         max-width: none !important;
         white-space: normal !important;
@@ -589,40 +600,59 @@
         color: #000000 !important;
         font-weight: 600 !important;
       }
-      .th-no { width: 24px !important; }
-      .th-cat { width: 75px !important; }
-      .th-name { width: 165px !important; }
-      .th-shift { width: 70px !important; }
-      .th-craft { width: 32px !important; }
-      .th-start { width: 62px !important; }
-      .th-end { width: 62px !important; }
-      .th-status { width: 58px !important; }
-      .th-pct { width: 30px !important; }
+      .th-no { width: 22px !important; min-width: 22px !important; }
+      .th-cat, .col-category { width: 110px !important; min-width: 110px !important; }
+      .th-name { width: 165px !important; min-width: 0 !important; }
+      .th-shift { width: 54px !important; min-width: 0 !important; }
+      .th-craft { width: 26px !important; min-width: 0 !important; }
+      .th-start { width: 56px !important; min-width: 0 !important; }
+      .th-end { width: 56px !important; min-width: 0 !important; }
+      .th-status { width: 52px !important; min-width: 0 !important; }
+      .th-pct { width: 26px !important; min-width: 0 !important; }
       .week-table th.day-th, 
       .week-table td.day-td {
-        width: 48px !important;
+        width: 46px !important;
         min-width: 0 !important;
         padding: 2px 1px !important;
       }
-      .th-note { width: 70px !important; }
-      .tbl-input-text, .tbl-input-category, .tbl-input-date, .tbl-select, .tbl-num-input {
+      .th-note { width: 55px !important; min-width: 0 !important; }
+
+      .input-with-mic {
+        display: block !important;
+        position: static !important;
+        width: 100% !important;
+        padding: 0 !important;
+      }
+      .input-with-mic .tbl-input-text,
+      .tbl-input-text, 
+      .tbl-input-category, 
+      .tbl-input-date, 
+      .tbl-select, 
+      .tbl-num-input {
         background: transparent !important;
         border: none !important;
         color: #000000 !important;
         font-weight: 500 !important;
         font-size: 8.5px !important;
-        padding: 0 !important;
+        padding: 0 1px !important;
+        padding-right: 1px !important;
         min-width: 0 !important;
         max-width: 100% !important;
         width: 100% !important;
         box-shadow: none !important;
+        outline: none !important;
+        overflow: visible !important;
+        white-space: normal !important;
+        text-overflow: clip !important;
+        -webkit-appearance: none !important;
+        appearance: none !important;
       }
       .gantt-day-block {
         border: 1px solid #000000 !important;
         color: #000000 !important;
-        font-size: 9.5px !important;
+        font-size: 9px !important;
         font-weight: 700 !important;
-        height: 18px !important;
+        height: 17px !important;
         padding: 0 1px !important;
       }
       .gantt-day-block.status-done { background: #cbd5e1 !important; }
@@ -1093,17 +1123,17 @@
 
       let row1 = `
         <tr>
-          <th rowspan="2" class="th-no" style="width:36px;">#</th>
+          <th rowspan="2" class="th-no">#</th>
           <th rowspan="2" class="th-cat col-category">หมวดงาน (Category)</th>
-          <th rowspan="2" class="th-name" style="min-width:210px;">หัวข้องาน / รายการกิจกรรม</th>
-          <th rowspan="2" class="th-shift" style="min-width:110px;">ช่วงเวลา (Shift)</th>
-          <th rowspan="2" class="th-craft" style="width:55px;">ช่าง (คน)</th>
-          <th rowspan="2" class="th-start" style="min-width:105px;">วันเริ่ม</th>
-          <th rowspan="2" class="th-end" style="min-width:105px;">วันจบ</th>
-          <th rowspan="2" class="th-status" style="min-width:85px;">สถานะ</th>
-          <th rowspan="2" class="th-pct" style="width:50px;">%</th>
+          <th rowspan="2" class="th-name">หัวข้องาน / รายการกิจกรรม</th>
+          <th rowspan="2" class="th-shift">ช่วงเวลา (Shift)</th>
+          <th rowspan="2" class="th-craft">ช่าง (คน)</th>
+          <th rowspan="2" class="th-start">วันเริ่ม</th>
+          <th rowspan="2" class="th-end">วันจบ</th>
+          <th rowspan="2" class="th-status">สถานะ</th>
+          <th rowspan="2" class="th-pct">%</th>
           <th colspan="7" class="th-gantt-title" style="background:rgba(0,173,242,0.18); color:var(--cyan);">ตารางแผนงานรายวัน (7 วันประจำสัปดาห์)</th>
-          <th rowspan="2" class="th-note" style="min-width:140px;">หมายเหตุ / อุปสรรค</th>
+          <th rowspan="2" class="th-note">หมายเหตุ / อุปสรรค</th>
           <th rowspan="2" class="no-print" style="width:40px;">ลบ</th>
         </tr>
       `;
@@ -1175,14 +1205,14 @@
           </td>
           <td>
             <div class="input-with-mic">
-              <input type="text" class="tbl-input-text" id="name_input_${tIdx}" style="font-weight:400; color:#ffffff; min-width:210px;" 
+              <input type="text" class="tbl-input-text" id="name_input_${tIdx}" style="font-weight:400; color:#ffffff;" 
                      value="${escapeHtml(t.name)}" placeholder="ระบุหัวข้องาน..." 
                      onchange="updateTaskField(${tIdx}, 'name', this.value)" />
               <button type="button" class="btn-input-mic no-print" onclick="toggleVoice('name_input_${tIdx}', ${tIdx}, 'name', this)" title="แตะเพื่อพูดสั่งข้อความด้วยเสียง">🎙️</button>
             </div>
           </td>
           <td>
-            <input type="text" class="tbl-input-text" style="min-width:105px; font-size:11.5px;" 
+            <input type="text" class="tbl-input-text" style="font-size:11.5px;" 
                    value="${escapeHtml(t.shift || '')}" placeholder="08:30 - 17:00" 
                    onchange="updateTaskField(${tIdx}, 'shift', this.value)" />
           </td>
@@ -1212,7 +1242,7 @@
           </td>
           ${ganttCells}
           <td>
-            <input type="text" class="tbl-input-text" style="min-width:140px; font-size:11.5px; color:var(--text-muted);" 
+            <input type="text" class="tbl-input-text" style="font-size:11.5px; color:var(--text-muted);" 
                    value="${escapeHtml(t.remarks || '')}" placeholder="บันทึกหน้างาน..." 
                    onchange="updateTaskField(${tIdx}, 'remarks', this.value)" />
           </td>
