@@ -522,11 +522,32 @@
         padding-bottom: 0;
         font-size: 10px;
       }
-      .app-header, .header-actions, .bottom-nav, .no-print, .del-btn, .suite-nav-bar, #addBtn {
+    /* Print Styles: A4 Landscape Full Width Without Scrollbar */
+    @media print {
+      @page {
+        size: A4 landscape;
+        margin: 5mm;
+      }
+      *, *::before, *::after {
+        box-sizing: border-box !important;
+      }
+      html, body {
+        width: 100% !important;
+        max-width: 100% !important;
+        min-width: 100% !important;
+        margin: 0 !important;
+        padding: 0 !important;
+        background: #ffffff !important;
+        color: #000000 !important;
+        font-size: 9.5px !important;
+      }
+      .app-header, .header-actions, .bottom-nav, .no-print, .del-btn, .suite-nav-bar, #addBtn, .btn-input-mic, .voice-status-bar, .input-with-mic button {
         display: none !important;
       }
       .container {
+        width: 100% !important;
         max-width: 100% !important;
+        margin: 0 !important;
         padding: 0 !important;
       }
       .section-card, .settings-bar, .exec-banner {
@@ -534,44 +555,80 @@
         border: 1px solid #000000 !important;
         color: #000000 !important;
         box-shadow: none !important;
-        padding: 8px !important;
-        margin-bottom: 10px !important;
+        padding: 6px 8px !important;
+        margin-bottom: 8px !important;
+        width: 100% !important;
+      }
+      .table-container {
+        overflow: visible !important;
+        border: none !important;
+        width: 100% !important;
+        max-width: 100% !important;
       }
       .week-table {
         border: 1.5px solid #000000 !important;
         width: 100% !important;
+        max-width: 100% !important;
+        table-layout: fixed !important;
+        border-collapse: collapse !important;
+        font-size: 9px !important;
       }
       .week-table th, 
       .week-table td {
-        border: 1px solid #334155 !important;
+        border: 1px solid #000000 !important;
         color: #000000 !important;
         position: static !important;
+        padding: 3px 2px !important;
+        min-width: 0 !important;
+        max-width: none !important;
+        white-space: normal !important;
+        word-break: break-word !important;
       }
       .week-table th {
         background: #e2e8f0 !important;
         color: #000000 !important;
+        font-weight: 600 !important;
       }
-      .tbl-input-text, .tbl-input-date, .tbl-select, .tbl-num-input {
+      .th-no { width: 24px !important; }
+      .th-cat { width: 75px !important; }
+      .th-name { width: 165px !important; }
+      .th-shift { width: 70px !important; }
+      .th-craft { width: 32px !important; }
+      .th-start { width: 62px !important; }
+      .th-end { width: 62px !important; }
+      .th-status { width: 58px !important; }
+      .th-pct { width: 30px !important; }
+      .week-table th.day-th, 
+      .week-table td.day-td {
+        width: 48px !important;
+        min-width: 0 !important;
+        padding: 2px 1px !important;
+      }
+      .th-note { width: 70px !important; }
+      .tbl-input-text, .tbl-input-category, .tbl-input-date, .tbl-select, .tbl-num-input {
         background: transparent !important;
         border: none !important;
         color: #000000 !important;
         font-weight: 500 !important;
+        font-size: 8.5px !important;
         padding: 0 !important;
+        min-width: 0 !important;
+        max-width: 100% !important;
+        width: 100% !important;
+        box-shadow: none !important;
       }
       .gantt-day-block {
         border: 1px solid #000000 !important;
         color: #000000 !important;
-        font-size: 11px !important;
+        font-size: 9.5px !important;
         font-weight: 700 !important;
+        height: 18px !important;
+        padding: 0 1px !important;
       }
       .gantt-day-block.status-done { background: #cbd5e1 !important; }
       .gantt-day-block.status-progress { background: #93c5fd !important; }
       .gantt-day-block.status-pending { background: #fde68a !important; }
       .gantt-day-block.status-delay { background: #fca5a5 !important; }
-      @page {
-        size: A4 landscape;
-        margin: 6mm;
-      }
     }
 
     /* Bottom Nav Bar */
@@ -1036,17 +1093,17 @@
 
       let row1 = `
         <tr>
-          <th rowspan="2" style="width:36px;">#</th>
-          <th rowspan="2" class="col-category">หมวดงาน (Category)</th>
-          <th rowspan="2" style="min-width:210px;">หัวข้องาน / รายการกิจกรรม</th>
-          <th rowspan="2" style="min-width:110px;">ช่วงเวลา (Shift)</th>
-          <th rowspan="2" style="width:55px;">ช่าง (คน)</th>
-          <th rowspan="2" style="min-width:105px;">วันเริ่ม</th>
-          <th rowspan="2" style="min-width:105px;">วันจบ</th>
-          <th rowspan="2" style="min-width:85px;">สถานะ</th>
-          <th rowspan="2" style="width:50px;">%</th>
-          <th colspan="7" style="background:rgba(0,173,242,0.18); color:var(--cyan);">ตารางแผนงานรายวัน (7 วันประจำสัปดาห์)</th>
-          <th rowspan="2" style="min-width:140px;">หมายเหตุ / อุปสรรค</th>
+          <th rowspan="2" class="th-no" style="width:36px;">#</th>
+          <th rowspan="2" class="th-cat col-category">หมวดงาน (Category)</th>
+          <th rowspan="2" class="th-name" style="min-width:210px;">หัวข้องาน / รายการกิจกรรม</th>
+          <th rowspan="2" class="th-shift" style="min-width:110px;">ช่วงเวลา (Shift)</th>
+          <th rowspan="2" class="th-craft" style="width:55px;">ช่าง (คน)</th>
+          <th rowspan="2" class="th-start" style="min-width:105px;">วันเริ่ม</th>
+          <th rowspan="2" class="th-end" style="min-width:105px;">วันจบ</th>
+          <th rowspan="2" class="th-status" style="min-width:85px;">สถานะ</th>
+          <th rowspan="2" class="th-pct" style="width:50px;">%</th>
+          <th colspan="7" class="th-gantt-title" style="background:rgba(0,173,242,0.18); color:var(--cyan);">ตารางแผนงานรายวัน (7 วันประจำสัปดาห์)</th>
+          <th rowspan="2" class="th-note" style="min-width:140px;">หมายเหตุ / อุปสรรค</th>
           <th rowspan="2" class="no-print" style="width:40px;">ลบ</th>
         </tr>
       `;
