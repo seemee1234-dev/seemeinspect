@@ -534,37 +534,90 @@
       transform: translateY(0);
     }
 
-    /* Print Styles */
+    /* Print Styles: A4 Landscape Full Width */
     @media print {
-      body {
+      @page {
+        size: A4 landscape;
+        margin: 6mm;
+      }
+      *, *::before, *::after {
+        box-sizing: border-box !important;
+      }
+      html, body {
+        width: 100% !important;
+        max-width: 100% !important;
+        min-width: 100% !important;
+        margin: 0 !important;
+        padding: 0 !important;
         background: #ffffff !important;
         color: #000000 !important;
-        padding-bottom: 0 !important;
+        font-size: 11px !important;
       }
       .app-header, .suite-nav-bar, .bottom-nav, .header-actions, .no-print {
         display: none !important;
+      }
+      .container {
+        width: 100% !important;
+        max-width: 100% !important;
+        min-width: 100% !important;
+        margin: 0 !important;
+        padding: 0 !important;
       }
       .section-box, .control-card, .kpi-card {
         background: #ffffff !important;
         border: 1px solid #000000 !important;
         color: #000000 !important;
         box-shadow: none !important;
+        width: 100% !important;
+        max-width: 100% !important;
+        margin-bottom: 10px !important;
+        padding: 8px 12px !important;
+      }
+      .kpi-grid {
+        display: flex !important;
+        flex-direction: row !important;
+        gap: 8px !important;
+        width: 100% !important;
+      }
+      .kpi-card {
+        flex: 1 !important;
+        margin-bottom: 0 !important;
+      }
+      .control-card {
+        display: flex !important;
+        flex-direction: row !important;
+        justify-content: space-between !important;
+      }
+      .table-container {
+        width: 100% !important;
+        max-width: 100% !important;
+        overflow: visible !important;
+        border: none !important;
+      }
+      .data-table {
+        width: 100% !important;
+        min-width: 100% !important;
+        table-layout: auto !important;
+        border-collapse: collapse !important;
+        font-size: 11px !important;
       }
       .data-table th, .data-table td {
-        border: 1px solid #334155 !important;
+        border: 1px solid #000000 !important;
         color: #000000 !important;
+        padding: 4px 6px !important;
+        white-space: normal !important;
       }
       .data-table th {
         background: #e2e8f0 !important;
+        font-weight: 600 !important;
       }
       .data-table input, .data-table select, .note-textarea {
         border: none !important;
         background: transparent !important;
         color: #000000 !important;
-      }
-      @page {
-        size: A4 portrait;
-        margin: 8mm;
+        font-size: 11px !important;
+        font-weight: 400 !important;
+        padding: 0 !important;
       }
     }
   </style>
