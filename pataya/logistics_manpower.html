@@ -498,12 +498,12 @@
 
     <!-- Suite Switcher Bar -->
     <div class="suite-nav-bar no-print">
-      <a href="scurve.html" class="suite-nav-link">📈 S-Curve 18 สัปดาห์</a>
-      <a href="3week.html" class="suite-nav-link">📅 แผน 3 สัปดาห์</a>
-      <a href="1week.html" class="suite-nav-link">📆 แผน 1 สัปดาห์</a>
-      <a href="daily_report.html" class="suite-nav-link">📋 รายงานประจำวัน</a>
-      <a href="procurement_plan.html" class="suite-nav-link">🛒 แผนสั่งของ 5 ช่วง</a>
-      <a href="logistics_manpower.html" class="suite-nav-link active">🚚 นำของเข้า & จัดคน</a>
+      <a href="https://seemee1234-dev.github.io/seemeinspect/pataya/scurve.html" class="suite-nav-link">📈 S-Curve 18 สัปดาห์</a>
+      <a href="https://seemee1234-dev.github.io/seemeinspect/pataya/3week.html" class="suite-nav-link">📅 แผน 3 สัปดาห์</a>
+      <a href="https://seemee1234-dev.github.io/seemeinspect/pataya/1week.html" class="suite-nav-link">📆 แผน 1 สัปดาห์</a>
+      <a href="https://seemee1234-dev.github.io/seemeinspect/pataya/daily_report.html" class="suite-nav-link">📋 รายงานประจำวัน</a>
+      <a href="https://seemee1234-dev.github.io/seemeinspect/pataya/procurement_plan.html" class="suite-nav-link">🛒 แผนสั่งของ 5 ช่วง</a>
+      <a href="https://seemee1234-dev.github.io/seemeinspect/pataya/logistics_manpower.html" class="suite-nav-link active">🚚 นำของเข้า & จัดคน</a>
     </div>
 
     <!-- Executive KPI Grid -->
@@ -612,27 +612,27 @@
 
   <!-- Mobile Bottom Navigation Bar -->
   <nav class="bottom-nav no-print">
-    <a href="scurve.html" class="nav-btn">
+    <a href="https://seemee1234-dev.github.io/seemeinspect/pataya/scurve.html" class="nav-btn">
       <span class="nav-icon">📈</span>
       <span>S-Curve</span>
     </a>
-    <a href="3week.html" class="nav-btn">
+    <a href="https://seemee1234-dev.github.io/seemeinspect/pataya/3week.html" class="nav-btn">
       <span class="nav-icon">📅</span>
       <span>แผน 3 วีค</span>
     </a>
-    <a href="1week.html" class="nav-btn">
+    <a href="https://seemee1234-dev.github.io/seemeinspect/pataya/1week.html" class="nav-btn">
       <span class="nav-icon">📆</span>
       <span>แผน 1 วีค</span>
     </a>
-    <a href="daily_report.html" class="nav-btn">
+    <a href="https://seemee1234-dev.github.io/seemeinspect/pataya/daily_report.html" class="nav-btn">
       <span class="nav-icon">📋</span>
       <span>รายงานวัน</span>
     </a>
-    <a href="procurement_plan.html" class="nav-btn">
+    <a href="https://seemee1234-dev.github.io/seemeinspect/pataya/procurement_plan.html" class="nav-btn">
       <span class="nav-icon">🛒</span>
       <span>สั่งของ 5 ช่วง</span>
     </a>
-    <a href="logistics_manpower.html" class="nav-btn active">
+    <a href="https://seemee1234-dev.github.io/seemeinspect/pataya/logistics_manpower.html" class="nav-btn active">
       <span class="nav-icon">🚚</span>
       <span>นำของ & คน</span>
     </a>
@@ -998,5 +998,29 @@
 
     window.addEventListener('DOMContentLoaded', initPage);
   </script>
+
+  <!-- Smart Navigation Interceptor: prevents ERR_FILE_NOT_FOUND when opened in Telegram or local sandboxes -->
+  <script>
+    document.addEventListener('DOMContentLoaded', function() {
+      const baseLiveUrl = 'https://seemee1234-dev.github.io/seemeinspect/pataya/';
+      document.querySelectorAll('a').forEach(function(el) {
+        const h = el.getAttribute('href');
+        if (!h || h.startsWith('#') || h.startsWith('javascript:')) return;
+        
+        // If link ends with .html and does not start with http
+        if (h.endsWith('.html') && !h.startsWith('http')) {
+          el.href = baseLiveUrl + h;
+        }
+        
+        // If opened inside Telegram content:// or file without siblings
+        if (window.location.protocol === 'content:' || !window.location.hostname.includes('github.io')) {
+          if (!el.href.startsWith('http')) {
+            el.href = baseLiveUrl + h;
+          }
+        }
+      });
+    });
+  </script>
+
 </body>
 </html>

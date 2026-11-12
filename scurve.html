@@ -1857,5 +1857,29 @@
       showToast("📥 ส่งออก CSV สำเร็จ");
     }
   </script>
+
+  <!-- Smart Navigation Interceptor: prevents ERR_FILE_NOT_FOUND when opened in Telegram or local sandboxes -->
+  <script>
+    document.addEventListener('DOMContentLoaded', function() {
+      const baseLiveUrl = 'https://seemee1234-dev.github.io/seemeinspect/pataya/';
+      document.querySelectorAll('a').forEach(function(el) {
+        const h = el.getAttribute('href');
+        if (!h || h.startsWith('#') || h.startsWith('javascript:')) return;
+        
+        // If link ends with .html and does not start with http
+        if (h.endsWith('.html') && !h.startsWith('http')) {
+          el.href = baseLiveUrl + h;
+        }
+        
+        // If opened inside Telegram content:// or file without siblings
+        if (window.location.protocol === 'content:' || !window.location.hostname.includes('github.io')) {
+          if (!el.href.startsWith('http')) {
+            el.href = baseLiveUrl + h;
+          }
+        }
+      });
+    });
+  </script>
+
 </body>
 </html>
