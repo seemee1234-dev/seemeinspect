@@ -789,7 +789,12 @@
         border: 1.5px solid #000000 !important;
         font-size: 7px !important;
       }
-      .scurve-table th, .scurve-table td {
+      .scurve-table th, .scurve-table td,
+      .scurve-table tr th, .scurve-table tr td,
+      .scurve-table tr.summary-row td,
+      .scurve-table tr.summary-row.actual-row td,
+      .scurve-table tr.actual-row td,
+      .scurve-table tfoot td {
         border: 1px solid #000000 !important;
         color: #000000 !important;
         padding: 2px 1px !important;
@@ -814,7 +819,8 @@
         background: #ffffff !important;
         color: #000000 !important;
       }
-      .scurve-table tr.summary-row td {
+      .scurve-table tr.summary-row td,
+      .scurve-table tr.summary-row.actual-row td {
         background: #f1f5f9 !important;
         border: 1px solid #000000 !important;
         color: #000000 !important;
@@ -822,14 +828,27 @@
       }
       .gantt-bar {
         background: #e2e8f0 !important;
-        border: 1px solid #64748b !important;
-        color: #0f172a !important;
+        border: 1px solid #000000 !important;
+        color: #000000 !important;
         font-size: 6.5px !important;
         font-weight: 700 !important;
         padding: 1px 0 !important;
         min-width: 0 !important;
         display: block !important;
         width: 100% !important;
+      }
+      .variance-badge,
+      .variance-badge.behind,
+      .variance-badge.ahead,
+      .variance-badge.ontrack {
+        background: transparent !important;
+        border: none !important;
+        color: #000000 !important;
+        font-weight: 700 !important;
+        font-size: 7px !important;
+        padding: 0 !important;
+        box-shadow: none !important;
+        white-space: nowrap !important;
       }
       .table-actual-input {
         background: transparent !important;
