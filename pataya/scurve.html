@@ -829,7 +829,7 @@
         display: none !important;
       }
 
-      /* Page 2: Master Table (Full 18 Weeks W1-W18 Complete) */
+      /* Page 2: Master Table (Full 18 Weeks W1-W18 Complete & Perfectly Centered) */
       #tableSection {
         page-break-before: always !important;
         break-before: page !important;
@@ -837,11 +837,14 @@
         break-inside: avoid !important;
         width: 100% !important;
         max-width: 100% !important;
-        margin-top: 0 !important;
+        margin: 0 auto !important;
+        padding: 4px 6px !important;
       }
       .table-responsive {
         width: 100% !important;
         max-width: 100% !important;
+        display: block !important;
+        margin: 0 auto !important;
         overflow: visible !important;
         border: none !important;
         scrollbar-width: none !important;
@@ -853,7 +856,7 @@
       }
       .scurve-table {
         width: 100% !important;
-        max-width: 100% !important;
+        margin: 0 auto !important;
         table-layout: fixed !important;
         border-collapse: collapse !important;
         border: 1.5px solid #000000 !important;
@@ -864,9 +867,7 @@
       .scurve-table tr.summary-row td,
       .scurve-table tr.summary-row.actual-row td,
       .scurve-table tr.actual-row td,
-      .scurve-table tfoot td,
-      .scurve-table span,
-      .scurve-table strong {
+      .scurve-table tfoot td {
         border: 1px solid #000000 !important;
         color: #000000 !important;
         -webkit-text-fill-color: #000000 !important;
@@ -880,11 +881,28 @@
         font-weight: 700 !important;
         line-height: 1.25 !important;
       }
+      .scurve-table span,
+      .scurve-table strong {
+        border: none !important;
+      }
       .scurve-table th {
         background: #e2e8f0 !important;
         font-weight: 700 !important;
         color: #000000 !important;
         -webkit-text-fill-color: #000000 !important;
+        text-align: center !important;
+        vertical-align: middle !important;
+      }
+      .scurve-table th.col-week {
+        text-align: center !important;
+        vertical-align: middle !important;
+        padding: 2px 1px !important;
+      }
+      .scurve-table th.col-week span {
+        border: none !important;
+        display: block !important;
+        margin: 0 auto !important;
+        text-align: center !important;
       }
       .scurve-table th.task-col,
       .scurve-table td.task-col {
@@ -905,6 +923,11 @@
         font-size: 8px !important;
         font-weight: 700 !important;
       }
+      .gantt-cell {
+        text-align: center !important;
+        vertical-align: middle !important;
+        padding: 2px 1px !important;
+      }
       .gantt-bar {
         background: #ffffff !important;
         border: 1px solid #000000 !important;
@@ -912,11 +935,13 @@
         -webkit-text-fill-color: #000000 !important;
         font-size: 7.5px !important;
         font-weight: 700 !important;
-        padding: 1px 0 !important;
+        padding: 2px 0 !important;
         min-width: 0 !important;
         display: block !important;
-        width: 100% !important;
-        border-radius: 2px !important;
+        margin: 0 auto !important;
+        width: 88% !important;
+        text-align: center !important;
+        border-radius: 3px !important;
       }
       .variance-badge,
       .variance-badge.behind,
@@ -947,14 +972,14 @@
         outline: none !important;
       }
 
-      /* Print Column Widths for All 25 Columns (Total = 1,083px) */
-      .col-item-no { width: 18px !important; min-width: 0 !important; }
-      .col-task-desc { width: 135px !important; min-width: 0 !important; }
-      .col-cost { width: 62px !important; min-width: 0 !important; }
-      .col-weight { width: 34px !important; min-width: 0 !important; }
-      .col-status { width: 42px !important; min-width: 0 !important; }
-      .col-duration { width: 36px !important; min-width: 0 !important; }
-      .col-week { width: 40px !important; min-width: 0 !important; }
+      /* Print Column Widths for All 25 Columns (100% Full-Width Flush Fit) */
+      .col-item-no { width: 1.8% !important; min-width: 0 !important; }
+      .col-task-desc { width: 14% !important; min-width: 0 !important; }
+      .col-cost { width: 6.2% !important; min-width: 0 !important; }
+      .col-weight { width: 3.5% !important; min-width: 0 !important; }
+      .col-status { width: 4.2% !important; min-width: 0 !important; }
+      .col-duration { width: 3.8% !important; min-width: 0 !important; }
+      .col-week { width: 3.48% !important; min-width: 0 !important; }
     }
 
     /* Bottom Navigation Bar (Mobile View matching Inspect Q) */
