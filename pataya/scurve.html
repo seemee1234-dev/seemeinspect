@@ -831,6 +831,17 @@
         overflow: hidden !important;
         page-break-inside: avoid !important;
         break-inside: avoid !important;
+        position: relative !important;
+      }
+      .chart-wrapper canvas,
+      canvas#scurveChart {
+        width: 100% !important;
+        max-width: 100% !important;
+        min-width: 100% !important;
+        height: 100% !important;
+        max-height: 100% !important;
+        display: block !important;
+        box-sizing: border-box !important;
       }
       .cutoff-bar {
         display: none !important;
@@ -1543,41 +1554,55 @@
       recalculateAll();
     });
 
-    // Update Chart.js to 100% Solid Black Text for High-Contrast Printing
+    // Update Chart.js to 100% Solid Black Text for High-Contrast Printing (All 18 Weeks Complete)
     function applyPrintChartTheme() {
       if (!scurveChartInstance) return;
       const opt = scurveChartInstance.options;
       if (opt.plugins && opt.plugins.legend && opt.plugins.legend.labels) {
         opt.plugins.legend.labels.color = '#000000';
-        opt.plugins.legend.labels.font = { family: 'Kanit', size: 13, weight: '700' };
+        opt.plugins.legend.labels.font = { family: 'Kanit', size: 9.5, weight: '700' };
+        opt.plugins.legend.labels.boxWidth = 8;
+        opt.plugins.legend.labels.padding = 6;
       }
       if (opt.scales) {
         if (opt.scales.x) {
           opt.scales.x.ticks.color = '#000000';
-          opt.scales.x.ticks.font = { family: 'Kanit', size: 11, weight: '700' };
+          opt.scales.x.ticks.font = { family: 'Kanit', size: 8, weight: '700' };
+          opt.scales.x.ticks.autoSkip = false; // SHOW ALL 18 WEEKS (W1 to W18) 100% COMPLETE
+          opt.scales.x.ticks.maxRotation = 0;
+          opt.scales.x.ticks.minRotation = 0;
           opt.scales.x.grid.color = 'rgba(0, 0, 0, 0.25)';
         }
         if (opt.scales.y) {
           opt.scales.y.ticks.color = '#000000';
-          opt.scales.y.ticks.font = { family: 'Kanit', size: 11, weight: '700' };
+          opt.scales.y.ticks.font = { family: 'Kanit', size: 8.5, weight: '700' };
           opt.scales.y.grid.color = 'rgba(0, 0, 0, 0.25)';
           if (opt.scales.y.title) {
             opt.scales.y.title.color = '#000000';
-            opt.scales.y.title.font = { family: 'Kanit', size: 12, weight: '700' };
+            opt.scales.y.title.font = { family: 'Kanit', size: 9.5, weight: '700' };
           }
         }
         if (opt.scales.yBar) {
           opt.scales.yBar.ticks.color = '#000000';
-          opt.scales.yBar.ticks.font = { family: 'Kanit', size: 11, weight: '700' };
+          opt.scales.yBar.ticks.font = { family: 'Kanit', size: 8.5, weight: '700' };
           if (opt.scales.yBar.title) {
             opt.scales.yBar.title.color = '#000000';
-            opt.scales.yBar.title.font = { family: 'Kanit', size: 12, weight: '700' };
+            opt.scales.yBar.title.font = { family: 'Kanit', size: 9.5, weight: '700' };
           }
         }
       }
+      opt.layout = {
+        padding: { top: 4, bottom: 4, left: 4, right: 6 }
+      };
+
+      const canvas = document.getElementById('scurveChart');
+      if (canvas && canvas.parentElement) {
+        canvas.style.width = '100%';
+        canvas.style.height = '100%';
+      }
       // Force immediate synchronous render without animation delay
-      scurveChartInstance.update('none');
       scurveChartInstance.resize();
+      scurveChartInstance.update('none');
       scurveChartInstance.render();
     }
 
@@ -1587,11 +1612,16 @@
       if (opt.plugins && opt.plugins.legend && opt.plugins.legend.labels) {
         opt.plugins.legend.labels.color = '#cbd5e1';
         opt.plugins.legend.labels.font = { family: 'Kanit', size: 12.5, weight: '300' };
+        opt.plugins.legend.labels.boxWidth = 10;
+        opt.plugins.legend.labels.padding = 12;
       }
       if (opt.scales) {
         if (opt.scales.x) {
           opt.scales.x.ticks.color = '#94a3b8';
-          opt.scales.x.ticks.font = { family: 'Kanit', size: 11, weight: '300' };
+          opt.scales.x.ticks.font = { family: 'Kanit', size: 9.5, weight: '300' };
+          opt.scales.x.ticks.autoSkip = false;
+          opt.scales.x.ticks.maxRotation = 0;
+          opt.scales.x.ticks.minRotation = 0;
           opt.scales.x.grid.color = 'rgba(30, 46, 84, 0.4)';
         }
         if (opt.scales.y) {
@@ -1604,8 +1634,8 @@
           opt.scales.yBar.ticks.font = { family: 'Kanit', size: 11.5, weight: '300' };
         }
       }
-      scurveChartInstance.update('none');
       scurveChartInstance.resize();
+      scurveChartInstance.update('none');
     }
 
     function triggerPrintDocument() {
@@ -2085,9 +2115,10 @@
               position: 'top',
               labels: {
                 color: '#cbd5e1',
-                font: { family: 'Kanit', size: 12.5, weight: '300' },
+                font: { family: 'Kanit', size: 11.5, weight: '300' },
                 usePointStyle: true,
-                padding: 16
+                padding: 10,
+                boxWidth: 8
               }
             },
             tooltip: {
@@ -2114,7 +2145,13 @@
           scales: {
             x: {
               grid: { color: 'rgba(30, 46, 84, 0.4)' },
-              ticks: { color: '#94a3b8', font: { family: 'Kanit', size: 11 } }
+              ticks: {
+                color: '#94a3b8',
+                font: { family: 'Kanit', size: 9.5 },
+                autoSkip: false,
+                maxRotation: 0,
+                minRotation: 0
+              }
             },
             y: {
               type: 'linear',
