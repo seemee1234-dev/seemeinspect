@@ -682,17 +682,54 @@
         padding: 5px 6px !important;
         margin-bottom: 6px !important;
       }
-      .exec-banner {
-        padding: 3px 6px !important;
-        margin-bottom: 4px !important;
-        background: #ffffff !important;
-        border: 1px solid #000000 !important;
-        page-break-inside: avoid !important;
-        break-inside: avoid !important;
+      /* Universal Pure Solid Black Text Lock (100% Crisp Black, Zero Faint Colors) */
+      *, *::before, *::after {
+        color: #000000 !important;
+        text-shadow: none !important;
+        -webkit-text-fill-color: #000000 !important;
       }
-      .kpi-row {
+
+      .exec-banner, 
+      .exec-banner * {
+        color: #000000 !important;
+      }
+      .exec-banner-badge {
+        background: #000000 !important;
+        color: #ffffff !important;
+        -webkit-text-fill-color: #ffffff !important;
+        border: 1px solid #000000 !important;
+      }
+
+      /* Project Meta Chips: 4 columns in one row, crisp black text */
+      .project-meta-grid {
         display: grid !important;
         grid-template-columns: repeat(4, 1fr) !important;
+        gap: 4px !important;
+        margin-bottom: 4px !important;
+      }
+      .meta-chip {
+        background: #ffffff !important;
+        border: 1px solid #000000 !important;
+        padding: 3px 5px !important;
+        border-radius: 4px !important;
+      }
+      .meta-chip .lbl {
+        color: #000000 !important;
+        font-size: 8px !important;
+        font-weight: 700 !important;
+      }
+      .meta-chip .val, 
+      .meta-chip .val.gold, 
+      .meta-chip .val.cyan {
+        color: #000000 !important;
+        font-size: 10px !important;
+        font-weight: 700 !important;
+      }
+
+      /* KPI Cards: ALL 5 Cards in ONE ROW across the page */
+      .kpi-row {
+        display: grid !important;
+        grid-template-columns: repeat(5, 1fr) !important;
         gap: 4px !important;
         margin-bottom: 4px !important;
         width: 100% !important;
@@ -705,18 +742,28 @@
         border: 1px solid #000000 !important;
         background: #ffffff !important;
       }
+      .kpi-card .kpi-title {
+        font-size: 8px !important;
+        color: #000000 !important;
+        font-weight: 700 !important;
+      }
       .kpi-card .kpi-value {
         font-size: 13px !important;
         color: #000000 !important;
         font-weight: 700 !important;
       }
-      .kpi-card .kpi-title {
-        font-size: 8px !important;
-        color: #000000 !important;
-      }
       .kpi-card .kpi-sub {
+        font-size: 7.5px !important;
+        color: #000000 !important;
+        font-weight: 500 !important;
+      }
+      .kpi-pill {
+        border: 1px solid #000000 !important;
+        color: #000000 !important;
+        background: #f1f5f9 !important;
         font-size: 7px !important;
-        color: #555555 !important;
+        font-weight: 700 !important;
+        padding: 1px 4px !important;
       }
 
       /* Page 1: S-Curve Chart (Fit completely on Page 1 - No 2-Page Split) */
@@ -1417,17 +1464,71 @@
       recalculateAll();
     });
 
-    // Resize Chart.js to fill 100% full page height/width during print
-    window.addEventListener('beforeprint', () => {
-      if (scurveChartInstance) {
-        scurveChartInstance.resize();
+    // Update Chart.js to 100% Solid Black Text for High-Contrast Printing
+    function applyPrintChartTheme() {
+      if (!scurveChartInstance) return;
+      const opt = scurveChartInstance.options;
+      if (opt.plugins && opt.plugins.legend && opt.plugins.legend.labels) {
+        opt.plugins.legend.labels.color = '#000000';
+        opt.plugins.legend.labels.font = { family: 'Kanit', size: 11.5, weight: '700' };
       }
-    });
-    window.addEventListener('afterprint', () => {
-      if (scurveChartInstance) {
-        scurveChartInstance.resize();
+      if (opt.scales) {
+        if (opt.scales.x) {
+          opt.scales.x.ticks.color = '#000000';
+          opt.scales.x.ticks.font = { family: 'Kanit', size: 9.5, weight: '700' };
+          opt.scales.x.grid.color = 'rgba(0, 0, 0, 0.15)';
+        }
+        if (opt.scales.y) {
+          opt.scales.y.ticks.color = '#000000';
+          opt.scales.y.ticks.font = { family: 'Kanit', size: 9.5, weight: '700' };
+          opt.scales.y.grid.color = 'rgba(0, 0, 0, 0.15)';
+          if (opt.scales.y.title) {
+            opt.scales.y.title.color = '#000000';
+            opt.scales.y.title.font = { family: 'Kanit', size: 10, weight: '700' };
+          }
+        }
+        if (opt.scales.yBar) {
+          opt.scales.yBar.ticks.color = '#000000';
+          opt.scales.yBar.ticks.font = { family: 'Kanit', size: 9.5, weight: '700' };
+          if (opt.scales.yBar.title) {
+            opt.scales.yBar.title.color = '#000000';
+            opt.scales.yBar.title.font = { family: 'Kanit', size: 10, weight: '700' };
+          }
+        }
       }
-    });
+      scurveChartInstance.update();
+      scurveChartInstance.resize();
+    }
+
+    function restoreScreenChartTheme() {
+      if (!scurveChartInstance) return;
+      const opt = scurveChartInstance.options;
+      if (opt.plugins && opt.plugins.legend && opt.plugins.legend.labels) {
+        opt.plugins.legend.labels.color = '#cbd5e1';
+        opt.plugins.legend.labels.font = { family: 'Kanit', size: 12.5, weight: '300' };
+      }
+      if (opt.scales) {
+        if (opt.scales.x) {
+          opt.scales.x.ticks.color = '#94a3b8';
+          opt.scales.x.ticks.font = { family: 'Kanit', size: 11, weight: '300' };
+          opt.scales.x.grid.color = 'rgba(30, 46, 84, 0.4)';
+        }
+        if (opt.scales.y) {
+          opt.scales.y.ticks.color = '#ffd700';
+          opt.scales.y.ticks.font = { family: 'Kanit', size: 11.5, weight: '300' };
+          opt.scales.y.grid.color = 'rgba(30, 46, 84, 0.5)';
+        }
+        if (opt.scales.yBar) {
+          opt.scales.yBar.ticks.color = '#00adf2';
+          opt.scales.yBar.ticks.font = { family: 'Kanit', size: 11.5, weight: '300' };
+        }
+      }
+      scurveChartInstance.update();
+      scurveChartInstance.resize();
+    }
+
+    window.addEventListener('beforeprint', applyPrintChartTheme);
+    window.addEventListener('afterprint', restoreScreenChartTheme);
 
     // Smart Universal Link Handler for Android Telegram / Local Cache (Fixes ERR_FILE_NOT_FOUND)
     (function() {
