@@ -500,11 +500,19 @@
       transform: translateY(0);
     }
 
+    .item-input { width: 100%; min-width: 170px; }
+    .cat-select { width: 115px; }
+    .vendor-input { width: 130px; }
+    .date-input { width: 105px; text-align: center; }
+    .zone-input { width: 135px; }
+    .pct-input { width: 45px; text-align: center; }
+    .stage-select { width: 125px; }
+
     /* Print Styles: A4 Landscape Full Width */
     @media print {
       @page {
         size: A4 landscape;
-        margin: 6mm;
+        margin: 4mm 5mm;
       }
       *, *::before, *::after {
         box-sizing: border-box !important;
@@ -517,10 +525,15 @@
         padding: 0 !important;
         background: #ffffff !important;
         color: #000000 !important;
-        font-size: 11px !important;
+        font-size: 8px !important;
       }
-      .app-header, .suite-nav-bar, .bottom-nav, .header-actions, .filter-bar, .no-print, .btn-input-mic, .voice-status-bar, .input-with-mic button {
+      .app-header, .suite-nav-bar, .bottom-nav, .header-actions, .filter-bar, .no-print, .btn-input-mic, .voice-status-bar, .input-with-mic button, .pill-btn, button {
         display: none !important;
+      }
+      .exec-print-header {
+        display: block !important;
+        width: 100% !important;
+        margin-bottom: 6px !important;
       }
       .container {
         width: 100% !important;
@@ -536,49 +549,138 @@
         box-shadow: none !important;
         width: 100% !important;
         max-width: 100% !important;
-        margin-bottom: 10px !important;
-        padding: 8px 12px !important;
+        margin-bottom: 6px !important;
+        padding: 4px 6px !important;
+      }
+      .section-title-bar {
+        border-bottom: 1px solid #000000 !important;
+        margin-bottom: 6px !important;
+        padding-bottom: 4px !important;
+      }
+      .section-title {
+        color: #000000 !important;
+        font-size: 11px !important;
+        font-weight: 700 !important;
+      }
+      .section-title .badge {
+        color: #000000 !important;
+        border: 1px solid #000000 !important;
+        background: #f1f5f9 !important;
+        font-size: 9px !important;
       }
       .kpi-grid {
-        display: flex !important;
-        flex-direction: row !important;
-        gap: 8px !important;
+        display: grid !important;
+        grid-template-columns: repeat(5, 1fr) !important;
+        gap: 5px !important;
         width: 100% !important;
+        margin-bottom: 6px !important;
       }
       .kpi-card {
-        flex: 1 !important;
+        padding: 4px 6px !important;
         margin-bottom: 0 !important;
+      }
+      .kpi-card .kpi-val {
+        font-size: 15px !important;
+        color: #000000 !important;
+        font-weight: 700 !important;
+      }
+      .kpi-card .kpi-label {
+        font-size: 9px !important;
+        color: #000000 !important;
+        font-weight: 600 !important;
+      }
+      .kpi-card .kpi-sub {
+        font-size: 7.5px !important;
+        color: #555555 !important;
       }
       .table-container {
         width: 100% !important;
         max-width: 100% !important;
         overflow: visible !important;
+        overflow-x: visible !important;
+        overflow-y: visible !important;
         border: none !important;
+        scrollbar-width: none !important;
+      }
+      .table-container::-webkit-scrollbar {
+        display: none !important;
+        width: 0 !important;
+        height: 0 !important;
       }
       .data-table {
         width: 100% !important;
         min-width: 100% !important;
-        table-layout: auto !important;
+        max-width: 100% !important;
+        table-layout: fixed !important;
         border-collapse: collapse !important;
-        font-size: 11px !important;
+        border: 1.5px solid #000000 !important;
+        font-size: 8px !important;
       }
       .data-table th, .data-table td {
         border: 1px solid #000000 !important;
         color: #000000 !important;
-        padding: 4px 6px !important;
+        padding: 2px 2px !important;
         white-space: normal !important;
+        word-break: break-word !important;
+        vertical-align: middle !important;
+        font-size: 8px !important;
       }
       .data-table th {
         background: #e2e8f0 !important;
         font-weight: 600 !important;
+        color: #000000 !important;
+        text-align: center !important;
       }
-      .data-table input, .data-table select {
+      .data-table th.stage-th {
+        color: #000000 !important;
+        background: #cbd5e1 !important;
+        border-bottom: 1.5px solid #000000 !important;
+      }
+      /* Column Widths in Print Mode (A4 Landscape 100% Full Width Fit) */
+      .col-no { width: 22px !important; }
+      .col-item { width: 125px !important; }
+      .col-cat { width: 72px !important; }
+      .col-vendor { width: 85px !important; }
+      .col-date { width: 48px !important; }
+      .col-zone { width: 95px !important; }
+      .col-lead { width: 42px !important; }
+      .col-pct { width: 32px !important; }
+      .col-stage { width: 65px !important; }
+
+      .input-with-mic {
+        display: block !important;
+        position: static !important;
+        width: 100% !important;
+      }
+      .input-with-mic input,
+      .data-table input, 
+      .data-table select {
         border: none !important;
         background: transparent !important;
         color: #000000 !important;
-        font-size: 11px !important;
-        font-weight: 400 !important;
+        font-size: 8px !important;
+        font-weight: 500 !important;
         padding: 0 !important;
+        padding-right: 0 !important;
+        margin: 0 !important;
+        width: 100% !important;
+        min-width: 0 !important;
+        max-width: 100% !important;
+        box-shadow: none !important;
+        outline: none !important;
+        overflow: visible !important;
+        -webkit-appearance: none !important;
+        appearance: none !important;
+      }
+      .item-input, .vendor-input, .zone-input, .date-input, .pct-input, .cat-select, .stage-select {
+        width: 100% !important;
+        min-width: 0 !important;
+        max-width: 100% !important;
+        padding: 0 !important;
+        font-size: 8px !important;
+      }
+      .pipeline-container {
+        display: none !important;
       }
     }
   
@@ -710,6 +812,20 @@
       <a href="https://seemee1234-dev.github.io/seemeinspect/pataya/logistics_manpower.html" target="_blank" rel="noopener noreferrer" class="suite-nav-link">🚚 นำของเข้า & จัดคน</a>
     </div>
 
+    <!-- Executive Print Banner (แสดงเฉพาะตอนพิมพ์) -->
+    <div class="exec-print-header" style="display:none;">
+      <div style="display:flex; justify-content:space-between; align-items:center; border-bottom:1.5px solid #000; padding-bottom:4px; margin-bottom:6px;">
+        <div>
+          <div style="font-size:14px; font-weight:700; color:#000;">THE ORIGIN PATTAYA • PROCUREMENT PLAN (5-STAGE SUPPLY CHAIN)</div>
+          <div style="font-size:9px; color:#333;">แผนการสั่งของ 5 ช่วงเวลา (สั่งซื้อ • ทำสัญญา • สั่งผลิต • ขนส่ง • จัดลงพื้นที่หน้างาน) โครงการพัทยา</div>
+        </div>
+        <div style="text-align:right; font-size:9px; color:#444;">
+          <div>เอกสารควบคุมงานจัดซื้อและซัพพลายเออร์</div>
+          <div>พิมพ์เมื่อ: 13/11/2026</div>
+        </div>
+      </div>
+    </div>
+
     <!-- Executive KPI Grid -->
     <div class="kpi-grid">
       <div class="kpi-card gold">
@@ -746,7 +862,7 @@
           <span>📦 ตารางแผนการจัดซื้อและบริหารห่วงโซ่อุปทาน 5 ช่วงเวลา (5-Stage Supply Chain Plan)</span>
           <span class="badge" id="tableBadge">0 รายการ</span>
         </div>
-        <button class="pill-btn" onclick="addNewProcurementRow()">➕ เพิ่มรายการวัสดุ</button>
+        <button class="pill-btn no-print" onclick="addNewProcurementRow()">➕ เพิ่มรายการวัสดุ</button>
       </div>
 
       <!-- Filter Controls -->
@@ -779,31 +895,31 @@
         <table class="data-table" id="procurementTable">
           <thead>
             <tr>
-              <th rowspan="2" style="width: 35px; text-align:center;">#</th>
-              <th rowspan="2">รายการวัสดุ / อุปกรณ์</th>
-              <th rowspan="2">หมวดงาน</th>
-              <th rowspan="2">ผู้ผลิต / ซัพพลายเออร์</th>
-              <th class="stage-th" colspan="2" style="color:#60a5fa;">ช่วงที่ 1: สั่งซื้อ / ออก PO</th>
-              <th class="stage-th" colspan="2" style="color:#c084fc;">ช่วงที่ 2: ทำสัญญา / มัดจำ</th>
-              <th class="stage-th" colspan="2" style="color:#fbbf24;">ช่วงที่ 3: สั่งผลิต (Factory)</th>
-              <th class="stage-th" colspan="2" style="color:#38bdf8;">ช่วงที่ 4: ขนส่ง (Logistics)</th>
-              <th class="stage-th" colspan="2" style="color:#34d399;">ช่วงที่ 5: จัดลงพื้นที่หน้างาน</th>
-              <th rowspan="2" style="text-align:center; width:80px;">Lead Time (วัน)</th>
-              <th rowspan="2" style="text-align:center; width:80px;">% ก้าวหน้า</th>
-              <th rowspan="2" style="text-align:center; width:130px;">ขั้นตอนปัจจุบัน</th>
+              <th rowspan="2" class="col-no" style="text-align:center;">#</th>
+              <th rowspan="2" class="col-item">รายการวัสดุ / อุปกรณ์</th>
+              <th rowspan="2" class="col-cat">หมวดงาน</th>
+              <th rowspan="2" class="col-vendor">ผู้ผลิต / ซัพพลายเออร์</th>
+              <th class="stage-th col-s1" colspan="2" style="color:#60a5fa;">ช่วงที่ 1: สั่งซื้อ / PO</th>
+              <th class="stage-th col-s2" colspan="2" style="color:#c084fc;">ช่วงที่ 2: ทำสัญญา / มัดจำ</th>
+              <th class="stage-th col-s3" colspan="2" style="color:#fbbf24;">ช่วงที่ 3: สั่งผลิต (Factory)</th>
+              <th class="stage-th col-s4" colspan="2" style="color:#38bdf8;">ช่วงที่ 4: ขนส่ง (Logistics)</th>
+              <th class="stage-th col-s5" colspan="2" style="color:#34d399;">ช่วงที่ 5: จัดลงพื้นที่</th>
+              <th rowspan="2" class="col-lead" style="text-align:center;">Lead Time</th>
+              <th rowspan="2" class="col-pct" style="text-align:center;">% ก้าวหน้า</th>
+              <th rowspan="2" class="col-stage" style="text-align:center;">ขั้นตอนปัจจุบัน</th>
               <th rowspan="2" style="width: 40px; text-align:center;" class="no-print">ลบ</th>
             </tr>
             <tr>
-              <th style="font-size:11px; text-align:center;">เริ่ม</th>
-              <th style="font-size:11px; text-align:center;">จบ</th>
-              <th style="font-size:11px; text-align:center;">เริ่ม</th>
-              <th style="font-size:11px; text-align:center;">จบ</th>
-              <th style="font-size:11px; text-align:center;">เริ่ม</th>
-              <th style="font-size:11px; text-align:center;">จบ</th>
-              <th style="font-size:11px; text-align:center;">เริ่ม</th>
-              <th style="font-size:11px; text-align:center;">จบ</th>
-              <th>จุดลงของ / กองพัก</th>
-              <th style="font-size:11px; text-align:center;">วันที่ส่งมอบ</th>
+              <th class="col-date" style="font-size:11px; text-align:center;">เริ่ม</th>
+              <th class="col-date" style="font-size:11px; text-align:center;">จบ</th>
+              <th class="col-date" style="font-size:11px; text-align:center;">เริ่ม</th>
+              <th class="col-date" style="font-size:11px; text-align:center;">จบ</th>
+              <th class="col-date" style="font-size:11px; text-align:center;">เริ่ม</th>
+              <th class="col-date" style="font-size:11px; text-align:center;">จบ</th>
+              <th class="col-date" style="font-size:11px; text-align:center;">เริ่ม</th>
+              <th class="col-date" style="font-size:11px; text-align:center;">จบ</th>
+              <th class="col-zone" style="text-align:center;">จุดลงของ / กองพัก</th>
+              <th class="col-date" style="font-size:11px; text-align:center;">วันที่ส่งมอบ</th>
             </tr>
           </thead>
           <tbody id="procurementTbody">
@@ -1070,13 +1186,13 @@
           <td style="text-align:center;">${idx + 1}</td>
           <td>
             <div class="input-with-mic">
-              <input type="text" id="item_input_${idx}" style="min-width:180px;" value="${escapeHtml(item.item)}" 
+              <input type="text" id="item_input_${idx}" class="item-input" value="${escapeHtml(item.item)}" 
                      placeholder="ระบุรายการวัสดุ/อุปกรณ์..." onchange="updateItem(${idx}, 'item', this.value)">
               <button type="button" class="btn-input-mic no-print" onclick="toggleVoice('item_input_${idx}', ${idx}, 'item', this)" title="แตะเพื่อพูดสั่งข้อความด้วยเสียง">🎙️</button>
             </div>
           </td>
           <td>
-            <select style="width:115px;" onchange="updateItem(${idx}, 'cat', this.value)">
+            <select class="cat-select" onchange="updateItem(${idx}, 'cat', this.value)">
               <option value="Structure" ${item.cat === 'Structure' ? 'selected' : ''}>1. โครงสร้าง</option>
               <option value="Architecture" ${item.cat === 'Architecture' ? 'selected' : ''}>2. สถาปัตย์</option>
               <option value="Interior" ${item.cat === 'Interior' ? 'selected' : ''}>3. ตกแต่งภายใน</option>
@@ -1089,45 +1205,45 @@
               <option value="Landscape" ${item.cat === 'Landscape' ? 'selected' : ''}>10. ภูมิทัศน์</option>
             </select>
           </td>
-          <td><input type="text" style="width:140px;" value="${escapeHtml(item.vendor)}" onchange="updateItem(${idx}, 'vendor', this.value)"></td>
+          <td><input type="text" class="vendor-input" value="${escapeHtml(item.vendor)}" placeholder="ซัพพลายเออร์..." onchange="updateItem(${idx}, 'vendor', this.value)"></td>
 
           <!-- Stage 1 -->
-          <td><input type="date" style="width:105px;" value="${item.s1_start}" onchange="updateItem(${idx}, 's1_start', this.value)"></td>
-          <td><input type="date" style="width:105px;" value="${item.s1_end}" onchange="updateItem(${idx}, 's1_end', this.value)"></td>
+          <td><input type="date" class="date-input" value="${item.s1_start}" onchange="updateItem(${idx}, 's1_start', this.value)"></td>
+          <td><input type="date" class="date-input" value="${item.s1_end}" onchange="updateItem(${idx}, 's1_end', this.value)"></td>
 
           <!-- Stage 2 -->
-          <td><input type="date" style="width:105px;" value="${item.s2_start}" onchange="updateItem(${idx}, 's2_start', this.value)"></td>
-          <td><input type="date" style="width:105px;" value="${item.s2_end}" onchange="updateItem(${idx}, 's2_end', this.value)"></td>
+          <td><input type="date" class="date-input" value="${item.s2_start}" onchange="updateItem(${idx}, 's2_start', this.value)"></td>
+          <td><input type="date" class="date-input" value="${item.s2_end}" onchange="updateItem(${idx}, 's2_end', this.value)"></td>
 
           <!-- Stage 3 -->
-          <td><input type="date" style="width:105px;" value="${item.s3_start}" onchange="updateItem(${idx}, 's3_start', this.value)"></td>
-          <td><input type="date" style="width:105px;" value="${item.s3_end}" onchange="updateItem(${idx}, 's3_end', this.value)"></td>
+          <td><input type="date" class="date-input" value="${item.s3_start}" onchange="updateItem(${idx}, 's3_start', this.value)"></td>
+          <td><input type="date" class="date-input" value="${item.s3_end}" onchange="updateItem(${idx}, 's3_end', this.value)"></td>
 
           <!-- Stage 4 -->
-          <td><input type="date" style="width:105px;" value="${item.s4_start}" onchange="updateItem(${idx}, 's4_start', this.value)"></td>
-          <td><input type="date" style="width:105px;" value="${item.s4_end}" onchange="updateItem(${idx}, 's4_end', this.value)"></td>
+          <td><input type="date" class="date-input" value="${item.s4_start}" onchange="updateItem(${idx}, 's4_start', this.value)"></td>
+          <td><input type="date" class="date-input" value="${item.s4_end}" onchange="updateItem(${idx}, 's4_end', this.value)"></td>
 
           <!-- Stage 5 -->
-          <td><input type="text" style="width:140px;" value="${escapeHtml(item.s5_zone)}" onchange="updateItem(${idx}, 's5_zone', this.value)"></td>
-          <td><input type="date" style="width:105px;" value="${item.s5_date}" onchange="updateItem(${idx}, 's5_date', this.value)"></td>
+          <td><input type="text" class="zone-input" value="${escapeHtml(item.s5_zone)}" placeholder="จุดลงของ..." onchange="updateItem(${idx}, 's5_zone', this.value)"></td>
+          <td><input type="date" class="date-input" value="${item.s5_date}" onchange="updateItem(${idx}, 's5_date', this.value)"></td>
 
           <!-- Metrics -->
-          <td style="text-align:center; font-weight:500; color:var(--cyan);">${leadTimeDays}</td>
+          <td style="text-align:center; font-weight:500;" class="lead-cell">${leadTimeDays}</td>
           <td style="text-align:center;">
-            <input type="number" min="0" max="100" style="width:55px; text-align:center;" value="${item.pct}" onchange="updateItem(${idx}, 'pct', this.value)">%
+            <input type="number" min="0" max="100" class="pct-input" value="${item.pct}" onchange="updateItem(${idx}, 'pct', this.value)"><span class="pct-sign">%</span>
           </td>
 
           <!-- Pipeline & Stage Select -->
           <td style="text-align:center;">
-            <div style="display:flex; flex-direction:column; align-items:center; gap:4px;">
-              <select style="width:125px;" onchange="updateItem(${idx}, 'stage', this.value)">
+            <div style="display:flex; flex-direction:column; align-items:center; gap:2px;">
+              <select class="stage-select" onchange="updateItem(${idx}, 'stage', this.value)">
                 <option value="1" ${item.stage == 1 ? 'selected' : ''}>1. สั่งซื้อ / PO</option>
                 <option value="2" ${item.stage == 2 ? 'selected' : ''}>2. เซ็นสัญญา</option>
                 <option value="3" ${item.stage == 3 ? 'selected' : ''}>3. อยู่ระหว่างผลิต</option>
                 <option value="4" ${item.stage == 4 ? 'selected' : ''}>4. กำลังขนส่ง</option>
                 <option value="5" ${item.stage == 5 ? 'selected' : ''}>5. ลงหน้างานแล้ว</option>
               </select>
-              <div class="pipeline-container">
+              <div class="pipeline-container no-print">
                 <div class="pipeline-step ${item.stage >= 1 ? 'active-1' : ''}" title="1. สั่งซื้อ"></div>
                 <div class="pipeline-step ${item.stage >= 2 ? 'active-2' : ''}" title="2. สัญญา"></div>
                 <div class="pipeline-step ${item.stage >= 3 ? 'active-3' : ''}" title="3. ผลิต"></div>
