@@ -1323,11 +1323,10 @@
           }
           
           if (isSandboxed) {
-            el.target = '_blank';
-            el.rel = 'noopener noreferrer';
+            el.target = '_self';
             el.onclick = function(e) {
               e.preventDefault();
-              window.open(this.href, '_blank');
+              window.location.href = this.href;
             };
           }
         });

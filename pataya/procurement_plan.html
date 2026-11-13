@@ -958,6 +958,33 @@
   </div>
 
   <script>
+    // Universal Link Handler: fixes ERR_FILE_NOT_FOUND when opened via Telegram content:// or local cache
+    (function() {
+      const GH_BASE = "https://seemee1234-dev.github.io/seemeinspect/pataya/";
+      function fixLinks() {
+        const isSandboxed = window.location.protocol === 'content:' || window.location.protocol === 'file:' || !window.location.hostname.includes('github.io');
+        document.querySelectorAll("a").forEach(function(el) {
+          const h = el.getAttribute("href");
+          if (!h || h.startsWith("#") || h.startsWith("javascript:")) return;
+          if (!h.startsWith("http")) {
+            el.href = GH_BASE + h;
+          }
+          if (isSandboxed) {
+            el.target = "_self";
+            el.onclick = function(e) {
+              e.preventDefault();
+              window.location.href = this.href;
+            };
+          }
+        });
+      }
+      if (document.readyState === 'loading') {
+        document.addEventListener('DOMContentLoaded', fixLinks);
+      } else {
+        fixLinks();
+      }
+    })();
+
     // Master Pattaya Procurement Data (10 Categories)
     const DEFAULT_PROCUREMENT_ITEMS = [
       {

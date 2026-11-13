@@ -549,6 +549,14 @@
       border: 1px solid #283e6b !important;
     }
 
+    .col-item-no { width: 40px; min-width: 36px; }
+    .col-task-desc { min-width: 220px; }
+    .col-cost { min-width: 105px; text-align: right; }
+    .col-weight { min-width: 65px; text-align: center; }
+    .col-status { min-width: 70px; text-align: center; }
+    .col-duration { min-width: 55px; text-align: center; }
+    .col-week { min-width: 48px; text-align: center; }
+
     .scurve-table tr:hover td {
       background: rgba(30, 50, 95, 0.7);
     }
@@ -635,80 +643,191 @@
       color: #7dd3fc;
     }
 
-    /* Print Controls & Watermark */
+    /* Print Controls & Full Page S-Curve Layout */
     @media print {
-      body {
+      @page {
+        size: A4 landscape;
+        margin: 4mm 5mm;
+      }
+      *, *::before, *::after {
+        box-sizing: border-box !important;
+      }
+      html, body {
+        width: 100% !important;
+        max-width: 100% !important;
+        min-width: 100% !important;
+        margin: 0 !important;
+        padding: 0 !important;
         background: #ffffff !important;
         color: #0f172a !important;
-        padding-bottom: 0;
-        font-size: 11px;
+        font-size: 8px !important;
       }
-      .app-header, .header-actions, .bottom-nav, .input-section, .no-print {
+      .app-header, .header-actions, .bottom-nav, .input-section, .no-print, .pill-btn, button {
         display: none !important;
       }
       .container {
+        width: 100% !important;
         max-width: 100% !important;
+        min-width: 100% !important;
+        margin: 0 !important;
         padding: 0 !important;
       }
-      .section-card, .kpi-card, .exec-banner, .meta-chip {
+      .section-card {
         background: #ffffff !important;
-        border: 1px solid #cbd5e1 !important;
+        border: 1px solid #000000 !important;
         color: #0f172a !important;
         box-shadow: none !important;
+        width: 100% !important;
+        max-width: 100% !important;
+        padding: 5px 6px !important;
+        margin-bottom: 6px !important;
       }
-      .kpi-value, .brand-title, .meta-chip .val {
-        color: #0f172a !important;
+      .exec-banner {
+        padding: 5px 8px !important;
+        margin-bottom: 6px !important;
+        background: #ffffff !important;
+        border: 1px solid #000000 !important;
+      }
+      .kpi-row {
+        display: grid !important;
+        grid-template-columns: repeat(4, 1fr) !important;
+        gap: 5px !important;
+        margin-bottom: 6px !important;
+        width: 100% !important;
+      }
+      .kpi-card {
+        padding: 4px 6px !important;
+        margin-bottom: 0 !important;
+        border: 1px solid #000000 !important;
+        background: #ffffff !important;
+      }
+      .kpi-card .kpi-value {
+        font-size: 15px !important;
+        color: #000000 !important;
+        font-weight: 700 !important;
+      }
+      .kpi-card .kpi-title {
+        font-size: 8.5px !important;
+        color: #000000 !important;
+      }
+      .kpi-card .kpi-sub {
+        font-size: 7.5px !important;
+        color: #555555 !important;
+      }
+
+      /* Page 1: S-Curve Chart (Full Page Expanded) */
+      #chartSection {
+        page-break-after: always !important;
+        break-after: page !important;
+        margin-bottom: 0 !important;
+        width: 100% !important;
       }
       .chart-wrapper {
         background: #ffffff !important;
         border: 1.5px solid #000000 !important;
-        height: 420px !important;
-        min-height: 420px !important;
-        padding-bottom: 30px !important;
+        height: 520px !important;
+        min-height: 520px !important;
+        width: 100% !important;
+        max-width: 100% !important;
+        padding: 10px 10px 25px 10px !important;
         overflow: hidden !important;
-        page-break-inside: avoid !important;
       }
       .cutoff-bar {
         display: none !important;
       }
+
+      /* Page 2: Master Table (Full 18 Weeks W1-W18 Complete) */
+      #tableSection {
+        page-break-before: always !important;
+        break-before: page !important;
+        width: 100% !important;
+        max-width: 100% !important;
+        margin-top: 0 !important;
+      }
       .table-responsive {
+        width: 100% !important;
+        max-width: 100% !important;
         overflow: visible !important;
-        border: 1.5px solid #000000 !important;
+        border: none !important;
+        scrollbar-width: none !important;
+      }
+      .table-responsive::-webkit-scrollbar {
+        display: none !important;
+        width: 0 !important;
+        height: 0 !important;
       }
       .scurve-table {
-        border-collapse: collapse !important;
         width: 100% !important;
+        max-width: 100% !important;
+        table-layout: fixed !important;
+        border-collapse: collapse !important;
         border: 1.5px solid #000000 !important;
+        font-size: 7px !important;
       }
       .scurve-table th, .scurve-table td {
-        border: 1px solid #334155 !important; /* เส้นตารางตอนพิมพ์ชัดครบทุกช่อง 100% */
-        color: #000000 !important;
-        position: static !important;
-      }
-      .scurve-table th, .scurve-table th.task-col {
-        background: #e2e8f0 !important;
         border: 1px solid #000000 !important;
         color: #000000 !important;
+        padding: 2px 1px !important;
+        position: static !important;
+        white-space: normal !important;
+        word-break: break-word !important;
+        vertical-align: middle !important;
+        text-align: center !important;
+        font-size: 7px !important;
+        line-height: 1.15 !important;
       }
+      .scurve-table th {
+        background: #e2e8f0 !important;
+        font-weight: 600 !important;
+        color: #000000 !important;
+      }
+      .scurve-table th.task-col,
       .scurve-table td.task-col {
+        text-align: left !important;
+        padding-left: 3px !important;
+        padding-right: 2px !important;
         background: #ffffff !important;
-        border: 1px solid #334155 !important;
         color: #000000 !important;
       }
       .scurve-table tr.summary-row td {
         background: #f1f5f9 !important;
         border: 1px solid #000000 !important;
         color: #000000 !important;
+        font-size: 7px !important;
       }
       .gantt-bar {
         background: #e2e8f0 !important;
         border: 1px solid #64748b !important;
         color: #0f172a !important;
+        font-size: 6.5px !important;
+        font-weight: 700 !important;
+        padding: 1px 0 !important;
+        min-width: 0 !important;
+        display: block !important;
+        width: 100% !important;
       }
-      @page {
-        size: A4 landscape;
-        margin: 10mm;
+      .table-actual-input {
+        background: transparent !important;
+        border: none !important;
+        color: #000000 !important;
+        font-size: 7px !important;
+        font-weight: 600 !important;
+        width: 100% !important;
+        min-width: 0 !important;
+        padding: 0 !important;
+        text-align: center !important;
+        box-shadow: none !important;
+        outline: none !important;
       }
+
+      /* Print Column Widths for All 25 Columns (Total = 1,083px) */
+      .col-item-no { width: 18px !important; min-width: 0 !important; }
+      .col-task-desc { width: 135px !important; min-width: 0 !important; }
+      .col-cost { width: 62px !important; min-width: 0 !important; }
+      .col-weight { width: 34px !important; min-width: 0 !important; }
+      .col-status { width: 42px !important; min-width: 0 !important; }
+      .col-duration { width: 36px !important; min-width: 0 !important; }
+      .col-week { width: 40px !important; min-width: 0 !important; }
     }
 
     /* Bottom Navigation Bar (Mobile View matching Inspect Q) */
@@ -998,17 +1117,17 @@
         <table class="scurve-table" id="masterTable">
           <thead>
             <tr>
-              <th rowspan="3" style="width:40px;">Item</th>
-              <th rowspan="3" class="task-col">Description (หมวดงาน)</th>
-              <th rowspan="3" style="min-width:110px;">Cost value<br>(baht)</th>
-              <th rowspan="3" style="min-width:65px;">Weight<br>%</th>
-              <th rowspan="3" style="min-width:70px;">Project<br>Status</th>
+              <th rowspan="3" class="col-item-no">Item</th>
+              <th rowspan="3" class="col-task-desc task-col">Description (หมวดงาน)</th>
+              <th rowspan="3" class="col-cost">Cost value<br>(baht)</th>
+              <th rowspan="3" class="col-weight">Weight<br>%</th>
+              <th rowspan="3" class="col-status">Project<br>Status</th>
               <th colspan="2">Duration</th>
               <th colspan="18">สัปดาห์การดำเนินงาน (ปี 2565 / 2022)</th>
             </tr>
             <tr>
-              <th rowspan="2" style="font-size:11px;">Start</th>
-              <th rowspan="2" style="font-size:11px;">Finish</th>
+              <th rowspan="2" class="col-duration">Start</th>
+              <th rowspan="2" class="col-duration">Finish</th>
               <th colspan="1" style="background:#0c1733;">มิ.ย.</th>
               <th colspan="5" style="background:#0e1d3e;">กรกฎาคม 2565</th>
               <th colspan="4" style="background:#0c1733;">สิงหาคม 2565</th>
@@ -1016,24 +1135,24 @@
               <th colspan="3" style="background:#0c1733;">ตุลาคม 2565</th>
             </tr>
             <tr>
-              <th>W1<br><span style="font-size:9.5px;color:#94a3b8;">24/6</span></th>
-              <th>W2<br><span style="font-size:9.5px;color:#94a3b8;">1/7</span></th>
-              <th>W3<br><span style="font-size:9.5px;color:#94a3b8;">8/7</span></th>
-              <th>W4<br><span style="font-size:9.5px;color:#94a3b8;">15/7</span></th>
-              <th>W5<br><span style="font-size:9.5px;color:#94a3b8;">22/7</span></th>
-              <th>W6<br><span style="font-size:9.5px;color:#94a3b8;">29/7</span></th>
-              <th>W7<br><span style="font-size:9.5px;color:#94a3b8;">5/8</span></th>
-              <th>W8<br><span style="font-size:9.5px;color:#94a3b8;">12/8</span></th>
-              <th>W9<br><span style="font-size:9.5px;color:#94a3b8;">19/8</span></th>
-              <th>W10<br><span style="font-size:9.5px;color:#94a3b8;">26/8</span></th>
-              <th>W11<br><span style="font-size:9.5px;color:#94a3b8;">2/9</span></th>
-              <th>W12<br><span style="font-size:9.5px;color:#94a3b8;">9/9</span></th>
-              <th>W13<br><span style="font-size:9.5px;color:#94a3b8;">16/9</span></th>
-              <th>W14<br><span style="font-size:9.5px;color:#94a3b8;">23/9</span></th>
-              <th>W15<br><span style="font-size:9.5px;color:#94a3b8;">30/9</span></th>
-              <th>W16<br><span style="font-size:9.5px;color:#94a3b8;">7/10</span></th>
-              <th>W17<br><span style="font-size:9.5px;color:#94a3b8;">14/10</span></th>
-              <th>W18<br><span style="font-size:9.5px;color:#94a3b8;">21/10</span></th>
+              <th class="col-week">W1<br><span style="font-size:9.5px;color:#94a3b8;">24/6</span></th>
+              <th class="col-week">W2<br><span style="font-size:9.5px;color:#94a3b8;">1/7</span></th>
+              <th class="col-week">W3<br><span style="font-size:9.5px;color:#94a3b8;">8/7</span></th>
+              <th class="col-week">W4<br><span style="font-size:9.5px;color:#94a3b8;">15/7</span></th>
+              <th class="col-week">W5<br><span style="font-size:9.5px;color:#94a3b8;">22/7</span></th>
+              <th class="col-week">W6<br><span style="font-size:9.5px;color:#94a3b8;">29/7</span></th>
+              <th class="col-week">W7<br><span style="font-size:9.5px;color:#94a3b8;">5/8</span></th>
+              <th class="col-week">W8<br><span style="font-size:9.5px;color:#94a3b8;">12/8</span></th>
+              <th class="col-week">W9<br><span style="font-size:9.5px;color:#94a3b8;">19/8</span></th>
+              <th class="col-week">W10<br><span style="font-size:9.5px;color:#94a3b8;">26/8</span></th>
+              <th class="col-week">W11<br><span style="font-size:9.5px;color:#94a3b8;">2/9</span></th>
+              <th class="col-week">W12<br><span style="font-size:9.5px;color:#94a3b8;">9/9</span></th>
+              <th class="col-week">W13<br><span style="font-size:9.5px;color:#94a3b8;">16/9</span></th>
+              <th class="col-week">W14<br><span style="font-size:9.5px;color:#94a3b8;">23/9</span></th>
+              <th class="col-week">W15<br><span style="font-size:9.5px;color:#94a3b8;">30/9</span></th>
+              <th class="col-week">W16<br><span style="font-size:9.5px;color:#94a3b8;">7/10</span></th>
+              <th class="col-week">W17<br><span style="font-size:9.5px;color:#94a3b8;">14/10</span></th>
+              <th class="col-week">W18<br><span style="font-size:9.5px;color:#94a3b8;">21/10</span></th>
             </tr>
           </thead>
           <tbody id="masterTableBody">
@@ -1254,6 +1373,45 @@
       recalculateAll();
     });
 
+    // Resize Chart.js to fill 100% full page height/width during print
+    window.addEventListener('beforeprint', () => {
+      if (scurveChartInstance) {
+        scurveChartInstance.resize();
+      }
+    });
+    window.addEventListener('afterprint', () => {
+      if (scurveChartInstance) {
+        scurveChartInstance.resize();
+      }
+    });
+
+    // Smart Universal Link Handler for Android Telegram / Local Cache (Fixes ERR_FILE_NOT_FOUND)
+    (function() {
+      const GH_BASE = "https://seemee1234-dev.github.io/seemeinspect/pataya/";
+      function fixLinks() {
+        const isSandboxed = window.location.protocol === 'content:' || window.location.protocol === 'file:' || !window.location.hostname.includes('github.io');
+        document.querySelectorAll("a").forEach(function(el) {
+          const h = el.getAttribute("href");
+          if (!h || h.startsWith("#") || h.startsWith("javascript:")) return;
+          if (!h.startsWith("http")) {
+            el.href = GH_BASE + h;
+          }
+          if (isSandboxed) {
+            el.target = "_self";
+            el.onclick = function(e) {
+              e.preventDefault();
+              window.location.href = this.href;
+            };
+          }
+        });
+      }
+      if (document.readyState === 'loading') {
+        document.addEventListener('DOMContentLoaded', fixLinks);
+      } else {
+        fixLinks();
+      }
+    })();
+
     /* ========================================================
        DATA PERSISTENCE (LocalStorage)
        ======================================================== */
@@ -1374,13 +1532,13 @@
         }
 
         tr.innerHTML = `
-          <td style="text-align:center;">${t.item}</td>
-          <td class="task-col">${t.name}</td>
-          <td style="text-align:right; color:var(--text-muted);">${formatMoney(t.cost)}</td>
-          <td style="text-align:center; color:var(--gold);">${t.weight.toFixed(2)}%</td>
-          <td style="text-align:center;"><span style="color:var(--cyan);">${t.status}</span></td>
-          <td style="font-size:11px; text-align:center; color:var(--text-dim);">${t.start}</td>
-          <td style="font-size:11px; text-align:center; color:var(--text-dim);">${t.finish}</td>
+          <td class="col-item-no" style="text-align:center;">${t.item}</td>
+          <td class="col-task-desc task-col">${t.name}</td>
+          <td class="col-cost" style="text-align:right; color:var(--text-muted);">${formatMoney(t.cost)}</td>
+          <td class="col-weight" style="text-align:center; color:var(--gold);">${t.weight.toFixed(2)}%</td>
+          <td class="col-status" style="text-align:center;"><span style="color:var(--cyan);">${t.status}</span></td>
+          <td class="col-duration" style="text-align:center; color:var(--text-dim);">${t.start}</td>
+          <td class="col-duration" style="text-align:center; color:var(--text-dim);">${t.finish}</td>
           ${weekCells}
         `;
         tbody.appendChild(tr);
