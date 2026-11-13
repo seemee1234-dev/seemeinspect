@@ -238,12 +238,12 @@
     }
 
     .meta-chip .val {
-      font-size: 15px;
+      font-size: 13.5px;
       font-weight: 400;
       color: #ffffff;
-      white-space: nowrap;
-      overflow: hidden;
-      text-overflow: ellipsis;
+      white-space: normal;
+      word-break: break-word;
+      line-height: 1.25;
     }
 
     .meta-chip .val.gold { color: var(--gold); }
@@ -722,18 +722,18 @@
       .project-meta-grid {
         display: grid !important;
         grid-template-columns: repeat(4, 1fr) !important;
-        gap: 4px !important;
-        margin-bottom: 4px !important;
+        gap: 3px !important;
+        margin-bottom: 3px !important;
       }
       .meta-chip {
         background: #ffffff !important;
         border: 1.5px solid #000000 !important;
-        padding: 4px 6px !important;
+        padding: 3px 5px !important;
         border-radius: 4px !important;
       }
       .meta-chip .lbl {
         color: #000000 !important;
-        font-size: 9.5px !important;
+        font-size: 8.5px !important;
         font-weight: 700 !important;
         display: block !important;
         margin-bottom: 1px !important;
@@ -742,54 +742,59 @@
       .meta-chip .val.gold, 
       .meta-chip .val.cyan {
         color: #000000 !important;
-        font-size: 12.5px !important;
+        font-size: 10.5px !important;
         font-weight: 700 !important;
+        white-space: normal !important;
+        overflow: visible !important;
+        text-overflow: clip !important;
+        word-break: break-word !important;
+        line-height: 1.2 !important;
       }
 
       /* KPI Cards: ALL 5 Cards in ONE ROW across the page */
       .kpi-row {
         display: grid !important;
         grid-template-columns: repeat(5, 1fr) !important;
-        gap: 4px !important;
-        margin-bottom: 4px !important;
+        gap: 3px !important;
+        margin-bottom: 3px !important;
         width: 100% !important;
         page-break-inside: avoid !important;
         break-inside: avoid !important;
       }
       .kpi-card {
-        padding: 4px 6px !important;
+        padding: 3px 5px !important;
         margin-bottom: 0 !important;
         border: 1.5px solid #000000 !important;
         background: #ffffff !important;
       }
       .kpi-card .kpi-title {
-        font-size: 9.5px !important;
+        font-size: 8.5px !important;
         color: #000000 !important;
         font-weight: 700 !important;
       }
       .kpi-card .kpi-value {
-        font-size: 15px !important;
+        font-size: 13.5px !important;
         color: #000000 !important;
         font-weight: 700 !important;
       }
       .kpi-card .kpi-sub {
-        font-size: 8.5px !important;
+        font-size: 7.5px !important;
         color: #000000 !important;
         font-weight: 600 !important;
-        line-height: 1.25 !important;
-        margin-top: 2px !important;
+        line-height: 1.2 !important;
+        margin-top: 1px !important;
       }
       .kpi-pill {
         border: 1.5px solid #000000 !important;
         color: #000000 !important;
         background: #ffffff !important;
-        font-size: 8px !important;
+        font-size: 7.5px !important;
         font-weight: 700 !important;
-        padding: 1px 5px !important;
-        border-radius: 4px !important;
+        padding: 1px 4px !important;
+        border-radius: 3px !important;
       }
 
-      /* Page 1: S-Curve Chart (Fit completely on Page 1 - No 2-Page Split) */
+      /* Page 1: S-Curve Chart (Fit completely on Page 1 - No 2-Page Split Guarantee) */
       #chartSection {
         page-break-inside: avoid !important;
         break-inside: avoid !important;
@@ -797,33 +802,35 @@
         break-after: page !important;
         margin-top: 0 !important;
         margin-bottom: 0 !important;
-        padding: 4px 6px !important;
+        padding: 3px 5px !important;
         width: 100% !important;
       }
       #chartSection .section-head {
-        margin-bottom: 4px !important;
+        margin-bottom: 2px !important;
         padding-bottom: 2px !important;
       }
       #chartSection .section-title {
-        font-size: 11px !important;
+        font-size: 10.5px !important;
         line-height: 1.2 !important;
         color: #000000 !important;
       }
       #chartSection .section-sub {
-        font-size: 8px !important;
+        font-size: 7.5px !important;
         line-height: 1.2 !important;
-        color: #555555 !important;
+        color: #333333 !important;
       }
       .chart-wrapper {
         background: #ffffff !important;
         border: 1.5px solid #000000 !important;
-        height: 420px !important;
-        min-height: 420px !important;
-        max-height: 420px !important;
+        height: 330px !important;
+        min-height: 330px !important;
+        max-height: 330px !important;
         width: 100% !important;
         max-width: 100% !important;
-        padding: 6px 6px 10px 6px !important;
+        padding: 4px 6px 6px 6px !important;
         overflow: hidden !important;
+        page-break-inside: avoid !important;
+        break-inside: avoid !important;
       }
       .cutoff-bar {
         display: none !important;
@@ -882,8 +889,12 @@
         line-height: 1.25 !important;
       }
       .scurve-table span,
-      .scurve-table strong {
+      .scurve-table strong,
+      .scurve-table th span,
+      .scurve-table th strong {
         border: none !important;
+        outline: none !important;
+        box-shadow: none !important;
       }
       .scurve-table th {
         background: #e2e8f0 !important;
@@ -893,10 +904,14 @@
         text-align: center !important;
         vertical-align: middle !important;
       }
-      .scurve-table th.col-week {
+      .scurve-table th.col-week,
+      .scurve-table td.col-week {
         text-align: center !important;
         vertical-align: middle !important;
-        padding: 2px 1px !important;
+        padding: 2px 0.5px !important;
+        font-size: 7.2px !important;
+        white-space: nowrap !important;
+        word-break: normal !important;
       }
       .scurve-table th.col-week span {
         border: none !important;
@@ -952,17 +967,20 @@
         color: #000000 !important;
         -webkit-text-fill-color: #000000 !important;
         font-weight: 700 !important;
-        font-size: 8px !important;
+        font-size: 7.2px !important;
         padding: 0 !important;
         box-shadow: none !important;
         white-space: nowrap !important;
+        word-break: normal !important;
+        display: inline-block !important;
+        line-height: 1 !important;
       }
       .table-actual-input {
         background: transparent !important;
         border: none !important;
         color: #000000 !important;
         -webkit-text-fill-color: #000000 !important;
-        font-size: 8px !important;
+        font-size: 7.5px !important;
         font-weight: 700 !important;
         width: 100% !important;
         min-width: 0 !important;
@@ -972,14 +990,14 @@
         outline: none !important;
       }
 
-      /* Print Column Widths for All 25 Columns (100% Full-Width Flush Fit) */
-      .col-item-no { width: 1.8% !important; min-width: 0 !important; }
-      .col-task-desc { width: 14% !important; min-width: 0 !important; }
-      .col-cost { width: 6.2% !important; min-width: 0 !important; }
-      .col-weight { width: 3.5% !important; min-width: 0 !important; }
-      .col-status { width: 4.2% !important; min-width: 0 !important; }
-      .col-duration { width: 3.8% !important; min-width: 0 !important; }
-      .col-week { width: 3.48% !important; min-width: 0 !important; }
+      /* Print Column Widths for All 25 Columns (100% Full-Width Flush Fit & Zero Wrapping) */
+      .col-item-no { width: 1.5% !important; min-width: 0 !important; }
+      .col-task-desc { width: 13.0% !important; min-width: 0 !important; }
+      .col-cost { width: 5.8% !important; min-width: 0 !important; }
+      .col-weight { width: 3.2% !important; min-width: 0 !important; }
+      .col-status { width: 3.8% !important; min-width: 0 !important; }
+      .col-duration { width: 3.2% !important; min-width: 0 !important; }
+      .col-week { width: 3.68% !important; min-width: 0 !important; font-size: 7.2px !important; }
     }
 
     /* Bottom Navigation Bar (Mobile View matching Inspect Q) */

@@ -500,13 +500,13 @@
       transform: translateY(0);
     }
 
-    .item-input { width: 100%; min-width: 190px; }
-    .cat-select { width: 125px; }
-    .vendor-input { width: 175px; }
-    .date-input { width: 105px; text-align: center; }
-    .zone-input { width: 155px; }
-    .pct-input { width: 45px; text-align: center; }
-    .stage-select { width: 125px; }
+    .item-input { width: 100%; min-width: 240px; }
+    .cat-select { width: 135px; }
+    .vendor-input { width: 100%; min-width: 220px; }
+    .date-input { width: 135px; min-width: 130px; text-align: center; }
+    .zone-input { width: 100%; min-width: 210px; }
+    .pct-input { width: 55px; text-align: center; }
+    .stage-select { width: 140px; }
     .print-val { display: none; }
 
     /* Print Styles: A4 Landscape Full Width */
@@ -576,27 +576,41 @@
       .kpi-grid {
         display: grid !important;
         grid-template-columns: repeat(5, 1fr) !important;
-        gap: 5px !important;
+        gap: 4px !important;
         width: 100% !important;
-        margin-bottom: 6px !important;
+        margin-bottom: 4px !important;
       }
       .kpi-card {
-        padding: 4px 6px !important;
+        padding: 3px 5px !important;
         margin-bottom: 0 !important;
+        border: 1.5px solid #000000 !important;
+        background: #ffffff !important;
+        overflow: visible !important;
       }
       .kpi-card .kpi-val {
-        font-size: 15px !important;
+        font-size: 13.5px !important;
         color: #000000 !important;
         font-weight: 700 !important;
+        white-space: normal !important;
+        overflow: visible !important;
+        text-overflow: clip !important;
       }
       .kpi-card .kpi-label {
-        font-size: 9px !important;
+        font-size: 8.5px !important;
         color: #000000 !important;
-        font-weight: 600 !important;
+        font-weight: 700 !important;
+        white-space: normal !important;
+        line-height: 1.25 !important;
+        overflow: visible !important;
+        text-overflow: clip !important;
       }
       .kpi-card .kpi-sub {
         font-size: 7.5px !important;
-        color: #555555 !important;
+        color: #333333 !important;
+        white-space: normal !important;
+        line-height: 1.25 !important;
+        overflow: visible !important;
+        text-overflow: clip !important;
       }
       .table-container {
         width: 100% !important;
@@ -642,27 +656,29 @@
         background: #cbd5e1 !important;
         border-bottom: 1.5px solid #000000 !important;
       }
-      /* Column Widths in Print Mode (A4 Landscape 100% Full Width Fit) */
-      .col-no { width: 20px !important; }
-      .col-item { width: 155px !important; }
-      .col-cat { width: 85px !important; }
-      .col-vendor { width: 145px !important; }
-      .col-date { width: 42px !important; }
-      .col-zone { width: 120px !important; }
-      .col-lead { width: 40px !important; }
-      .col-pct { width: 30px !important; }
-      .col-stage { width: 65px !important; }
+      /* Column Widths in Print Mode (A4 Landscape 100% Full Width Fit & Zero Ellipsis) */
+      .col-no { width: 1.8% !important; min-width: 0 !important; }
+      .col-item { width: 14.0% !important; min-width: 0 !important; }
+      .col-cat { width: 7.0% !important; min-width: 0 !important; }
+      .col-vendor { width: 13.0% !important; min-width: 0 !important; }
+      .col-date { width: 4.7% !important; min-width: 0 !important; }
+      .col-zone { width: 10.5% !important; min-width: 0 !important; }
+      .col-lead { width: 4.0% !important; min-width: 0 !important; }
+      .col-pct { width: 3.0% !important; min-width: 0 !important; }
+      .col-stage { width: 4.4% !important; min-width: 0 !important; }
 
       .print-val {
         display: block !important;
         white-space: normal !important;
         word-break: break-word !important;
         line-height: 1.25 !important;
-        font-size: 8.5px !important;
+        font-size: 8px !important;
         font-weight: 600 !important;
         color: #000000 !important;
         -webkit-text-fill-color: #000000 !important;
         text-align: left !important;
+        overflow: visible !important;
+        text-overflow: clip !important;
       }
       .print-val.text-center {
         text-align: center !important;
