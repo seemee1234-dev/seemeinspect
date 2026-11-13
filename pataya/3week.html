@@ -492,11 +492,23 @@
 
     /* Print Setup */
     @media print {
+      @page {
+        size: A4 landscape;
+        margin: 4mm 5mm;
+      }
+      *, *::before, *::after {
+        box-sizing: border-box !important;
+        color: #000000 !important;
+        -webkit-text-fill-color: #000000 !important;
+        text-shadow: none !important;
+      }
       body {
         background: #ffffff !important;
         color: #000000 !important;
+        -webkit-text-fill-color: #000000 !important;
         padding-bottom: 0;
-        font-size: 10px;
+        font-size: 8.5px;
+        font-weight: 600 !important;
       }
       .app-header, .header-actions, .bottom-nav, .no-print, .del-btn, #addBtn {
         display: none !important;
@@ -510,8 +522,8 @@
         border: 1px solid #000000 !important;
         color: #000000 !important;
         box-shadow: none !important;
-        padding: 8px !important;
-        margin-bottom: 10px !important;
+        padding: 4px 6px !important;
+        margin-bottom: 6px !important;
       }
       .table-container {
         overflow: visible !important;
@@ -525,13 +537,16 @@
       }
       .lookahead-table th, 
       .lookahead-table td {
-        border: 1px solid #334155 !important;
+        border: 1px solid #000000 !important;
         color: #000000 !important;
+        -webkit-text-fill-color: #000000 !important;
         position: static !important;
+        font-weight: 600 !important;
       }
       .lookahead-table th {
         background: #e2e8f0 !important;
         color: #000000 !important;
+        font-weight: 700 !important;
       }
       .tbl-input-text, .tbl-input-date, .tbl-select, .tbl-num-input {
         background: transparent !important;

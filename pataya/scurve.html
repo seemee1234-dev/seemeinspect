@@ -857,29 +857,34 @@
         table-layout: fixed !important;
         border-collapse: collapse !important;
         border: 1.5px solid #000000 !important;
-        font-size: 7px !important;
+        font-size: 8px !important;
       }
       .scurve-table th, .scurve-table td,
       .scurve-table tr th, .scurve-table tr td,
       .scurve-table tr.summary-row td,
       .scurve-table tr.summary-row.actual-row td,
       .scurve-table tr.actual-row td,
-      .scurve-table tfoot td {
+      .scurve-table tfoot td,
+      .scurve-table span,
+      .scurve-table strong {
         border: 1px solid #000000 !important;
         color: #000000 !important;
-        padding: 2px 1px !important;
+        -webkit-text-fill-color: #000000 !important;
+        padding: 3px 1px !important;
         position: static !important;
         white-space: normal !important;
         word-break: break-word !important;
         vertical-align: middle !important;
         text-align: center !important;
-        font-size: 7px !important;
-        line-height: 1.15 !important;
+        font-size: 8px !important;
+        font-weight: 700 !important;
+        line-height: 1.25 !important;
       }
       .scurve-table th {
         background: #e2e8f0 !important;
-        font-weight: 600 !important;
+        font-weight: 700 !important;
         color: #000000 !important;
+        -webkit-text-fill-color: #000000 !important;
       }
       .scurve-table th.task-col,
       .scurve-table td.task-col {
@@ -888,24 +893,30 @@
         padding-right: 2px !important;
         background: #ffffff !important;
         color: #000000 !important;
+        -webkit-text-fill-color: #000000 !important;
+        font-weight: 700 !important;
       }
       .scurve-table tr.summary-row td,
       .scurve-table tr.summary-row.actual-row td {
         background: #f1f5f9 !important;
         border: 1px solid #000000 !important;
         color: #000000 !important;
-        font-size: 7px !important;
+        -webkit-text-fill-color: #000000 !important;
+        font-size: 8px !important;
+        font-weight: 700 !important;
       }
       .gantt-bar {
-        background: #e2e8f0 !important;
+        background: #ffffff !important;
         border: 1px solid #000000 !important;
         color: #000000 !important;
-        font-size: 6.5px !important;
+        -webkit-text-fill-color: #000000 !important;
+        font-size: 7.5px !important;
         font-weight: 700 !important;
         padding: 1px 0 !important;
         min-width: 0 !important;
         display: block !important;
         width: 100% !important;
+        border-radius: 2px !important;
       }
       .variance-badge,
       .variance-badge.behind,
@@ -914,8 +925,9 @@
         background: transparent !important;
         border: none !important;
         color: #000000 !important;
+        -webkit-text-fill-color: #000000 !important;
         font-weight: 700 !important;
-        font-size: 7px !important;
+        font-size: 8px !important;
         padding: 0 !important;
         box-shadow: none !important;
         white-space: nowrap !important;
@@ -924,8 +936,9 @@
         background: transparent !important;
         border: none !important;
         color: #000000 !important;
-        font-size: 7px !important;
-        font-weight: 600 !important;
+        -webkit-text-fill-color: #000000 !important;
+        font-size: 8px !important;
+        font-weight: 700 !important;
         width: 100% !important;
         min-width: 0 !important;
         padding: 0 !important;
@@ -1711,11 +1724,11 @@
         tr.innerHTML = `
           <td class="col-item-no" style="text-align:center;">${t.item}</td>
           <td class="col-task-desc task-col">${t.name}</td>
-          <td class="col-cost" style="text-align:right; color:var(--text-muted);">${formatMoney(t.cost)}</td>
-          <td class="col-weight" style="text-align:center; color:var(--gold);">${t.weight.toFixed(2)}%</td>
-          <td class="col-status" style="text-align:center;"><span style="color:var(--cyan);">${t.status}</span></td>
-          <td class="col-duration" style="text-align:center; color:var(--text-dim);">${t.start}</td>
-          <td class="col-duration" style="text-align:center; color:var(--text-dim);">${t.finish}</td>
+          <td class="col-cost" style="text-align:right;">${formatMoney(t.cost)}</td>
+          <td class="col-weight" style="text-align:center;">${t.weight.toFixed(2)}%</td>
+          <td class="col-status" style="text-align:center;"><span>${t.status}</span></td>
+          <td class="col-duration" style="text-align:center;">${t.start}</td>
+          <td class="col-duration" style="text-align:center;">${t.finish}</td>
           ${weekCells}
         `;
         tbody.appendChild(tr);
@@ -1725,35 +1738,35 @@
       const tfoot = document.getElementById('masterTableFoot');
       tfoot.innerHTML = `
         <!-- Summary Total Header -->
-        <tr class="summary-row" style="background:#0a142c; font-weight:500;">
-          <td colspan="2" class="task-col" style="color:var(--gold);">SUMMARY (มูลค่ารวมโครงการ)</td>
-          <td style="text-align:right; color:var(--gold); font-size:13.5px;">${formatMoney(TOTAL_BUDGET)}</td>
-          <td style="text-align:center; color:var(--gold);">100.00%</td>
-          <td colspan="3" style="text-align:center; color:var(--cyan);">Planning vs Actual</td>
-          <td colspan="18" style="text-align:left; color:var(--text-dim); font-size:11px;">
+        <tr class="summary-row" style="background:#0a142c; font-weight:600;">
+          <td colspan="2" class="task-col">SUMMARY (มูลค่ารวมโครงการ)</td>
+          <td style="text-align:right; font-size:13.5px; font-weight:700;">${formatMoney(TOTAL_BUDGET)}</td>
+          <td style="text-align:center; font-weight:700;">100.00%</td>
+          <td colspan="3" style="text-align:center; font-weight:700;">Planning vs Actual</td>
+          <td colspan="18" style="text-align:left; font-size:11px;">
             &gt;&gt;&gt; รายละเอียดความก้าวหน้าโครงการ ณ วันที่ตรวจสอบ
           </td>
         </tr>
 
         <!-- Row 1: Planning % per week -->
         <tr class="summary-row">
-          <td colspan="7" class="task-col" style="color:var(--gold);">
+          <td colspan="7" class="task-col" style="font-weight:600;">
             Planning : % work progress per week (แผนงานรายสัปดาห์)
           </td>
-          ${PLAN_WEEKLY.map(p => `<td style="text-align:center; color:var(--gold);">${p.toFixed(2)}</td>`).join('')}
+          ${PLAN_WEEKLY.map(p => `<td style="text-align:center; font-weight:600;">${p.toFixed(2)}</td>`).join('')}
         </tr>
 
         <!-- Row 2: Planning % Accumulate work progress -->
         <tr class="summary-row">
-          <td colspan="7" class="task-col" style="color:var(--gold); font-weight:500;">
+          <td colspan="7" class="task-col" style="font-weight:700;">
             Planning : % Accumulate work progress (แผนงานสะสม S-Curve)
           </td>
-          ${PLAN_CUMULATIVE.map(c => `<td style="text-align:center; color:var(--gold); font-weight:500;">${c.toFixed(2)}</td>`).join('')}
+          ${PLAN_CUMULATIVE.map(c => `<td style="text-align:center; font-weight:700;">${c.toFixed(2)}</td>`).join('')}
         </tr>
 
         <!-- Row 3: Actual % per week (With In-Table Inputs) -->
         <tr class="summary-row actual-row">
-          <td colspan="7" class="task-col" style="color:var(--cyan); font-weight:500;">
+          <td colspan="7" class="task-col" style="font-weight:700;">
             Actual : % work progress per week (ผลงานจริงรายสัปดาห์ - กรอกได้)
           </td>
           ${WEEKS_META.map((w, idx) => `
@@ -1770,21 +1783,21 @@
 
         <!-- Row 4: Actual % Accumulate work progress -->
         <tr class="summary-row actual-row">
-          <td colspan="7" class="task-col" style="color:var(--cyan); font-weight:600;">
+          <td colspan="7" class="task-col" style="font-weight:700;">
             Actual : % Accumulate work progress (ผลงานจริงสะสม S-Curve)
           </td>
           ${WEEKS_META.map((w, idx) => `
-            <td style="text-align:center; color:var(--cyan); font-weight:600;" id="tblCumCell_${idx}">-</td>
+            <td style="text-align:center; font-weight:700;" id="tblCumCell_${idx}">-</td>
           `).join('')}
         </tr>
 
         <!-- Row 5: Variance Row -->
         <tr class="summary-row">
-          <td colspan="7" class="task-col" style="color:#ffffff;">
+          <td colspan="7" class="task-col" style="font-weight:700;">
             Variance : ส่วนต่างความคืบหน้า (+/- สะสม)
           </td>
           ${WEEKS_META.map((w, idx) => `
-            <td style="text-align:center;" id="tblVarCell_${idx}">-</td>
+            <td style="text-align:center; font-weight:700;" id="tblVarCell_${idx}">-</td>
           `).join('')}
         </tr>
       `;
