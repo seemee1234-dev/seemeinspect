@@ -368,36 +368,30 @@
       display: flex;
       align-items: center;
       justify-content: center;
-      font-size: 14px;
+      font-size: 13.5px;
       font-weight: 700;
-      color: #ffffff;
-      box-shadow: 0 1px 4px rgba(0, 0, 0, 0.4);
+      color: #000000;
+      box-shadow: 0 1px 3px rgba(0, 0, 0, 0.15);
       white-space: nowrap;
       overflow: visible;
       padding: 0 2px;
-      letter-spacing: -0.3px;
-      text-shadow: 0 1px 2px rgba(0, 0, 0, 0.95);
+      letter-spacing: -0.2px;
+      -webkit-print-color-adjust: exact !important;
+      print-color-adjust: exact !important;
     }
 
-    .gantt-bar-active.status-done {
-      background: linear-gradient(90deg, #059669, #10b981);
-      border: 1px solid #34d399;
-    }
-
-    .gantt-bar-active.status-progress {
-      background: linear-gradient(90deg, #0284c7, #00adf2);
-      border: 1px solid #38bdf8;
-    }
-
-    .gantt-bar-active.status-pending {
-      background: linear-gradient(90deg, #d97706, #f59e0b);
-      border: 1px solid #fbbf24;
-    }
-
-    .gantt-bar-active.status-delay {
-      background: linear-gradient(90deg, #dc2626, #ef4444);
-      border: 1px solid #f87171;
-    }
+    /* Category 40% Faint Pastel Shades (เเบ่งชนิดงานเน้นสีจาง 40%) */
+    .cat-structure { background: rgba(56, 189, 248, 0.40) !important; border: 1.5px solid #0284c7 !important; color: #000000 !important; }
+    .cat-architecture { background: rgba(251, 191, 36, 0.40) !important; border: 1.5px solid #d97706 !important; color: #000000 !important; }
+    .cat-interior { background: rgba(251, 113, 133, 0.40) !important; border: 1.5px solid #e11d48 !important; color: #000000 !important; }
+    .cat-appliance { background: rgba(165, 180, 252, 0.40) !important; border: 1.5px solid #4f46e5 !important; color: #000000 !important; }
+    .cat-electrical { background: rgba(250, 204, 21, 0.40) !important; border: 1.5px solid #ca8a04 !important; color: #000000 !important; }
+    .cat-sanitary { background: rgba(45, 212, 191, 0.40) !important; border: 1.5px solid #0d9488 !important; color: #000000 !important; }
+    .cat-fire { background: rgba(248, 113, 113, 0.40) !important; border: 1.5px solid #dc2626 !important; color: #000000 !important; }
+    .cat-hvac { background: rgba(192, 132, 252, 0.40) !important; border: 1.5px solid #9333ea !important; color: #000000 !important; }
+    .cat-external { background: rgba(110, 231, 183, 0.40) !important; border: 1.5px solid #059669 !important; color: #000000 !important; }
+    .cat-landscape { background: rgba(74, 222, 128, 0.40) !important; border: 1.5px solid #16a34a !important; color: #000000 !important; }
+    .cat-default { background: rgba(148, 163, 184, 0.40) !important; border: 1.5px solid #64748b !important; color: #000000 !important; }
 
     /* Form Controls inside table */
     .col-category {
@@ -560,15 +554,23 @@
         padding: 0 !important;
       }
       .gantt-bar-active {
-        border: 1px solid #000000 !important;
+        -webkit-print-color-adjust: exact !important;
+        print-color-adjust: exact !important;
         color: #000000 !important;
         font-size: 11px !important;
         font-weight: 700 !important;
       }
-      .gantt-bar-active.status-done { background: #cbd5e1 !important; }
-      .gantt-bar-active.status-progress { background: #93c5fd !important; }
-      .gantt-bar-active.status-pending { background: #fde68a !important; }
-      .gantt-bar-active.status-delay { background: #fca5a5 !important; }
+      .cat-structure { background: rgba(56, 189, 248, 0.40) !important; border: 1.5px solid #0284c7 !important; color: #000000 !important; }
+      .cat-architecture { background: rgba(251, 191, 36, 0.40) !important; border: 1.5px solid #d97706 !important; color: #000000 !important; }
+      .cat-interior { background: rgba(251, 113, 133, 0.40) !important; border: 1.5px solid #e11d48 !important; color: #000000 !important; }
+      .cat-appliance { background: rgba(165, 180, 252, 0.40) !important; border: 1.5px solid #4f46e5 !important; color: #000000 !important; }
+      .cat-electrical { background: rgba(250, 204, 21, 0.40) !important; border: 1.5px solid #ca8a04 !important; color: #000000 !important; }
+      .cat-sanitary { background: rgba(45, 212, 191, 0.40) !important; border: 1.5px solid #0d9488 !important; color: #000000 !important; }
+      .cat-fire { background: rgba(248, 113, 113, 0.40) !important; border: 1.5px solid #dc2626 !important; color: #000000 !important; }
+      .cat-hvac { background: rgba(192, 132, 252, 0.40) !important; border: 1.5px solid #9333ea !important; color: #000000 !important; }
+      .cat-external { background: rgba(110, 231, 183, 0.40) !important; border: 1.5px solid #059669 !important; color: #000000 !important; }
+      .cat-landscape { background: rgba(74, 222, 128, 0.40) !important; border: 1.5px solid #16a34a !important; color: #000000 !important; }
+      .cat-default { background: rgba(148, 163, 184, 0.40) !important; border: 1.5px solid #64748b !important; color: #000000 !important; }
       @page {
         size: A4 landscape;
         margin: 6mm;
@@ -825,6 +827,17 @@
         <div>
           <div class="section-title">📊 ตารางแผนงาน 3 สัปดาห์ (21 วัน) ควบคู่ Gantt Chart</div>
           <div class="section-sub">กรอกแก้ไขหัวข้องาน, หมวดงาน, วันเริ่ม, วันจบ, และ % ความก้าวหน้าได้โดยตรงในตาราง (เส้นไทม์ไลน์จะคำนวณอัตโนมัติ)</div>
+          <div class="category-legend" style="display:flex; flex-wrap:wrap; gap:6px; margin-top:8px; font-size:11px; align-items:center;">
+            <span style="font-weight:700; color:#000000; font-size:11.5px;">เฉดสี 40% แบ่งชนิดงาน:</span>
+            <span class="legend-badge cat-structure" style="padding:2px 7px; border-radius:4px; font-weight:700;">งานโครงสร้าง</span>
+            <span class="legend-badge cat-architecture" style="padding:2px 7px; border-radius:4px; font-weight:700;">งานสถาปัตย์</span>
+            <span class="legend-badge cat-interior" style="padding:2px 7px; border-radius:4px; font-weight:700;">ตกแต่งภายใน</span>
+            <span class="legend-badge cat-electrical" style="padding:2px 7px; border-radius:4px; font-weight:700;">ระบบไฟฟ้า</span>
+            <span class="legend-badge cat-sanitary" style="padding:2px 7px; border-radius:4px; font-weight:700;">สุขาภิบาล</span>
+            <span class="legend-badge cat-hvac" style="padding:2px 7px; border-radius:4px; font-weight:700;">ปรับอากาศ</span>
+            <span class="legend-badge cat-fire" style="padding:2px 7px; border-radius:4px; font-weight:700;">ดับเพลิง</span>
+            <span class="legend-badge cat-landscape" style="padding:2px 7px; border-radius:4px; font-weight:700;">ภูมิทัศน์/ภายนอก</span>
+          </div>
         </div>
         <div class="header-actions">
           <button class="pill-btn cyan" id="addBtn" onclick="addNewTaskRow()">➕ เพิ่มหัวข้องานใหม่</button>
@@ -971,6 +984,121 @@
     });
 
     /* ========================================================
+       CATEGORY 40% FAINT SHADE PALETTE HELPER (เเบ่งชนิดงาน 40%)
+       ======================================================== */
+    function getCategoryTheme(category) {
+      const cat = (category || '').toLowerCase().trim();
+      // 1. งานโครงสร้าง -> สีฟ้าจาง 40%
+      if (cat.includes('โครงสร้าง') || cat.includes('structure') || cat.includes('เสา') || cat.includes('คาน') || cat.includes('คอนกรีต') || cat.includes('ฐานราก')) {
+        return {
+          bg: 'rgba(56, 189, 248, 0.40)',
+          hex: '#bae6fd',
+          border: '#0284c7',
+          text: '#000000',
+          cls: 'cat-structure',
+          label: 'งานโครงสร้าง'
+        };
+      }
+      // 2. งานสถาปัตย์ -> สีอำพัน/ส้มอบอุ่นจาง 40%
+      if (cat.includes('สถาปัตย์') || cat.includes('architect') || cat.includes('ก่ออิฐ') || cat.includes('ฉาบปูน') || cat.includes('ปูกระเบื้อง') || cat.includes('ทาสี')) {
+        return {
+          bg: 'rgba(251, 191, 36, 0.40)',
+          hex: '#fde68a',
+          border: '#d97706',
+          text: '#000000',
+          cls: 'cat-architecture',
+          label: 'งานสถาปัตย์'
+        };
+      }
+      // 3. งานตกแต่งภายใน -> สีชมพูกุหลาบจาง 40%
+      if (cat.includes('ตกแต่ง') || cat.includes('interior') || cat.includes('อินทีเรีย') || cat.includes('บิลท์อิน') || cat.includes('เฟอร์') || cat.includes('ฝ้า')) {
+        return {
+          bg: 'rgba(251, 113, 133, 0.40)',
+          hex: '#fecdd3',
+          border: '#e11d48',
+          text: '#000000',
+          cls: 'cat-interior',
+          label: 'งานตกแต่งภายใน'
+        };
+      }
+      // 4. งานเครื่องใช้ไฟฟ้า / ครัว -> สีครามจาง 40%
+      if (cat.includes('เครื่องใช้') || cat.includes('kitchen') || cat.includes('appliance') || cat.includes('ครัว')) {
+        return {
+          bg: 'rgba(165, 180, 252, 0.40)',
+          hex: '#c7d2fe',
+          border: '#4f46e5',
+          text: '#000000',
+          cls: 'cat-appliance',
+          label: 'งานเครื่องใช้ไฟฟ้า'
+        };
+      }
+      // 5. งานระบบไฟฟ้าและสื่อสาร -> สีเหลืองทองจาง 40%
+      if (cat.includes('ไฟฟ้า') || cat.includes('electric') || cat.includes('communication') || cat.includes('แสงสว่าง') || cat.includes('สายไฟ') || cat.includes('สวิตช์')) {
+        return {
+          bg: 'rgba(250, 204, 21, 0.40)',
+          hex: '#fef08a',
+          border: '#ca8a04',
+          text: '#000000',
+          cls: 'cat-electrical',
+          label: 'งานระบบไฟฟ้า'
+        };
+      }
+      // 6. งานสุขาภิบาล / ประปา -> สีฟ้าอมเขียว/ไซแอนจาง 40%
+      if (cat.includes('สุขาภิบาล') || cat.includes('sanitary') || cat.includes('ประปา') || cat.includes('ท่อน้ำ') || cat.includes('บำบัด')) {
+        return {
+          bg: 'rgba(45, 212, 191, 0.40)',
+          hex: '#99f6e4',
+          border: '#0d9488',
+          text: '#000000',
+          cls: 'cat-sanitary',
+          label: 'งานสุขาภิบาล'
+        };
+      }
+      // 7. งานดับเพลิง -> สีแดงจาง 40%
+      if (cat.includes('ดับเพลิง') || cat.includes('fire') || cat.includes('สปริงเกลอร์')) {
+        return {
+          bg: 'rgba(248, 113, 113, 0.40)',
+          hex: '#fecaca',
+          border: '#dc2626',
+          text: '#000000',
+          cls: 'cat-fire',
+          label: 'งานดับเพลิง'
+        };
+      }
+      // 8. งานปรับอากาศ -> สีม่วงลาเวนเดอร์จาง 40%
+      if (cat.includes('ปรับอากาศ') || cat.includes('แอร์') || cat.includes('hvac') || cat.includes('ventilation') || cat.includes('ดักท์')) {
+        return {
+          bg: 'rgba(192, 132, 252, 0.40)',
+          hex: '#e9d5ff',
+          border: '#9333ea',
+          text: '#000000',
+          cls: 'cat-hvac',
+          label: 'งานปรับอากาศ'
+        };
+      }
+      // 9. งานภูมิทัศน์ / ภายนอก / ความปลอดภัย -> สีเขียวมรกตจาง 40%
+      if (cat.includes('ภูมิทัศน์') || cat.includes('landscape') || cat.includes('ภายนอก') || cat.includes('external') || cat.includes('สวน') || cat.includes('ปลอดภัย') || cat.includes('5ส')) {
+        return {
+          bg: 'rgba(74, 222, 128, 0.40)',
+          hex: '#bbf7d0',
+          border: '#16a34a',
+          text: '#000000',
+          cls: 'cat-landscape',
+          label: 'งานภูมิทัศน์/ภายนอก'
+        };
+      }
+      // Default งานทั่วไป -> สีเทาหมอกจาง 40%
+      return {
+        bg: 'rgba(148, 163, 184, 0.40)',
+        hex: '#e2e8f0',
+        border: '#64748b',
+        text: '#000000',
+        cls: 'cat-default',
+        label: 'งานทั่วไป'
+      };
+    }
+
+    /* ========================================================
        DATE CALCULATION & TIMELINE HELPERS
        ======================================================== */
     function getDaysList() {
@@ -1071,6 +1199,7 @@
       tasks.forEach((t, tIdx) => {
         const tr = document.createElement('tr');
         tr.id = `row_${t.id}`;
+        const catTheme = getCategoryTheme(t.category);
 
         // Calculate Gantt coverage
         // Find which days of the 21 days this task falls into
@@ -1086,11 +1215,12 @@
           const isEndDay = (days[i].isoStr === t.finishDate);
 
           if (inRange) {
-            let barClass = `status-${t.status}`;
             let barLabel = isStartDay ? `${t.progress}%` : '';
             ganttCells += `
               <td class="day-col ${isTodayCol ? 'is-today-col' : ''}">
-                <div class="gantt-bar-active ${barClass}" title="${t.name} (${t.startDate} ถึง ${t.finishDate}) : ${t.progress}%">
+                <div class="gantt-bar-active ${catTheme.cls}" 
+                     style="background:${catTheme.bg} !important; border:1.5px solid ${catTheme.border} !important; color:#000000 !important; font-weight:700 !important;" 
+                     title="${t.category} : ${t.name} (${t.startDate} ถึง ${t.finishDate}) : ${t.progress}%">
                   ${barLabel}
                 </div>
               </td>
@@ -1103,10 +1233,11 @@
         }
 
         tr.innerHTML = `
-          <td style="text-align:center; color:var(--text-dim);">${tIdx + 1}</td>
+          <td style="text-align:center; color:var(--text-dim); font-weight:700;">${tIdx + 1}</td>
           <td>
             <div class="input-with-mic">
-              <input type="text" class="tbl-input-text tbl-input-category" id="cat_input_${tIdx}" value="${escapeHtml(t.category)}" 
+              <input type="text" class="tbl-input-text tbl-input-category ${catTheme.cls}" id="cat_input_${tIdx}" value="${escapeHtml(t.category)}" 
+                     style="background:${catTheme.bg} !important; border:1px solid ${catTheme.border} !important; color:#000000 !important; font-weight:700 !important; border-radius:4px; padding:3px 6px;" 
                      placeholder="เช่น งานโครงสร้าง" onchange="updateTaskField(${tIdx}, 'category', this.value)" />
               <button type="button" class="btn-input-mic no-print" onclick="toggleVoice('cat_input_${tIdx}', ${tIdx}, 'category', this)" title="แตะเพื่อพูดสั่งข้อความด้วยเสียง">🎙️</button>
             </div>

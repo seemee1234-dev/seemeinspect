@@ -586,15 +586,27 @@
     }
 
     .gantt-bar {
-      background: rgba(0, 173, 242, 0.25);
-      border: 1px solid var(--cyan);
-      color: var(--cyan);
       border-radius: 4px;
       padding: 3px 0;
       font-size: 11px;
-      font-weight: 400;
+      font-weight: 700;
       display: block;
+      -webkit-print-color-adjust: exact !important;
+      print-color-adjust: exact !important;
     }
+
+    /* Category 40% Faint Pastel Shades (เเบ่งชนิดงานเน้นสีจาง 40%) */
+    .cat-structure { background: rgba(56, 189, 248, 0.40) !important; border: 1.5px solid #0284c7 !important; color: #000000 !important; }
+    .cat-architecture { background: rgba(251, 191, 36, 0.40) !important; border: 1.5px solid #d97706 !important; color: #000000 !important; }
+    .cat-interior { background: rgba(251, 113, 133, 0.40) !important; border: 1.5px solid #e11d48 !important; color: #000000 !important; }
+    .cat-appliance { background: rgba(165, 180, 252, 0.40) !important; border: 1.5px solid #4f46e5 !important; color: #000000 !important; }
+    .cat-electrical { background: rgba(250, 204, 21, 0.40) !important; border: 1.5px solid #ca8a04 !important; color: #000000 !important; }
+    .cat-sanitary { background: rgba(45, 212, 191, 0.40) !important; border: 1.5px solid #0d9488 !important; color: #000000 !important; }
+    .cat-fire { background: rgba(248, 113, 113, 0.40) !important; border: 1.5px solid #dc2626 !important; color: #000000 !important; }
+    .cat-hvac { background: rgba(192, 132, 252, 0.40) !important; border: 1.5px solid #9333ea !important; color: #000000 !important; }
+    .cat-external { background: rgba(110, 231, 183, 0.40) !important; border: 1.5px solid #059669 !important; color: #000000 !important; }
+    .cat-landscape { background: rgba(74, 222, 128, 0.40) !important; border: 1.5px solid #16a34a !important; color: #000000 !important; }
+    .cat-default { background: rgba(148, 163, 184, 0.40) !important; border: 1.5px solid #64748b !important; color: #000000 !important; }
 
     .table-actual-input {
       width: 50px;
@@ -960,10 +972,11 @@
         padding: 2px 1px !important;
       }
       .gantt-bar {
-        background: #ffffff !important;
         border: 1px solid #000000 !important;
         color: #000000 !important;
         -webkit-text-fill-color: #000000 !important;
+        -webkit-print-color-adjust: exact !important;
+        print-color-adjust: exact !important;
         font-size: 8.5px !important;
         font-weight: 700 !important;
         padding: 2px 0 !important;
@@ -974,6 +987,17 @@
         text-align: center !important;
         border-radius: 3px !important;
       }
+      .cat-structure { background: rgba(56, 189, 248, 0.40) !important; border: 1px solid #0284c7 !important; color: #000000 !important; }
+      .cat-architecture { background: rgba(251, 191, 36, 0.40) !important; border: 1px solid #d97706 !important; color: #000000 !important; }
+      .cat-interior { background: rgba(251, 113, 133, 0.40) !important; border: 1px solid #e11d48 !important; color: #000000 !important; }
+      .cat-appliance { background: rgba(165, 180, 252, 0.40) !important; border: 1px solid #4f46e5 !important; color: #000000 !important; }
+      .cat-electrical { background: rgba(250, 204, 21, 0.40) !important; border: 1px solid #ca8a04 !important; color: #000000 !important; }
+      .cat-sanitary { background: rgba(45, 212, 191, 0.40) !important; border: 1px solid #0d9488 !important; color: #000000 !important; }
+      .cat-fire { background: rgba(248, 113, 113, 0.40) !important; border: 1px solid #dc2626 !important; color: #000000 !important; }
+      .cat-hvac { background: rgba(192, 132, 252, 0.40) !important; border: 1px solid #9333ea !important; color: #000000 !important; }
+      .cat-external { background: rgba(110, 231, 183, 0.40) !important; border: 1px solid #059669 !important; color: #000000 !important; }
+      .cat-landscape { background: rgba(74, 222, 128, 0.40) !important; border: 1px solid #16a34a !important; color: #000000 !important; }
+      .cat-default { background: rgba(148, 163, 184, 0.40) !important; border: 1px solid #64748b !important; color: #000000 !important; }
       .variance-badge,
       .variance-badge.behind,
       .variance-badge.ahead,
@@ -1778,6 +1802,44 @@
     }
 
     /* ========================================================
+       CATEGORY 40% FAINT SHADE PALETTE HELPER (เเบ่งชนิดงาน 40%)
+       ======================================================== */
+    function getCategoryTheme(category) {
+      const cat = (category || '').toLowerCase().trim();
+      if (cat.includes('structure') || cat.includes('โครงสร้าง') || cat.includes('เสา') || cat.includes('คาน') || cat.includes('คอนกรีต')) {
+        return { bg: 'rgba(56, 189, 248, 0.40)', hex: '#bae6fd', border: '#0284c7', text: '#000000', cls: 'cat-structure' };
+      }
+      if (cat.includes('architectural') || cat.includes('สถาปัตย์') || cat.includes('ก่ออิฐ') || cat.includes('ฉาบปูน')) {
+        return { bg: 'rgba(251, 191, 36, 0.40)', hex: '#fde68a', border: '#d97706', text: '#000000', cls: 'cat-architecture' };
+      }
+      if (cat.includes('interior') || cat.includes('ตกแต่ง') || cat.includes('อินทีเรีย') || cat.includes('ฝ้า')) {
+        return { bg: 'rgba(251, 113, 133, 0.40)', hex: '#fecdd3', border: '#e11d48', text: '#000000', cls: 'cat-interior' };
+      }
+      if (cat.includes('kitchen') || cat.includes('appliance') || cat.includes('เครื่องใช้') || cat.includes('ครัว')) {
+        return { bg: 'rgba(165, 180, 252, 0.40)', hex: '#c7d2fe', border: '#4f46e5', text: '#000000', cls: 'cat-appliance' };
+      }
+      if (cat.includes('electrical') || cat.includes('communication') || cat.includes('ไฟฟ้า') || cat.includes('แสงสว่าง')) {
+        return { bg: 'rgba(250, 204, 21, 0.40)', hex: '#fef08a', border: '#ca8a04', text: '#000000', cls: 'cat-electrical' };
+      }
+      if (cat.includes('sanitary') || cat.includes('สุขาภิบาล') || cat.includes('ประปา') || cat.includes('ท่อน้ำ')) {
+        return { bg: 'rgba(45, 212, 191, 0.40)', hex: '#99f6e4', border: '#0d9488', text: '#000000', cls: 'cat-sanitary' };
+      }
+      if (cat.includes('fire') || cat.includes('ดับเพลิง') || cat.includes('สปริงเกลอร์')) {
+        return { bg: 'rgba(248, 113, 113, 0.40)', hex: '#fecaca', border: '#dc2626', text: '#000000', cls: 'cat-fire' };
+      }
+      if (cat.includes('condition') || cat.includes('ventilation') || cat.includes('air') || cat.includes('ปรับอากาศ') || cat.includes('แอร์')) {
+        return { bg: 'rgba(192, 132, 252, 0.40)', hex: '#e9d5ff', border: '#9333ea', text: '#000000', cls: 'cat-hvac' };
+      }
+      if (cat.includes('external') || cat.includes('ภายนอก') || cat.includes('ถนน') || cat.includes('รั้ว')) {
+        return { bg: 'rgba(110, 231, 183, 0.40)', hex: '#a7f3d0', border: '#059669', text: '#000000', cls: 'cat-external' };
+      }
+      if (cat.includes('landscape') || cat.includes('ภูมิทัศน์') || cat.includes('สวน') || cat.includes('ปลอดภัย')) {
+        return { bg: 'rgba(74, 222, 128, 0.40)', hex: '#bbf7d0', border: '#16a34a', text: '#000000', cls: 'cat-landscape' };
+      }
+      return { bg: 'rgba(148, 163, 184, 0.40)', hex: '#e2e8f0', border: '#64748b', text: '#000000', cls: 'cat-default' };
+    }
+
+    /* ========================================================
        RENDER MASTER TABLE (10 Tasks & Summary Rows)
        ======================================================== */
     function renderMasterTable() {
@@ -1785,13 +1847,15 @@
       tbody.innerHTML = '';
 
       TASKS.forEach(t => {
+        const catTheme = getCategoryTheme(t.name);
         const tr = document.createElement('tr');
         let weekCells = '';
         for (let i = 1; i <= TOTAL_WEEKS; i++) {
           if (t.planWeeks && t.planWeeks[i] !== undefined) {
             weekCells += `
               <td class="gantt-cell">
-                <span class="gantt-bar">${t.planWeeks[i].toFixed(2)}%</span>
+                <span class="gantt-bar ${catTheme.cls}" 
+                      style="background:${catTheme.bg} !important; border:1px solid ${catTheme.border} !important; color:#000000 !important; -webkit-text-fill-color:#000000 !important; font-weight:700 !important;">${t.planWeeks[i].toFixed(2)}%</span>
               </td>
             `;
           } else {
