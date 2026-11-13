@@ -507,6 +507,7 @@
     .zone-input { width: 155px; }
     .pct-input { width: 45px; text-align: center; }
     .stage-select { width: 125px; }
+    .print-val { display: none; }
 
     /* Print Styles: A4 Landscape Full Width */
     @media print {
@@ -614,17 +615,17 @@
         table-layout: fixed !important;
         border-collapse: collapse !important;
         border: 1.5px solid #000000 !important;
-        font-size: 7.5px !important;
-        letter-spacing: -0.2px !important;
+        font-size: 8px !important;
       }
       .data-table th, .data-table td {
         border: 1px solid #000000 !important;
         color: #000000 !important;
-        padding: 2px 2px !important;
+        padding: 3px 2px !important;
         white-space: normal !important;
         word-break: break-word !important;
         vertical-align: middle !important;
-        font-size: 7.5px !important;
+        font-size: 8px !important;
+        line-height: 1.25 !important;
       }
       .data-table th {
         background: #e2e8f0 !important;
@@ -639,48 +640,34 @@
       }
       /* Column Widths in Print Mode (A4 Landscape 100% Full Width Fit) */
       .col-no { width: 20px !important; }
-      .col-item { width: 165px !important; }
-      .col-cat { width: 92px !important; }
-      .col-vendor { width: 155px !important; }
+      .col-item { width: 155px !important; }
+      .col-cat { width: 85px !important; }
+      .col-vendor { width: 145px !important; }
       .col-date { width: 42px !important; }
-      .col-zone { width: 115px !important; }
+      .col-zone { width: 120px !important; }
       .col-lead { width: 40px !important; }
       .col-pct { width: 30px !important; }
-      .col-stage { width: 62px !important; }
+      .col-stage { width: 65px !important; }
 
-      .input-with-mic {
+      .print-val {
         display: block !important;
-        position: static !important;
-        width: 100% !important;
-      }
-      .input-with-mic input,
-      .data-table input, 
-      .data-table select {
-        border: none !important;
-        background: transparent !important;
-        color: #000000 !important;
-        font-size: 7.5px !important;
+        white-space: normal !important;
+        word-break: break-word !important;
+        line-height: 1.25 !important;
+        font-size: 8px !important;
         font-weight: 500 !important;
-        letter-spacing: -0.2px !important;
-        padding: 0 1px !important;
-        padding-right: 1px !important;
-        margin: 0 !important;
-        width: 100% !important;
-        min-width: 0 !important;
-        max-width: 100% !important;
-        box-shadow: none !important;
-        outline: none !important;
-        overflow: visible !important;
-        -webkit-appearance: none !important;
-        appearance: none !important;
+        color: #000000 !important;
+        text-align: left !important;
       }
-      .item-input, .vendor-input, .zone-input, .date-input, .pct-input, .cat-select, .stage-select {
-        width: 100% !important;
-        min-width: 0 !important;
-        max-width: 100% !important;
-        padding: 0 1px !important;
-        font-size: 7.5px !important;
-        letter-spacing: -0.2px !important;
+      .print-val.text-center {
+        text-align: center !important;
+      }
+      .print-val.font-bold {
+        font-weight: 700 !important;
+      }
+
+      .no-print {
+        display: none !important;
       }
       .pipeline-container {
         display: none !important;
@@ -1184,18 +1171,47 @@
           5: '<span class="badge-stage s5">5. ลงหน้างานแล้ว</span>'
         };
 
+        const catMap = {
+          'Structure': '1. โครงสร้าง',
+          'Architecture': '2. สถาปัตย์',
+          'Interior': '3. ตกแต่งภายใน',
+          'Kitchen': '4. ครัว/เครื่องใช้',
+          'Electrical': '5. ไฟฟ้า/สื่อสาร',
+          'Sanitary': '6. สุขาภิบาล',
+          'Fire': '7. ดับเพลิง',
+          'HVAC': '8. ปรับอากาศ',
+          'External': '9. ภายนอก',
+          'Landscape': '10. ภูมิทัศน์'
+        };
+
+        const stageMap = {
+          1: '1. สั่งซื้อ / PO',
+          2: '2. เซ็นสัญญา',
+          3: '3. กำลังผลิต',
+          4: '4. กำลังขนส่ง',
+          5: '5. ลงหน้างานแล้ว'
+        };
+
+        function fmtDate(dStr) {
+          if (!dStr) return '-';
+          const p = dStr.split('-');
+          if (p.length === 3) return `${p[2]}/${p[1]}/${p[0].slice(2)}`;
+          return dStr;
+        }
+
         const tr = document.createElement('tr');
         tr.innerHTML = `
           <td style="text-align:center;">${idx + 1}</td>
           <td>
-            <div class="input-with-mic">
+            <div class="input-with-mic no-print">
               <input type="text" id="item_input_${idx}" class="item-input" value="${escapeHtml(item.item)}" 
                      placeholder="ระบุรายการวัสดุ/อุปกรณ์..." onchange="updateItem(${idx}, 'item', this.value)">
-              <button type="button" class="btn-input-mic no-print" onclick="toggleVoice('item_input_${idx}', ${idx}, 'item', this)" title="แตะเพื่อพูดสั่งข้อความด้วยเสียง">🎙️</button>
+              <button type="button" class="btn-input-mic" onclick="toggleVoice('item_input_${idx}', ${idx}, 'item', this)" title="แตะเพื่อพูดสั่งข้อความด้วยเสียง">🎙️</button>
             </div>
+            <div class="print-val">${escapeHtml(item.item)}</div>
           </td>
           <td>
-            <select class="cat-select" onchange="updateItem(${idx}, 'cat', this.value)">
+            <select class="cat-select no-print" onchange="updateItem(${idx}, 'cat', this.value)">
               <option value="Structure" ${item.cat === 'Structure' ? 'selected' : ''}>1. โครงสร้าง</option>
               <option value="Architecture" ${item.cat === 'Architecture' ? 'selected' : ''}>2. สถาปัตย์</option>
               <option value="Interior" ${item.cat === 'Interior' ? 'selected' : ''}>3. ตกแต่งภายใน</option>
@@ -1207,38 +1223,73 @@
               <option value="External" ${item.cat === 'External' ? 'selected' : ''}>9. ภายนอก</option>
               <option value="Landscape" ${item.cat === 'Landscape' ? 'selected' : ''}>10. ภูมิทัศน์</option>
             </select>
+            <div class="print-val">${escapeHtml(catMap[item.cat] || item.cat)}</div>
           </td>
-          <td><input type="text" class="vendor-input" value="${escapeHtml(item.vendor)}" placeholder="ซัพพลายเออร์..." onchange="updateItem(${idx}, 'vendor', this.value)"></td>
+          <td>
+            <input type="text" class="vendor-input no-print" value="${escapeHtml(item.vendor)}" placeholder="ซัพพลายเออร์..." onchange="updateItem(${idx}, 'vendor', this.value)">
+            <div class="print-val">${escapeHtml(item.vendor)}</div>
+          </td>
 
           <!-- Stage 1 -->
-          <td><input type="date" class="date-input" value="${item.s1_start}" onchange="updateItem(${idx}, 's1_start', this.value)"></td>
-          <td><input type="date" class="date-input" value="${item.s1_end}" onchange="updateItem(${idx}, 's1_end', this.value)"></td>
+          <td>
+            <input type="date" class="date-input no-print" value="${item.s1_start}" onchange="updateItem(${idx}, 's1_start', this.value)">
+            <div class="print-val text-center">${fmtDate(item.s1_start)}</div>
+          </td>
+          <td>
+            <input type="date" class="date-input no-print" value="${item.s1_end}" onchange="updateItem(${idx}, 's1_end', this.value)">
+            <div class="print-val text-center">${fmtDate(item.s1_end)}</div>
+          </td>
 
           <!-- Stage 2 -->
-          <td><input type="date" class="date-input" value="${item.s2_start}" onchange="updateItem(${idx}, 's2_start', this.value)"></td>
-          <td><input type="date" class="date-input" value="${item.s2_end}" onchange="updateItem(${idx}, 's2_end', this.value)"></td>
+          <td>
+            <input type="date" class="date-input no-print" value="${item.s2_start}" onchange="updateItem(${idx}, 's2_start', this.value)">
+            <div class="print-val text-center">${fmtDate(item.s2_start)}</div>
+          </td>
+          <td>
+            <input type="date" class="date-input no-print" value="${item.s2_end}" onchange="updateItem(${idx}, 's2_end', this.value)">
+            <div class="print-val text-center">${fmtDate(item.s2_end)}</div>
+          </td>
 
           <!-- Stage 3 -->
-          <td><input type="date" class="date-input" value="${item.s3_start}" onchange="updateItem(${idx}, 's3_start', this.value)"></td>
-          <td><input type="date" class="date-input" value="${item.s3_end}" onchange="updateItem(${idx}, 's3_end', this.value)"></td>
+          <td>
+            <input type="date" class="date-input no-print" value="${item.s3_start}" onchange="updateItem(${idx}, 's3_start', this.value)">
+            <div class="print-val text-center">${fmtDate(item.s3_start)}</div>
+          </td>
+          <td>
+            <input type="date" class="date-input no-print" value="${item.s3_end}" onchange="updateItem(${idx}, 's3_end', this.value)">
+            <div class="print-val text-center">${fmtDate(item.s3_end)}</div>
+          </td>
 
           <!-- Stage 4 -->
-          <td><input type="date" class="date-input" value="${item.s4_start}" onchange="updateItem(${idx}, 's4_start', this.value)"></td>
-          <td><input type="date" class="date-input" value="${item.s4_end}" onchange="updateItem(${idx}, 's4_end', this.value)"></td>
+          <td>
+            <input type="date" class="date-input no-print" value="${item.s4_start}" onchange="updateItem(${idx}, 's4_start', this.value)">
+            <div class="print-val text-center">${fmtDate(item.s4_start)}</div>
+          </td>
+          <td>
+            <input type="date" class="date-input no-print" value="${item.s4_end}" onchange="updateItem(${idx}, 's4_end', this.value)">
+            <div class="print-val text-center">${fmtDate(item.s4_end)}</div>
+          </td>
 
           <!-- Stage 5 -->
-          <td><input type="text" class="zone-input" value="${escapeHtml(item.s5_zone)}" placeholder="จุดลงของ..." onchange="updateItem(${idx}, 's5_zone', this.value)"></td>
-          <td><input type="date" class="date-input" value="${item.s5_date}" onchange="updateItem(${idx}, 's5_date', this.value)"></td>
+          <td>
+            <input type="text" class="zone-input no-print" value="${escapeHtml(item.s5_zone)}" placeholder="จุดลงของ..." onchange="updateItem(${idx}, 's5_zone', this.value)">
+            <div class="print-val">${escapeHtml(item.s5_zone)}</div>
+          </td>
+          <td>
+            <input type="date" class="date-input no-print" value="${item.s5_date}" onchange="updateItem(${idx}, 's5_date', this.value)">
+            <div class="print-val text-center">${fmtDate(item.s5_date)}</div>
+          </td>
 
           <!-- Metrics -->
           <td style="text-align:center; font-weight:500;" class="lead-cell">${leadTimeDays}</td>
           <td style="text-align:center;">
-            <input type="number" min="0" max="100" class="pct-input" value="${item.pct}" onchange="updateItem(${idx}, 'pct', this.value)"><span class="pct-sign">%</span>
+            <div class="no-print"><input type="number" min="0" max="100" class="pct-input" value="${item.pct}" onchange="updateItem(${idx}, 'pct', this.value)"><span class="pct-sign">%</span></div>
+            <div class="print-val text-center font-bold">${item.pct}%</div>
           </td>
 
           <!-- Pipeline & Stage Select -->
           <td style="text-align:center;">
-            <div style="display:flex; flex-direction:column; align-items:center; gap:2px;">
+            <div class="no-print" style="display:flex; flex-direction:column; align-items:center; gap:2px;">
               <select class="stage-select" onchange="updateItem(${idx}, 'stage', this.value)">
                 <option value="1" ${item.stage == 1 ? 'selected' : ''}>1. สั่งซื้อ / PO</option>
                 <option value="2" ${item.stage == 2 ? 'selected' : ''}>2. เซ็นสัญญา</option>
@@ -1246,7 +1297,7 @@
                 <option value="4" ${item.stage == 4 ? 'selected' : ''}>4. กำลังขนส่ง</option>
                 <option value="5" ${item.stage == 5 ? 'selected' : ''}>5. ลงหน้างานแล้ว</option>
               </select>
-              <div class="pipeline-container no-print">
+              <div class="pipeline-container">
                 <div class="pipeline-step ${item.stage >= 1 ? 'active-1' : ''}" title="1. สั่งซื้อ"></div>
                 <div class="pipeline-step ${item.stage >= 2 ? 'active-2' : ''}" title="2. สัญญา"></div>
                 <div class="pipeline-step ${item.stage >= 3 ? 'active-3' : ''}" title="3. ผลิต"></div>
@@ -1254,6 +1305,7 @@
                 <div class="pipeline-step ${item.stage >= 5 ? 'active-5' : ''}" title="5. ลงหน้างาน"></div>
               </div>
             </div>
+            <div class="print-val text-center font-bold">${escapeHtml(stageMap[item.stage] || item.stage)}</div>
           </td>
 
           <td style="text-align:center;" class="no-print">
