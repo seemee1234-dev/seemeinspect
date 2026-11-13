@@ -509,6 +509,29 @@
     .stage-select { width: 140px; }
     .print-val { display: none; }
 
+    .data-table textarea.tbl-textarea {
+      min-height: 44px;
+      height: 44px;
+      line-height: 1.35;
+      resize: vertical;
+      white-space: pre-wrap;
+      word-break: break-word;
+      display: block;
+      background: rgba(7, 13, 30, 0.7);
+      border: 1px solid var(--border-subtle);
+      border-radius: 4px;
+      padding: 4px 6px;
+      color: #ffffff;
+      font-family: 'Kanit', sans-serif;
+      font-size: 12px;
+      outline: none;
+      box-sizing: border-box;
+    }
+    .data-table textarea.tbl-textarea:focus {
+      border-color: var(--cyan);
+      background: #000000;
+    }
+
     /* Print Styles: A4 Landscape Full Width */
     @media print {
       @page {
@@ -1256,14 +1279,14 @@
           <td style="text-align:center;">${idx + 1}</td>
           <td>
             <div class="input-with-mic no-print">
-              <input type="text" id="item_input_${idx}" class="item-input" value="${escapeHtml(item.item)}" 
-                     placeholder="ระบุรายการวัสดุ/อุปกรณ์..." onchange="updateItem(${idx}, 'item', this.value)">
+              <textarea rows="2" id="item_input_${idx}" class="item-input tbl-textarea" 
+                     placeholder="ระบุรายการวัสดุ/อุปกรณ์..." onchange="updateItem(${idx}, 'item', this.value)">${escapeHtml(item.item)}</textarea>
               <button type="button" class="btn-input-mic" onclick="toggleVoice('item_input_${idx}', ${idx}, 'item', this)" title="แตะเพื่อพูดสั่งข้อความด้วยเสียง">🎙️</button>
             </div>
             <div class="print-val">${escapeHtml(item.item)}</div>
           </td>
           <td>
-            <select class="cat-select no-print" onchange="updateItem(${idx}, 'cat', this.value)">
+            <select class="cat-select no-print" style="height:44px;" onchange="updateItem(${idx}, 'cat', this.value)">
               <option value="Structure" ${item.cat === 'Structure' ? 'selected' : ''}>1. โครงสร้าง</option>
               <option value="Architecture" ${item.cat === 'Architecture' ? 'selected' : ''}>2. สถาปัตย์</option>
               <option value="Interior" ${item.cat === 'Interior' ? 'selected' : ''}>3. ตกแต่งภายใน</option>
@@ -1278,7 +1301,7 @@
             <div class="print-val">${escapeHtml(catMap[item.cat] || item.cat)}</div>
           </td>
           <td>
-            <input type="text" class="vendor-input no-print" value="${escapeHtml(item.vendor)}" placeholder="ซัพพลายเออร์..." onchange="updateItem(${idx}, 'vendor', this.value)">
+            <textarea rows="2" class="vendor-input tbl-textarea no-print" placeholder="ซัพพลายเออร์..." onchange="updateItem(${idx}, 'vendor', this.value)">${escapeHtml(item.vendor)}</textarea>
             <div class="print-val">${escapeHtml(item.vendor)}</div>
           </td>
 
@@ -1324,7 +1347,7 @@
 
           <!-- Stage 5 -->
           <td>
-            <input type="text" class="zone-input no-print" value="${escapeHtml(item.s5_zone)}" placeholder="จุดลงของ..." onchange="updateItem(${idx}, 's5_zone', this.value)">
+            <textarea rows="2" class="zone-input tbl-textarea no-print" placeholder="จุดลงของ..." onchange="updateItem(${idx}, 's5_zone', this.value)">${escapeHtml(item.s5_zone)}</textarea>
             <div class="print-val">${escapeHtml(item.s5_zone)}</div>
           </td>
           <td>

@@ -328,7 +328,7 @@
       background: rgba(30, 50, 95, 0.45);
     }
 
-    .data-table input, .data-table select {
+    .data-table input, .data-table select, .data-table textarea {
       background: rgba(7, 13, 30, 0.7);
       border: 1px solid var(--border-subtle);
       border-radius: 4px;
@@ -338,9 +338,20 @@
       font-size: 12px;
       font-weight: 300;
       outline: none;
+      box-sizing: border-box;
     }
 
-    .data-table input:focus, .data-table select:focus {
+    .data-table textarea.tbl-textarea {
+      min-height: 44px;
+      height: 44px;
+      line-height: 1.35;
+      resize: vertical;
+      white-space: pre-wrap;
+      word-break: break-word;
+      display: block;
+    }
+
+    .data-table input:focus, .data-table select:focus, .data-table textarea:focus {
       border-color: var(--cyan);
       background: #000000;
     }
@@ -519,13 +530,19 @@
         background: #e2e8f0 !important;
         font-weight: 700 !important;
       }
-      .data-table input, .data-table select {
+      .data-table input, .data-table select, .data-table textarea {
         border: none !important;
         background: transparent !important;
         color: #000000 !important;
+        -webkit-text-fill-color: #000000 !important;
         font-size: 11px !important;
         font-weight: 700 !important;
         padding: 0 !important;
+        line-height: 1.3 !important;
+        white-space: pre-wrap !important;
+        word-break: break-word !important;
+        resize: none !important;
+        overflow: visible !important;
       }
     }
   </style>
@@ -880,16 +897,16 @@
         const tr = document.createElement('tr');
         tr.innerHTML = `
           <td style="text-align:center;">${idx + 1}</td>
-          <td><input type="date" style="width:110px;" value="${item.date}" onchange="updateLogistics(${idx}, 'date', this.value)"></td>
-          <td><input type="text" style="width:115px; text-align:center;" value="${escapeHtml(item.timeSlot)}" onchange="updateLogistics(${idx}, 'timeSlot', this.value)"></td>
-          <td><input type="text" style="min-width:180px;" value="${escapeHtml(item.material)}" onchange="updateLogistics(${idx}, 'material', this.value)"></td>
-          <td><input type="text" style="width:140px;" value="${escapeHtml(item.vendor)}" onchange="updateLogistics(${idx}, 'vendor', this.value)"></td>
-          <td><input type="text" style="width:140px;" value="${escapeHtml(item.vehicle)}" onchange="updateLogistics(${idx}, 'vehicle', this.value)"></td>
-          <td><input type="text" style="width:150px;" value="${escapeHtml(item.zone)}" onchange="updateLogistics(${idx}, 'zone', this.value)"></td>
-          <td><input type="text" style="width:140px;" value="${escapeHtml(item.equipment)}" onchange="updateLogistics(${idx}, 'equipment', this.value)"></td>
-          <td><input type="text" style="width:130px;" value="${escapeHtml(item.receiver)}" onchange="updateLogistics(${idx}, 'receiver', this.value)"></td>
+          <td><input type="date" style="width:110px; height:44px;" value="${item.date}" onchange="updateLogistics(${idx}, 'date', this.value)"></td>
+          <td><textarea rows="2" class="tbl-textarea" style="width:115px; text-align:center;" onchange="updateLogistics(${idx}, 'timeSlot', this.value)">${escapeHtml(item.timeSlot)}</textarea></td>
+          <td><textarea rows="2" class="tbl-textarea" style="min-width:180px;" onchange="updateLogistics(${idx}, 'material', this.value)">${escapeHtml(item.material)}</textarea></td>
+          <td><textarea rows="2" class="tbl-textarea" style="width:140px;" onchange="updateLogistics(${idx}, 'vendor', this.value)">${escapeHtml(item.vendor)}</textarea></td>
+          <td><textarea rows="2" class="tbl-textarea" style="width:140px;" onchange="updateLogistics(${idx}, 'vehicle', this.value)">${escapeHtml(item.vehicle)}</textarea></td>
+          <td><textarea rows="2" class="tbl-textarea" style="width:150px;" onchange="updateLogistics(${idx}, 'zone', this.value)">${escapeHtml(item.zone)}</textarea></td>
+          <td><textarea rows="2" class="tbl-textarea" style="width:140px;" onchange="updateLogistics(${idx}, 'equipment', this.value)">${escapeHtml(item.equipment)}</textarea></td>
+          <td><textarea rows="2" class="tbl-textarea" style="width:130px;" onchange="updateLogistics(${idx}, 'receiver', this.value)">${escapeHtml(item.receiver)}</textarea></td>
           <td style="text-align:center;">
-            <select style="width:115px;" onchange="updateLogistics(${idx}, 'status', this.value)">
+            <select style="width:115px; height:44px;" onchange="updateLogistics(${idx}, 'status', this.value)">
               <option value="scheduled" ${item.status === 'scheduled' ? 'selected' : ''}>นัดหมายแล้ว</option>
               <option value="transit" ${item.status === 'transit' ? 'selected' : ''}>กำลังเดินทาง</option>
               <option value="arrived" ${item.status === 'arrived' ? 'selected' : ''}>ลงของแล้ว</option>
@@ -947,9 +964,9 @@
         const tr = document.createElement('tr');
         tr.innerHTML = `
           <td style="text-align:center;">${idx + 1}</td>
-          <td><input type="text" style="min-width:180px;" value="${escapeHtml(task.task)}" onchange="updateManpowerTask(${idx}, 'task', this.value)"></td>
+          <td><textarea rows="2" class="tbl-textarea" style="min-width:180px;" onchange="updateManpowerTask(${idx}, 'task', this.value)">${escapeHtml(task.task)}</textarea></td>
           <td>
-            <select style="width:115px;" onchange="updateManpowerTask(${idx}, 'cat', this.value)">
+            <select style="width:115px; height:44px;" onchange="updateManpowerTask(${idx}, 'cat', this.value)">
               <option value="Structure" ${task.cat === 'Structure' ? 'selected' : ''}>โครงสร้าง</option>
               <option value="Architecture" ${task.cat === 'Architecture' ? 'selected' : ''}>สถาปัตย์</option>
               <option value="Interior" ${task.cat === 'Interior' ? 'selected' : ''}>ตกแต่งภายใน</option>
@@ -962,20 +979,20 @@
               <option value="Landscape" ${task.cat === 'Landscape' ? 'selected' : ''}>ภูมิทัศน์</option>
             </select>
           </td>
-          <td><input type="text" style="width:125px;" value="${escapeHtml(task.zone)}" onchange="updateManpowerTask(${idx}, 'zone', this.value)"></td>
-          <td><input type="text" style="width:140px;" value="${escapeHtml(task.team)}" onchange="updateManpowerTask(${idx}, 'team', this.value)"></td>
-          <td style="text-align:center;"><input type="number" min="0" style="width:60px; text-align:center;" value="${task.count}" onchange="updateManpowerTask(${idx}, 'count', this.value)"></td>
-          <td><input type="text" style="width:135px; text-align:center;" value="${escapeHtml(task.shift)}" onchange="updateManpowerTask(${idx}, 'shift', this.value)"></td>
-          <td><input type="text" style="min-width:170px;" value="${escapeHtml(task.target)}" onchange="updateManpowerTask(${idx}, 'target', this.value)"></td>
-          <td style="text-align:center;"><input type="number" min="0" max="100" style="width:55px; text-align:center;" value="${task.pct}" onchange="updateManpowerTask(${idx}, 'pct', this.value)">%</td>
+          <td><textarea rows="2" class="tbl-textarea" style="width:125px;" onchange="updateManpowerTask(${idx}, 'zone', this.value)">${escapeHtml(task.zone)}</textarea></td>
+          <td><textarea rows="2" class="tbl-textarea" style="width:140px;" onchange="updateManpowerTask(${idx}, 'team', this.value)">${escapeHtml(task.team)}</textarea></td>
+          <td style="text-align:center;"><input type="number" min="0" style="width:60px; height:44px; text-align:center;" value="${task.count}" onchange="updateManpowerTask(${idx}, 'count', this.value)"></td>
+          <td><textarea rows="2" class="tbl-textarea" style="width:135px; text-align:center;" onchange="updateManpowerTask(${idx}, 'shift', this.value)">${escapeHtml(task.shift)}</textarea></td>
+          <td><textarea rows="2" class="tbl-textarea" style="min-width:170px;" onchange="updateManpowerTask(${idx}, 'target', this.value)">${escapeHtml(task.target)}</textarea></td>
+          <td style="text-align:center;"><input type="number" min="0" max="100" style="width:55px; height:44px; text-align:center;" value="${task.pct}" onchange="updateManpowerTask(${idx}, 'pct', this.value)">%</td>
           <td style="text-align:center;">
-            <select style="width:115px;" onchange="updateManpowerTask(${idx}, 'status', this.value)">
+            <select style="width:115px; height:44px;" onchange="updateManpowerTask(${idx}, 'status', this.value)">
               <option value="progress" ${task.status === 'progress' ? 'selected' : ''}>กำลังทำ</option>
               <option value="done" ${task.status === 'done' ? 'selected' : ''}>เสร็จสมบูรณ์</option>
               <option value="delay" ${task.status === 'delay' ? 'selected' : ''}>ล่าช้า</option>
             </select>
           </td>
-          <td><input type="text" style="min-width:160px;" value="${escapeHtml(task.safety)}" onchange="updateManpowerTask(${idx}, 'safety', this.value)"></td>
+          <td><textarea rows="2" class="tbl-textarea" style="min-width:160px;" onchange="updateManpowerTask(${idx}, 'safety', this.value)">${escapeHtml(task.safety)}</textarea></td>
           <td style="text-align:center;" class="no-print">
             <button class="btn-action-icon" onclick="deleteManpowerTaskRow(${idx})">🗑️</button>
           </td>

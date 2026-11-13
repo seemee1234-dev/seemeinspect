@@ -1213,9 +1213,9 @@
           </td>
           <td>
             <div class="input-with-mic">
-              <input type="text" class="tbl-input-text" id="name_input_${tIdx}" style="font-weight:400; color:#ffffff;" 
-                     value="${escapeHtml(t.name)}" placeholder="ระบุหัวข้องาน..." 
-                     onchange="updateTaskField(${tIdx}, 'name', this.value)" />
+              <textarea rows="2" class="tbl-input-text tbl-textarea" id="name_input_${tIdx}" style="font-weight:400; color:#ffffff; min-height:42px; line-height:1.3; resize:vertical; display:block; width:100%;" 
+                     placeholder="ระบุหัวข้องาน..." 
+                     onchange="updateTaskField(${tIdx}, 'name', this.value)">${escapeHtml(t.name)}</textarea>
               <button type="button" class="btn-input-mic no-print" onclick="toggleVoice('name_input_${tIdx}', ${tIdx}, 'name', this)" title="แตะเพื่อพูดสั่งข้อความด้วยเสียง">🎙️</button>
             </div>
           </td>
@@ -1250,9 +1250,9 @@
           </td>
           ${ganttCells}
           <td>
-            <input type="text" class="tbl-input-text" style="font-size:11.5px; color:var(--text-muted);" 
-                   value="${escapeHtml(t.remarks || '')}" placeholder="บันทึกหน้างาน..." 
-                   onchange="updateTaskField(${tIdx}, 'remarks', this.value)" />
+            <textarea rows="2" class="tbl-input-text tbl-textarea" style="font-size:11.5px; color:var(--text-muted); min-height:42px; line-height:1.3; resize:vertical; display:block; width:100%;" 
+                   placeholder="บันทึกหน้างาน..." 
+                   onchange="updateTaskField(${tIdx}, 'remarks', this.value)">${escapeHtml(t.remarks || '')}</textarea>
           </td>
           <td class="no-print" style="text-align:center;">
             <button class="del-btn" onclick="deleteTaskRow(${tIdx})" title="ลบงานนี้">✕</button>
