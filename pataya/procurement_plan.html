@@ -501,21 +501,21 @@
     }
 
     .col-no { width: 35px; min-width: 35px; text-align: center; }
-    .col-item { min-width: 220px; }
-    .col-cat { width: 135px; min-width: 130px; }
-    .col-vendor { min-width: 180px; }
-    .col-date { width: 135px; min-width: 125px; text-align: center; }
-    .col-zone { min-width: 180px; }
-    .col-lead { width: 80px; min-width: 75px; text-align: center; }
-    .col-pct { width: 70px; min-width: 65px; text-align: center; }
-    .col-stage { width: 140px; min-width: 130px; text-align: center; }
+    .col-item { min-width: 200px; }
+    .col-cat { width: 125px; min-width: 120px; }
+    .col-vendor { min-width: 160px; }
+    .col-date { width: 105px; min-width: 95px; text-align: center; }
+    .col-zone { min-width: 160px; }
+    .col-lead { width: 75px; min-width: 70px; text-align: center; }
+    .col-pct { width: 65px; min-width: 60px; text-align: center; }
+    .col-stage { width: 135px; min-width: 125px; text-align: center; }
     .col-del { width: 40px; min-width: 40px; text-align: center; }
 
-    .item-input { width: 100%; min-width: 200px; }
+    .item-input { width: 100%; min-width: 180px; }
     .cat-select { width: 100%; }
-    .vendor-input { width: 100%; min-width: 160px; }
-    .date-input { width: 100%; text-align: center; }
-    .zone-input { width: 100%; min-width: 160px; }
+    .vendor-input { width: 100%; min-width: 140px; }
+    .date-input { width: 100%; min-width: 90px; text-align: center; font-size: 11px; padding: 2px 3px; }
+    .zone-input { width: 100%; min-width: 140px; }
     .pct-input { width: 55px; text-align: center; }
     .stage-select { width: 100%; }
     .print-val { display: none; }
@@ -565,7 +565,8 @@
         color: #000000 !important;
         -webkit-text-fill-color: #000000 !important;
         font-size: 9px !important;
-        overflow: hidden !important;
+        overflow: visible !important;
+        transform: none !important;
       }
       .app-header, .suite-nav-bar, .bottom-nav, .header-actions, .filter-bar, .no-print, .btn-input-mic, .voice-status-bar, .input-with-mic button, .pill-btn, button {
         display: none !important;
@@ -581,6 +582,7 @@
         min-width: 100% !important;
         margin: 0 !important;
         padding: 0 !important;
+        transform: none !important;
       }
       .section-box, .kpi-card {
         background: #ffffff !important;
@@ -591,6 +593,7 @@
         max-width: 100% !important;
         margin-bottom: 4px !important;
         padding: 3px 5px !important;
+        transform: none !important;
       }
       .section-title-bar {
         border-bottom: 1px solid #000000 !important;
@@ -614,6 +617,7 @@
         gap: 4px !important;
         width: 100% !important;
         margin-bottom: 4px !important;
+        transform: none !important;
       }
       .kpi-card {
         padding: 3px 5px !important;
@@ -645,9 +649,14 @@
       .table-container {
         width: 100% !important;
         max-width: 100% !important;
-        overflow: hidden !important;
+        overflow: visible !important;
+        overflow-x: visible !important;
         border: none !important;
         scrollbar-width: none !important;
+        margin-left: 0 !important;
+        padding-left: 0 !important;
+        left: 0 !important;
+        transform: none !important;
       }
       .table-container::-webkit-scrollbar {
         display: none !important;
@@ -662,6 +671,9 @@
         border-collapse: collapse !important;
         border: 1.5px solid #000000 !important;
         font-size: 9px !important;
+        margin-left: 0 !important;
+        left: 0 !important;
+        transform: none !important;
       }
       .data-table th, .data-table td {
         border: 1px solid #000000 !important;
@@ -690,17 +702,26 @@
         font-weight: 700 !important;
       }
 
-      /* Locked Column Widths in Print Mode (A4 Landscape 100% Full Width Fit - Total = 100%) */
-      .col-no { width: 2.2% !important; min-width: 0 !important; max-width: 2.2% !important; text-align: center !important; }
-      .col-item { width: 13.5% !important; min-width: 0 !important; max-width: 13.5% !important; }
-      .col-cat { width: 7.2% !important; min-width: 0 !important; max-width: 7.2% !important; text-align: center !important; }
-      .col-vendor { width: 10.5% !important; min-width: 0 !important; max-width: 10.5% !important; }
-      .col-date { width: 4.8% !important; min-width: 0 !important; max-width: 4.8% !important; font-size: 8.5px !important; text-align: center !important; }
-      .col-zone { width: 9.8% !important; min-width: 0 !important; max-width: 9.8% !important; }
-      .col-lead { width: 4.4% !important; min-width: 0 !important; max-width: 4.4% !important; text-align: center !important; }
+      /* Narrow Date Columns in Print Mode (A4 Landscape 100% Full Width Fit) */
+      .col-no { width: 2.0% !important; min-width: 0 !important; max-width: 2.0% !important; text-align: center !important; }
+      .col-item { width: 16.0% !important; min-width: 0 !important; max-width: 16.0% !important; }
+      .col-cat { width: 7.5% !important; min-width: 0 !important; max-width: 7.5% !important; text-align: center !important; }
+      .col-vendor { width: 12.0% !important; min-width: 0 !important; max-width: 12.0% !important; }
+      .col-date { width: 3.6% !important; min-width: 0 !important; max-width: 3.6% !important; font-size: 8px !important; text-align: center !important; padding: 2px 1px !important; white-space: nowrap !important; }
+      .col-zone { width: 11.0% !important; min-width: 0 !important; max-width: 11.0% !important; }
+      .col-lead { width: 4.6% !important; min-width: 0 !important; max-width: 4.6% !important; text-align: center !important; }
       .col-pct { width: 4.0% !important; min-width: 0 !important; max-width: 4.0% !important; text-align: center !important; }
-      .col-stage { width: 5.2% !important; min-width: 0 !important; max-width: 5.2% !important; text-align: center !important; }
+      .col-stage { width: 7.5% !important; min-width: 0 !important; max-width: 7.5% !important; text-align: center !important; }
       .col-del { display: none !important; width: 0 !important; max-width: 0 !important; }
+
+      .col-date .print-val {
+        font-size: 8px !important;
+        white-space: nowrap !important;
+        letter-spacing: -0.3px !important;
+        text-align: center !important;
+        padding: 0 !important;
+        line-height: 1 !important;
+      }
 
       .print-val {
         display: block !important;
@@ -842,7 +863,7 @@
     <div class="header-actions">
       <button class="pill-btn" onclick="resetToDefaultData()" title="โหลดรายการแผนสั่งของมาตรฐาน 13 รายการ">🔄 โหลด 13 รายการ</button>
       <button class="pill-btn gold" onclick="saveProcurementData()">💾 บันทึกแผนสั่งของ</button>
-      <button class="pill-btn cyan" onclick="window.print()">🖨️ พิมพ์ / PDF</button>
+      <button class="pill-btn cyan" onclick="prepareAndPrint()">🖨️ พิมพ์ / PDF</button>
       <button class="pill-btn" onclick="exportJSON()">📥 ส่งออกข้อมูล</button>
     </div>
   </header>
@@ -969,27 +990,27 @@
               <th rowspan="2" class="col-item">รายการวัสดุ / อุปกรณ์</th>
               <th rowspan="2" class="col-cat">หมวดงาน</th>
               <th rowspan="2" class="col-vendor">ผู้ผลิต / ซัพพลายเออร์</th>
-              <th class="stage-th col-s1" colspan="2" style="color:#60a5fa;">ช่วงที่ 1: สั่งซื้อ / PO</th>
-              <th class="stage-th col-s2" colspan="2" style="color:#c084fc;">ช่วงที่ 2: ทำสัญญา / มัดจำ</th>
-              <th class="stage-th col-s3" colspan="2" style="color:#fbbf24;">ช่วงที่ 3: สั่งผลิต (Factory)</th>
-              <th class="stage-th col-s4" colspan="2" style="color:#38bdf8;">ช่วงที่ 4: ขนส่ง (Logistics)</th>
-              <th class="stage-th col-s5" colspan="2" style="color:#34d399;">ช่วงที่ 5: จัดลงพื้นที่</th>
+              <th class="stage-th col-s1" colspan="2" style="color:#60a5fa;">ช่วง 1: PO</th>
+              <th class="stage-th col-s2" colspan="2" style="color:#c084fc;">ช่วง 2: สัญญา</th>
+              <th class="stage-th col-s3" colspan="2" style="color:#fbbf24;">ช่วง 3: สั่งผลิต</th>
+              <th class="stage-th col-s4" colspan="2" style="color:#38bdf8;">ช่วง 4: ขนส่ง</th>
+              <th class="stage-th col-s5" colspan="2" style="color:#34d399;">ช่วง 5: ลงพื้นที่</th>
               <th rowspan="2" class="col-lead" style="text-align:center;">Lead Time</th>
               <th rowspan="2" class="col-pct" style="text-align:center;">% ก้าวหน้า</th>
               <th rowspan="2" class="col-stage" style="text-align:center;">ขั้นตอนปัจจุบัน</th>
               <th rowspan="2" class="col-del no-print" style="text-align:center;">ลบ</th>
             </tr>
             <tr>
-              <th class="col-date" style="font-size:11px; text-align:center;">เริ่ม</th>
-              <th class="col-date" style="font-size:11px; text-align:center;">จบ</th>
-              <th class="col-date" style="font-size:11px; text-align:center;">เริ่ม</th>
-              <th class="col-date" style="font-size:11px; text-align:center;">จบ</th>
-              <th class="col-date" style="font-size:11px; text-align:center;">เริ่ม</th>
-              <th class="col-date" style="font-size:11px; text-align:center;">จบ</th>
-              <th class="col-date" style="font-size:11px; text-align:center;">เริ่ม</th>
-              <th class="col-date" style="font-size:11px; text-align:center;">จบ</th>
+              <th class="col-date" style="font-size:10px; text-align:center;">เริ่ม</th>
+              <th class="col-date" style="font-size:10px; text-align:center;">จบ</th>
+              <th class="col-date" style="font-size:10px; text-align:center;">เริ่ม</th>
+              <th class="col-date" style="font-size:10px; text-align:center;">จบ</th>
+              <th class="col-date" style="font-size:10px; text-align:center;">เริ่ม</th>
+              <th class="col-date" style="font-size:10px; text-align:center;">จบ</th>
+              <th class="col-date" style="font-size:10px; text-align:center;">เริ่ม</th>
+              <th class="col-date" style="font-size:10px; text-align:center;">จบ</th>
               <th class="col-zone" style="text-align:center;">จุดลงของ / กองพัก</th>
-              <th class="col-date" style="font-size:11px; text-align:center;">วันที่ส่งมอบ</th>
+              <th class="col-date" style="font-size:10px; text-align:center;">ส่งมอบ</th>
             </tr>
           </thead>
           <tbody id="procurementTbody">
@@ -1538,6 +1559,25 @@
       a.download = `INSPECT_Q_PROCUREMENT_PATAYA_${new Date().toISOString().slice(0,10)}.json`;
       a.click();
     }
+
+    function prepareAndPrint() {
+      window.scrollTo(0, 0);
+      const tc = document.querySelector('.table-container');
+      if (tc) tc.scrollLeft = 0;
+      document.body.scrollLeft = 0;
+      document.documentElement.scrollLeft = 0;
+      setTimeout(() => {
+        window.print();
+      }, 60);
+    }
+
+    window.addEventListener('beforeprint', function() {
+      window.scrollTo(0, 0);
+      const tc = document.querySelector('.table-container');
+      if (tc) tc.scrollLeft = 0;
+      document.body.scrollLeft = 0;
+      document.documentElement.scrollLeft = 0;
+    });
 
     function escapeHtml(str) {
       if (!str) return '';
