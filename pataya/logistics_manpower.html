@@ -1022,6 +1022,8 @@
 
     function initPage() {
       loadSavedData();
+      if (!Array.isArray(logisticsData) || logisticsData.length === 0) logisticsData = [...DEFAULT_LOGISTICS];
+      if (!Array.isArray(manpowerData) || manpowerData.length === 0) manpowerData = [...DEFAULT_MANPOWER_TASKS];
       renderLogistics();
       renderManpowerTasks();
       calcKPIs();
@@ -1036,8 +1038,8 @@
       if (saved) {
         try {
           const parsed = JSON.parse(saved);
-          logisticsData = parsed.logistics || [...DEFAULT_LOGISTICS];
-          manpowerData = parsed.manpower || [...DEFAULT_MANPOWER_TASKS];
+          logisticsData = (Array.isArray(parsed.logistics) && parsed.logistics.length > 0) ? parsed.logistics : [...DEFAULT_LOGISTICS];
+          manpowerData = (Array.isArray(parsed.manpower) && parsed.manpower.length > 0) ? parsed.manpower : [...DEFAULT_MANPOWER_TASKS];
         } catch(e) {
           logisticsData = [...DEFAULT_LOGISTICS];
           manpowerData = [...DEFAULT_MANPOWER_TASKS];
@@ -1329,7 +1331,11 @@
       return String(str).replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;').replace(/"/g, '&quot;');
     }
 
-    window.addEventListener('DOMContentLoaded', initPage);
+    if (document.readyState === 'loading') {
+      window.addEventListener('DOMContentLoaded', initPage);
+    } else {
+      initPage();
+    }
   </script>
 
   <!-- Smart Navigation Interceptor: guarantees link clicks work 100% in Telegram (content://), offline files, and mobile browsers -->

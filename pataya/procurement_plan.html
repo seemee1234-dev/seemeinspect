@@ -840,6 +840,7 @@
       </div>
     </div>
     <div class="header-actions">
+      <button class="pill-btn" onclick="resetToDefaultData()" title="โหลดรายการแผนสั่งของมาตรฐาน 13 รายการ">🔄 โหลด 13 รายการ</button>
       <button class="pill-btn gold" onclick="saveProcurementData()">💾 บันทึกแผนสั่งของ</button>
       <button class="pill-btn cyan" onclick="window.print()">🖨️ พิมพ์ / PDF</button>
       <button class="pill-btn" onclick="exportJSON()">📥 ส่งออกข้อมูล</button>
@@ -906,9 +907,12 @@
       <div class="section-title-bar">
         <div class="section-title">
           <span>📦 ตารางแผนการจัดซื้อและบริหารห่วงโซ่อุปทาน 5 ช่วงเวลา (5-Stage Supply Chain Plan)</span>
-          <span class="badge" id="tableBadge">0 รายการ</span>
+          <span class="badge" id="tableBadge">13 รายการ</span>
         </div>
-        <button class="pill-btn no-print" onclick="addNewProcurementRow()">➕ เพิ่มรายการวัสดุ</button>
+        <div class="no-print">
+          <button class="pill-btn" onclick="resetToDefaultData()" style="margin-right:6px;" title="โหลดข้อมูล 13 รายการเริ่มต้น">🔄 คืนค่า 13 รายการ</button>
+          <button class="pill-btn" onclick="addNewProcurementRow()">➕ เพิ่มรายการวัสดุ</button>
+        </div>
       </div>
 
       <!-- Filter Controls -->
@@ -1212,6 +1216,10 @@
 
     function initPage() {
       loadSavedData();
+      if (!Array.isArray(items) || items.length === 0) {
+        items = JSON.parse(JSON.stringify(DEFAULT_PROCUREMENT_ITEMS));
+        saveProcurementData(false);
+      }
       renderTable();
       calcKPIs();
     }
@@ -1224,12 +1232,30 @@
       const saved = localStorage.getItem(getStorageKey());
       if (saved) {
         try {
-          items = JSON.parse(saved);
+          const parsed = JSON.parse(saved);
+          if (Array.isArray(parsed) && parsed.length > 0) {
+            items = parsed;
+          } else {
+            items = JSON.parse(JSON.stringify(DEFAULT_PROCUREMENT_ITEMS));
+            saveProcurementData(false);
+          }
         } catch(e) {
-          items = [...DEFAULT_PROCUREMENT_ITEMS];
+          items = JSON.parse(JSON.stringify(DEFAULT_PROCUREMENT_ITEMS));
+          saveProcurementData(false);
         }
       } else {
-        items = [...DEFAULT_PROCUREMENT_ITEMS];
+        items = JSON.parse(JSON.stringify(DEFAULT_PROCUREMENT_ITEMS));
+        saveProcurementData(false);
+      }
+    }
+
+    function resetToDefaultData() {
+      if (confirm("ต้องการรีเซ็ตและโหลดรายการแผนสั่งของมาตรฐาน 13 รายการใช่หรือไม่?")) {
+        items = JSON.parse(JSON.stringify(DEFAULT_PROCUREMENT_ITEMS));
+        saveProcurementData(true);
+        renderTable();
+        calcKPIs();
+        showToast("🔄 โหลดรายการวัสดุมาตรฐาน 13 รายการครบถ้วน");
       }
     }
 
@@ -1240,12 +1266,21 @@
     }
 
     function renderTable() {
+      if (!Array.isArray(items) || items.length === 0) {
+        items = JSON.parse(JSON.stringify(DEFAULT_PROCUREMENT_ITEMS));
+        saveProcurementData(false);
+      }
+
       const tbody = document.getElementById('procurementTbody');
       tbody.innerHTML = '';
 
-      const searchVal = document.getElementById('searchInput').value.toLowerCase();
-      const catVal = document.getElementById('categoryFilter').value;
-      const stageVal = document.getElementById('stageFilter').value;
+      const searchInputEl = document.getElementById('searchInput');
+      const categoryFilterEl = document.getElementById('categoryFilter');
+      const stageFilterEl = document.getElementById('stageFilter');
+
+      const searchVal = searchInputEl ? searchInputEl.value.toLowerCase().trim() : '';
+      const catVal = categoryFilterEl ? categoryFilterEl.value : 'ALL';
+      const stageVal = stageFilterEl ? stageFilterEl.value : 'ALL';
 
       let displayCount = 0;
 
@@ -1415,7 +1450,6 @@
             <button class="btn-action-icon" onclick="deleteItemRow(${idx})" title="ลบรายการ">🗑️</button>
           </td>
         `;
-        `;
         tbody.appendChild(tr);
       });
 
@@ -1510,7 +1544,11 @@
       return String(str).replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;').replace(/"/g, '&quot;');
     }
 
-    window.addEventListener('DOMContentLoaded', initPage);
+    if (document.readyState === 'loading') {
+      window.addEventListener('DOMContentLoaded', initPage);
+    } else {
+      initPage();
+    }
   
     /* ========================================================
        VOICE DICTATION ENGINE (THAI SPEECH-TO-TEXT)
