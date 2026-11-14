@@ -7,34 +7,35 @@ THE ORIGIN PATTAYA • ระบบแผนงานก่อสร้างแ
 - LINE ID: @inspectq
 - เบอร์ติดต่อ: 081-449-9499
 
-สรุปการปรับปรุงล่าสุด (ตัดข้อความ "โครงการพัทยา" ออกทุกแผ่น 100%):
-1. นำข้อความ "โครงการพัทยา" ออกจากหัวข้อหน้าเว็บ (<title>) ทุกแผ่น:
-   - ป้องกันไม่ให้เบราว์เซอร์พิมพ์ข้อความ "โครงการพัทยา" ติดอยู่บนขอบหัวกระดาษตอนสั่ง Print หรือบันทึก PDF
-2. นำข้อความ "โครงการพัทยา" ออกจากแถบชื่อระบบย่อย (<div class="brand-sub">) และหัวตารางทุกแผ่น:
-   - แผนสั่งของ 5 ช่วงเวลา (procurement_plan.html)
-   - แผนนำของเข้าและจัดคน (logistics_manpower.html)
-   - แผนงานรายสัปดาห์ 7 วัน (1week.html)
-   - แผนงานระยะสั้น 3 สัปดาห์ (3week.html)
-   - รายงานประจำวันงานก่อสร้าง (daily_report.html)
-   - หน้าพอร์ทัลรวมระบบ (index.html)
-   - หน้าบันทึกดีเฟกต์ (site_inspection.html)
-3. ตารางแผนสั่งของ 5 ช่วงเวลา (procurement_plan.html):
-   - รองรับระบบเฉดสี 40% (Translucent Tint & Pastel Shade) แสดงสถานะ 5 ช่วงเวลา
-   - ปรับสัดส่วนคอลัมน์ A4 แนวนอน พอดี 1 แผ่นเต็ม 100%
+สรุปการปรับปรุงล่าสุด (ปรับรูปแบบวันที่เป็นอย่างย่อ /26 ทุกหน้า ครบถ้วน 100%):
+1. แผนงานระยะสั้น 3 สัปดาห์ (3week.html) & แผนปฏิบัติการ 7 วัน (1week.html):
+   - แก้ไขปัญหาช่องวันที่ "วันเริ่ม / วันจบ" ยาวเกินจนถูกตัดตกขอบ (เช่น 07/01/202)
+   - ปรับเป็นระบบปุ่มวันที่แบบย่อ (.date-btn) ขนาดกะทัดรัด 62px สวยงาม คมชัด ไม่ล้นช่อง
+   - แสดงผลวันที่เป็นแบบย่อ วัน/เดือน/ปี 2 หลัก ลงท้ายด้วย /26 เสมอ (เช่น 01/07/26, 05/07/26)
+   - โหมดพิมพ์ (Print / PDF): แสดงข้อความ .print-val แบบย่อ /26 คมชัด ไม่ถูกบีบตัดขอบ
+2. แผนนำของเข้า & จัดคน (logistics_manpower.html):
+   - ปรับฟังก์ชัน formatThaiDateDisplay แสดงผลเป็น วัน/เดือน/ปี 2 หลัก ลงท้ายด้วย /26 (เช่น 12/11/26)
+   - ปรับช่องวันที่เข้าหน้างานบนหน้าจอให้เป็นปุ่มย่อ .date-btn สวยงามลงตัว
+3. แผนสั่งของ 5 ช่วงเวลา (procurement_plan.html):
+   - กำกับรูปแบบวันที่ทั้ง 5 ช่วงเวลาเป็น วัน/เดือน/ปี 2 หลัก (/26) ทั้ง 13 รายการ
+4. รายงานประจำวัน (daily_report.html):
+   - กำกับวันที่นัดหมายแก้ไข Defect เป็นแบบย่อ /26
+5. S-Curve Dashboard (scurve.html):
+   - กำกับรอบสัปดาห์ประเมินเป็นปี 2569 / 2026 (/26)
 
 ลิงก์เข้าใช้งานระบบบนมือถือและคอมพิวเตอร์ (GitHub Pages Live):
-- แผนสั่งของ 5 ช่วงเวลา (เฉดสี 40% แสดงสถานะ + จบครบใน 1 หน้า A4):
-  https://seemee1234-dev.github.io/seemeinspect/pataya/procurement_plan.html
-- แผนนำของเข้า & จัดคน (ตัวหนังสือไม่ซ้อน อ่านง่าย คมชัด):
-  https://seemee1234-dev.github.io/seemeinspect/pataya/logistics_manpower.html
-- แผนงาน 1 สัปดาห์ (1-Week Work Plan):
-  https://seemee1234-dev.github.io/seemeinspect/pataya/1week.html
-- แผนงาน 3 สัปดาห์ (3-Week Lookahead):
+- แผนงาน 3 สัปดาห์ (วันที่ย่อ /26 สวยงาม ไม่ล้นขอบ):
   https://seemee1234-dev.github.io/seemeinspect/pataya/3week.html
-- รายงานประจำวัน (A4 แนวนอนเต็มหน้า):
+- แผนงาน 1 สัปดาห์ (วันที่ย่อ /26):
+  https://seemee1234-dev.github.io/seemeinspect/pataya/1week.html
+- แผนสั่งของ 5 ช่วงเวลา (เฉดสี 40% + วันที่ย่อ /26):
+  https://seemee1234-dev.github.io/seemeinspect/pataya/procurement_plan.html
+- แผนนำของเข้า & จัดคน (วันที่ย่อ /26):
+  https://seemee1234-dev.github.io/seemeinspect/pataya/logistics_manpower.html
+- รายงานประจำวัน (Daily Report):
   https://seemee1234-dev.github.io/seemeinspect/pataya/daily_report.html
 - กราฟ S-Curve บริหารงาน:
   https://seemee1234-dev.github.io/seemeinspect/pataya/scurve.html
-- รวมทุกแผนงาน:
+- รวมทุกแผนงาน (Master Suite):
   https://seemee1234-dev.github.io/seemeinspect/pataya/index.html
 ================================================================================

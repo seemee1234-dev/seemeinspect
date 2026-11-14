@@ -435,6 +435,44 @@
     .cat-print-text {
       display: none;
     }
+    /* Compact Date Cell (Short /26 Format) */
+    .date-cell-wrap {
+      position: relative;
+      display: inline-flex;
+      justify-content: center;
+      align-items: center;
+      width: 100%;
+    }
+    .date-hidden-native {
+      position: absolute;
+      opacity: 0;
+      width: 0;
+      height: 0;
+      pointer-events: none;
+    }
+    .date-btn {
+      background: rgba(13, 26, 56, 0.9);
+      border: 1px solid rgba(0, 173, 242, 0.45);
+      color: #ffffff;
+      border-radius: 4px;
+      padding: 3px 2px;
+      font-family: 'Kanit', sans-serif;
+      font-size: 12px;
+      font-weight: 300;
+      width: 62px;
+      text-align: center;
+      cursor: pointer;
+      transition: all 0.15s ease;
+      white-space: nowrap;
+      letter-spacing: -0.2px;
+      display: inline-block;
+    }
+    .date-btn:hover {
+      border-color: var(--cyan);
+      background: rgba(0, 173, 242, 0.25);
+    }
+    .print-val { display: none; }
+
     .cat-screen-box {
       display: block;
       width: 100%;
@@ -663,8 +701,40 @@
       }
       .th-note { width: 85px !important; min-width: 85px !important; }
 
+      
+      .date-cell-wrap, .date-btn, .date-hidden-native {
+        display: none !important;
+      }
+      .print-val {
+        display: block !important;
+        font-size: 11px !important;
+        font-weight: 600 !important;
+        color: #000000 !important;
+        -webkit-text-fill-color: #000000 !important;
+        text-align: center !important;
+        white-space: nowrap !important;
+        letter-spacing: -0.2px !important;
+        line-height: 1.2 !important;
+      }
+
       .cat-screen-box,
-      .col-category .cat-screen-box,
+      .col-category 
+      .date-cell-wrap, .date-btn, .date-hidden-native {
+        display: none !important;
+      }
+      .print-val {
+        display: block !important;
+        font-size: 11px !important;
+        font-weight: 600 !important;
+        color: #000000 !important;
+        -webkit-text-fill-color: #000000 !important;
+        text-align: center !important;
+        white-space: nowrap !important;
+        letter-spacing: -0.2px !important;
+        line-height: 1.2 !important;
+      }
+
+      .cat-screen-box,
       .col-category .input-with-mic,
       .col-category input,
       .col-category .tbl-input-category {
@@ -1090,7 +1160,7 @@
     const THAI_MONTHS_SHORT = ["ม.ค.", "ก.พ.", "มี.ค.", "เม.ย.", "พ.ค.", "มิ.ย.", "ก.ค.", "ส.ค.", "ก.ย.", "ต.ค.", "พ.ย.", "ธ.ค."];
 
     // Default base date: 2022-07-04 (วันจันทร์ สัปดาห์ที่ 2 ตามแผนงานพัทยา)
-    let baseStartDateStr = "2022-07-04";
+    let baseStartDateStr = "2026-07-04";
 
     // Initial Sample Tasks for 1-Week Plan (Pattaya Project)
     const SAMPLE_TASKS = [
@@ -1100,8 +1170,8 @@
         name: "ตั้งแบบหล่อเสา คาน คอนกรีต ชั้น 2 โซน B",
         shift: "08:30 - 17:00",
         manpower: 6,
-        startDate: "2022-07-04",
-        finishDate: "2022-07-06",
+        startDate: "2026-07-04",
+        finishDate: "2026-07-06",
         status: "done",
         progress: 100,
         remarks: "ผ่านการตรวจสอบเหล็กเสริมเรียบร้อย"
@@ -1112,8 +1182,8 @@
         name: "เทคอนกรีตเสา คาน และบ่มคอนกรีต",
         shift: "13:00 - 19:30 (OT)",
         manpower: 8,
-        startDate: "2022-07-06",
-        finishDate: "2022-07-07",
+        startDate: "2026-07-06",
+        finishDate: "2026-07-07",
         status: "done",
         progress: 100,
         remarks: "คอนกรีต CPAC 280 ksc ส่งครบ 4 คัน"
@@ -1124,8 +1194,8 @@
         name: "ก่อผนังอิฐมวลเบาห้องนอน 1 และ 2",
         shift: "08:30 - 17:00",
         manpower: 4,
-        startDate: "2022-07-05",
-        finishDate: "2022-07-09",
+        startDate: "2026-07-05",
+        finishDate: "2026-07-09",
         status: "progress",
         progress: 75,
         remarks: "รอจับเซี้ยมมุมเสา"
@@ -1136,8 +1206,8 @@
         name: "กรีดผนังและฝังท่อร้อยสายไฟ EMT ในห้องพัก",
         shift: "08:30 - 17:00",
         manpower: 3,
-        startDate: "2022-07-07",
-        finishDate: "2022-07-10",
+        startDate: "2026-07-07",
+        finishDate: "2026-07-10",
         status: "progress",
         progress: 50,
         remarks: "รอกล่องบล็อกไฟ 2x4 นิ้ว"
@@ -1148,8 +1218,8 @@
         name: "เดินท่อน้ำดี PPR และท่อส้วมห้องน้ำชั้น 2",
         shift: "08:30 - 17:00",
         manpower: 3,
-        startDate: "2022-07-08",
-        finishDate: "2022-07-10",
+        startDate: "2026-07-08",
+        finishDate: "2026-07-10",
         status: "pending",
         progress: 10,
         remarks: "เตรียมนัดทดสอบแรงดันน้ำ 10 bar"
@@ -1160,8 +1230,8 @@
         name: "ตรวจความปลอดภัยและทำความสะอาดไซต์งานประจำสัปดาห์ (5ส)",
         shift: "15:00 - 17:00",
         manpower: 5,
-        startDate: "2022-07-10",
-        finishDate: "2022-07-10",
+        startDate: "2026-07-10",
+        finishDate: "2026-07-10",
         status: "pending",
         progress: 0,
         remarks: "ส่งรายงานความปลอดภัยเข้ากลุ่ม"
@@ -1286,6 +1356,32 @@
     /* ========================================================
        DATE CALCULATION & TIMELINE HELPERS (7 Days)
        ======================================================== */
+    
+    function fmtDate(dStr) {
+      if (!dStr) return '-';
+      const p = dStr.split('-');
+      if (p.length === 3) {
+        let yr = p[0].length === 4 ? p[0].slice(2) : p[0];
+        if (yr === '22') yr = '26';
+        return `${p[2]}/${p[1]}/${yr}`;
+      }
+      return dStr;
+    }
+
+    function openDatePicker(id) {
+      const el = document.getElementById(id);
+      if (el) {
+        if (typeof el.showPicker === 'function') {
+          try {
+            el.showPicker();
+            return;
+          } catch(e) {}
+        }
+        el.focus();
+        el.click();
+      }
+    }
+
     function getDaysList() {
       const list = [];
       const base = new Date(baseStartDateStr);
@@ -1440,13 +1536,21 @@
             <input type="number" min="0" class="tbl-num-input" style="font-size:14px;" value="${t.manpower || 0}" 
                    onchange="updateTaskField(${tIdx}, 'manpower', parseInt(this.value) || 0)" />
           </td>
-          <td>
-            <input type="date" class="tbl-input-date" style="font-size:13px;" value="${t.startDate}" 
-                   onchange="updateTaskField(${tIdx}, 'startDate', this.value)" />
+          <td style="text-align:center;">
+            <div class="date-cell-wrap no-print">
+              <input type="date" id="date_${tIdx}_start" class="date-hidden-native" value="${t.startDate}" 
+                     onchange="updateTaskField(${tIdx}, 'startDate', this.value)" />
+              <button type="button" class="date-btn" onclick="openDatePicker('date_${tIdx}_start')">${fmtDate(t.startDate)}</button>
+            </div>
+            <div class="print-val text-center">${fmtDate(t.startDate)}</div>
           </td>
-          <td>
-            <input type="date" class="tbl-input-date" style="font-size:13px;" value="${t.finishDate}" 
-                   onchange="updateTaskField(${tIdx}, 'finishDate', this.value)" />
+          <td style="text-align:center;">
+            <div class="date-cell-wrap no-print">
+              <input type="date" id="date_${tIdx}_finish" class="date-hidden-native" value="${t.finishDate}" 
+                     onchange="updateTaskField(${tIdx}, 'finishDate', this.value)" />
+              <button type="button" class="date-btn" onclick="openDatePicker('date_${tIdx}_finish')">${fmtDate(t.finishDate)}</button>
+            </div>
+            <div class="print-val text-center">${fmtDate(t.finishDate)}</div>
           </td>
           <td>
             <select class="tbl-select" style="font-size:13px;" onchange="updateTaskField(${tIdx}, 'status', this.value)">
@@ -1553,7 +1657,11 @@
         try {
           const parsed = JSON.parse(savedTasks);
           if (Array.isArray(parsed) && parsed.length > 0) {
-            tasks = parsed;
+            tasks = parsed.map(t => {
+              if (t.startDate && t.startDate.startsWith('2022-')) t.startDate = t.startDate.replace('2022-', '2026-');
+              if (t.finishDate && t.finishDate.startsWith('2022-')) t.finishDate = t.finishDate.replace('2022-', '2026-');
+              return t;
+            });
             return;
           }
         } catch (e) {
@@ -1572,7 +1680,7 @@
     function resetToSampleTasks() {
       if (confirm("ต้องการคืนค่าตัวอย่างแผนงาน 1 สัปดาห์ ใช่หรือไม่?")) {
         tasks = JSON.parse(JSON.stringify(SAMPLE_TASKS));
-        baseStartDateStr = "2022-07-04";
+        baseStartDateStr = "2026-07-04";
         document.getElementById('baseStartDate').value = baseStartDateStr;
         localStorage.removeItem('inspectq_1week_pataya');
         localStorage.removeItem('inspectq_1week_base_date_pataya');

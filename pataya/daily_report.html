@@ -399,6 +399,45 @@
       text-align: center;
     }
 
+    
+    /* Compact Date Cell (Short /26 Format) */
+    .date-cell-wrap {
+      position: relative;
+      display: inline-flex;
+      justify-content: center;
+      align-items: center;
+      width: 100%;
+    }
+    .date-hidden-native {
+      position: absolute;
+      opacity: 0;
+      width: 0;
+      height: 0;
+      pointer-events: none;
+    }
+    .date-btn {
+      background: rgba(13, 26, 56, 0.9);
+      border: 1px solid rgba(0, 173, 242, 0.45);
+      color: #ffffff;
+      border-radius: 4px;
+      padding: 3px 2px;
+      font-family: 'Kanit', sans-serif;
+      font-size: 12px;
+      font-weight: 300;
+      width: 62px;
+      text-align: center;
+      cursor: pointer;
+      transition: all 0.15s ease;
+      white-space: nowrap;
+      letter-spacing: -0.2px;
+      display: inline-block;
+    }
+    .date-btn:hover {
+      border-color: var(--cyan);
+      background: rgba(0, 173, 242, 0.25);
+    }
+    .print-val { display: none; }
+
     .badge-status.done { background: rgba(16, 185, 129, 0.2); color: var(--green); border: 1px solid var(--green); }
     .badge-status.progress { background: rgba(0, 173, 242, 0.2); color: var(--cyan); border: 1px solid var(--cyan); }
     .badge-status.pending { background: rgba(245, 158, 11, 0.2); color: var(--amber); border: 1px solid var(--amber); }
@@ -558,6 +597,20 @@
         font-size: 10px !important;
         font-weight: 600 !important;
       }
+      
+      .date-cell-wrap, .date-btn, .date-hidden-native {
+        display: none !important;
+      }
+      .print-val {
+        display: block !important;
+        font-size: 10px !important;
+        font-weight: 600 !important;
+        color: #000000 !important;
+        -webkit-text-fill-color: #000000 !important;
+        text-align: center !important;
+        white-space: nowrap !important;
+      }
+
       .app-header, .suite-nav-bar, .bottom-nav, .header-actions, .no-print {
         display: none !important;
       }
@@ -1237,7 +1290,13 @@
           </td>
           <td><input type="text" value="${escapeHtml(d.action)}" onchange="updateDefect(${idx}, 'action', this.value)"></td>
           <td><input type="text" style="width:100px;" value="${escapeHtml(d.resp)}" onchange="updateDefect(${idx}, 'resp', this.value)"></td>
-          <td><input type="date" style="width:110px;" value="${d.due}" onchange="updateDefect(${idx}, 'due', this.value)"></td>
+          <td style="text-align:center;">
+            <div class="date-cell-wrap no-print">
+              <input type="date" id="defect_date_${idx}" class="date-hidden-native" value="${d.due}" onchange="updateDefect(${idx}, 'due', this.value)">
+              <button type="button" class="date-btn" onclick="openDatePicker('defect_date_${idx}')">${fmtDate(d.due)}</button>
+            </div>
+            <span class="print-val">${fmtDate(d.due)}</span>
+          </td>
           <td><input type="text" style="width:100px;" value="${escapeHtml(d.status)}" onchange="updateDefect(${idx}, 'status', this.value)"></td>
           <td style="text-align:center;" class="no-print"><button class="btn-action-icon" onclick="deleteDefectRow(${idx})">🗑️</button></td>
         `;
@@ -1265,6 +1324,32 @@
     }
 
     // Calculations & KPIs
+    
+    function fmtDate(dStr) {
+      if (!dStr) return '-';
+      const p = dStr.split('-');
+      if (p.length === 3) {
+        let yr = p[0].length === 4 ? p[0].slice(2) : p[0];
+        if (yr === '22') yr = '26';
+        return `${p[2]}/${p[1]}/${yr}`;
+      }
+      return dStr;
+    }
+
+    function openDatePicker(id) {
+      const el = document.getElementById(id);
+      if (el) {
+        if (typeof el.showPicker === 'function') {
+          try {
+            el.showPicker();
+            return;
+          } catch(e) {}
+        }
+        el.focus();
+        el.click();
+      }
+    }
+
     function calcStats() {
       let dayTotal = 0;
       let otTotal = 0;

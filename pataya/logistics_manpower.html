@@ -371,6 +371,44 @@
     .col-mp-del { width: 40px; min-width: 40px; text-align: center; }
 
     .print-val { display: none; }
+    
+    /* Compact Date Cell (Short /26 Format) */
+    .date-cell-wrap {
+      position: relative;
+      display: inline-flex;
+      justify-content: center;
+      align-items: center;
+      width: 100%;
+    }
+    .date-hidden-native {
+      position: absolute;
+      opacity: 0;
+      width: 0;
+      height: 0;
+      pointer-events: none;
+    }
+    .date-btn {
+      background: rgba(13, 26, 56, 0.9);
+      border: 1px solid rgba(0, 173, 242, 0.45);
+      color: #ffffff;
+      border-radius: 4px;
+      padding: 3px 2px;
+      font-family: 'Kanit', sans-serif;
+      font-size: 12px;
+      font-weight: 300;
+      width: 62px;
+      text-align: center;
+      cursor: pointer;
+      transition: all 0.15s ease;
+      white-space: nowrap;
+      letter-spacing: -0.2px;
+      display: inline-block;
+    }
+    .date-btn:hover {
+      border-color: var(--cyan);
+      background: rgba(0, 173, 242, 0.25);
+    }
+
     .screen-val { display: block; width: 100%; }
 
     .data-table textarea.tbl-textarea {
@@ -1090,9 +1128,25 @@
       if (!dateStr) return "-";
       const p = dateStr.split('-');
       if (p.length === 3) {
-        return `${p[2]}/${p[1]}/${p[0]}`;
+        let yr = p[0].length === 4 ? p[0].slice(2) : p[0];
+        if (yr === '22') yr = '26';
+        return `${p[2]}/${p[1]}/${yr}`;
       }
       return dateStr;
+    }
+
+    function openDatePicker(id) {
+      const el = document.getElementById(id);
+      if (el) {
+        if (typeof el.showPicker === 'function') {
+          try {
+            el.showPicker();
+            return;
+          } catch(e) {}
+        }
+        el.focus();
+        el.click();
+      }
     }
 
     // 1. Logistics Table Render
@@ -1108,10 +1162,11 @@
         tr.innerHTML = `
           <td class="col-log-no" style="text-align:center;">${idx + 1}</td>
           <td class="col-log-date" style="text-align:center;">
-            <span class="print-val date-print-text">${dateDisp}</span>
-            <div class="screen-val date-screen-box no-print">
-              <input type="date" value="${item.date}" onchange="updateLogistics(${idx}, 'date', this.value)">
+            <div class="date-cell-wrap no-print">
+              <input type="date" id="log_date_${idx}" class="date-hidden-native" value="${item.date}" onchange="updateLogistics(${idx}, 'date', this.value)">
+              <button type="button" class="date-btn" onclick="openDatePicker('log_date_${idx}')">${dateDisp}</button>
             </div>
+            <span class="print-val date-print-text">${dateDisp}</span>
           </td>
           <td class="col-log-time" style="text-align:center;">
             <textarea rows="2" class="tbl-textarea" onchange="updateLogistics(${idx}, 'timeSlot', this.value)">${escapeHtml(item.timeSlot)}</textarea>

@@ -1454,7 +1454,11 @@
         function fmtDate(dStr) {
           if (!dStr) return '-';
           const p = dStr.split('-');
-          if (p.length === 3) return `${p[2]}/${p[1]}/${p[0].slice(2)}`;
+          if (p.length === 3) {
+            let yr = p[0].length === 4 ? p[0].slice(2) : p[0];
+            if (yr === '22') yr = '26';
+            return `${p[2]}/${p[1]}/${yr}`;
+          }
           return dStr;
         }
 
