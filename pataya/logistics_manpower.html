@@ -48,7 +48,7 @@
     body {
       font-family: 'Kanit', sans-serif;
       font-weight: 300;
-      font-size: 13px;
+      font-size: 14px;
       background: var(--bg-dark);
       color: var(--text-main);
       line-height: 1.5;
@@ -304,7 +304,7 @@
     .data-table {
       width: 100%;
       border-collapse: collapse;
-      font-size: 12px;
+      font-size: 13.5px;
       white-space: nowrap;
     }
 
@@ -314,6 +314,7 @@
       padding: 9px 10px;
       text-align: left;
       font-weight: 500;
+      font-size: 13.5px;
       border: 1px solid var(--border-strong);
     }
 
@@ -322,6 +323,7 @@
       border: 1px solid var(--border-strong);
       background: var(--bg-card);
       color: var(--text-main);
+      font-size: 13.5px;
     }
 
     .data-table tr:hover td {
@@ -335,19 +337,52 @@
       padding: 4px 6px;
       color: #ffffff;
       font-family: 'Kanit', sans-serif;
-      font-size: 12px;
+      font-size: 13px;
       font-weight: 300;
       outline: none;
       box-sizing: border-box;
+      width: 100%;
     }
 
+    /* Table Columns Width (Screen) */
+    .col-log-no { width: 35px; min-width: 35px; text-align: center; }
+    .col-log-date { width: 110px; min-width: 105px; text-align: center; }
+    .col-log-time { width: 115px; min-width: 105px; text-align: center; }
+    .col-log-material { width: 180px; min-width: 170px; }
+    .col-log-vendor { width: 130px; min-width: 120px; }
+    .col-log-vehicle { width: 130px; min-width: 120px; }
+    .col-log-zone { width: 140px; min-width: 130px; }
+    .col-log-equip { width: 125px; min-width: 115px; }
+    .col-log-receiver { width: 115px; min-width: 105px; }
+    .col-log-status { width: 120px; min-width: 110px; text-align: center; }
+    .col-log-del { width: 40px; min-width: 40px; text-align: center; }
+
+    .col-mp-no { width: 35px; min-width: 35px; text-align: center; }
+    .col-mp-task { width: 185px; min-width: 175px; }
+    .col-mp-cat { width: 110px; min-width: 100px; text-align: center; }
+    .col-mp-zone { width: 120px; min-width: 110px; }
+    .col-mp-team { width: 135px; min-width: 125px; }
+    .col-mp-count { width: 65px; min-width: 60px; text-align: center; }
+    .col-mp-shift { width: 135px; min-width: 125px; text-align: center; }
+    .col-mp-target { width: 160px; min-width: 150px; }
+    .col-mp-pct { width: 65px; min-width: 60px; text-align: center; }
+    .col-mp-status { width: 115px; min-width: 105px; text-align: center; }
+    .col-mp-safety { width: 160px; min-width: 150px; }
+    .col-mp-del { width: 40px; min-width: 40px; text-align: center; }
+
+    .print-val { display: none; }
+    .screen-val { display: block; width: 100%; }
+
     .data-table textarea.tbl-textarea {
-      min-height: 44px;
-      height: 44px;
+      width: 100% !important;
+      box-sizing: border-box !important;
+      min-height: 42px;
+      height: 42px;
       line-height: 1.35;
       resize: vertical;
       white-space: pre-wrap;
-      word-break: break-word;
+      word-break: normal;
+      overflow-wrap: break-word;
       display: block;
     }
 
@@ -455,7 +490,7 @@
     @media print {
       @page {
         size: A4 landscape;
-        margin: 6mm;
+        margin: 3.5mm 4mm;
       }
       *, *::before, *::after {
         box-sizing: border-box !important;
@@ -472,10 +507,10 @@
         background: #ffffff !important;
         color: #000000 !important;
         -webkit-text-fill-color: #000000 !important;
-        font-size: 10px !important;
-        font-weight: 600 !important;
+        font-size: 12.5px !important;
+        font-weight: 500 !important;
       }
-      .app-header, .suite-nav-bar, .bottom-nav, .header-actions, .no-print {
+      .app-header, .suite-nav-bar, .bottom-nav, .header-actions, .no-print, .btn-action-icon {
         display: none !important;
       }
       .container {
@@ -492,18 +527,49 @@
         box-shadow: none !important;
         width: 100% !important;
         max-width: 100% !important;
-        margin-bottom: 10px !important;
-        padding: 8px 12px !important;
+        margin-bottom: 5px !important;
+        padding: 4px 8px !important;
       }
       .kpi-grid {
         display: flex !important;
         flex-direction: row !important;
-        gap: 8px !important;
+        gap: 6px !important;
         width: 100% !important;
+        margin-bottom: 5px !important;
       }
       .kpi-card {
         flex: 1 !important;
         margin-bottom: 0 !important;
+        padding: 4px 6px !important;
+      }
+      .kpi-label {
+        font-size: 11.5px !important;
+        font-weight: 600 !important;
+        margin-bottom: 2px !important;
+      }
+      .kpi-val {
+        font-size: 20px !important;
+        font-weight: 700 !important;
+        line-height: 1.1 !important;
+        margin-bottom: 2px !important;
+      }
+      .kpi-sub {
+        font-size: 10.5px !important;
+        font-weight: 500 !important;
+      }
+      .section-box {
+        margin-bottom: 6px !important;
+      }
+      .section-box-header {
+        padding-bottom: 4px !important;
+        margin-bottom: 4px !important;
+      }
+      .section-box-title {
+        font-size: 13.5px !important;
+        font-weight: 700 !important;
+      }
+      .section-box-desc {
+        font-size: 11px !important;
       }
       .table-container {
         width: 100% !important;
@@ -513,36 +579,114 @@
       }
       .data-table {
         width: 100% !important;
-        min-width: 100% !important;
-        table-layout: auto !important;
+        max-width: 100% !important;
+        table-layout: fixed !important;
         border-collapse: collapse !important;
-        font-size: 11px !important;
+        font-size: 11.5px !important;
       }
+
+      /* Fixed Column Widths for A4 Landscape Print (Total ~ 1040-1060px) */
+      .col-log-no { width: 28px !important; min-width: 28px !important; max-width: 28px !important; text-align: center !important; }
+      .col-log-date { width: 85px !important; min-width: 85px !important; max-width: 85px !important; text-align: center !important; }
+      .col-log-time { width: 95px !important; min-width: 95px !important; max-width: 95px !important; text-align: center !important; }
+      .col-log-material { width: 185px !important; min-width: 185px !important; }
+      .col-log-vendor { width: 125px !important; min-width: 125px !important; }
+      .col-log-vehicle { width: 125px !important; min-width: 125px !important; }
+      .col-log-zone { width: 135px !important; min-width: 135px !important; }
+      .col-log-equip { width: 115px !important; min-width: 115px !important; }
+      .col-log-receiver { width: 105px !important; min-width: 105px !important; }
+      .col-log-status { width: 85px !important; min-width: 85px !important; text-align: center !important; }
+      .col-log-del { display: none !important; width: 0 !important; }
+
+      .col-mp-no { width: 28px !important; min-width: 28px !important; max-width: 28px !important; text-align: center !important; }
+      .col-mp-task { width: 165px !important; min-width: 165px !important; }
+      .col-mp-cat { width: 90px !important; min-width: 90px !important; text-align: center !important; }
+      .col-mp-zone { width: 95px !important; min-width: 95px !important; }
+      .col-mp-team { width: 115px !important; min-width: 115px !important; }
+      .col-mp-count { width: 48px !important; min-width: 48px !important; text-align: center !important; }
+      .col-mp-shift { width: 110px !important; min-width: 110px !important; text-align: center !important; }
+      .col-mp-target { width: 140px !important; min-width: 140px !important; }
+      .col-mp-pct { width: 48px !important; min-width: 48px !important; text-align: center !important; }
+      .col-mp-status { width: 82px !important; min-width: 82px !important; text-align: center !important; }
+      .col-mp-safety { width: 130px !important; min-width: 130px !important; }
+      .col-mp-del { display: none !important; width: 0 !important; }
+
       .data-table th, .data-table td {
         border: 1px solid #000000 !important;
         color: #000000 !important;
-        padding: 5px 6px !important;
+        padding: 4px 5px !important;
         white-space: normal !important;
-        font-size: 11px !important;
-        font-weight: 700 !important;
+        word-break: normal !important;
+        overflow-wrap: break-word !important;
+        font-size: 11.5px !important;
+        font-weight: 500 !important;
+        vertical-align: middle !important;
       }
       .data-table th {
         background: #e2e8f0 !important;
         font-weight: 700 !important;
+        font-size: 11.5px !important;
+        text-align: center !important;
       }
-      .data-table input, .data-table select, .data-table textarea {
+
+      /* Switch Screen inputs to Clean Print Text */
+      .screen-val, .screen-box, .cat-screen-box, .status-screen-box, .date-screen-box, .pct-screen-box, .count-screen-box {
+        display: none !important;
+      }
+      .print-val, .cat-print-text, .status-print-text, .date-print-text, .pct-print-text, .count-print-text {
+        display: block !important;
+        visibility: visible !important;
+        font-size: 11.5px !important;
+        font-weight: 600 !important;
+        line-height: 1.3 !important;
+        white-space: normal !important;
+        word-break: normal !important;
+        overflow-wrap: break-word !important;
+        color: #000000 !important;
+      }
+      .print-val.status-print-text {
+        font-weight: 700 !important;
+      }
+
+      .data-table textarea.tbl-textarea {
         border: none !important;
         background: transparent !important;
         color: #000000 !important;
         -webkit-text-fill-color: #000000 !important;
-        font-size: 11px !important;
-        font-weight: 700 !important;
+        font-size: 11.5px !important;
+        font-weight: 500 !important;
         padding: 0 !important;
-        line-height: 1.3 !important;
+        width: 100% !important;
+        max-width: 100% !important;
+        min-width: 0 !important;
+        height: auto !important;
+        min-height: 0 !important;
+        line-height: 1.25 !important;
         white-space: pre-wrap !important;
-        word-break: break-word !important;
+        word-break: normal !important;
+        overflow-wrap: break-word !important;
         resize: none !important;
-        overflow: visible !important;
+        overflow: hidden !important;
+        box-shadow: none !important;
+        outline: none !important;
+      }
+      select {
+        -webkit-appearance: none !important;
+        -moz-appearance: none !important;
+        appearance: none !important;
+        background: transparent !important;
+      }
+      input[type=number]::-webkit-inner-spin-button,
+      input[type=number]::-webkit-outer-spin-button {
+        -webkit-appearance: none !important;
+        margin: 0 !important;
+      }
+      input[type=date]::-webkit-calendar-picker-indicator {
+        display: none !important;
+      }
+      textarea::-webkit-scrollbar, input::-webkit-scrollbar {
+        display: none !important;
+        width: 0 !important;
       }
     }
   </style>
@@ -615,19 +759,32 @@
 
       <div class="table-container">
         <table class="data-table" id="logisticsTable">
+          <colgroup>
+            <col class="col-log-no">
+            <col class="col-log-date">
+            <col class="col-log-time">
+            <col class="col-log-material">
+            <col class="col-log-vendor">
+            <col class="col-log-vehicle">
+            <col class="col-log-zone">
+            <col class="col-log-equip">
+            <col class="col-log-receiver">
+            <col class="col-log-status">
+            <col class="col-log-del no-print">
+          </colgroup>
           <thead>
             <tr>
-              <th style="width: 35px; text-align:center;">#</th>
-              <th style="text-align:center; width:100px;">วันที่จะเข้า</th>
-              <th style="text-align:center; width:110px;">ช่วงเวลา (Time Slot)</th>
-              <th>รายการวัสดุ / สินค้า</th>
-              <th>ซัพพลายเออร์ / ร้านค้า</th>
-              <th>ประเภทรถขนส่ง / ทะเบียน</th>
-              <th>จุดลงของ / กองพักวัสดุ (Staging Zone)</th>
-              <th>อุปกรณ์ช่วยยกขน</th>
-              <th>วิศวกรผู้ตรวจรับ</th>
-              <th style="text-align:center; width:120px;">สถานะการเข้า</th>
-              <th style="width: 40px; text-align:center;" class="no-print">ลบ</th>
+              <th class="col-log-no">#</th>
+              <th class="col-log-date">วันที่จะเข้า</th>
+              <th class="col-log-time">ช่วงเวลา (Time Slot)</th>
+              <th class="col-log-material">รายการวัสดุ / สินค้า</th>
+              <th class="col-log-vendor">ซัพพลายเออร์ / ร้านค้า</th>
+              <th class="col-log-vehicle">ประเภทรถขนส่ง / ทะเบียน</th>
+              <th class="col-log-zone">จุดลงของ / กองพักวัสดุ (Staging Zone)</th>
+              <th class="col-log-equip">อุปกรณ์ช่วยยกขน</th>
+              <th class="col-log-receiver">วิศวกรผู้ตรวจรับ</th>
+              <th class="col-log-status">สถานะการเข้า</th>
+              <th class="col-log-del no-print">ลบ</th>
             </tr>
           </thead>
           <tbody id="logisticsTbody">
@@ -649,20 +806,34 @@
 
       <div class="table-container">
         <table class="data-table" id="manpowerTable">
+          <colgroup>
+            <col class="col-mp-no">
+            <col class="col-mp-task">
+            <col class="col-mp-cat">
+            <col class="col-mp-zone">
+            <col class="col-mp-team">
+            <col class="col-mp-count">
+            <col class="col-mp-shift">
+            <col class="col-mp-target">
+            <col class="col-mp-pct">
+            <col class="col-mp-status">
+            <col class="col-mp-safety">
+            <col class="col-mp-del no-print">
+          </colgroup>
           <thead>
             <tr>
-              <th style="width: 35px; text-align:center;">#</th>
-              <th>หัวข้องานที่ดำเนินงาน</th>
-              <th>หมวดงาน</th>
-              <th>พื้นที่ / ชั้น / โซน</th>
-              <th>ทีมช่าง / ผู้รับเหมาช่วง</th>
-              <th style="text-align:center; width:80px;">จำนวนช่าง</th>
-              <th style="text-align:center; width:135px;">ช่วงเวลางาน (กะทำงาน)</th>
-              <th>ผลผลิตเป้าหมายประจำกะ</th>
-              <th style="text-align:center; width:80px;">% ก้าวหน้า</th>
-              <th style="text-align:center; width:120px;">สถานะงาน</th>
-              <th>มาตรการความปลอดภัย / PPE</th>
-              <th style="width: 40px; text-align:center;" class="no-print">ลบ</th>
+              <th class="col-mp-no">#</th>
+              <th class="col-mp-task">หัวข้องานที่ดำเนินงาน</th>
+              <th class="col-mp-cat">หมวดงาน</th>
+              <th class="col-mp-zone">พื้นที่ / ชั้น / โซน</th>
+              <th class="col-mp-team">ทีมช่าง / ผู้รับเหมาช่วง</th>
+              <th class="col-mp-count">จำนวนช่าง</th>
+              <th class="col-mp-shift">ช่วงเวลางาน (กะทำงาน)</th>
+              <th class="col-mp-target">ผลผลิตเป้าหมายประจำกะ</th>
+              <th class="col-mp-pct">% ก้าวหน้า</th>
+              <th class="col-mp-status">สถานะงาน</th>
+              <th class="col-mp-safety">มาตรการความปลอดภัย / PPE</th>
+              <th class="col-mp-del no-print">ลบ</th>
             </tr>
           </thead>
           <tbody id="manpowerTbody">
@@ -888,6 +1059,40 @@
       if (showToastMsg) showToast("💾 บันทึกแผนการนำของเข้าและจัดคนเรียบร้อย");
     }
 
+    const CAT_THAI_MAP = {
+      Structure: "โครงสร้าง",
+      Architecture: "สถาปัตย์",
+      Interior: "ตกแต่งภายใน",
+      Kitchen: "ครัว/เครื่องใช้",
+      Electrical: "ไฟฟ้า/สื่อสาร",
+      Sanitary: "สุขาภิบาล",
+      Fire: "ดับเพลิง",
+      HVAC: "ปรับอากาศ",
+      External: "ภายนอก",
+      Landscape: "ภูมิทัศน์"
+    };
+
+    const MP_STATUS_MAP = {
+      progress: "กำลังทำ",
+      done: "เสร็จสมบูรณ์",
+      delay: "ล่าช้า"
+    };
+
+    const LOG_STATUS_MAP = {
+      scheduled: "นัดหมายแล้ว",
+      transit: "กำลังเดินทาง",
+      arrived: "ลงของแล้ว"
+    };
+
+    function formatThaiDateDisplay(dateStr) {
+      if (!dateStr) return "-";
+      const p = dateStr.split('-');
+      if (p.length === 3) {
+        return `${p[2]}/${p[1]}/${p[0]}`;
+      }
+      return dateStr;
+    }
+
     // 1. Logistics Table Render
     function renderLogistics() {
       const tbody = document.getElementById('logisticsTbody');
@@ -895,24 +1100,49 @@
 
       logisticsData.forEach((item, idx) => {
         const tr = document.createElement('tr');
+        const statusText = LOG_STATUS_MAP[item.status] || item.status;
+        const dateDisp = formatThaiDateDisplay(item.date);
+
         tr.innerHTML = `
-          <td style="text-align:center;">${idx + 1}</td>
-          <td><input type="date" style="width:110px; height:44px;" value="${item.date}" onchange="updateLogistics(${idx}, 'date', this.value)"></td>
-          <td><textarea rows="2" class="tbl-textarea" style="width:115px; text-align:center;" onchange="updateLogistics(${idx}, 'timeSlot', this.value)">${escapeHtml(item.timeSlot)}</textarea></td>
-          <td><textarea rows="2" class="tbl-textarea" style="min-width:180px;" onchange="updateLogistics(${idx}, 'material', this.value)">${escapeHtml(item.material)}</textarea></td>
-          <td><textarea rows="2" class="tbl-textarea" style="width:140px;" onchange="updateLogistics(${idx}, 'vendor', this.value)">${escapeHtml(item.vendor)}</textarea></td>
-          <td><textarea rows="2" class="tbl-textarea" style="width:140px;" onchange="updateLogistics(${idx}, 'vehicle', this.value)">${escapeHtml(item.vehicle)}</textarea></td>
-          <td><textarea rows="2" class="tbl-textarea" style="width:150px;" onchange="updateLogistics(${idx}, 'zone', this.value)">${escapeHtml(item.zone)}</textarea></td>
-          <td><textarea rows="2" class="tbl-textarea" style="width:140px;" onchange="updateLogistics(${idx}, 'equipment', this.value)">${escapeHtml(item.equipment)}</textarea></td>
-          <td><textarea rows="2" class="tbl-textarea" style="width:130px;" onchange="updateLogistics(${idx}, 'receiver', this.value)">${escapeHtml(item.receiver)}</textarea></td>
-          <td style="text-align:center;">
-            <select style="width:115px; height:44px;" onchange="updateLogistics(${idx}, 'status', this.value)">
-              <option value="scheduled" ${item.status === 'scheduled' ? 'selected' : ''}>นัดหมายแล้ว</option>
-              <option value="transit" ${item.status === 'transit' ? 'selected' : ''}>กำลังเดินทาง</option>
-              <option value="arrived" ${item.status === 'arrived' ? 'selected' : ''}>ลงของแล้ว</option>
-            </select>
+          <td class="col-log-no" style="text-align:center;">${idx + 1}</td>
+          <td class="col-log-date" style="text-align:center;">
+            <span class="print-val date-print-text">${dateDisp}</span>
+            <div class="screen-val date-screen-box no-print">
+              <input type="date" value="${item.date}" onchange="updateLogistics(${idx}, 'date', this.value)">
+            </div>
           </td>
-          <td style="text-align:center;" class="no-print">
+          <td class="col-log-time" style="text-align:center;">
+            <textarea rows="2" class="tbl-textarea" onchange="updateLogistics(${idx}, 'timeSlot', this.value)">${escapeHtml(item.timeSlot)}</textarea>
+          </td>
+          <td class="col-log-material">
+            <textarea rows="2" class="tbl-textarea" onchange="updateLogistics(${idx}, 'material', this.value)">${escapeHtml(item.material)}</textarea>
+          </td>
+          <td class="col-log-vendor">
+            <textarea rows="2" class="tbl-textarea" onchange="updateLogistics(${idx}, 'vendor', this.value)">${escapeHtml(item.vendor)}</textarea>
+          </td>
+          <td class="col-log-vehicle">
+            <textarea rows="2" class="tbl-textarea" onchange="updateLogistics(${idx}, 'vehicle', this.value)">${escapeHtml(item.vehicle)}</textarea>
+          </td>
+          <td class="col-log-zone">
+            <textarea rows="2" class="tbl-textarea" onchange="updateLogistics(${idx}, 'zone', this.value)">${escapeHtml(item.zone)}</textarea>
+          </td>
+          <td class="col-log-equip">
+            <textarea rows="2" class="tbl-textarea" onchange="updateLogistics(${idx}, 'equipment', this.value)">${escapeHtml(item.equipment)}</textarea>
+          </td>
+          <td class="col-log-receiver">
+            <textarea rows="2" class="tbl-textarea" onchange="updateLogistics(${idx}, 'receiver', this.value)">${escapeHtml(item.receiver)}</textarea>
+          </td>
+          <td class="col-log-status" style="text-align:center;">
+            <span class="print-val status-print-text ${item.status}">${statusText}</span>
+            <div class="screen-val status-screen-box no-print">
+              <select onchange="updateLogistics(${idx}, 'status', this.value)">
+                <option value="scheduled" ${item.status === 'scheduled' ? 'selected' : ''}>นัดหมายแล้ว</option>
+                <option value="transit" ${item.status === 'transit' ? 'selected' : ''}>กำลังเดินทาง</option>
+                <option value="arrived" ${item.status === 'arrived' ? 'selected' : ''}>ลงของแล้ว</option>
+              </select>
+            </div>
+          </td>
+          <td class="col-log-del no-print" style="text-align:center;">
             <button class="btn-action-icon" onclick="deleteLogisticsRow(${idx})">🗑️</button>
           </td>
         `;
@@ -960,40 +1190,70 @@
       manpowerData.forEach((task, idx) => {
         const count = parseInt(task.count) || 0;
         totalAllocated += count;
+        const catThai = CAT_THAI_MAP[task.cat] || task.cat;
+        const statusThai = MP_STATUS_MAP[task.status] || task.status;
 
         const tr = document.createElement('tr');
         tr.innerHTML = `
-          <td style="text-align:center;">${idx + 1}</td>
-          <td><textarea rows="2" class="tbl-textarea" style="min-width:180px;" onchange="updateManpowerTask(${idx}, 'task', this.value)">${escapeHtml(task.task)}</textarea></td>
-          <td>
-            <select style="width:115px; height:44px;" onchange="updateManpowerTask(${idx}, 'cat', this.value)">
-              <option value="Structure" ${task.cat === 'Structure' ? 'selected' : ''}>โครงสร้าง</option>
-              <option value="Architecture" ${task.cat === 'Architecture' ? 'selected' : ''}>สถาปัตย์</option>
-              <option value="Interior" ${task.cat === 'Interior' ? 'selected' : ''}>ตกแต่งภายใน</option>
-              <option value="Kitchen" ${task.cat === 'Kitchen' ? 'selected' : ''}>ครัว/เครื่องใช้</option>
-              <option value="Electrical" ${task.cat === 'Electrical' ? 'selected' : ''}>ไฟฟ้า/สื่อสาร</option>
-              <option value="Sanitary" ${task.cat === 'Sanitary' ? 'selected' : ''}>สุขาภิบาล</option>
-              <option value="Fire" ${task.cat === 'Fire' ? 'selected' : ''}>ดับเพลิง</option>
-              <option value="HVAC" ${task.cat === 'HVAC' ? 'selected' : ''}>ปรับอากาศ</option>
-              <option value="External" ${task.cat === 'External' ? 'selected' : ''}>ภายนอก</option>
-              <option value="Landscape" ${task.cat === 'Landscape' ? 'selected' : ''}>ภูมิทัศน์</option>
-            </select>
+          <td class="col-mp-no" style="text-align:center;">${idx + 1}</td>
+          <td class="col-mp-task">
+            <textarea rows="2" class="tbl-textarea" onchange="updateManpowerTask(${idx}, 'task', this.value)">${escapeHtml(task.task)}</textarea>
           </td>
-          <td><textarea rows="2" class="tbl-textarea" style="width:125px;" onchange="updateManpowerTask(${idx}, 'zone', this.value)">${escapeHtml(task.zone)}</textarea></td>
-          <td><textarea rows="2" class="tbl-textarea" style="width:140px;" onchange="updateManpowerTask(${idx}, 'team', this.value)">${escapeHtml(task.team)}</textarea></td>
-          <td style="text-align:center;"><input type="number" min="0" style="width:60px; height:44px; text-align:center;" value="${task.count}" onchange="updateManpowerTask(${idx}, 'count', this.value)"></td>
-          <td><textarea rows="2" class="tbl-textarea" style="width:135px; text-align:center;" onchange="updateManpowerTask(${idx}, 'shift', this.value)">${escapeHtml(task.shift)}</textarea></td>
-          <td><textarea rows="2" class="tbl-textarea" style="min-width:170px;" onchange="updateManpowerTask(${idx}, 'target', this.value)">${escapeHtml(task.target)}</textarea></td>
-          <td style="text-align:center;"><input type="number" min="0" max="100" style="width:55px; height:44px; text-align:center;" value="${task.pct}" onchange="updateManpowerTask(${idx}, 'pct', this.value)">%</td>
-          <td style="text-align:center;">
-            <select style="width:115px; height:44px;" onchange="updateManpowerTask(${idx}, 'status', this.value)">
-              <option value="progress" ${task.status === 'progress' ? 'selected' : ''}>กำลังทำ</option>
-              <option value="done" ${task.status === 'done' ? 'selected' : ''}>เสร็จสมบูรณ์</option>
-              <option value="delay" ${task.status === 'delay' ? 'selected' : ''}>ล่าช้า</option>
-            </select>
+          <td class="col-mp-cat" style="text-align:center;">
+            <span class="print-val cat-print-text">${catThai}</span>
+            <div class="screen-val cat-screen-box no-print">
+              <select onchange="updateManpowerTask(${idx}, 'cat', this.value)">
+                <option value="Structure" ${task.cat === 'Structure' ? 'selected' : ''}>โครงสร้าง</option>
+                <option value="Architecture" ${task.cat === 'Architecture' ? 'selected' : ''}>สถาปัตย์</option>
+                <option value="Interior" ${task.cat === 'Interior' ? 'selected' : ''}>ตกแต่งภายใน</option>
+                <option value="Kitchen" ${task.cat === 'Kitchen' ? 'selected' : ''}>ครัว/เครื่องใช้</option>
+                <option value="Electrical" ${task.cat === 'Electrical' ? 'selected' : ''}>ไฟฟ้า/สื่อสาร</option>
+                <option value="Sanitary" ${task.cat === 'Sanitary' ? 'selected' : ''}>สุขาภิบาล</option>
+                <option value="Fire" ${task.cat === 'Fire' ? 'selected' : ''}>ดับเพลิง</option>
+                <option value="HVAC" ${task.cat === 'HVAC' ? 'selected' : ''}>ปรับอากาศ</option>
+                <option value="External" ${task.cat === 'External' ? 'selected' : ''}>ภายนอก</option>
+                <option value="Landscape" ${task.cat === 'Landscape' ? 'selected' : ''}>ภูมิทัศน์</option>
+              </select>
+            </div>
           </td>
-          <td><textarea rows="2" class="tbl-textarea" style="min-width:160px;" onchange="updateManpowerTask(${idx}, 'safety', this.value)">${escapeHtml(task.safety)}</textarea></td>
-          <td style="text-align:center;" class="no-print">
+          <td class="col-mp-zone">
+            <textarea rows="2" class="tbl-textarea" onchange="updateManpowerTask(${idx}, 'zone', this.value)">${escapeHtml(task.zone)}</textarea>
+          </td>
+          <td class="col-mp-team">
+            <textarea rows="2" class="tbl-textarea" onchange="updateManpowerTask(${idx}, 'team', this.value)">${escapeHtml(task.team)}</textarea>
+          </td>
+          <td class="col-mp-count" style="text-align:center;">
+            <span class="print-val count-print-text">${task.count}</span>
+            <div class="screen-val count-screen-box no-print">
+              <input type="number" min="0" style="text-align:center;" value="${task.count}" onchange="updateManpowerTask(${idx}, 'count', this.value)">
+            </div>
+          </td>
+          <td class="col-mp-shift" style="text-align:center;">
+            <textarea rows="2" class="tbl-textarea" style="text-align:center;" onchange="updateManpowerTask(${idx}, 'shift', this.value)">${escapeHtml(task.shift)}</textarea>
+          </td>
+          <td class="col-mp-target">
+            <textarea rows="2" class="tbl-textarea" onchange="updateManpowerTask(${idx}, 'target', this.value)">${escapeHtml(task.target)}</textarea>
+          </td>
+          <td class="col-mp-pct" style="text-align:center; white-space:nowrap;">
+            <span class="print-val pct-print-text">${task.pct}%</span>
+            <div class="screen-val pct-screen-box no-print" style="display:inline-flex; align-items:center; justify-content:center;">
+              <input type="number" min="0" max="100" style="width:48px; text-align:center;" value="${task.pct}" onchange="updateManpowerTask(${idx}, 'pct', this.value)"><span style="font-weight:600; margin-left:2px;">%</span>
+            </div>
+          </td>
+          <td class="col-mp-status" style="text-align:center;">
+            <span class="print-val status-print-text ${task.status}">${statusThai}</span>
+            <div class="screen-val status-screen-box no-print">
+              <select onchange="updateManpowerTask(${idx}, 'status', this.value)">
+                <option value="progress" ${task.status === 'progress' ? 'selected' : ''}>กำลังทำ</option>
+                <option value="done" ${task.status === 'done' ? 'selected' : ''}>เสร็จสมบูรณ์</option>
+                <option value="delay" ${task.status === 'delay' ? 'selected' : ''}>ล่าช้า</option>
+              </select>
+            </div>
+          </td>
+          <td class="col-mp-safety">
+            <textarea rows="2" class="tbl-textarea" onchange="updateManpowerTask(${idx}, 'safety', this.value)">${escapeHtml(task.safety)}</textarea>
+          </td>
+          <td class="col-mp-del no-print" style="text-align:center;">
             <button class="btn-action-icon" onclick="deleteManpowerTaskRow(${idx})">🗑️</button>
           </td>
         `;

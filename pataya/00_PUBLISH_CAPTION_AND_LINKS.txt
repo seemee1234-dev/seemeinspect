@@ -1,51 +1,38 @@
 ================================================================================
-INSPECT Q • PATTAYA EXECUTIVE MASTER SUITE (6 ระบบแผนงานครบวงจร)
-โครงการก่อสร้างและปรับปรุงอาคาร (พัทยา) | มูลค่า 10,351,000.00 บาท
+THE ORIGIN PATTAYA • ระบบแผนงานก่อสร้างและควบคุมงาน โครงการ ดิ ออริจิ้น พัทยา
 ================================================================================
 
-ช่องทางติดต่อ Inspect Q (LINE OA 100%):
-- ลิงก์ตรง: https://line.me/R/ti/p/@inspectq
-- LINE ID: @inspectq (มี @ ด้วยครับ)
+ช่องทางติดต่อทีมงาน Inspect Q:
+- LINE OA ลิงก์ตรง: https://line.me/R/ti/p/@inspectq
+- LINE ID: @inspectq
 - เบอร์ติดต่อ: 081-449-9499
 
-ลิงก์เปิดใช้งานบนเว็บจริง (GitHub Pages 100% เปิดดูบนมือถือได้ทันที ไร้ปัญหา 404):
-🌐 ศูนย์รวมระบบแผนงาน (Portal):
-   👉 https://seemee1234-dev.github.io/seemeinspect/pataya/index.html
+สรุปการปรับปรุงล่าสุด (แก้ไขตารางให้อ่านง่าย ตัวหนังสือไม่บีบซ้อนแนวตั้ง logistics_manpower.html):
+1. แก้ไขปัญหาตัวหนังสือเรียงซ้อนแนวตั้ง (Vertical Character Stacking Fix 100%):
+   - คอลัมน์ 3 "หมวดงาน", คอลัมน์ 4 "พื้นที่ / ชั้น / โซน", และ คอลัมน์ 5 "ทีมช่าง / ผู้รับเหมาช่วง" เดิมที่ถูกเบราว์เซอร์บีบเหลือ 18px จนตัวอักษรแตกตัวเป็นแนวตั้ง (ห-ม-ว-ด-ง-า-น, โ-ค-ร-ง-ส-ร้-า-ง) ได้รับการแก้ไขเรียบร้อย
+   - กำหนด <colgroup> และล็อกความกว้างตายตัวด้วย table-layout: fixed !important:
+     * หมวดงาน: กว้าง 90px (จัดวางแนวนอนบรรทัดเดียวสบายตา)
+     * พื้นที่ / ชั้น / โซน: กว้าง 95px (อ่านง่าย คมชัด)
+     * ทีมช่าง / ผู้รับเหมาช่วง: กว้าง 115px (ข้อความไม่ตกหล่น ไม่โดนบีบ)
+2. ระบบพิมพ์แบบ Clean Print Text Replacement (สองโหมดสมบูรณ์แบบ):
+   - บนหน้าจอ (Screen): มี Dropdown เมนู <select> และช่องป้อนข้อมูลให้เลือกแก้ไขได้อย่างสะดวก
+   - ในโหมดพิมพ์ / PDF: ซ่อน <select> อัตโนมัติ แล้วแสดงผลเป็นตัวหนังสือภาษาไทยปกติ (.cat-print-text, .status-print-text) คมกริบ 100% ไร้ลูกศรดรอปดาวน์ และไร้กรอบบีบ
+3. การตัดคำภาษาไทยสมบูรณ์แบบ:
+   - ปรับใช้ word-break: normal !important; overflow-wrap: break-word !important; ตัวอักษรภาษาไทยจะไม่แตกเรียงตัวเดี่ยวแนวตั้งอีกต่อไป
 
-1. แผนรายงานประจำวัน (Daily Construction & QC Report):
-   👉 https://seemee1234-dev.github.io/seemeinspect/pataya/daily_report.html
-   - บันทึกสภาพอากาศ, ยอดช่างกะกลางวัน-OT ทุกหมวดงาน, ผลงานจริง, เครื่องจักร, วัสดุเข้า, Defect ประจำวัน
-
-2. แผนการสั่งของ 5 ช่วงเวลา (Material Procurement & Supply Chain):
-   👉 https://seemee1234-dev.github.io/seemeinspect/pataya/procurement_plan.html
-   - ควบคุม 5 ช่วง: สั่งซื้อ(PO) • ทำสัญญา • สั่งผลิต(Factory) • ขนส่ง • จัดลงพื้นที่หน้างาน
-   - แถบ Visual Pipeline 5 สี คำนวณ Lead Time และ % ความก้าวหน้าสด
-
-3. แผนนำของเข้าหน้างาน และการจัดคนเข้าทำงาน (Site Logistics & Manpower):
-   👉 https://seemee1234-dev.github.io/seemeinspect/pataya/logistics_manpower.html
-   - ตารางนำของเข้าหน้างาน (Time Slot + จุด Staging Zone ป้องกันรถติด)
-   - การจัดคนเข้าทำงานแต่ละหัวข้อ และช่วงเวลากะงาน (08:00-17:00 / OT)
-
-4. แผนปฏิบัติงาน 1 สัปดาห์ (1-Week Daily Work Plan 7 วัน):
-   👉 https://seemee1234-dev.github.io/seemeinspect/pataya/1week.html
-
-5. แผนงาน 3 สัปดาห์ (3-Week Lookahead Schedule 21 วัน):
-   👉 https://seemee1234-dev.github.io/seemeinspect/pataya/3week.html
-
-6. แผนงาน S-Curve รวมผู้บริหาร (Executive 18-Week S-Curve Dashboard):
-   👉 https://seemee1234-dev.github.io/seemeinspect/pataya/scurve.html
-
---------------------------------------------------------------------------------
-ทางลัดเปิดใช้งานบนหน้าจอคอมพิวเตอร์ Desktop:
-- 00_เปิดศูนย์รวมแผนงานโครงการพัทยา.bat
-- 00_เปิดแผนรายงานประจำวัน_พัทยา.bat
-- 00_เปิดแผนการสั่งของ_พัทยา.bat
-- 00_เปิดแผนนำของเข้าและจัดคน_พัทยา.bat
-- 06_เปิดแผนงาน_1Week_พัทยา.bat
-- 05_เปิดแผนงาน_3Week_พัทยา.bat
-- 04_เปิดแผนงาน_SCurve_พัทยา.bat
-
-โฟลเดอร์เก็บข้อมูลในเครื่อง:
-- C:\Users\ADMIN\Documents\pataya\
-- C:\Users\ADMIN\Pictures\Screenshots\New folder\pataya\
+ลิงก์เข้าใช้งานระบบบนมือถือและคอมพิวเตอร์ (GitHub Pages Live):
+- แผนนำของเข้า & จัดคน (ตารางจัดระเบียบใหม่ ตัวหนังสือไม่ซ้อน อ่านง่าย คมชัด):
+  https://seemee1234-dev.github.io/seemeinspect/pataya/logistics_manpower.html
+- แผนงาน 1 สัปดาห์ (1-Week Work Plan):
+  https://seemee1234-dev.github.io/seemeinspect/pataya/1week.html
+- แผนงาน 3 สัปดาห์ (3-Week Lookahead):
+  https://seemee1234-dev.github.io/seemeinspect/pataya/3week.html
+- รายงานประจำวัน (A4 แนวนอนเต็มหน้า):
+  https://seemee1234-dev.github.io/seemeinspect/pataya/daily_report.html
+- แผนสั่งของ 5 ช่วงเวลา (สั่งงานด้วยเสียง):
+  https://seemee1234-dev.github.io/seemeinspect/pataya/procurement_plan.html
+- กราฟ S-Curve บริหารงาน:
+  https://seemee1234-dev.github.io/seemeinspect/pataya/scurve.html
+- รวมทุกแผนงาน:
+  https://seemee1234-dev.github.io/seemeinspect/pataya/index.html
 ================================================================================
