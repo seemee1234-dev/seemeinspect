@@ -500,13 +500,24 @@
       transform: translateY(0);
     }
 
-    .item-input { width: 100%; min-width: 240px; }
-    .cat-select { width: 135px; }
-    .vendor-input { width: 100%; min-width: 220px; }
-    .date-input { width: 135px; min-width: 130px; text-align: center; }
-    .zone-input { width: 100%; min-width: 210px; }
+    .col-no { width: 35px; min-width: 35px; text-align: center; }
+    .col-item { min-width: 220px; }
+    .col-cat { width: 135px; min-width: 130px; }
+    .col-vendor { min-width: 180px; }
+    .col-date { width: 135px; min-width: 125px; text-align: center; }
+    .col-zone { min-width: 180px; }
+    .col-lead { width: 80px; min-width: 75px; text-align: center; }
+    .col-pct { width: 70px; min-width: 65px; text-align: center; }
+    .col-stage { width: 140px; min-width: 130px; text-align: center; }
+    .col-del { width: 40px; min-width: 40px; text-align: center; }
+
+    .item-input { width: 100%; min-width: 200px; }
+    .cat-select { width: 100%; }
+    .vendor-input { width: 100%; min-width: 160px; }
+    .date-input { width: 100%; text-align: center; }
+    .zone-input { width: 100%; min-width: 160px; }
     .pct-input { width: 55px; text-align: center; }
-    .stage-select { width: 140px; }
+    .stage-select { width: 100%; }
     .print-val { display: none; }
 
     .data-table textarea.tbl-textarea {
@@ -536,7 +547,7 @@
     @media print {
       @page {
         size: A4 landscape;
-        margin: 4mm 5mm;
+        margin: 3.5mm 4mm;
       }
       *, *::before, *::after {
         box-sizing: border-box !important;
@@ -553,7 +564,8 @@
         background: #ffffff !important;
         color: #000000 !important;
         -webkit-text-fill-color: #000000 !important;
-        font-size: 8px !important;
+        font-size: 9px !important;
+        overflow: hidden !important;
       }
       .app-header, .suite-nav-bar, .bottom-nav, .header-actions, .filter-bar, .no-print, .btn-input-mic, .voice-status-bar, .input-with-mic button, .pill-btn, button {
         display: none !important;
@@ -561,7 +573,7 @@
       .exec-print-header {
         display: block !important;
         width: 100% !important;
-        margin-bottom: 6px !important;
+        margin-bottom: 4px !important;
       }
       .container {
         width: 100% !important;
@@ -577,13 +589,13 @@
         box-shadow: none !important;
         width: 100% !important;
         max-width: 100% !important;
-        margin-bottom: 6px !important;
-        padding: 4px 6px !important;
+        margin-bottom: 4px !important;
+        padding: 3px 5px !important;
       }
       .section-title-bar {
         border-bottom: 1px solid #000000 !important;
-        margin-bottom: 6px !important;
-        padding-bottom: 4px !important;
+        margin-bottom: 4px !important;
+        padding-bottom: 3px !important;
       }
       .section-title {
         color: #000000 !important;
@@ -611,36 +623,29 @@
         overflow: visible !important;
       }
       .kpi-card .kpi-val {
-        font-size: 15px !important;
+        font-size: 14px !important;
         color: #000000 !important;
         font-weight: 700 !important;
         white-space: normal !important;
         overflow: visible !important;
-        text-overflow: clip !important;
       }
       .kpi-card .kpi-label {
-        font-size: 9.5px !important;
+        font-size: 9px !important;
         color: #000000 !important;
         font-weight: 700 !important;
         white-space: normal !important;
-        line-height: 1.25 !important;
-        overflow: visible !important;
-        text-overflow: clip !important;
+        line-height: 1.2 !important;
       }
       .kpi-card .kpi-sub {
-        font-size: 8.5px !important;
+        font-size: 8px !important;
         color: #333333 !important;
         white-space: normal !important;
-        line-height: 1.25 !important;
-        overflow: visible !important;
-        text-overflow: clip !important;
+        line-height: 1.2 !important;
       }
       .table-container {
         width: 100% !important;
         max-width: 100% !important;
-        overflow: visible !important;
-        overflow-x: visible !important;
-        overflow-y: visible !important;
+        overflow: hidden !important;
         border: none !important;
         scrollbar-width: none !important;
       }
@@ -656,56 +661,59 @@
         table-layout: fixed !important;
         border-collapse: collapse !important;
         border: 1.5px solid #000000 !important;
-        font-size: 9.5px !important;
+        font-size: 9px !important;
       }
       .data-table th, .data-table td {
         border: 1px solid #000000 !important;
         color: #000000 !important;
-        padding: 4px 2.5px !important;
+        padding: 3px 2px !important;
         white-space: normal !important;
-        word-break: break-word !important;
+        word-break: normal !important;
+        overflow-wrap: break-word !important;
         vertical-align: middle !important;
-        font-size: 9.5px !important;
-        font-weight: 700 !important;
-        line-height: 1.25 !important;
+        font-size: 9px !important;
+        font-weight: 600 !important;
+        line-height: 1.2 !important;
       }
       .data-table th {
         background: #e2e8f0 !important;
         font-weight: 700 !important;
         color: #000000 !important;
         text-align: center !important;
-        font-size: 10px !important;
+        font-size: 9.5px !important;
       }
       .data-table th.stage-th {
         color: #000000 !important;
         background: #cbd5e1 !important;
         border-bottom: 1.5px solid #000000 !important;
-        font-size: 10.5px !important;
+        font-size: 9.5px !important;
         font-weight: 700 !important;
       }
-      /* Column Widths in Print Mode (A4 Landscape 100% Full Width Fit & Zero Ellipsis) */
-      .col-no { width: 1.8% !important; min-width: 0 !important; }
-      .col-item { width: 14.0% !important; min-width: 0 !important; }
-      .col-cat { width: 7.0% !important; min-width: 0 !important; }
-      .col-vendor { width: 13.0% !important; min-width: 0 !important; }
-      .col-date { width: 4.7% !important; min-width: 0 !important; font-size: 9px !important; }
-      .col-zone { width: 10.5% !important; min-width: 0 !important; }
-      .col-lead { width: 4.0% !important; min-width: 0 !important; }
-      .col-pct { width: 3.0% !important; min-width: 0 !important; }
-      .col-stage { width: 4.4% !important; min-width: 0 !important; }
+
+      /* Locked Column Widths in Print Mode (A4 Landscape 100% Full Width Fit - Total = 100%) */
+      .col-no { width: 2.2% !important; min-width: 0 !important; max-width: 2.2% !important; text-align: center !important; }
+      .col-item { width: 13.5% !important; min-width: 0 !important; max-width: 13.5% !important; }
+      .col-cat { width: 7.2% !important; min-width: 0 !important; max-width: 7.2% !important; text-align: center !important; }
+      .col-vendor { width: 10.5% !important; min-width: 0 !important; max-width: 10.5% !important; }
+      .col-date { width: 4.8% !important; min-width: 0 !important; max-width: 4.8% !important; font-size: 8.5px !important; text-align: center !important; }
+      .col-zone { width: 9.8% !important; min-width: 0 !important; max-width: 9.8% !important; }
+      .col-lead { width: 4.4% !important; min-width: 0 !important; max-width: 4.4% !important; text-align: center !important; }
+      .col-pct { width: 4.0% !important; min-width: 0 !important; max-width: 4.0% !important; text-align: center !important; }
+      .col-stage { width: 5.2% !important; min-width: 0 !important; max-width: 5.2% !important; text-align: center !important; }
+      .col-del { display: none !important; width: 0 !important; max-width: 0 !important; }
 
       .print-val {
         display: block !important;
         white-space: normal !important;
-        word-break: break-word !important;
-        line-height: 1.25 !important;
-        font-size: 9.5px !important;
-        font-weight: 700 !important;
+        word-break: normal !important;
+        overflow-wrap: break-word !important;
+        line-height: 1.2 !important;
+        font-size: 9px !important;
+        font-weight: 600 !important;
         color: #000000 !important;
         -webkit-text-fill-color: #000000 !important;
         text-align: left !important;
         overflow: visible !important;
-        text-overflow: clip !important;
       }
       .print-val.text-center {
         text-align: center !important;
@@ -931,6 +939,26 @@
 
       <div class="table-container">
         <table class="data-table" id="procurementTable">
+          <colgroup>
+            <col class="col-no">
+            <col class="col-item">
+            <col class="col-cat">
+            <col class="col-vendor">
+            <col class="col-date">
+            <col class="col-date">
+            <col class="col-date">
+            <col class="col-date">
+            <col class="col-date">
+            <col class="col-date">
+            <col class="col-date">
+            <col class="col-date">
+            <col class="col-zone">
+            <col class="col-date">
+            <col class="col-lead">
+            <col class="col-pct">
+            <col class="col-stage">
+            <col class="col-del no-print">
+          </colgroup>
           <thead>
             <tr>
               <th rowspan="2" class="col-no" style="text-align:center;">#</th>
@@ -945,7 +973,7 @@
               <th rowspan="2" class="col-lead" style="text-align:center;">Lead Time</th>
               <th rowspan="2" class="col-pct" style="text-align:center;">% ก้าวหน้า</th>
               <th rowspan="2" class="col-stage" style="text-align:center;">ขั้นตอนปัจจุบัน</th>
-              <th rowspan="2" style="width: 40px; text-align:center;" class="no-print">ลบ</th>
+              <th rowspan="2" class="col-del no-print" style="text-align:center;">ลบ</th>
             </tr>
             <tr>
               <th class="col-date" style="font-size:11px; text-align:center;">เริ่ม</th>
@@ -1276,8 +1304,8 @@
 
         const tr = document.createElement('tr');
         tr.innerHTML = `
-          <td style="text-align:center;">${idx + 1}</td>
-          <td>
+          <td class="col-no" style="text-align:center;">${idx + 1}</td>
+          <td class="col-item">
             <div class="input-with-mic no-print">
               <textarea rows="2" id="item_input_${idx}" class="item-input tbl-textarea" 
                      placeholder="ระบุรายการวัสดุ/อุปกรณ์..." onchange="updateItem(${idx}, 'item', this.value)">${escapeHtml(item.item)}</textarea>
@@ -1285,7 +1313,7 @@
             </div>
             <div class="print-val">${escapeHtml(item.item)}</div>
           </td>
-          <td>
+          <td class="col-cat">
             <select class="cat-select no-print" style="height:44px;" onchange="updateItem(${idx}, 'cat', this.value)">
               <option value="Structure" ${item.cat === 'Structure' ? 'selected' : ''}>1. โครงสร้าง</option>
               <option value="Architecture" ${item.cat === 'Architecture' ? 'selected' : ''}>2. สถาปัตย์</option>
@@ -1300,70 +1328,70 @@
             </select>
             <div class="print-val">${escapeHtml(catMap[item.cat] || item.cat)}</div>
           </td>
-          <td>
+          <td class="col-vendor">
             <textarea rows="2" class="vendor-input tbl-textarea no-print" placeholder="ซัพพลายเออร์..." onchange="updateItem(${idx}, 'vendor', this.value)">${escapeHtml(item.vendor)}</textarea>
             <div class="print-val">${escapeHtml(item.vendor)}</div>
           </td>
 
           <!-- Stage 1 -->
-          <td>
+          <td class="col-date">
             <input type="date" class="date-input no-print" value="${item.s1_start}" onchange="updateItem(${idx}, 's1_start', this.value)">
             <div class="print-val text-center">${fmtDate(item.s1_start)}</div>
           </td>
-          <td>
+          <td class="col-date">
             <input type="date" class="date-input no-print" value="${item.s1_end}" onchange="updateItem(${idx}, 's1_end', this.value)">
             <div class="print-val text-center">${fmtDate(item.s1_end)}</div>
           </td>
 
           <!-- Stage 2 -->
-          <td>
+          <td class="col-date">
             <input type="date" class="date-input no-print" value="${item.s2_start}" onchange="updateItem(${idx}, 's2_start', this.value)">
             <div class="print-val text-center">${fmtDate(item.s2_start)}</div>
           </td>
-          <td>
+          <td class="col-date">
             <input type="date" class="date-input no-print" value="${item.s2_end}" onchange="updateItem(${idx}, 's2_end', this.value)">
             <div class="print-val text-center">${fmtDate(item.s2_end)}</div>
           </td>
 
           <!-- Stage 3 -->
-          <td>
+          <td class="col-date">
             <input type="date" class="date-input no-print" value="${item.s3_start}" onchange="updateItem(${idx}, 's3_start', this.value)">
             <div class="print-val text-center">${fmtDate(item.s3_start)}</div>
           </td>
-          <td>
+          <td class="col-date">
             <input type="date" class="date-input no-print" value="${item.s3_end}" onchange="updateItem(${idx}, 's3_end', this.value)">
             <div class="print-val text-center">${fmtDate(item.s3_end)}</div>
           </td>
 
           <!-- Stage 4 -->
-          <td>
+          <td class="col-date">
             <input type="date" class="date-input no-print" value="${item.s4_start}" onchange="updateItem(${idx}, 's4_start', this.value)">
             <div class="print-val text-center">${fmtDate(item.s4_start)}</div>
           </td>
-          <td>
+          <td class="col-date">
             <input type="date" class="date-input no-print" value="${item.s4_end}" onchange="updateItem(${idx}, 's4_end', this.value)">
             <div class="print-val text-center">${fmtDate(item.s4_end)}</div>
           </td>
 
           <!-- Stage 5 -->
-          <td>
+          <td class="col-zone">
             <textarea rows="2" class="zone-input tbl-textarea no-print" placeholder="จุดลงของ..." onchange="updateItem(${idx}, 's5_zone', this.value)">${escapeHtml(item.s5_zone)}</textarea>
             <div class="print-val">${escapeHtml(item.s5_zone)}</div>
           </td>
-          <td>
+          <td class="col-date">
             <input type="date" class="date-input no-print" value="${item.s5_date}" onchange="updateItem(${idx}, 's5_date', this.value)">
             <div class="print-val text-center">${fmtDate(item.s5_date)}</div>
           </td>
 
           <!-- Metrics -->
-          <td style="text-align:center; font-weight:500;" class="lead-cell">${leadTimeDays}</td>
-          <td style="text-align:center;">
+          <td class="col-lead" style="text-align:center; font-weight:600;">${leadTimeDays}</td>
+          <td class="col-pct" style="text-align:center;">
             <div class="no-print"><input type="number" min="0" max="100" class="pct-input" value="${item.pct}" onchange="updateItem(${idx}, 'pct', this.value)"><span class="pct-sign">%</span></div>
             <div class="print-val text-center font-bold">${item.pct}%</div>
           </td>
 
           <!-- Pipeline & Stage Select -->
-          <td style="text-align:center;">
+          <td class="col-stage" style="text-align:center;">
             <div class="no-print" style="display:flex; flex-direction:column; align-items:center; gap:2px;">
               <select class="stage-select" onchange="updateItem(${idx}, 'stage', this.value)">
                 <option value="1" ${item.stage == 1 ? 'selected' : ''}>1. สั่งซื้อ / PO</option>
@@ -1383,9 +1411,10 @@
             <div class="print-val text-center font-bold">${escapeHtml(stageMap[item.stage] || item.stage)}</div>
           </td>
 
-          <td style="text-align:center;" class="no-print">
+          <td class="col-del no-print" style="text-align:center;">
             <button class="btn-action-icon" onclick="deleteItemRow(${idx})" title="ลบรายการ">🗑️</button>
           </td>
+        `;
         `;
         tbody.appendChild(tr);
       });
