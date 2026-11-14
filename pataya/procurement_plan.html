@@ -556,6 +556,47 @@
     }
     .print-val { display: none; }
 
+    /* 40% Color Shades for 5 Stages (Screen & Print) */
+    .s1-active { background: rgba(59, 130, 246, 0.38) !important; }
+    .s2-active { background: rgba(139, 92, 246, 0.38) !important; }
+    .s3-active { background: rgba(245, 158, 11, 0.38) !important; }
+    .s4-active { background: rgba(0, 173, 242, 0.38) !important; }
+    .s5-active { background: rgba(16, 185, 129, 0.38) !important; }
+
+    .s1-active .date-btn { background: rgba(30, 64, 175, 0.8) !important; border-color: #60a5fa !important; font-weight: 500; }
+    .s2-active .date-btn { background: rgba(109, 40, 217, 0.8) !important; border-color: #c084fc !important; font-weight: 500; }
+    .s3-active .date-btn { background: rgba(180, 83, 9, 0.8) !important; border-color: #fcd34d !important; font-weight: 500; }
+    .s4-active .date-btn { background: rgba(3, 105, 161, 0.8) !important; border-color: #38bdf8 !important; font-weight: 500; }
+    .s5-active .date-btn { background: rgba(4, 120, 87, 0.8) !important; border-color: #34d399 !important; font-weight: 500; }
+
+    .s1-active .stage-select { background: rgba(30, 64, 175, 0.9) !important; border-color: #60a5fa !important; color: #ffffff !important; }
+    .s2-active .stage-select { background: rgba(109, 40, 217, 0.9) !important; border-color: #c084fc !important; color: #ffffff !important; }
+    .s3-active .stage-select { background: rgba(180, 83, 9, 0.9) !important; border-color: #fcd34d !important; color: #ffffff !important; }
+    .s4-active .stage-select { background: rgba(3, 105, 161, 0.9) !important; border-color: #38bdf8 !important; color: #ffffff !important; }
+    .s5-active .stage-select { background: rgba(4, 120, 87, 0.9) !important; border-color: #34d399 !important; color: #ffffff !important; }
+    .s5-active .zone-input { background: rgba(4, 120, 87, 0.45) !important; border-color: #34d399 !important; }
+
+    .data-table th.col-s1 { background: rgba(59, 130, 246, 0.40) !important; color: #93c5fd !important; border-bottom: 2px solid #3b82f6 !important; }
+    .data-table th.col-s2 { background: rgba(139, 92, 246, 0.40) !important; color: #d8b4fe !important; border-bottom: 2px solid #8b5cf6 !important; }
+    .data-table th.col-s3 { background: rgba(245, 158, 11, 0.40) !important; color: #fde047 !important; border-bottom: 2px solid #f59e0b !important; }
+    .data-table th.col-s4 { background: rgba(0, 173, 242, 0.40) !important; color: #7dd3fc !important; border-bottom: 2px solid #00adf2 !important; }
+    .data-table th.col-s5 { background: rgba(16, 185, 129, 0.40) !important; color: #86efac !important; border-bottom: 2px solid #10b981 !important; }
+
+    .legend-chip {
+      display: inline-flex;
+      align-items: center;
+      padding: 3px 8px;
+      border-radius: 4px;
+      font-size: 11px;
+      font-weight: 400;
+      white-space: nowrap;
+    }
+    .legend-chip.s1 { background: rgba(59, 130, 246, 0.38); color: #93c5fd; border: 1px solid #3b82f6; }
+    .legend-chip.s2 { background: rgba(139, 92, 246, 0.38); color: #d8b4fe; border: 1px solid #8b5cf6; }
+    .legend-chip.s3 { background: rgba(245, 158, 11, 0.38); color: #fde047; border: 1px solid #f59e0b; }
+    .legend-chip.s4 { background: rgba(0, 173, 242, 0.38); color: #7dd3fc; border: 1px solid #00adf2; }
+    .legend-chip.s5 { background: rgba(16, 185, 129, 0.38); color: #86efac; border: 1px solid #10b981; }
+
     .data-table textarea.tbl-textarea {
       min-height: 44px;
       height: 44px;
@@ -779,6 +820,19 @@
         font-weight: 700 !important;
       }
 
+      /* 40% Pastel Shades for Print Mode */
+      .s1-active { background: #dbeafe !important; -webkit-print-color-adjust: exact !important; print-color-adjust: exact !important; }
+      .s2-active { background: #f3e8ff !important; -webkit-print-color-adjust: exact !important; print-color-adjust: exact !important; }
+      .s3-active { background: #fef3c7 !important; -webkit-print-color-adjust: exact !important; print-color-adjust: exact !important; }
+      .s4-active { background: #cffafe !important; -webkit-print-color-adjust: exact !important; print-color-adjust: exact !important; }
+      .s5-active { background: #dcfce7 !important; -webkit-print-color-adjust: exact !important; print-color-adjust: exact !important; }
+
+      .data-table th.col-s1 { background: #bfdbfe !important; -webkit-print-color-adjust: exact !important; print-color-adjust: exact !important; }
+      .data-table th.col-s2 { background: #e9d5ff !important; -webkit-print-color-adjust: exact !important; print-color-adjust: exact !important; }
+      .data-table th.col-s3 { background: #fde68a !important; -webkit-print-color-adjust: exact !important; print-color-adjust: exact !important; }
+      .data-table th.col-s4 { background: #a5f3fc !important; -webkit-print-color-adjust: exact !important; print-color-adjust: exact !important; }
+      .data-table th.col-s5 { background: #bbf7d0 !important; -webkit-print-color-adjust: exact !important; print-color-adjust: exact !important; }
+
       .no-print {
         display: none !important;
       }
@@ -996,6 +1050,16 @@
           <option value="4">ช่วง 4: กำลังขนส่ง (In Transit)</option>
           <option value="5">ช่วง 5: จัดลงพื้นที่หน้างานแล้ว</option>
         </select>
+      </div>
+
+      <!-- Stage Legend Bar (40% Color Shades) -->
+      <div style="display:flex; flex-wrap:wrap; align-items:center; gap:8px; margin-bottom:8px; padding:6px 12px; background:rgba(15,23,42,0.6); border:1px solid var(--border-subtle); border-radius:6px;" class="no-print">
+        <span style="font-size:11.5px; color:#94a3b8; font-weight:500;">🎨 เฉดสี 40% แสดงสถานะ 5 ช่วงเวลา:</span>
+        <span class="legend-chip s1">ช่วง 1: สั่งซื้อ / PO (40%)</span>
+        <span class="legend-chip s2">ช่วง 2: ทำสัญญา / มัดจำ (40%)</span>
+        <span class="legend-chip s3">ช่วง 3: สั่งผลิต Factory (40%)</span>
+        <span class="legend-chip s4">ช่วง 4: กำลังขนส่ง Logistics (40%)</span>
+        <span class="legend-chip s5">ช่วง 5: จัดลงพื้นที่ / ของมาส่ง (40%)</span>
       </div>
 
       <div class="table-container">
@@ -1426,14 +1490,14 @@
           </td>
 
           <!-- Stage 1 -->
-          <td class="col-date">
+          <td class="col-date ${item.stage >= 1 ? 's1-active' : ''}">
             <div class="date-cell-wrap no-print">
               <input type="date" id="date_${idx}_s1_start" class="date-hidden-native" value="${item.s1_start}" onchange="updateItem(${idx}, 's1_start', this.value)">
               <button type="button" class="date-btn" onclick="openDatePicker('date_${idx}_s1_start')">${fmtDate(item.s1_start)}</button>
             </div>
             <div class="print-val text-center">${fmtDate(item.s1_start)}</div>
           </td>
-          <td class="col-date">
+          <td class="col-date ${item.stage >= 1 ? 's1-active' : ''}">
             <div class="date-cell-wrap no-print">
               <input type="date" id="date_${idx}_s1_end" class="date-hidden-native" value="${item.s1_end}" onchange="updateItem(${idx}, 's1_end', this.value)">
               <button type="button" class="date-btn" onclick="openDatePicker('date_${idx}_s1_end')">${fmtDate(item.s1_end)}</button>
@@ -1442,14 +1506,14 @@
           </td>
 
           <!-- Stage 2 -->
-          <td class="col-date">
+          <td class="col-date ${item.stage >= 2 ? 's2-active' : ''}">
             <div class="date-cell-wrap no-print">
               <input type="date" id="date_${idx}_s2_start" class="date-hidden-native" value="${item.s2_start}" onchange="updateItem(${idx}, 's2_start', this.value)">
               <button type="button" class="date-btn" onclick="openDatePicker('date_${idx}_s2_start')">${fmtDate(item.s2_start)}</button>
             </div>
             <div class="print-val text-center">${fmtDate(item.s2_start)}</div>
           </td>
-          <td class="col-date">
+          <td class="col-date ${item.stage >= 2 ? 's2-active' : ''}">
             <div class="date-cell-wrap no-print">
               <input type="date" id="date_${idx}_s2_end" class="date-hidden-native" value="${item.s2_end}" onchange="updateItem(${idx}, 's2_end', this.value)">
               <button type="button" class="date-btn" onclick="openDatePicker('date_${idx}_s2_end')">${fmtDate(item.s2_end)}</button>
@@ -1458,14 +1522,14 @@
           </td>
 
           <!-- Stage 3 -->
-          <td class="col-date">
+          <td class="col-date ${item.stage >= 3 ? 's3-active' : ''}">
             <div class="date-cell-wrap no-print">
               <input type="date" id="date_${idx}_s3_start" class="date-hidden-native" value="${item.s3_start}" onchange="updateItem(${idx}, 's3_start', this.value)">
               <button type="button" class="date-btn" onclick="openDatePicker('date_${idx}_s3_start')">${fmtDate(item.s3_start)}</button>
             </div>
             <div class="print-val text-center">${fmtDate(item.s3_start)}</div>
           </td>
-          <td class="col-date">
+          <td class="col-date ${item.stage >= 3 ? 's3-active' : ''}">
             <div class="date-cell-wrap no-print">
               <input type="date" id="date_${idx}_s3_end" class="date-hidden-native" value="${item.s3_end}" onchange="updateItem(${idx}, 's3_end', this.value)">
               <button type="button" class="date-btn" onclick="openDatePicker('date_${idx}_s3_end')">${fmtDate(item.s3_end)}</button>
@@ -1474,14 +1538,14 @@
           </td>
 
           <!-- Stage 4 -->
-          <td class="col-date">
+          <td class="col-date ${item.stage >= 4 ? 's4-active' : ''}">
             <div class="date-cell-wrap no-print">
               <input type="date" id="date_${idx}_s4_start" class="date-hidden-native" value="${item.s4_start}" onchange="updateItem(${idx}, 's4_start', this.value)">
               <button type="button" class="date-btn" onclick="openDatePicker('date_${idx}_s4_start')">${fmtDate(item.s4_start)}</button>
             </div>
             <div class="print-val text-center">${fmtDate(item.s4_start)}</div>
           </td>
-          <td class="col-date">
+          <td class="col-date ${item.stage >= 4 ? 's4-active' : ''}">
             <div class="date-cell-wrap no-print">
               <input type="date" id="date_${idx}_s4_end" class="date-hidden-native" value="${item.s4_end}" onchange="updateItem(${idx}, 's4_end', this.value)">
               <button type="button" class="date-btn" onclick="openDatePicker('date_${idx}_s4_end')">${fmtDate(item.s4_end)}</button>
@@ -1490,11 +1554,11 @@
           </td>
 
           <!-- Stage 5 -->
-          <td class="col-zone">
+          <td class="col-zone ${item.stage >= 5 ? 's5-active' : ''}">
             <textarea rows="2" class="zone-input tbl-textarea no-print" placeholder="จุดลงของ..." onchange="updateItem(${idx}, 's5_zone', this.value)">${escapeHtml(item.s5_zone)}</textarea>
             <div class="print-val">${escapeHtml(item.s5_zone)}</div>
           </td>
-          <td class="col-date">
+          <td class="col-date ${item.stage >= 5 ? 's5-active' : ''}">
             <div class="date-cell-wrap no-print">
               <input type="date" id="date_${idx}_s5_date" class="date-hidden-native" value="${item.s5_date}" onchange="updateItem(${idx}, 's5_date', this.value)">
               <button type="button" class="date-btn" onclick="openDatePicker('date_${idx}_s5_date')">${fmtDate(item.s5_date)}</button>
@@ -1510,7 +1574,7 @@
           </td>
 
           <!-- Pipeline & Stage Select -->
-          <td class="col-stage" style="text-align:center;">
+          <td class="col-stage s${item.stage}-active" style="text-align:center;">
             <div class="no-print" style="display:flex; flex-direction:column; align-items:center; gap:2px;">
               <select class="stage-select" onchange="updateItem(${idx}, 'stage', this.value)">
                 <option value="1" ${item.stage == 1 ? 'selected' : ''}>1. สั่งซื้อ / PO</option>
