@@ -500,24 +500,60 @@
       transform: translateY(0);
     }
 
-    .col-no { width: 35px; min-width: 35px; text-align: center; }
-    .col-item { min-width: 200px; }
-    .col-cat { width: 125px; min-width: 120px; }
-    .col-vendor { min-width: 160px; }
-    .col-date { width: 105px; min-width: 95px; text-align: center; }
-    .col-zone { min-width: 160px; }
-    .col-lead { width: 75px; min-width: 70px; text-align: center; }
-    .col-pct { width: 65px; min-width: 60px; text-align: center; }
-    .col-stage { width: 135px; min-width: 125px; text-align: center; }
-    .col-del { width: 40px; min-width: 40px; text-align: center; }
+    .col-no { width: 30px; min-width: 28px; text-align: center; }
+    .col-item { min-width: 150px; }
+    .col-cat { width: 105px; min-width: 95px; }
+    .col-vendor { min-width: 120px; }
+    .col-date { width: 64px; min-width: 60px; text-align: center; padding: 4px 2px !important; }
+    .col-zone { min-width: 120px; }
+    .col-lead { width: 60px; min-width: 55px; text-align: center; }
+    .col-pct { width: 52px; min-width: 48px; text-align: center; }
+    .col-stage { width: 110px; min-width: 100px; text-align: center; }
+    .col-del { width: 35px; min-width: 35px; text-align: center; }
 
-    .item-input { width: 100%; min-width: 180px; }
-    .cat-select { width: 100%; }
-    .vendor-input { width: 100%; min-width: 140px; }
-    .date-input { width: 100%; min-width: 90px; text-align: center; font-size: 11px; padding: 2px 3px; }
-    .zone-input { width: 100%; min-width: 140px; }
-    .pct-input { width: 55px; text-align: center; }
-    .stage-select { width: 100%; }
+    .item-input { width: 100%; min-width: 140px; }
+    .cat-select { width: 100%; font-size: 11.5px; }
+    .vendor-input { width: 100%; min-width: 110px; }
+    .zone-input { width: 100%; min-width: 110px; }
+    .pct-input { width: 44px; text-align: center; }
+    .stage-select { width: 100%; font-size: 11px; }
+
+    /* Compact Date Cell */
+    .date-cell-wrap {
+      position: relative;
+      display: inline-flex;
+      justify-content: center;
+      align-items: center;
+      width: 100%;
+    }
+    .date-hidden-native {
+      position: absolute;
+      opacity: 0;
+      width: 0;
+      height: 0;
+      pointer-events: none;
+    }
+    .date-btn {
+      background: rgba(13, 26, 56, 0.9);
+      border: 1px solid rgba(0, 173, 242, 0.45);
+      color: #ffffff;
+      border-radius: 4px;
+      padding: 3px 2px;
+      font-family: 'Kanit', sans-serif;
+      font-size: 11px;
+      font-weight: 300;
+      width: 58px;
+      text-align: center;
+      cursor: pointer;
+      transition: all 0.15s ease;
+      white-space: nowrap;
+      letter-spacing: -0.2px;
+      display: inline-block;
+    }
+    .date-btn:hover {
+      border-color: var(--cyan);
+      background: rgba(0, 173, 242, 0.25);
+    }
     .print-val { display: none; }
 
     .data-table textarea.tbl-textarea {
@@ -1391,41 +1427,65 @@
 
           <!-- Stage 1 -->
           <td class="col-date">
-            <input type="date" class="date-input no-print" value="${item.s1_start}" onchange="updateItem(${idx}, 's1_start', this.value)">
+            <div class="date-cell-wrap no-print">
+              <input type="date" id="date_${idx}_s1_start" class="date-hidden-native" value="${item.s1_start}" onchange="updateItem(${idx}, 's1_start', this.value)">
+              <button type="button" class="date-btn" onclick="openDatePicker('date_${idx}_s1_start')">${fmtDate(item.s1_start)}</button>
+            </div>
             <div class="print-val text-center">${fmtDate(item.s1_start)}</div>
           </td>
           <td class="col-date">
-            <input type="date" class="date-input no-print" value="${item.s1_end}" onchange="updateItem(${idx}, 's1_end', this.value)">
+            <div class="date-cell-wrap no-print">
+              <input type="date" id="date_${idx}_s1_end" class="date-hidden-native" value="${item.s1_end}" onchange="updateItem(${idx}, 's1_end', this.value)">
+              <button type="button" class="date-btn" onclick="openDatePicker('date_${idx}_s1_end')">${fmtDate(item.s1_end)}</button>
+            </div>
             <div class="print-val text-center">${fmtDate(item.s1_end)}</div>
           </td>
 
           <!-- Stage 2 -->
           <td class="col-date">
-            <input type="date" class="date-input no-print" value="${item.s2_start}" onchange="updateItem(${idx}, 's2_start', this.value)">
+            <div class="date-cell-wrap no-print">
+              <input type="date" id="date_${idx}_s2_start" class="date-hidden-native" value="${item.s2_start}" onchange="updateItem(${idx}, 's2_start', this.value)">
+              <button type="button" class="date-btn" onclick="openDatePicker('date_${idx}_s2_start')">${fmtDate(item.s2_start)}</button>
+            </div>
             <div class="print-val text-center">${fmtDate(item.s2_start)}</div>
           </td>
           <td class="col-date">
-            <input type="date" class="date-input no-print" value="${item.s2_end}" onchange="updateItem(${idx}, 's2_end', this.value)">
+            <div class="date-cell-wrap no-print">
+              <input type="date" id="date_${idx}_s2_end" class="date-hidden-native" value="${item.s2_end}" onchange="updateItem(${idx}, 's2_end', this.value)">
+              <button type="button" class="date-btn" onclick="openDatePicker('date_${idx}_s2_end')">${fmtDate(item.s2_end)}</button>
+            </div>
             <div class="print-val text-center">${fmtDate(item.s2_end)}</div>
           </td>
 
           <!-- Stage 3 -->
           <td class="col-date">
-            <input type="date" class="date-input no-print" value="${item.s3_start}" onchange="updateItem(${idx}, 's3_start', this.value)">
+            <div class="date-cell-wrap no-print">
+              <input type="date" id="date_${idx}_s3_start" class="date-hidden-native" value="${item.s3_start}" onchange="updateItem(${idx}, 's3_start', this.value)">
+              <button type="button" class="date-btn" onclick="openDatePicker('date_${idx}_s3_start')">${fmtDate(item.s3_start)}</button>
+            </div>
             <div class="print-val text-center">${fmtDate(item.s3_start)}</div>
           </td>
           <td class="col-date">
-            <input type="date" class="date-input no-print" value="${item.s3_end}" onchange="updateItem(${idx}, 's3_end', this.value)">
+            <div class="date-cell-wrap no-print">
+              <input type="date" id="date_${idx}_s3_end" class="date-hidden-native" value="${item.s3_end}" onchange="updateItem(${idx}, 's3_end', this.value)">
+              <button type="button" class="date-btn" onclick="openDatePicker('date_${idx}_s3_end')">${fmtDate(item.s3_end)}</button>
+            </div>
             <div class="print-val text-center">${fmtDate(item.s3_end)}</div>
           </td>
 
           <!-- Stage 4 -->
           <td class="col-date">
-            <input type="date" class="date-input no-print" value="${item.s4_start}" onchange="updateItem(${idx}, 's4_start', this.value)">
+            <div class="date-cell-wrap no-print">
+              <input type="date" id="date_${idx}_s4_start" class="date-hidden-native" value="${item.s4_start}" onchange="updateItem(${idx}, 's4_start', this.value)">
+              <button type="button" class="date-btn" onclick="openDatePicker('date_${idx}_s4_start')">${fmtDate(item.s4_start)}</button>
+            </div>
             <div class="print-val text-center">${fmtDate(item.s4_start)}</div>
           </td>
           <td class="col-date">
-            <input type="date" class="date-input no-print" value="${item.s4_end}" onchange="updateItem(${idx}, 's4_end', this.value)">
+            <div class="date-cell-wrap no-print">
+              <input type="date" id="date_${idx}_s4_end" class="date-hidden-native" value="${item.s4_end}" onchange="updateItem(${idx}, 's4_end', this.value)">
+              <button type="button" class="date-btn" onclick="openDatePicker('date_${idx}_s4_end')">${fmtDate(item.s4_end)}</button>
+            </div>
             <div class="print-val text-center">${fmtDate(item.s4_end)}</div>
           </td>
 
@@ -1435,7 +1495,10 @@
             <div class="print-val">${escapeHtml(item.s5_zone)}</div>
           </td>
           <td class="col-date">
-            <input type="date" class="date-input no-print" value="${item.s5_date}" onchange="updateItem(${idx}, 's5_date', this.value)">
+            <div class="date-cell-wrap no-print">
+              <input type="date" id="date_${idx}_s5_date" class="date-hidden-native" value="${item.s5_date}" onchange="updateItem(${idx}, 's5_date', this.value)">
+              <button type="button" class="date-btn" onclick="openDatePicker('date_${idx}_s5_date')">${fmtDate(item.s5_date)}</button>
+            </div>
             <div class="print-val text-center">${fmtDate(item.s5_date)}</div>
           </td>
 
@@ -1542,6 +1605,20 @@
       document.getElementById('kpiManufacturingItems').innerHTML = `${mfg} <span style="font-size:14px; font-weight:300;">รายการ</span>`;
       document.getElementById('kpiTransitItems').innerHTML = `${transit} <span style="font-size:14px; font-weight:300;">รายการ</span>`;
       document.getElementById('kpiStagedItems').innerHTML = `${staged} <span style="font-size:14px; font-weight:300;">รายการ</span>`;
+    }
+
+    function openDatePicker(id) {
+      const el = document.getElementById(id);
+      if (el) {
+        if (typeof el.showPicker === 'function') {
+          try {
+            el.showPicker();
+            return;
+          } catch(e) {}
+        }
+        el.focus();
+        el.click();
+      }
     }
 
     function showToast(msg) {
