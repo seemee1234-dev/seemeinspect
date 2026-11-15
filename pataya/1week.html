@@ -432,7 +432,7 @@
     .th-status { min-width: 95px; }
     .th-pct { width: 55px; min-width: 50px; }
     .th-note { min-width: 140px; }
-    .cat-print-text {
+    .cat-print-text, .name-print-text, .note-print-text {
       display: none;
     }
     /* Compact Date Cell (Short /26 Format) */
@@ -695,15 +695,15 @@
         font-weight: 700 !important;
         font-size: 12px !important;
       }
-      .th-no { width: 22px !important; min-width: 22px !important; text-align: center !important; }
-      .th-cat, .col-category { width: 105px !important; min-width: 105px !important; }
-      .th-name { width: 165px !important; min-width: 0 !important; }
-      .th-shift { width: 88px !important; min-width: 88px !important; max-width: 88px !important; text-align: center !important; }
-      .th-craft { width: 46px !important; min-width: 46px !important; max-width: 46px !important; text-align: center !important; white-space: nowrap !important; }
-      .th-start { width: 70px !important; min-width: 70px !important; text-align: center !important; }
-      .th-end { width: 70px !important; min-width: 70px !important; text-align: center !important; }
-      .th-status { width: 70px !important; min-width: 70px !important; text-align: center !important; }
-      .th-pct { width: 30px !important; min-width: 30px !important; text-align: center !important; }
+            .th-no { width: 22px !important; min-width: 22px !important; text-align: center !important; }
+      .th-cat, .col-category { width: 100px !important; min-width: 100px !important; }
+      .th-name, .col-name { width: 160px !important; min-width: 160px !important; }
+      .th-shift, .col-shift { width: 78px !important; min-width: 78px !important; text-align: center !important; }
+      .th-craft, .col-craft { width: 44px !important; min-width: 44px !important; text-align: center !important; white-space: nowrap !important; }
+      .th-start, .col-start { width: 58px !important; min-width: 58px !important; text-align: center !important; }
+      .th-end, .col-end { width: 58px !important; min-width: 58px !important; text-align: center !important; }
+      .th-status, .col-status { width: 68px !important; min-width: 68px !important; text-align: center !important; }
+      .th-pct, .col-pct { width: 32px !important; min-width: 32px !important; text-align: center !important; }
       .week-table th.day-th, 
       .week-table td.day-td {
         width: 42px !important;
@@ -711,11 +711,12 @@
         padding: 2px 1px !important;
         text-align: center !important;
       }
-      .th-note { width: 85px !important; min-width: 85px !important; }
+      .th-note, .col-note { 
+        width: 135px !important; 
+        min-width: 135px !important; 
+      }
 
-      
-      
-      .screen-val {
+      .screen-val, .no-print {
         display: none !important;
       }
       .th-sub {
@@ -725,22 +726,12 @@
         display: block !important;
         color: #333333 !important;
       }
-      .print-val {
-        display: block !important;
-        color: #000000 !important;
-        -webkit-text-fill-color: #000000 !important;
-        line-height: 1.25 !important;
-      }
-      .print-val.text-center {
-        text-align: center !important;
-      }
-      .print-val.font-bold {
-        font-weight: 700 !important;
-      }
 
       .date-cell-wrap, .date-btn, .date-hidden-native {
         display: none !important;
       }
+
+      /* Compact single-line values for numeric & code columns */
       .print-val {
         display: block !important;
         font-size: 11px !important;
@@ -750,26 +741,6 @@
         text-align: center !important;
         white-space: nowrap !important;
         letter-spacing: -0.2px !important;
-        line-height: 1.2 !important;
-      }
-
-      .cat-screen-box,
-      .col-category 
-      
-      .screen-val {
-        display: none !important;
-      }
-      .th-sub {
-        font-size: 9.5px !important;
-        font-weight: 500 !important;
-        white-space: nowrap !important;
-        display: block !important;
-        color: #333333 !important;
-      }
-      .print-val {
-        display: block !important;
-        color: #000000 !important;
-        -webkit-text-fill-color: #000000 !important;
         line-height: 1.25 !important;
       }
       .print-val.text-center {
@@ -779,21 +750,7 @@
         font-weight: 700 !important;
       }
 
-      .date-cell-wrap, .date-btn, .date-hidden-native {
-        display: none !important;
-      }
-      .print-val {
-        display: block !important;
-        font-size: 11px !important;
-        font-weight: 600 !important;
-        color: #000000 !important;
-        -webkit-text-fill-color: #000000 !important;
-        text-align: center !important;
-        white-space: nowrap !important;
-        letter-spacing: -0.2px !important;
-        line-height: 1.2 !important;
-      }
-
+      /* Category Print Text */
       .cat-screen-box,
       .col-category .input-with-mic,
       .col-category input,
@@ -808,7 +765,7 @@
       .cat-print-text {
         display: block !important;
         visibility: visible !important;
-        font-size: 12px !important;
+        font-size: 11.5px !important;
         font-weight: 600 !important;
         color: #000000 !important;
         background: transparent !important;
@@ -822,7 +779,41 @@
         margin: 0 !important;
       }
 
-      .input-with-mic:not(.cat-screen-box) {
+      /* Task Name Print Text */
+      .name-screen-box {
+        display: none !important;
+      }
+      .name-print-text {
+        display: block !important;
+        visibility: visible !important;
+        font-size: 11.5px !important;
+        font-weight: 600 !important;
+        color: #000000 !important;
+        text-align: left !important;
+        white-space: normal !important;
+        word-break: break-word !important;
+        line-height: 1.25 !important;
+        padding: 0 !important;
+        margin: 0 !important;
+      }
+
+      /* Remarks / Obstacles Print Text - 100% Complete & Word-Wrapped */
+      .note-print-text {
+        display: block !important;
+        visibility: visible !important;
+        font-size: 10.5px !important;
+        font-weight: 500 !important;
+        color: #000000 !important;
+        text-align: left !important;
+        white-space: normal !important;
+        word-break: break-word !important;
+        overflow-wrap: break-word !important;
+        line-height: 1.3 !important;
+        padding: 1px 0 !important;
+        margin: 0 !important;
+      }
+
+.input-with-mic:not(.cat-screen-box) {
         display: block !important;
         position: static !important;
         width: 100% !important;
@@ -1585,8 +1576,9 @@
               <button type="button" class="btn-input-mic no-print" onclick="toggleVoice('cat_input_${tIdx}', ${tIdx}, 'category', this)" title="แตะเพื่อพูดสั่งข้อความด้วยเสียง">🎙️</button>
             </div>
           </td>
-          <td>
-            <div class="input-with-mic">
+          <td class="col-name">
+            <span class="name-print-text" id="name_print_${tIdx}">${escapeHtml(t.name)}</span>
+            <div class="input-with-mic name-screen-box no-print">
               <textarea rows="2" class="tbl-input-text tbl-textarea" id="name_input_${tIdx}" style="font-weight:400; color:#ffffff; min-height:44px; line-height:1.35; resize:vertical; display:block; width:100%; font-size:14px;" 
                      placeholder="ระบุหัวข้องาน..." 
                      onchange="updateTaskField(${tIdx}, 'name', this.value)">${escapeHtml(t.name)}</textarea>
@@ -1643,13 +1635,13 @@
             <div class="print-val text-center font-bold" style="font-size:12px;">${t.progress}%</div>
           </td>
           ${ganttCells}
-          <td>
+          <td class="col-note">
             <div class="screen-val no-print">
               <textarea rows="2" class="tbl-input-text tbl-textarea" style="font-size:13px; color:var(--text-muted); min-height:44px; line-height:1.35; resize:vertical; display:block; width:100%;" 
                      placeholder="บันทึกหน้างาน..." 
                      onchange="updateTaskField(${tIdx}, 'remarks', this.value)">${escapeHtml(t.remarks || '')}</textarea>
             </div>
-            <div class="print-val" style="font-size:10.5px; font-weight:400; line-height:1.2;">${escapeHtml(t.remarks || '-')}</div>
+            <div class="note-print-text" id="note_print_${tIdx}">${escapeHtml(t.remarks || '-')}</div>
           </td>
           <td class="no-print" style="text-align:center;">
             <button class="del-btn" onclick="deleteTaskRow(${tIdx})" title="ลบงานนี้">✕</button>
@@ -1669,6 +1661,14 @@
       if (field === 'category') {
         const printEl = document.getElementById(`cat_print_${idx}`);
         if (printEl) printEl.textContent = value;
+      }
+      if (field === 'name') {
+        const printEl = document.getElementById(`name_print_${idx}`);
+        if (printEl) printEl.textContent = value;
+      }
+      if (field === 'remarks') {
+        const printEl = document.getElementById(`note_print_${idx}`);
+        if (printEl) printEl.textContent = value || '-';
       }
       if (field === 'startDate' || field === 'finishDate' || field === 'status' || field === 'progress') {
         renderTableBody();
