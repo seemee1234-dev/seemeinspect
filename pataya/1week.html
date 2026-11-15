@@ -473,6 +473,18 @@
     }
     .print-val { display: none; }
 
+    
+    .th-sub {
+      font-size: 10.5px;
+      font-weight: 400;
+      white-space: nowrap !important;
+      display: block;
+      opacity: 0.9;
+      line-height: 1.1;
+      margin-top: 1px;
+    }
+    .screen-val { display: block; width: 100%; }
+
     .cat-screen-box {
       display: block;
       width: 100%;
@@ -686,8 +698,8 @@
       .th-no { width: 22px !important; min-width: 22px !important; text-align: center !important; }
       .th-cat, .col-category { width: 105px !important; min-width: 105px !important; }
       .th-name { width: 165px !important; min-width: 0 !important; }
-      .th-shift { width: 75px !important; min-width: 75px !important; }
-      .th-craft { width: 30px !important; min-width: 30px !important; text-align: center !important; }
+      .th-shift { width: 88px !important; min-width: 88px !important; max-width: 88px !important; text-align: center !important; }
+      .th-craft { width: 46px !important; min-width: 46px !important; max-width: 46px !important; text-align: center !important; white-space: nowrap !important; }
       .th-start { width: 70px !important; min-width: 70px !important; text-align: center !important; }
       .th-end { width: 70px !important; min-width: 70px !important; text-align: center !important; }
       .th-status { width: 70px !important; min-width: 70px !important; text-align: center !important; }
@@ -702,6 +714,30 @@
       .th-note { width: 85px !important; min-width: 85px !important; }
 
       
+      
+      .screen-val {
+        display: none !important;
+      }
+      .th-sub {
+        font-size: 9.5px !important;
+        font-weight: 500 !important;
+        white-space: nowrap !important;
+        display: block !important;
+        color: #333333 !important;
+      }
+      .print-val {
+        display: block !important;
+        color: #000000 !important;
+        -webkit-text-fill-color: #000000 !important;
+        line-height: 1.25 !important;
+      }
+      .print-val.text-center {
+        text-align: center !important;
+      }
+      .print-val.font-bold {
+        font-weight: 700 !important;
+      }
+
       .date-cell-wrap, .date-btn, .date-hidden-native {
         display: none !important;
       }
@@ -719,6 +755,30 @@
 
       .cat-screen-box,
       .col-category 
+      
+      .screen-val {
+        display: none !important;
+      }
+      .th-sub {
+        font-size: 9.5px !important;
+        font-weight: 500 !important;
+        white-space: nowrap !important;
+        display: block !important;
+        color: #333333 !important;
+      }
+      .print-val {
+        display: block !important;
+        color: #000000 !important;
+        -webkit-text-fill-color: #000000 !important;
+        line-height: 1.25 !important;
+      }
+      .print-val.text-center {
+        text-align: center !important;
+      }
+      .print-val.font-bold {
+        font-weight: 700 !important;
+      }
+
       .date-cell-wrap, .date-btn, .date-hidden-native {
         display: none !important;
       }
@@ -1437,13 +1497,13 @@
       let row1 = `
         <tr>
           <th rowspan="2" class="th-no">#</th>
-          <th rowspan="2" class="th-cat col-category">หมวดงาน (Category)</th>
+          <th rowspan="2" class="th-cat col-category">หมวดงาน<span class="th-sub">(Category)</span></th>
           <th rowspan="2" class="th-name">หัวข้องาน / รายการกิจกรรม</th>
-          <th rowspan="2" class="th-shift">ช่วงเวลา (Shift)</th>
-          <th rowspan="2" class="th-craft">ช่าง (คน)</th>
-          <th rowspan="2" class="th-start">วันเริ่ม</th>
-          <th rowspan="2" class="th-end">วันจบ</th>
-          <th rowspan="2" class="th-status">สถานะ</th>
+          <th rowspan="2" class="th-shift">ช่วงเวลา<span class="th-sub">(Shift)</span></th>
+          <th rowspan="2" class="th-craft">ช่าง<span class="th-sub">(คน)</span></th>
+          <th rowspan="2" class="th-start">วันเริ่ม<span class="th-sub">(Start)</span></th>
+          <th rowspan="2" class="th-end">วันจบ<span class="th-sub">(Finish)</span></th>
+          <th rowspan="2" class="th-status">สถานะ<span class="th-sub">(Status)</span></th>
           <th rowspan="2" class="th-pct">%</th>
           <th colspan="7" class="th-gantt-title" style="background:rgba(0,173,242,0.18); color:var(--cyan);">ตารางแผนงานรายวัน (7 วันประจำสัปดาห์)</th>
           <th rowspan="2" class="th-note">หมายเหตุ / อุปสรรค</th>
@@ -1471,6 +1531,12 @@
        RENDER TABLE BODY WITH 7-DAY GANTT BARS
        ======================================================== */
     function renderTableBody() {
+      const statusMap = {
+        done: "✅ เสร็จสิ้น",
+        progress: "⚡ กำลังทำ",
+        pending: "⏳ รอเริ่ม",
+        delay: "⚠️ ล่าช้า"
+      };
       const tbody = document.getElementById('tableBody');
       tbody.innerHTML = '';
       const days = getDaysList();
@@ -1527,14 +1593,20 @@
               <button type="button" class="btn-input-mic no-print" onclick="toggleVoice('name_input_${tIdx}', ${tIdx}, 'name', this)" title="แตะเพื่อพูดสั่งข้อความด้วยเสียง">🎙️</button>
             </div>
           </td>
-          <td>
-            <input type="text" class="tbl-input-text" style="font-size:13.5px;" 
-                   value="${escapeHtml(t.shift || '')}" placeholder="08:30 - 17:00" 
-                   onchange="updateTaskField(${tIdx}, 'shift', this.value)" />
+          <td style="text-align:center;">
+            <div class="screen-val no-print">
+              <input type="text" class="tbl-input-text" style="font-size:13px; text-align:center;" 
+                     value="${escapeHtml(t.shift || '')}" placeholder="08:30 - 17:00" 
+                     onchange="updateTaskField(${tIdx}, 'shift', this.value)" />
+            </div>
+            <div class="print-val text-center" style="font-size:11px; white-space:nowrap; letter-spacing:-0.2px;">${escapeHtml(t.shift || '-')}</div>
           </td>
           <td style="text-align:center;">
-            <input type="number" min="0" class="tbl-num-input" style="font-size:14px;" value="${t.manpower || 0}" 
-                   onchange="updateTaskField(${tIdx}, 'manpower', parseInt(this.value) || 0)" />
+            <div class="screen-val no-print">
+              <input type="number" min="0" class="tbl-num-input" style="font-size:14px; text-align:center;" value="${t.manpower || 0}" 
+                     onchange="updateTaskField(${tIdx}, 'manpower', parseInt(this.value) || 0)" />
+            </div>
+            <div class="print-val text-center font-bold" style="font-size:12px;">${t.manpower || 0}</div>
           </td>
           <td style="text-align:center;">
             <div class="date-cell-wrap no-print">
@@ -1552,23 +1624,32 @@
             </div>
             <div class="print-val text-center">${fmtDate(t.finishDate)}</div>
           </td>
-          <td>
-            <select class="tbl-select" style="font-size:13px;" onchange="updateTaskField(${tIdx}, 'status', this.value)">
-              <option value="pending" ${t.status === 'pending' ? 'selected' : ''}>⏳ รอดำเนินการ</option>
-              <option value="progress" ${t.status === 'progress' ? 'selected' : ''}>⚡ กำลังทำ</option>
-              <option value="done" ${t.status === 'done' ? 'selected' : ''}>✅ เสร็จสิ้น</option>
-              <option value="delay" ${t.status === 'delay' ? 'selected' : ''}>⚠️ ล่าช้า</option>
-            </select>
+          <td style="text-align:center;">
+            <div class="screen-val no-print">
+              <select class="tbl-select" style="font-size:13px;" onchange="updateTaskField(${tIdx}, 'status', this.value)">
+                <option value="pending" ${t.status === 'pending' ? 'selected' : ''}>⏳ รอดำเนินการ</option>
+                <option value="progress" ${t.status === 'progress' ? 'selected' : ''}>⚡ กำลังทำ</option>
+                <option value="done" ${t.status === 'done' ? 'selected' : ''}>✅ เสร็จสิ้น</option>
+                <option value="delay" ${t.status === 'delay' ? 'selected' : ''}>⚠️ ล่าช้า</option>
+              </select>
+            </div>
+            <div class="print-val text-center" style="font-size:11px; font-weight:600;">${statusMap[t.status] || t.status}</div>
           </td>
           <td style="text-align:center;">
-            <input type="number" min="0" max="100" class="tbl-num-input" style="font-size:14px;" value="${t.progress}" 
-                   onchange="updateTaskField(${tIdx}, 'progress', parseInt(this.value) || 0)" />
+            <div class="screen-val no-print">
+              <input type="number" min="0" max="100" class="tbl-num-input" style="font-size:14px; text-align:center;" value="${t.progress}" 
+                     onchange="updateTaskField(${tIdx}, 'progress', parseInt(this.value) || 0)" />
+            </div>
+            <div class="print-val text-center font-bold" style="font-size:12px;">${t.progress}%</div>
           </td>
           ${ganttCells}
           <td>
-            <textarea rows="2" class="tbl-input-text tbl-textarea" style="font-size:13px; color:var(--text-muted); min-height:44px; line-height:1.35; resize:vertical; display:block; width:100%;" 
-                   placeholder="บันทึกหน้างาน..." 
-                   onchange="updateTaskField(${tIdx}, 'remarks', this.value)">${escapeHtml(t.remarks || '')}</textarea>
+            <div class="screen-val no-print">
+              <textarea rows="2" class="tbl-input-text tbl-textarea" style="font-size:13px; color:var(--text-muted); min-height:44px; line-height:1.35; resize:vertical; display:block; width:100%;" 
+                     placeholder="บันทึกหน้างาน..." 
+                     onchange="updateTaskField(${tIdx}, 'remarks', this.value)">${escapeHtml(t.remarks || '')}</textarea>
+            </div>
+            <div class="print-val" style="font-size:10.5px; font-weight:400; line-height:1.2;">${escapeHtml(t.remarks || '-')}</div>
           </td>
           <td class="no-print" style="text-align:center;">
             <button class="del-btn" onclick="deleteTaskRow(${tIdx})" title="ลบงานนี้">✕</button>

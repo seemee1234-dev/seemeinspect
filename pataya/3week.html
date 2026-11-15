@@ -409,6 +409,18 @@
     .tbl-input-name { min-width: 180px; }
     .tbl-input-assignee { min-width: 90px; }
     
+      
+      .screen-val {
+        display: none !important;
+      }
+      .th-sub {
+        font-size: 9px !important;
+        font-weight: 500 !important;
+        white-space: nowrap !important;
+        display: block !important;
+        color: #333333 !important;
+      }
+
       .date-cell-wrap, .date-btn, .date-hidden-native {
         display: none !important;
       }
@@ -464,6 +476,18 @@
       background: rgba(0, 173, 242, 0.25);
     }
     .print-val { display: none; }
+
+    
+    .th-sub {
+      font-size: 10px;
+      font-weight: 400;
+      white-space: nowrap !important;
+      display: block;
+      opacity: 0.9;
+      line-height: 1.1;
+      margin-top: 1px;
+    }
+    .screen-val { display: block; width: 100%; }
 
     .cat-screen-box {
       display: block;
@@ -712,6 +736,18 @@
         position: absolute !important;
       }
       
+      
+      .screen-val {
+        display: none !important;
+      }
+      .th-sub {
+        font-size: 9px !important;
+        font-weight: 500 !important;
+        white-space: nowrap !important;
+        display: block !important;
+        color: #333333 !important;
+      }
+
       .date-cell-wrap, .date-btn, .date-hidden-native {
         display: none !important;
       }
@@ -1417,12 +1453,12 @@
       let row1 = `
         <tr>
           <th rowspan="2" class="th-no">#</th>
-          <th rowspan="2" class="col-category">หมวดงาน (Category)</th>
-          <th rowspan="2" class="th-name">หัวข้องาน (Task Description)</th>
+          <th rowspan="2" class="col-category">หมวดงาน<span class="th-sub">(Category)</span></th>
+          <th rowspan="2" class="th-name">หัวข้องาน<span class="th-sub">(Task Description)</span></th>
           <th rowspan="2" class="th-assignee">ผู้รับผิดชอบ</th>
-          <th rowspan="2" class="th-start">วันเริ่ม</th>
-          <th rowspan="2" class="th-end">วันจบ</th>
-          <th rowspan="2" class="th-status">สถานะ</th>
+          <th rowspan="2" class="th-start">วันเริ่ม<span class="th-sub">(Start)</span></th>
+          <th rowspan="2" class="th-end">วันจบ<span class="th-sub">(Finish)</span></th>
+          <th rowspan="2" class="th-status">สถานะ<span class="th-sub">(Status)</span></th>
           <th rowspan="2" class="th-pct">%</th>
           <th colspan="7" class="week-header-w1">สัปดาห์ที่ 1 (Week 1)</th>
           <th colspan="7" class="week-header-w2">สัปดาห์ที่ 2 (Week 2)</th>
@@ -1451,6 +1487,12 @@
        RENDER TABLE BODY WITH DYNAMIC GANTT BARS
        ======================================================== */
     function renderTableBody() {
+      const statusMap = {
+        done: "✅ เสร็จสิ้น",
+        progress: "⚡ กำลังทำ",
+        pending: "⏳ รอเริ่ม",
+        delay: "⚠️ ล่าช้า"
+      };
       const tbody = document.getElementById('tableBody');
       tbody.innerHTML = '';
       const days = getDaysList();
@@ -1511,8 +1553,11 @@
             </div>
           </td>
           <td>
-            <input type="text" class="tbl-input-text tbl-input-assignee" style="font-size:13px;" value="${escapeHtml(t.assignee || '')}" 
-                   placeholder="ผู้รับผิดชอบ" onchange="updateTaskField(${tIdx}, 'assignee', this.value)" />
+            <div class="screen-val no-print">
+              <input type="text" class="tbl-input-text tbl-input-assignee" style="font-size:13px;" value="${escapeHtml(t.assignee || '')}" 
+                     placeholder="ผู้รับผิดชอบ" onchange="updateTaskField(${tIdx}, 'assignee', this.value)" />
+            </div>
+            <div class="print-val" style="font-size:11px; text-align:left;">${escapeHtml(t.assignee || '-')}</div>
           </td>
           <td style="text-align:center;">
             <div class="date-cell-wrap no-print">
@@ -1530,17 +1575,23 @@
             </div>
             <div class="print-val text-center">${fmtDate(t.finishDate)}</div>
           </td>
-          <td>
-            <select class="tbl-select" style="font-size:13px;" onchange="updateTaskField(${tIdx}, 'status', this.value)">
-              <option value="pending" ${t.status === 'pending' ? 'selected' : ''}>⏳ รอดำเนินการ</option>
-              <option value="progress" ${t.status === 'progress' ? 'selected' : ''}>⚡ กำลังทำ</option>
-              <option value="done" ${t.status === 'done' ? 'selected' : ''}>✅ เสร็จสิ้น</option>
-              <option value="delay" ${t.status === 'delay' ? 'selected' : ''}>⚠️ ล่าช้า</option>
-            </select>
+          <td style="text-align:center;">
+            <div class="screen-val no-print">
+              <select class="tbl-select" style="font-size:13px;" onchange="updateTaskField(${tIdx}, 'status', this.value)">
+                <option value="pending" ${t.status === 'pending' ? 'selected' : ''}>⏳ รอดำเนินการ</option>
+                <option value="progress" ${t.status === 'progress' ? 'selected' : ''}>⚡ กำลังทำ</option>
+                <option value="done" ${t.status === 'done' ? 'selected' : ''}>✅ เสร็จสิ้น</option>
+                <option value="delay" ${t.status === 'delay' ? 'selected' : ''}>⚠️ ล่าช้า</option>
+              </select>
+            </div>
+            <div class="print-val text-center" style="font-size:11px; font-weight:600;">${statusMap[t.status] || t.status}</div>
           </td>
           <td style="text-align:center;">
-            <input type="number" min="0" max="100" class="tbl-num-input" style="font-size:13.5px;" value="${t.progress}" 
-                   onchange="updateTaskField(${tIdx}, 'progress', parseInt(this.value) || 0)" />
+            <div class="screen-val no-print">
+              <input type="number" min="0" max="100" class="tbl-num-input" style="font-size:13.5px; text-align:center;" value="${t.progress}" 
+                     onchange="updateTaskField(${tIdx}, 'progress', parseInt(this.value) || 0)" />
+            </div>
+            <div class="print-val text-center font-bold" style="font-size:12px;">${t.progress}%</div>
           </td>
           ${ganttCells}
           <td class="no-print" style="text-align:center;">
