@@ -6,17 +6,13 @@
   <meta http-equiv="Pragma" content="no-cache">
   <meta http-equiv="Expires" content="0">
   <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-  <title>ตารางเช็คสถานะงาน อาคาร B • โครงการเดอะ ออริจิ้น พัทยา (Well Graded 14 หมวดงาน)</title>
+  <title>ตารางเช็คสถานะงานก่อสร้าง อาคาร B (FL 2 – FL 8) • โครงการเดอะ ออริจิ้น พัทยา</title>
   
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Kanit:wght@300;400;500;600;700&display=swap" rel="stylesheet">
   
   <style>
-    /* ========================================================
-       HIGH-CONTRAST SOLID BLACK THEME (PRINT & SCREEN STANDARDS)
-       Kanit 300 Light, Pure Black #000000 Text, Crisp Contrast
-       ======================================================== */
     *, *::before, *::after {
       box-sizing: border-box;
       margin: 0;
@@ -25,690 +21,612 @@
     }
 
     :root {
-      --bg-base: #f1f5f9;
-      --bg-surface: #ffffff;
+      --navy-dark: #0a192f;
+      --navy-primary: #1e3a8a;
+      --navy-light: #2563eb;
+      --navy-subtle: #f0f4ff;
+      --gold: #d97706;
+      --gold-light: #fef3c7;
+      --green: #16a34a;
+      --green-light: #dcfce7;
+      --rose: #dc2626;
+      --rose-light: #fee2e2;
+      --amber: #d97706;
+      --amber-light: #fef3c7;
+      --border-color: #cbd5e1;
       --bg-card: #ffffff;
-      --navy-primary: #0a2540;
-      --navy-deep: #061626;
-      --border-subtle: #cbd5e1;
-      --border-strong: #000000;
+      --bg-page: #f8fafc;
       --text-main: #000000;
       --text-sub: #1e293b;
       --text-muted: #475569;
-      --gold: #d97706;
-      --green-bg: #dcfce7;
-      --green-border: #16a34a;
-      --green-text: #14532d;
-      --amber-bg: #fef3c7;
-      --amber-border: #d97706;
-      --red-bg: #fee2e2;
-      --red-border: #dc2626;
-      --font-family: 'Kanit', -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
     }
 
     body {
-      font-family: var(--font-family) !important;
-      font-weight: 300 !important;
-      background-color: var(--bg-base);
+      font-family: 'Kanit', sans-serif;
+      font-weight: 300;
+      font-size: 13px;
+      background: var(--bg-page);
       color: var(--text-main);
-      padding: 20px 24px 60px 24px;
       line-height: 1.5;
-      font-size: 15px;
+      padding-bottom: 60px;
+      -webkit-font-smoothing: antialiased;
     }
 
-    /* HEADER & BRANDING */
-    .header-panel {
-      background: linear-gradient(135deg, var(--navy-deep), var(--navy-primary));
+    /* Top Executive Header */
+    .header-bar {
+      background: linear-gradient(135deg, #0a192f 0%, #1e3a8a 100%);
       color: #ffffff;
-      border-radius: 12px;
-      padding: 20px 24px;
-      margin-bottom: 20px;
-      box-shadow: 0 4px 16px rgba(10, 37, 64, 0.15);
-      border: 1px solid rgba(255, 255, 255, 0.1);
-    }
-    .header-top {
+      padding: 16px 20px;
       display: flex;
-      flex-wrap: wrap;
-      justify-content: space-between;
       align-items: center;
-      gap: 16px;
-      margin-bottom: 12px;
+      justify-content: space-between;
+      flex-wrap: wrap;
+      gap: 12px;
+      position: sticky;
+      top: 0;
+      z-index: 100;
+      box-shadow: 0 4px 15px rgba(0,0,0,0.15);
     }
-    .brand-title {
-      font-size: 24px;
+    .header-left {
+      display: flex;
+      align-items: center;
+      gap: 14px;
+    }
+    .brand-badge {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      padding: 4px 14px;
+      background: rgba(255, 255, 255, 0.12);
+      border: 1px solid rgba(255, 255, 255, 0.3);
+      border-radius: 20px;
+      color: #ffd700;
+      font-size: 12px;
       font-weight: 400;
+      letter-spacing: 0.5px;
+    }
+    .dot-gold {
+      width: 7px;
+      height: 7px;
+      border-radius: 50%;
+      background: #ffd700;
+      display: inline-block;
+    }
+    .header-title-box h1 {
+      font-size: 17px;
+      font-weight: 500;
       color: #ffffff;
-      letter-spacing: -0.3px;
+      margin-bottom: 2px;
+    }
+    .header-title-box p {
+      font-size: 12px;
+      color: rgba(255, 255, 255, 0.85);
+      font-weight: 300;
+    }
+    .header-right {
       display: flex;
       align-items: center;
       gap: 10px;
-    }
-    .brand-badge {
-      background: #f59e0b;
-      color: #000000;
-      font-size: 13px;
-      font-weight: 600;
-      padding: 3px 10px;
-      border-radius: 6px;
-      text-transform: uppercase;
-      letter-spacing: 0.5px;
-    }
-    .header-desc {
-      color: #cbd5e1;
-      font-size: 14px;
-      font-weight: 300;
-    }
-    .header-actions {
-      display: flex;
       flex-wrap: wrap;
-      gap: 8px;
     }
-    .btn {
-      padding: 8px 14px;
+    .header-btn {
+      padding: 6px 14px;
       border-radius: 8px;
-      font-size: 13px;
+      font-size: 12px;
       font-weight: 400;
+      text-decoration: none;
       cursor: pointer;
-      border: 1px solid transparent;
       display: inline-flex;
       align-items: center;
       gap: 6px;
-      transition: all 0.15s ease;
-      font-family: inherit;
-      text-decoration: none;
+      transition: all 0.2s ease;
+      font-family: 'Kanit', sans-serif;
     }
-    .btn-gold {
-      background: #f59e0b;
-      color: #000000;
-      border-color: #d97706;
+    .btn-portal {
+      background: rgba(255, 255, 255, 0.15);
+      color: #ffffff;
+      border: 1px solid rgba(255, 255, 255, 0.35);
+    }
+    .btn-portal:hover {
+      background: rgba(255, 255, 255, 0.25);
+      color: #ffffff;
+    }
+    .btn-switch {
+      background: #ffd700;
+      color: #0a192f;
+      border: 1px solid #ffd700;
       font-weight: 500;
     }
-    .btn-gold:hover { background: #d97706; color: #ffffff; }
-    .btn-dark {
-      background: rgba(255, 255, 255, 0.12);
-      color: #ffffff;
-      border-color: rgba(255, 255, 255, 0.25);
+    .btn-switch:hover {
+      background: #f59e0b;
+      color: #0a192f;
     }
-    .btn-dark:hover { background: rgba(255, 255, 255, 0.2); }
 
-    /* DATE TRACKER & CONTROL BAR */
-    .date-tracker-bar {
+    /* Main Container */
+    .container {
+      max-width: 1400px;
+      margin: 0 auto;
+      padding: 20px 16px;
+    }
+
+    /* DATE TRACKER BAR */
+    .date-tracker-card {
       background: #ffffff;
-      border: 2px solid var(--navy-primary);
-      border-radius: 10px;
-      padding: 12px 18px;
-      margin-bottom: 20px;
+      border: 1.5px solid var(--border-color);
+      border-radius: 12px;
+      padding: 14px 18px;
+      margin-bottom: 18px;
       display: flex;
-      flex-wrap: wrap;
       align-items: center;
       justify-content: space-between;
+      flex-wrap: wrap;
       gap: 12px;
-      box-shadow: 0 2px 8px rgba(0,0,0,0.06);
+      box-shadow: 0 2px 8px rgba(0,0,0,0.04);
     }
     .date-tracker-left {
       display: flex;
       align-items: center;
-      flex-wrap: wrap;
       gap: 12px;
+      flex-wrap: wrap;
     }
     .date-badge {
       display: inline-flex;
       align-items: center;
-      gap: 8px;
-      background: #e0f2fe;
-      color: #0369a1;
-      padding: 6px 14px;
-      border-radius: 20px;
-      font-size: 14px;
+      gap: 6px;
+      padding: 5px 12px;
+      background: var(--navy-subtle);
+      border: 1px solid #bfdbfe;
+      border-radius: 8px;
+      font-size: 13px;
+      color: var(--navy-primary);
       font-weight: 500;
-      border: 1px solid #7dd3fc;
     }
     .date-input-group {
       display: flex;
       align-items: center;
       gap: 8px;
     }
-    .date-input-label {
-      font-size: 13px;
-      font-weight: 400;
-      color: var(--text-sub);
-    }
     .date-input {
-      padding: 6px 10px;
-      border: 1px solid #94a3b8;
+      padding: 5px 10px;
+      border: 1px solid var(--border-color);
       border-radius: 6px;
-      font-family: inherit;
       font-size: 13px;
-      font-weight: 400;
+      font-family: 'Kanit', sans-serif;
+      font-weight: 300;
+      color: var(--text-main);
       width: 130px;
-      background: #f8fafc;
-      color: #000000;
     }
-    .date-select {
-      padding: 6px 12px;
-      border: 1px solid #94a3b8;
-      border-radius: 6px;
-      font-family: inherit;
-      font-size: 13px;
-      font-weight: 400;
-      background: #f8fafc;
-      color: #000000;
-      cursor: pointer;
-    }
-    .btn-update-date {
-      background: #0284c7;
+    .btn-date-apply {
+      padding: 5px 12px;
+      background: var(--navy-primary);
       color: #ffffff;
       border: none;
-      padding: 6px 14px;
+      border-radius: 6px;
+      font-size: 12px;
+      font-family: 'Kanit', sans-serif;
+      cursor: pointer;
+    }
+    .date-select {
+      padding: 5px 12px;
+      border: 1px solid var(--border-color);
       border-radius: 6px;
       font-size: 13px;
+      font-family: 'Kanit', sans-serif;
       font-weight: 400;
+      color: var(--text-main);
+      background: #ffffff;
+      cursor: pointer;
+    }
+
+    /* KPI Grid (14 Cards) */
+    .kpi-section-title {
+      font-size: 15px;
+      font-weight: 500;
+      color: var(--navy-primary);
+      margin-bottom: 12px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      flex-wrap: wrap;
+      gap: 8px;
+    }
+    .kpi14-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(180px, 1fr));
+      gap: 10px;
+      margin-bottom: 24px;
+    }
+    .kpi14-card {
+      background: #ffffff;
+      border: 1.5px solid var(--border-color);
+      border-radius: 10px;
+      padding: 10px 12px;
+      box-shadow: 0 1px 4px rgba(0,0,0,0.03);
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+      transition: transform 0.15s ease, box-shadow 0.15s ease;
+      cursor: pointer;
+    }
+    .kpi14-card:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 4px 12px rgba(30, 58, 138, 0.1);
+      border-color: var(--navy-light);
+    }
+    .kpi14-top {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      margin-bottom: 4px;
+    }
+    .kpi14-num {
+      font-size: 11px;
+      font-weight: 500;
+      color: var(--text-muted);
+      background: #f1f5f9;
+      padding: 1px 6px;
+      border-radius: 4px;
+    }
+    .kpi14-page {
+      font-size: 10px;
+      color: var(--text-muted);
+    }
+    .kpi14-name {
+      font-size: 12px;
+      font-weight: 500;
+      color: var(--text-main);
+      margin-bottom: 6px;
+      white-space: nowrap;
+      overflow: hidden;
+      text-overflow: ellipsis;
+    }
+    .kpi14-pct {
+      font-size: 20px;
+      font-weight: 600;
+      color: var(--navy-primary);
+      line-height: 1.1;
+      margin-bottom: 6px;
+    }
+    .kpi14-meta {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      font-size: 11px;
+      color: var(--text-muted);
+      padding-top: 4px;
+      border-top: 1px solid #f1f5f9;
+    }
+    .kpi14-var-pos {
+      color: var(--green);
+      font-weight: 500;
+    }
+    .kpi14-var-neg {
+      color: var(--rose);
+      font-weight: 500;
+    }
+
+    /* Controls & View Switcher */
+    .controls-bar {
+      background: #ffffff;
+      border: 1.5px solid var(--border-color);
+      border-radius: 10px;
+      padding: 12px 16px;
+      margin-bottom: 16px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      flex-wrap: wrap;
+      gap: 12px;
+    }
+    .view-toggles {
+      display: flex;
+      gap: 8px;
+    }
+    .btn-view {
+      padding: 6px 14px;
+      border: 1px solid var(--border-color);
+      background: #ffffff;
+      border-radius: 6px;
+      font-size: 12px;
+      font-family: 'Kanit', sans-serif;
+      font-weight: 400;
+      color: var(--text-main);
       cursor: pointer;
       display: inline-flex;
       align-items: center;
       gap: 6px;
     }
-    .btn-update-date:hover { background: #0369a1; }
-
-    /* KPI CARDS (14 PACKAGES) */
-    .kpi-section-title {
-      font-size: 16px;
-      font-weight: 500;
-      color: var(--navy-primary);
-      margin-bottom: 12px;
-      display: flex;
-      align-items: center;
-      justify-content: space-between;
-    }
-    .kpi14-grid {
-      display: grid;
-      grid-template-columns: repeat(auto-fill, minmax(180px, 1fr));
-      gap: 12px;
-      margin-bottom: 24px;
-    }
-    .kpi14-card {
-      background: #ffffff;
-      border: 1px solid var(--border-subtle);
-      border-radius: 8px;
-      padding: 12px;
-      box-shadow: 0 1px 3px rgba(0,0,0,0.05);
-      position: relative;
-      cursor: pointer;
-      transition: all 0.15s ease;
-    }
-    .kpi14-card:hover {
-      transform: translateY(-2px);
-      box-shadow: 0 4px 10px rgba(0,0,0,0.08);
-      border-color: #94a3b8;
-    }
-    .kpi14-card.ontrack { border-top: 3px solid #16a34a; }
-    .kpi14-card.behind { border-top: 3px solid #dc2626; }
-    .kpi14-card.highlight-100 { background: #f0fdf4; border-top: 3px solid #16a34a; }
-    .kpi14-num {
-      font-size: 11px;
-      font-weight: 600;
-      color: var(--text-muted);
-      margin-bottom: 2px;
-    }
-    .kpi14-name {
-      font-size: 13px;
-      font-weight: 400;
-      color: var(--text-main);
-      margin-bottom: 8px;
-      line-height: 1.3;
-      white-space: normal !important;
-      word-break: break-word !important;
-      min-height: 34px;
-    }
-    .kpi14-actual {
-      font-size: 22px;
-      font-weight: 600;
-      color: #000000;
-      margin-bottom: 4px;
-    }
-    .kpi14-plan-row {
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
-      font-size: 11px;
-      padding-top: 6px;
-      border-top: 1px dashed #e2e8f0;
-    }
-    .kpi14-plan-label { color: var(--text-muted); }
-    .kpi14-variance.ontrack { color: #15803d; font-weight: 500; }
-    .kpi14-variance.behind { color: #b91c1c; font-weight: 500; }
-
-    /* VIEW SWITCHER & FILTER */
-    .controls-panel {
-      background: #ffffff;
-      border: 1px solid var(--border-subtle);
-      border-radius: 10px;
-      padding: 12px 18px;
-      margin-bottom: 20px;
-      display: flex;
-      flex-wrap: wrap;
-      justify-content: space-between;
-      align-items: center;
-      gap: 12px;
-    }
-    .tab-group {
-      display: flex;
-      gap: 6px;
-      background: #f1f5f9;
-      padding: 4px;
-      border-radius: 8px;
-    }
-    .tab-btn {
-      padding: 6px 14px;
-      border-radius: 6px;
-      font-size: 13px;
-      font-weight: 400;
-      border: none;
-      background: transparent;
-      color: var(--text-sub);
-      cursor: pointer;
-      font-family: inherit;
-      transition: all 0.15s ease;
-    }
-    .tab-btn.active {
-      background: #ffffff;
-      color: #000000;
-      font-weight: 500;
-      box-shadow: 0 1px 3px rgba(0,0,0,0.1);
-    }
-    .filter-select {
-      padding: 8px 14px;
-      border-radius: 6px;
-      border: 1px solid #94a3b8;
-      font-size: 13px;
-      font-weight: 400;
-      font-family: inherit;
-      background: #f8fafc;
-      color: #000000;
-      max-width: 360px;
-      cursor: pointer;
-    }
-
-    /* SLIDE CARD & 5-COLUMN TABLES */
-    .slide-card {
-      background: #ffffff;
-      border: 2px solid #000000;
-      border-radius: 8px;
-      margin-bottom: 24px;
-      overflow: hidden;
-      box-shadow: 0 2px 8px rgba(0,0,0,0.06);
-      page-break-inside: avoid;
-    }
-    .slide-card-header {
-      background: #002d62;
+    .btn-view.active {
+      background: var(--navy-primary);
       color: #ffffff;
-      padding: 10px 16px;
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
-      border-bottom: 2px solid #000000;
+      border-color: var(--navy-primary);
     }
-    .slide-card-header h3 {
-      font-size: 16px;
-      font-weight: 500;
-      letter-spacing: -0.2px;
+    .search-input {
+      padding: 6px 12px;
+      border: 1px solid var(--border-color);
+      border-radius: 6px;
+      font-size: 13px;
+      font-family: 'Kanit', sans-serif;
+      font-weight: 300;
+      width: 220px;
     }
-    .slide-card-header .slide-badge {
+
+    /* Package Tables (5-Column Slide Layout) */
+    .package-card {
       background: #ffffff;
-      color: #002d62;
-      font-size: 12px;
-      font-weight: 600;
-      padding: 3px 8px;
-      border-radius: 4px;
+      border: 1.5px solid var(--border-color);
+      border-radius: 12px;
+      margin-bottom: 20px;
+      overflow: hidden;
+      box-shadow: 0 2px 6px rgba(0,0,0,0.03);
     }
-    .table-container {
-      width: 100%;
+    .package-header {
+      background: linear-gradient(135deg, #0a192f 0%, #1e3a8a 100%);
+      color: #ffffff;
+      padding: 12px 18px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      flex-wrap: wrap;
+      gap: 8px;
+    }
+    .package-title-left {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+    }
+    .badge-index {
+      background: rgba(255,255,255,0.2);
+      color: #ffffff;
+      padding: 2px 8px;
+      border-radius: 6px;
+      font-size: 12px;
+      font-weight: 500;
+    }
+    .badge-page {
+      background: #ffd700;
+      color: #0a192f;
+      padding: 2px 8px;
+      border-radius: 6px;
+      font-size: 11px;
+      font-weight: 600;
+    }
+    .package-header h3 {
+      font-size: 15px;
+      font-weight: 500;
+      color: #ffffff;
+    }
+    .package-header-right {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+    }
+    .badge-accum {
+      background: #ffffff;
+      color: var(--navy-primary);
+      padding: 3px 10px;
+      border-radius: 8px;
+      font-size: 13px;
+      font-weight: 600;
+    }
+
+    .table-wrap {
       overflow-x: auto;
     }
     table.slide-table {
       width: 100%;
       border-collapse: collapse;
-      font-size: 15px;
-      color: #000000 !important;
-      background: #ffffff;
+      font-size: 12.5px;
     }
     table.slide-table th {
-      background: #002d62 !important;
-      color: #ffffff !important;
-      padding: 10px 12px;
-      text-align: center;
+      background: #0f274a;
+      color: #ffffff;
       font-weight: 400;
-      border: 1px solid #001f44;
-      white-space: normal !important;
-      word-break: break-word !important;
+      padding: 9px 12px;
+      text-align: center;
+      border-bottom: 1px solid #1e3a8a;
+      white-space: nowrap;
     }
     table.slide-table th:first-child {
       text-align: left;
-      width: 32%;
     }
     table.slide-table td {
-      padding: 9px 12px;
-      border: 1px solid #000000 !important;
-      text-align: center;
+      padding: 8px 12px;
+      border-bottom: 1px solid #e2e8f0;
       color: #000000 !important;
-      font-weight: 300 !important;
+      text-align: center;
       white-space: normal !important;
       word-break: break-word !important;
     }
     table.slide-table td:first-child {
       text-align: left;
-      font-weight: 400 !important;
+      font-weight: 400;
+    }
+    table.slide-table tr:nth-child(even) td {
+      background-color: #f8fafc;
+    }
+    table.slide-table tr:hover td {
+      background-color: #f1f5f9;
     }
     table.slide-table tr.total-row td {
-      background: #e2e8f0;
-      font-weight: 600 !important;
-      border-top: 2px solid #000000 !important;
+      background-color: #0f274a;
+      color: #ffffff !important;
+      font-weight: 500;
+      border-top: 1.5px solid #1e3a8a;
     }
 
-    /* 100% LIGHT GREEN HIGHLIGHT (PERMANENT RULE) */
-    .highlight-100, td.highlight-100, span.highlight-100, .cell-100, td.cell-100 {
-      background-color: var(--green-bg) !important;
-      color: #000000 !important;
+    /* 100% Highlight Class */
+    .cell-100 {
+      background-color: #dcfce7 !important;
+      color: #14532d !important;
       font-weight: 500 !important;
     }
 
-    /* EDITABLE CELLS */
-    td[contenteditable="true"]:hover {
-      background-color: #fef08a !important;
-      outline: 2px dashed #ca8a04;
-      cursor: text;
-    }
-    td[contenteditable="true"]:focus {
-      background-color: #fef9c3 !important;
-      outline: 2px solid #ca8a04;
-    }
-
-    /* MATRIX VIEW */
+    /* Matrix Table Layout */
     .matrix-card {
       background: #ffffff;
-      border: 2px solid #000000;
-      border-radius: 8px;
+      border: 1.5px solid var(--border-color);
+      border-radius: 12px;
       padding: 16px;
       margin-bottom: 24px;
       overflow-x: auto;
-    }
-    .matrix-title {
-      font-size: 16px;
-      font-weight: 500;
-      color: var(--navy-primary);
-      margin-bottom: 12px;
+      box-shadow: 0 2px 8px rgba(0,0,0,0.04);
     }
     table.matrix-table {
       width: 100%;
       border-collapse: collapse;
-      font-size: 14px;
-      color: #000000;
+      font-size: 12px;
+      min-width: 900px;
     }
     table.matrix-table th {
-      background: #0a2540;
+      background: #0f274a;
       color: #ffffff;
-      padding: 8px 10px;
-      text-align: center;
-      border: 1px solid #000000;
       font-weight: 400;
+      padding: 9px 8px;
+      text-align: center;
+      border: 1px solid #1e3a8a;
+      white-space: nowrap;
+    }
+    table.matrix-table th:nth-child(2) {
+      text-align: left;
     }
     table.matrix-table td {
-      padding: 8px 10px;
-      border: 1px solid #000000;
+      padding: 7px 8px;
+      border: 1px solid #cbd5e1;
       text-align: center;
-      font-weight: 300;
+      color: #000000 !important;
+      white-space: normal !important;
+      word-break: break-word !important;
     }
-    table.matrix-table td:first-child {
+    table.matrix-table td:nth-child(2) {
       text-align: left;
       font-weight: 400;
     }
-
-    /* DAILY AUDIT LOG TABLE */
-    .audit-log-panel {
-      background: #ffffff;
-      border: 1px solid var(--border-subtle);
-      border-radius: 8px;
-      padding: 16px;
-      margin-top: 20px;
+    table.matrix-table tr:nth-child(even) td {
+      background-color: #f8fafc;
     }
-    .audit-log-header {
-      font-size: 15px;
-      font-weight: 500;
-      color: var(--navy-primary);
-      margin-bottom: 10px;
-      display: flex;
-      align-items: center;
-      gap: 8px;
+    table.matrix-table tr:hover td {
+      background-color: #f1f5f9;
     }
-    table.audit-table {
-      width: 100%;
-      border-collapse: collapse;
-      font-size: 13px;
-    }
-    table.audit-table th, table.audit-table td {
-      padding: 8px 12px;
-      border: 1px solid var(--border-subtle);
-      text-align: left;
-    }
-    table.audit-table th {
-      background: #f8fafc;
-      font-weight: 500;
-      color: var(--text-sub);
+    table.matrix-table tr.matrix-avg-row td {
+      background-color: #0f274a;
+      color: #ffffff !important;
+      font-weight: 600;
     }
 
-    /* PRINT MEDIA RULES */
-    @media print {
-      body {
-        background: #ffffff !important;
-        padding: 0 !important;
-        font-size: 12px !important;
-      }
-      .date-tracker-bar, .controls-panel, .header-actions, .btn, .audit-log-panel {
-        display: none !important;
-      }
-      .header-panel {
-        background: #002d62 !important;
-        color: #ffffff !important;
-        -webkit-print-color-adjust: exact !important;
-        print-color-adjust: exact !important;
-        margin-bottom: 10px !important;
-        padding: 12px !important;
-      }
-      .slide-card {
-        border: 1px solid #000000 !important;
-        page-break-inside: avoid !important;
-        margin-bottom: 16px !important;
-      }
-      table.slide-table th {
-        background: #002d62 !important;
-        color: #ffffff !important;
-        -webkit-print-color-adjust: exact !important;
-        print-color-adjust: exact !important;
-      }
-      .highlight-100, .cell-100 {
-        background-color: #dcfce7 !important;
-        -webkit-print-color-adjust: exact !important;
-        print-color-adjust: exact !important;
-      }
-    }
+    /* Clean Layout - Zero Footer Banner */
   </style>
 </head>
 <body>
 
-  <!-- HEADER -->
-  <div class="header-panel">
-    <div class="header-top">
-      <div class="brand-title">
-        <span>🏢 ตารางเช็คสถานะงานก่อสร้าง อาคาร B</span>
-        <span class="brand-badge">Well Graded 14 หมวดงาน</span>
-      </div>
-      <div class="header-actions">
-        <button class="btn btn-gold" onclick="saveToLocalStorage()">💾 บันทึกข้อมูลที่แก้ไข</button>
-        <button class="btn btn-dark" onclick="window.print()">🖨️ สั่งพิมพ์ A3/A4 / PDF</button>
-        <button class="btn btn-dark" onclick="shareSummary()">📱 สรุปส่ง LINE</button>
-        <button class="btn btn-dark" onclick="resetToOfficial()">🔄 รีเซ็ตค่าเริ่มต้น</button>
+  <!-- TOP HEADER -->
+  <header class="header-bar">
+    <div class="header-left">
+      <span class="brand-badge"><span class="dot-gold"></span> THE ORIGIN PATTAYA</span>
+      <div class="header-title-box">
+        <h1>ตารางเช็คสถานะงาน อาคาร B (FL 2 – FL 8)</h1>
+        <p>ผู้รับเหมาหลัก: Well Graded • โครงการเดอะ ออริจิ้น พัทยา</p>
       </div>
     </div>
-    <div class="header-desc">
-      โครงการ เดอะ ออริจิ้น พัทยา • ข้อมูลอัปเดตสไลด์ทางการ Well Graded ครบ 14 หมวดงาน (FL 2 – FL 8)
-      • ความก้าวหน้าสะสมรวม 14 หมวดงาน: <strong id="headerOverallPct" style="color:#ffd700;">47.57%</strong>
+    <div class="header-right">
+      <a href="origin_pattaya_master_progress.html" class="header-btn btn-portal">🏢 ภาพรวม 38 ตาราง</a>
+      <a href="building_a_status.html" class="header-btn btn-switch">🏢 สลับไปอาคาร A (56.63%)</a>
+      <a href="index.html" class="header-btn btn-portal">🏠 หน้าหลักโครงการ</a>
     </div>
-  </div>
+  </header>
 
-  <!-- DATE TRACKER & CONTROL BAR -->
-  <div class="date-tracker-bar">
-    <div class="date-tracker-left">
-      <div class="date-badge" id="currentDateBadge">
-        📅 วันที่อัปเดตข้อมูล: <strong id="displayUpdateDate">24 พ.ย. 69</strong>
+  <div class="container">
+
+    <!-- DATE TRACKER & HISTORY SELECTOR -->
+    <div class="date-tracker-card">
+      <div class="date-tracker-left">
+        <span class="date-badge">📅 ข้อมูลอัปเดต: <strong id="displayUpdateDate" style="margin-left:4px;">24 พ.ย. 69</strong></span>
+        <div class="date-input-group">
+          <input type="text" id="updateDateInput" class="date-input" value="24 พ.ย. 69" placeholder="ระบุวันที่อัปเดต">
+          <button class="btn-date-apply" onclick="applyCustomDate()">✏️ ตั้งวันที่</button>
+        </div>
       </div>
-      <div class="date-input-group">
-        <label class="date-input-label" for="updateDateInput">เปลี่ยนวันที่:</label>
-        <input type="text" id="updateDateInput" class="date-input" value="24 พ.ย. 69" placeholder="เช่น 24 พ.ย. 69">
-        <button class="btn-update-date" onclick="applyCustomDate()">✏️ ตั้งวันที่</button>
+      <div class="date-tracker-right" style="display:flex;align-items:center;gap:10px;">
+        <span style="font-size:13px;color:var(--text-muted);">เลือกดูข้อมูลย้อนหลัง:</span>
+        <select id="dateHistorySelect" class="date-select" onchange="handleHistorySelect(this.value)">
+          <option value="2026-11-24">24 พ.ย. 69 (รอบล่าสุด 14 หมวดงาน • 46.69%)</option>
+          <option value="2026-11-23">23 พ.ย. 69 (รอบดราฟต์เดิม 14 หมวดงาน • 47.57%)</option>
+          <option value="2026-11-21">21 พ.ย. 69 (รอบทางการเดิม 14 หมวดงาน • 47.88%)</option>
+        </select>
       </div>
     </div>
-    <div class="date-tracker-right" style="display:flex;align-items:center;gap:10px;">
-      <span style="font-size:13px;color:var(--text-muted);">เลือกดูข้อมูลย้อนหลัง:</span>
-      <select id="dateHistorySelect" class="date-select" onchange="handleHistorySelect(this.value)">
-        <option value="2026-11-24">24 พ.ย. 69 (รอบล่าสุด 14 หมวดงาน • 47.57%)</option>
-        <option value="2026-11-21">21 พ.ย. 69 (รอบทางการเดิม 14 หมวดงาน • 47.88%)</option>
-      </select>
-    </div>
-  </div>
 
-  <!-- KPI SUMMARY (14 CARDS) -->
-  <div class="kpi-section-title">
-    <span>📊 สรุปความก้าวหน้าสะสม 14 หมวดงาน (Actual % vs Plan %) <span id="kpiDateLabel" style="font-size:13px;color:var(--text-muted);font-weight:300;">ณ วันที่ 24 พ.ย. 69</span></span>
-    <span style="font-size:13px;font-weight:400;color:var(--text-sub);">เฉลี่ยรวม: <strong id="kpiOverallPct" style="color:var(--navy-primary);font-size:15px;">47.57%</strong></span>
-  </div>
-  <div class="kpi14-grid" id="kpi14Grid">
-    <!-- Generated by JS -->
-  </div>
-
-  <!-- CONTROLS & FILTER -->
-  <div class="controls-panel">
-    <div class="tab-group">
-      <button class="tab-btn active" id="tabSlide" onclick="switchView('slide')">📑 ตารางตามสไลด์ (5 คอลัมน์ทางการ)</button>
-      <button class="tab-btn" id="tabMatrix" onclick="switchView('matrix')">📊 ตาราง Matrix ภาพรวมทุกชั้น (FL 2 – FL 8)</button>
-      <button class="tab-btn" id="tabAudit" onclick="switchView('audit')">🕒 บันทึกประวัติการอัปเดตแต่ละวัน</button>
+    <!-- KPI SUMMARY (14 CARDS) -->
+    <div class="kpi-section-title">
+      <span>📊 สรุปความก้าวหน้าสะสม 14 หมวดงาน (Actual % vs Plan %) <span id="kpiDateLabel" style="font-size:13px;color:var(--text-muted);font-weight:300;">ณ วันที่ 24 พ.ย. 69</span></span>
+      <span style="font-size:13px;font-weight:400;color:var(--text-sub);">เฉลี่ยรวม: <strong id="kpiOverallPct" style="color:var(--navy-primary);font-size:15px;">46.69%</strong></span>
     </div>
-    <div style="display:flex;align-items:center;gap:10px;">
-      <select id="pkgSelect" class="filter-select" onchange="renderSlideView()">
-        <option value="all">🌟 แสดงครบทั้ง 14 หมวดงานทางการ (Full 14 Tables)</option>
-      </select>
-    </div>
-  </div>
-
-  <!-- VIEW 1: SLIDE CARDS (5-COLUMN TABLES) -->
-  <div id="viewSlide">
-    <div id="slideCardsContainer">
+    <div class="kpi14-grid" id="kpi14Grid">
       <!-- Generated by JS -->
     </div>
-  </div>
 
-  <!-- VIEW 2: MATRIX VIEW (ALL FLOORS) -->
-  <div id="viewMatrix" style="display:none;">
-    <div class="matrix-card">
-      <div class="matrix-title">📊 ตารางสรุปภาพรวมความก้าวหน้าทุกชั้น อาคาร B (FL 2 – FL 8)</div>
-      <div class="table-container">
-        <table class="matrix-table" id="matrixTable">
-          <!-- Generated by JS -->
-        </table>
+    <!-- CONTROLS & FILTER -->
+    <div class="controls-bar">
+      <div class="view-toggles">
+        <button class="btn-view active" id="btnSlideView" onclick="switchView('slide')">📑 รูปแบบ 5 คอลัมน์ตามสไลด์ (14 หมวด)</button>
+        <button class="btn-view" id="btnMatrixView" onclick="switchView('matrix')">📊 รูปแบบตารางเมทริกซ์เทียบทุกชั้น</button>
+      </div>
+      <div>
+        <input type="text" id="searchInput" class="search-input" placeholder="🔍 ค้นหาหมวดงาน..." oninput="handleSearch(this.value)">
       </div>
     </div>
-  </div>
 
-  <!-- VIEW 3: AUDIT & DAILY UPDATE LOG -->
-  <div id="viewAudit" style="display:none;">
-    <div class="audit-log-panel">
-      <div class="audit-log-header">
-        🕒 บันทึกประวัติการอัปเดตข้อมูลรายวัน (Daily Progress & Version History Log)
-      </div>
-      <div class="table-container">
-        <table class="audit-table">
-          <thead>
-            <tr>
-              <th>วันที่อัปเดต</th>
-              <th>จำนวนหมวดงาน</th>
-              <th>ความคืบหน้ารวม</th>
-              <th>รายการเปลี่ยนแปลงสำคัญ (Change Log)</th>
-              <th>สถานะตรวจสอบ</th>
-            </tr>
-          </thead>
-          <tbody>
-            <tr>
-              <td><strong style="color:#0284c7;">24 พ.ย. 69</strong> (รอบเช้า 07:53 น.)</td>
-              <td>14 หมวดงาน</td>
-              <td><strong style="color:#15803d;">47.57%</strong></td>
-              <td>
-                • อัปเดตงานเกร้าท์รอยต่อ Precast (#01) ขยับขึ้นเป็น <strong>82.14%</strong> (เดิม 80.71% • ชั้น 6 เสร็จ 100%)<br>
-                • อัปเดตงานเกร้าท์ผนัง RISER ห้องพัก (#03) ขยับขึ้นเป็น <strong>67.14%</strong> (เดิม 65.00%)<br>
-                • อัปเดตงานเทปรับระดับพื้น (#04) ขยับขึ้นเป็น <strong>48.57%</strong> (เดิม 43.93% • ชั้น 5 เริ่มเทได้ 40%)<br>
-                • อัปเดตงานติดตั้งกระเบื้อง (#05) ขยับขึ้นเป็น <strong>38.68%</strong> (เดิม 36.82% • ชั้น 4-5 คืบหน้า)<br>
-                • อัปเดตงานติดตั้ง Texca wall (#07) ขยับขึ้นเป็น <strong>92.86%</strong> (เดิม 92.14% • ชั้น 7-8 ได้ 80%)<br>
-                • อัปเดตงานติดตั้งฝ้าเพดาน (#09) ขยับขึ้นเป็น <strong>45.71%</strong> (เดิม 44.29% • โครงฝ้าชั้น 5 แตะ 80%)<br>
-                • อัปเดตงานทาสี (#11) ขยับขึ้นเป็น <strong>22.38%</strong> (เดิม 17.62% • สีจริงเที่ยว 1 ขยับเพิ่ม)<br>
-                • อัปเดตงานติดตั้งวงกบและบานประตู (#12) ขยับขึ้นเป็น <strong>6.46%</strong> (เดิม 0.00% • วงกบชั้น 2-3 เริ่มติดตั้ง)
-              </td>
-              <td><span style="color:#15803d;font-weight:500;">✅ ตรวจสอบเทียบสไลด์ 14 ใบครบ 100%</span></td>
-            </tr>
-            <tr>
-              <td>21 พ.ย. 69 (รอบทางการ)</td>
-              <td>14 หมวดงาน</td>
-              <td>47.88%</td>
-              <td>รายงานประจำวันฉบับตั้งต้นโครงการ</td>
-              <td><span>เอกสารชุดเดิม (Historical Base)</span></td>
-            </tr>
-          </tbody>
-        </table>
+    <!-- VIEW 1: 5-COLUMN OFFICIAL SLIDE LAYOUT -->
+    <div id="slideViewSection">
+      <!-- Generated by JS -->
+    </div>
+
+    <!-- VIEW 2: MATRIX TABLE LAYOUT -->
+    <div id="matrixViewSection" style="display:none;">
+      <div class="matrix-card">
+        <h3 style="font-size:14px;font-weight:500;color:var(--navy-primary);margin-bottom:12px;">ตารางเมทริกซ์เปรียบเทียบความคืบหน้าสะสมทุกชั้น (FL 2 – FL 8) อาคาร B</h3>
+        <div class="table-wrap">
+          <table class="matrix-table" id="matrixTable">
+            <!-- Generated by JS -->
+          </table>
+        </div>
       </div>
     </div>
+
+
+
   </div>
 
   <script>
-    const MASTER_B = {"report_title": "ตารางเช็คสถานะงานก่อสร้าง อาคาร B • โครงการเดอะ ออริจิ้น พัทยา", "contractor": "Well Graded", "report_date": "24 พ.ย. 69", "overall_pct": 47.57, "packages": [{"id": "wg1", "num": 1, "page": 15, "name": "งานเกร้าท์รอยต่อ Precast", "title": "งานเกร้าท์รอยต่อ Precast อาคาร B", "accum": 82.14, "plan": 85.71, "variance": -3.57, "scope": "FL 2 – FL 8", "rows": [{"item": "งานเกร้าท์รอยต่อ Precast ชั้น 8", "planStart": "13 ต.ค. 69", "actPct": "-", "planEnd": "19 ต.ค. 69", "note": ""}, {"item": "งานเกร้าท์รอยต่อ Precast ชั้น 7", "planStart": "2 ต.ค. 69", "actPct": "75%", "planEnd": "8 ต.ค. 69", "note": ""}, {"item": "งานเกร้าท์รอยต่อ Precast ชั้น 6", "planStart": "21 ก.ย. 69", "actPct": "100%", "planEnd": "27 ก.ย. 69", "note": ""}, {"item": "งานเกร้าท์รอยต่อ Precast ชั้น 5", "planStart": "10 ก.ย. 69", "actPct": "100%", "planEnd": "16 ก.ย. 69", "note": ""}, {"item": "งานเกร้าท์รอยต่อ Precast ชั้น 4", "planStart": "30 ส.ค. 69", "actPct": "100%", "planEnd": "5 ก.ย. 69", "note": ""}, {"item": "งานเกร้าท์รอยต่อ Precast ชั้น 3", "planStart": "19 ส.ค. 69", "actPct": "100%", "planEnd": "25 ส.ค. 69", "note": ""}, {"item": "งานเกร้าท์รอยต่อ Precast ชั้น 2", "planStart": "8 ส.ค. 69", "actPct": "100%", "planEnd": "14 ส.ค. 69", "note": ""}]}, {"id": "wg2", "num": 2, "page": 16, "name": "งานติดตั้งราวระเบียง", "title": "งานติดตั้งราวระเบียง อาคาร B", "accum": 92.14, "plan": 100.0, "variance": -7.86, "scope": "FL 2 – FL 8", "rows": [{"item": "งานติดตั้งราวระเบียง ชั้น 8", "planStart": "23 ต.ค. 69", "actPct": "75%", "planEnd": "29 ต.ค. 69", "note": ""}, {"item": "งานติดตั้งราวระเบียง ชั้น 7", "planStart": "9 ต.ค. 69", "actPct": "95%", "planEnd": "15 ต.ค. 69", "note": ""}, {"item": "งานติดตั้งราวระเบียง ชั้น 6", "planStart": "28 ก.ย. 69", "actPct": "95%", "planEnd": "4 ต.ค. 69", "note": ""}, {"item": "งานติดตั้งราวระเบียง ชั้น 5", "planStart": "17 ก.ย. 69", "actPct": "95%", "planEnd": "23 ก.ย. 69", "note": ""}, {"item": "งานติดตั้งราวระเบียง ชั้น 4", "planStart": "6 ก.ย. 69", "actPct": "95%", "planEnd": "12 ก.ย. 69", "note": ""}, {"item": "งานติดตั้งราวระเบียง ชั้น 3", "planStart": "26 ส.ค. 69", "actPct": "95%", "planEnd": "1 ก.ย. 69", "note": ""}, {"item": "งานติดตั้งราวระเบียง ชั้น 2", "planStart": "15 ส.ค. 69", "actPct": "95%", "planEnd": "21 ส.ค. 69", "note": ""}]}, {"id": "wg3", "num": 3, "page": 17, "name": "งานเกร้าท์ผนัง RISER ห้องพัก", "title": "งานเกร้าท์ผนังตำแหน่งท่อ RISER ภายในห้องพัก อาคาร B", "accum": 67.14, "plan": 71.43, "variance": -4.29, "scope": "FL 2 – FL 8", "rows": [{"item": "งานเกร้าท์ผนังตำแหน่งท่อ RISER ภายในห้องพัก ชั้น 8", "planStart": "30 ต.ค. 69", "actPct": "-", "planEnd": "5 พ.ย. 69", "note": ""}, {"item": "งานเกร้าท์ผนังตำแหน่งท่อ RISER ภายในห้องพัก ชั้น 7", "planStart": "19 ต.ค. 69", "actPct": "-", "planEnd": "25 ต.ค. 69", "note": ""}, {"item": "งานเกร้าท์ผนังตำแหน่งท่อ RISER ภายในห้องพัก ชั้น 6", "planStart": "8 ต.ค. 69", "actPct": "80%", "planEnd": "14 ต.ค. 69", "note": ""}, {"item": "งานเกร้าท์ผนังตำแหน่งท่อ RISER ภายในห้องพัก ชั้น 5", "planStart": "27 ก.ย. 69", "actPct": "95%", "planEnd": "3 ต.ค. 69", "note": ""}, {"item": "งานเกร้าท์ผนังตำแหน่งท่อ RISER ภายในห้องพัก ชั้น 4", "planStart": "16 ก.ย. 69", "actPct": "95%", "planEnd": "22 ก.ย. 69", "note": ""}, {"item": "งานเกร้าท์ผนังตำแหน่งท่อ RISER ภายในห้องพัก ชั้น 3", "planStart": "5 ก.ย. 69", "actPct": "100%", "planEnd": "11 ก.ย. 69", "note": ""}, {"item": "งานเกร้าท์ผนังตำแหน่งท่อ RISER ภายในห้องพัก ชั้น 2", "planStart": "25 ส.ค. 69", "actPct": "100%", "planEnd": "31 ส.ค. 69", "note": ""}]}, {"id": "wg4", "num": 4, "page": 18, "name": "งานเทปรับระดับพื้น", "title": "งานเทปรับระดับพื้น อาคาร B", "accum": 48.57, "plan": 57.14, "variance": -8.57, "scope": "FL 2 – FL 8", "rows": [{"item": "งานเทปรับระดับพื้น ชั้น 8", "planStart": "10 พ.ย. 69", "actPct": "-", "planEnd": "16 พ.ย. 69", "note": ""}, {"item": "งานเทปรับระดับพื้น ชั้น 7", "planStart": "30 ต.ค. 69", "actPct": "-", "planEnd": "5 พ.ย. 69", "note": ""}, {"item": "งานเทปรับระดับพื้น ชั้น 6", "planStart": "19 ต.ค. 69", "actPct": "-", "planEnd": "25 ต.ค. 69", "note": ""}, {"item": "งานเทปรับระดับพื้น ชั้น 5", "planStart": "8 ต.ค. 69", "actPct": "40%", "planEnd": "14 ต.ค. 69", "note": ""}, {"item": "งานเทปรับระดับพื้น ชั้น 4", "planStart": "27 ก.ย. 69", "actPct": "100%", "planEnd": "3 ต.ค. 69", "note": ""}, {"item": "งานเทปรับระดับพื้น ชั้น 3", "planStart": "16 ก.ย. 69", "actPct": "100%", "planEnd": "22 ก.ย. 69", "note": ""}, {"item": "งานเทปรับระดับพื้น ชั้น 2", "planStart": "5 ก.ย. 69", "actPct": "100%", "planEnd": "11 ก.ย. 69", "note": ""}]}, {"id": "wg5", "num": 5, "page": 19, "name": "งานติดตั้งกระเบื้อง", "title": "งานติดตั้งกระเบื้อง อาคาร B", "accum": 38.68, "plan": 42.86, "variance": -4.18, "scope": "FL 2 – FL 8 (ผนังน้ำ 43.29% • พื้นน้ำ/ครัว/ระเบียง 37.14%)", "rows": [{"item": "งานติดตั้งกระเบื้อง ชั้น 8", "planStart": "18 พ.ย. 69", "actPct": "-", "planEnd": "20 ธ.ค. 69", "note": ""}, {"item": "งานติดตั้งกระเบื้อง ชั้น 7", "planStart": "7 พ.ย. 69", "actPct": "-", "planEnd": "9 ธ.ค. 69", "note": ""}, {"item": "งานติดตั้งกระเบื้อง ชั้น 6", "planStart": "27 ต.ค. 69", "actPct": "-", "planEnd": "28 พ.ย. 69", "note": ""}, {"item": "งานติดตั้งกระเบื้อง ชั้น 5", "planStart": "16 ต.ค. 69", "actPct": "17.50%", "planEnd": "17 พ.ย. 69", "note": "ผนัง 70%"}, {"item": "งานติดตั้งกระเบื้อง ชั้น 4", "planStart": "5 ต.ค. 69", "actPct": "80.75%", "planEnd": "6 พ.ย. 69", "note": "ผนัง 90% • พื้น 75%"}, {"item": "งานติดตั้งกระเบื้อง ชั้น 3", "planStart": "24 ก.ย. 69", "actPct": "88.25%", "planEnd": "26 ต.ค. 69", "note": "ผนัง 90% • พื้น 85%"}, {"item": "งานติดตั้งกระเบื้อง ชั้น 2", "planStart": "13 ก.ย. 69", "actPct": "100.00%", "planEnd": "15 ต.ค. 69", "note": "ผนัง 100% • พื้น 100%"}]}, {"id": "wg6", "num": 6, "page": 20, "name": "งานกันซึมห้องน้ำระเบียง", "title": "งานกันซึมห้องน้ำระเบียง อาคาร B", "accum": 57.14, "plan": 57.14, "variance": 0.0, "scope": "FL 2 – FL 8", "rows": [{"item": "งานกันซึมห้องน้ำระเบียง ชั้น 8", "planStart": "14 พ.ย. 69", "actPct": "-", "planEnd": "17 พ.ย. 69", "note": ""}, {"item": "งานกันซึมห้องน้ำระเบียง ชั้น 7", "planStart": "3 พ.ย. 69", "actPct": "-", "planEnd": "6 พ.ย. 69", "note": ""}, {"item": "งานกันซึมห้องน้ำระเบียง ชั้น 6", "planStart": "23 ต.ค. 69", "actPct": "-", "planEnd": "26 ต.ค. 69", "note": ""}, {"item": "งานกันซึมห้องน้ำระเบียง ชั้น 5", "planStart": "12 ต.ค. 69", "actPct": "100%", "planEnd": "15 ต.ค. 69", "note": ""}, {"item": "งานกันซึมห้องน้ำระเบียง ชั้น 4", "planStart": "1 ต.ค. 69", "actPct": "100%", "planEnd": "4 ต.ค. 69", "note": ""}, {"item": "งานกันซึมห้องน้ำระเบียง ชั้น 3", "planStart": "20 ก.ย. 69", "actPct": "100%", "planEnd": "23 ก.ย. 69", "note": ""}, {"item": "งานกันซึมห้องน้ำระเบียง ชั้น 2", "planStart": "9 ก.ย. 69", "actPct": "100%", "planEnd": "12 ก.ย. 69", "note": ""}]}, {"id": "wg7", "num": 7, "page": 21, "name": "งานติดตั้ง Texca wall", "title": "งานติดตั้ง Texca wall อาคาร B", "accum": 92.86, "plan": 100.0, "variance": -7.14, "scope": "FL 2 – FL 8", "rows": [{"item": "งานติดตั้ง Texca wall ชั้น 8", "planStart": "11 ต.ค. 69", "actPct": "80%", "planEnd": "24 ต.ค. 69", "note": ""}, {"item": "งานติดตั้ง Texca wall ชั้น 7", "planStart": "30 ก.ย. 69", "actPct": "80%", "planEnd": "13 ต.ค. 69", "note": ""}, {"item": "งานติดตั้ง Texca wall ชั้น 6", "planStart": "19 ก.ย. 69", "actPct": "95%", "planEnd": "2 ต.ค. 69", "note": ""}, {"item": "งานติดตั้ง Texca wall ชั้น 5", "planStart": "8 ก.ย. 69", "actPct": "95%", "planEnd": "21 ก.ย. 69", "note": ""}, {"item": "งานติดตั้ง Texca wall ชั้น 4", "planStart": "28 ส.ค. 69", "actPct": "100%", "planEnd": "10 ก.ย. 69", "note": ""}, {"item": "งานติดตั้ง Texca wall ชั้น 3", "planStart": "17 ส.ค. 69", "actPct": "100%", "planEnd": "30 ส.ค. 69", "note": ""}, {"item": "งานติดตั้ง Texca wall ชั้น 2", "planStart": "6 ส.ค. 69", "actPct": "100%", "planEnd": "19 ส.ค. 69", "note": ""}]}, {"id": "wg8", "num": 8, "page": 22, "name": "งานติดตั้งอลูมิเนียม", "title": "งานติดตั้งอลูมิเนียม อาคาร B", "accum": 28.46, "plan": 42.86, "variance": -14.4, "scope": "FL 2 – FL 8 (หน้าต่าง/ระเบียง/นอน/ครัว)", "rows": [{"item": "งานติดตั้งอลูมิเนียม ชั้น 8", "planStart": "22 พ.ย. 69", "actPct": "25.00%", "planEnd": "28 พ.ย. 69", "note": "หน้าต่าง 100%"}, {"item": "งานติดตั้งอลูมิเนียม ชั้น 7", "planStart": "11 พ.ย. 69", "actPct": "25.00%", "planEnd": "17 พ.ย. 69", "note": "หน้าต่าง 100%"}, {"item": "งานติดตั้งอลูมิเนียม ชั้น 6", "planStart": "31 ต.ค. 69", "actPct": "25.00%", "planEnd": "6 พ.ย. 69", "note": "หน้าต่าง 100%"}, {"item": "งานติดตั้งอลูมิเนียม ชั้น 5", "planStart": "20 ต.ค. 69", "actPct": "25.00%", "planEnd": "26 ต.ค. 69", "note": "หน้าต่าง 100%"}, {"item": "งานติดตั้งอลูมิเนียม ชั้น 4", "planStart": "9 ต.ค. 69", "actPct": "35.00%", "planEnd": "15 ต.ค. 69", "note": "หน้าต่าง 100% • ระเบียง 40%"}, {"item": "งานติดตั้งอลูมิเนียม ชั้น 3", "planStart": "28 ก.ย. 69", "actPct": "45.00%", "planEnd": "4 ต.ค. 69", "note": "หน้าต่าง 100% • ระเบียง 80%"}, {"item": "งานติดตั้งอลูมิเนียม ชั้น 2", "planStart": "17 ก.ย. 69", "actPct": "54.25%", "planEnd": "23 ก.ย. 69", "note": "หน้าต่าง 100% • ระเบียง 80% • ห้องนอน 37%"}]}, {"id": "wg9", "num": 9, "page": 23, "name": "งานติดตั้งฝ้าเพดาน", "title": "งานติดตั้งฝ้าเพดาน อาคาร B", "accum": 45.71, "plan": 42.86, "variance": 2.85, "scope": "FL 2 – FL 8 (โครงฝ้า 51.43% • แผ่นฝ้า 40.00%)", "rows": [{"item": "งานติดตั้งฝ้าเพดาน ชั้น 8", "planStart": "25 พ.ย. 69", "actPct": "-", "planEnd": "6 ธ.ค. 69", "note": ""}, {"item": "งานติดตั้งฝ้าเพดาน ชั้น 7", "planStart": "14 พ.ย. 69", "actPct": "-", "planEnd": "25 พ.ย. 69", "note": ""}, {"item": "งานติดตั้งฝ้าเพดาน ชั้น 6", "planStart": "3 พ.ย. 69", "actPct": "-", "planEnd": "14 พ.ย. 69", "note": ""}, {"item": "งานติดตั้งฝ้าเพดาน ชั้น 5", "planStart": "23 ต.ค. 69", "actPct": "40.00%", "planEnd": "3 พ.ย. 69", "note": "โครงฝ้า 80%"}, {"item": "งานติดตั้งฝ้าเพดาน ชั้น 4", "planStart": "12 ต.ค. 69", "actPct": "80.00%", "planEnd": "23 ต.ค. 69", "note": "โครงฝ้า 80% • แผ่นฝ้า 80%"}, {"item": "งานติดตั้งฝ้าเพดาน ชั้น 3", "planStart": "1 ต.ค. 69", "actPct": "100.00%", "planEnd": "12 ต.ค. 69", "note": "โครง 100% • แผ่น 100%"}, {"item": "งานติดตั้งฝ้าเพดาน ชั้น 2", "planStart": "20 ก.ย. 69", "actPct": "100.00%", "planEnd": "1 ต.ค. 69", "note": "โครง 100% • แผ่น 100%"}]}, {"id": "wg10", "num": 10, "page": 24, "name": "งาน SKIM ห้องพัก", "title": "งาน SKIM ห้องพัก อาคาร B", "accum": 70.0, "plan": 71.43, "variance": -1.43, "scope": "FL 2 – FL 8", "rows": [{"item": "งาน SKIM ห้องพัก ชั้น 8", "planStart": "21 ต.ค. 69", "actPct": "-", "planEnd": "27 ต.ค. 69", "note": ""}, {"item": "งาน SKIM ห้องพัก ชั้น 7", "planStart": "10 ต.ค. 69", "actPct": "-", "planEnd": "16 ต.ค. 69", "note": ""}, {"item": "งาน SKIM ห้องพัก ชั้น 6", "planStart": "29 ก.ย. 69", "actPct": "95%", "planEnd": "5 ต.ค. 69", "note": ""}, {"item": "งาน SKIM ห้องพัก ชั้น 5", "planStart": "18 ก.ย. 69", "actPct": "95%", "planEnd": "24 ก.ย. 69", "note": ""}, {"item": "งาน SKIM ห้องพัก ชั้น 4", "planStart": "7 ก.ย. 69", "actPct": "100%", "planEnd": "13 ก.ย. 69", "note": ""}, {"item": "งาน SKIM ห้องพัก ชั้น 3", "planStart": "27 ส.ค. 69", "actPct": "100%", "planEnd": "2 ก.ย. 69", "note": ""}, {"item": "งาน SKIM ห้องพัก ชั้น 2", "planStart": "16 ส.ค. 69", "actPct": "100%", "planEnd": "22 ส.ค. 69", "note": ""}]}, {"id": "wg11", "num": 11, "page": 25, "name": "งานทาสี", "title": "งานทาสี อาคาร B", "accum": 22.38, "plan": 28.57, "variance": -6.19, "scope": "FL 2 – FL 8 (สีรองพื้น 42.86% • สีจริงเที่ยว 1 24.29%)", "rows": [{"item": "งานทาสี ชั้น 8", "planStart": "25 ม.ค. 70", "actPct": "-", "planEnd": "18 ก.พ. 70", "note": ""}, {"item": "งานทาสี ชั้น 7", "planStart": "14 ม.ค. 70", "actPct": "-", "planEnd": "7 ก.พ. 70", "note": ""}, {"item": "งานทาสี ชั้น 6", "planStart": "3 ม.ค. 70", "actPct": "-", "planEnd": "27 ม.ค. 70", "note": ""}, {"item": "งานทาสี ชั้น 5", "planStart": "22 ธ.ค. 69", "actPct": "-", "planEnd": "16 ม.ค. 70", "note": ""}, {"item": "งานทาสี ชั้น 4", "planStart": "11 ธ.ค. 69", "actPct": "46.67%", "planEnd": "5 ม.ค. 70", "note": "รองพื้น 100% • สีจริง 1 ได้ 40%"}, {"item": "งานทาสี ชั้น 3", "planStart": "31 ต.ค. 69", "actPct": "50.00%", "planEnd": "24 พ.ย. 69", "note": "รองพื้น 100% • สีจริง 1 ได้ 50%"}, {"item": "งานทาสี ชั้น 2", "planStart": "20 ต.ค. 69", "actPct": "60.00%", "planEnd": "14 พ.ย. 69", "note": "รองพื้น 100% • สีจริง 1 ได้ 100% (คำนวณรวม 60%)"}]}, {"id": "wg12", "num": 12, "page": 26, "name": "งานติดตั้งวงกบและบานประตู", "title": "งานติดตั้งวงกบและบานประตู อาคาร B", "accum": 6.46, "plan": 14.29, "variance": -7.83, "scope": "FL 2 – FL 8 (วงกบ 11.86% • บานประตู 2.14%)", "rows": [{"item": "งานติดตั้งวงกบและบานประตู ชั้น 8", "planStart": "9 ม.ค. 70", "actPct": "-", "planEnd": "23 ม.ค. 70", "note": ""}, {"item": "งานติดตั้งวงกบและบานประตู ชั้น 7", "planStart": "29 ธ.ค. 69", "actPct": "-", "planEnd": "12 ม.ค. 70", "note": ""}, {"item": "งานติดตั้งวงกบและบานประตู ชั้น 6", "planStart": "18 ธ.ค. 69", "actPct": "-", "planEnd": "1 ม.ค. 70", "note": ""}, {"item": "งานติดตั้งวงกบและบานประตู ชั้น 5", "planStart": "7 ธ.ค. 69", "actPct": "-", "planEnd": "21 ธ.ค. 69", "note": ""}, {"item": "งานติดตั้งวงกบและบานประตู ชั้น 4", "planStart": "26 พ.ย. 69", "actPct": "-", "planEnd": "10 ธ.ค. 69", "note": ""}, {"item": "งานติดตั้งวงกบและบานประตู ชั้น 3", "planStart": "15 พ.ย. 69", "actPct": "7.50%", "planEnd": "29 พ.ย. 69", "note": "วงกบ 15%"}, {"item": "งานติดตั้งวงกบและบานประตู ชั้น 2", "planStart": "4 พ.ย. 69", "actPct": "37.75%", "planEnd": "18 พ.ย. 69", "note": "วงกบ 68% • บานประตู 15%"}]}, {"id": "wg13", "num": 13, "page": 27, "name": "งานสุขภัณฑ์", "title": "งานสุขภัณฑ์ อาคาร B", "accum": 14.29, "plan": 14.29, "variance": 0.0, "scope": "FL 2 – FL 8", "rows": [{"item": "งานสุขภัณฑ์ ชั้น 8", "planStart": "19 ม.ค. 70", "actPct": "-", "planEnd": "25 ม.ค. 70", "note": ""}, {"item": "งานสุขภัณฑ์ ชั้น 7", "planStart": "8 ม.ค. 70", "actPct": "-", "planEnd": "14 ม.ค. 70", "note": ""}, {"item": "งานสุขภัณฑ์ ชั้น 6", "planStart": "28 ธ.ค. 69", "actPct": "-", "planEnd": "3 ม.ค. 70", "note": ""}, {"item": "งานสุขภัณฑ์ ชั้น 5", "planStart": "17 ธ.ค. 69", "actPct": "-", "planEnd": "23 ธ.ค. 69", "note": ""}, {"item": "งานสุขภัณฑ์ ชั้น 4", "planStart": "6 ธ.ค. 69", "actPct": "-", "planEnd": "10 ธ.ค. 69", "note": ""}, {"item": "งานสุขภัณฑ์ ชั้น 3", "planStart": "25 พ.ย. 69", "actPct": "-", "planEnd": "1 ธ.ค. 69", "note": ""}, {"item": "งานสุขภัณฑ์ ชั้น 2", "planStart": "14 พ.ย. 69", "actPct": "100%", "planEnd": "20 พ.ย. 69", "note": "ติดตั้งสุขภัณฑ์ครบ 100%"}]}, {"id": "wg14", "num": 14, "page": 28, "name": "งานติดตั้งพื้นกระเบื้องยาง SPC ห้องพัก", "title": "งานติดตั้งพื้นกระเบื้องยาง SPC ห้องพัก อาคาร B", "accum": 0.0, "plan": 14.29, "variance": -14.29, "scope": "FL 2 – FL 8", "rows": [{"item": "งานติดตั้งพื้นกระเบื้องยาง SPC ห้องพัก ชั้น 8", "planStart": "26 ม.ค. 70", "actPct": "-", "planEnd": "1 ก.พ. 70", "note": ""}, {"item": "งานติดตั้งพื้นกระเบื้องยาง SPC ห้องพัก ชั้น 7", "planStart": "15 ม.ค. 70", "actPct": "-", "planEnd": "21 ม.ค. 70", "note": ""}, {"item": "งานติดตั้งพื้นกระเบื้องยาง SPC ห้องพัก ชั้น 6", "planStart": "4 ม.ค. 70", "actPct": "-", "planEnd": "10 ม.ค. 70", "note": ""}, {"item": "งานติดตั้งพื้นกระเบื้องยาง SPC ห้องพัก ชั้น 5", "planStart": "24 ธ.ค. 69", "actPct": "-", "planEnd": "30 ธ.ค. 69", "note": ""}, {"item": "งานติดตั้งพื้นกระเบื้องยาง SPC ห้องพัก ชั้น 4", "planStart": "13 ธ.ค. 69", "actPct": "-", "planEnd": "19 ธ.ค. 69", "note": ""}, {"item": "งานติดตั้งพื้นกระเบื้องยาง SPC ห้องพัก ชั้น 3", "planStart": "2 ธ.ค. 69", "actPct": "-", "planEnd": "8 ธ.ค. 69", "note": ""}, {"item": "งานติดตั้งพื้นกระเบื้องยาง SPC ห้องพัก ชั้น 2", "planStart": "21 พ.ย. 69", "actPct": "-", "planEnd": "27 พ.ย. 69", "note": "เตรียมเริ่มงาน"}]}]};
-    let currentData = [];
-    let currentUpdateDate = "24 พ.ย. 69";
+    const MASTER_B = {"report_title": "ตารางเช็คสถานะงานก่อสร้าง อาคาร B • โครงการเดอะ ออริจิ้น พัทยา", "contractor": "Well Graded", "report_date": "24 พ.ย. 69", "overall_pct": 46.69, "packages": [{"id": "wg1", "num": 1, "page": 15, "name": "งานเกร้าท์รอยต่อ Precast", "title": "งานเกร้าท์รอยต่อ Precast อาคาร B", "accum": 85.71, "plan": 85.71, "variance": 0.0, "scope": "FL 2 – FL 8", "rows": [{"item": "งานเกร้าท์รอยต่อ Precast ชั้น 8", "planStart": "13 ต.ค. 69", "actPct": "-", "planEnd": "19 ต.ค. 69", "note": ""}, {"item": "งานเกร้าท์รอยต่อ Precast ชั้น 7", "planStart": "2 ต.ค. 69", "actPct": "100%", "planEnd": "8 ต.ค. 69", "note": ""}, {"item": "งานเกร้าท์รอยต่อ Precast ชั้น 6", "planStart": "21 ก.ย. 69", "actPct": "100%", "planEnd": "27 ก.ย. 69", "note": ""}, {"item": "งานเกร้าท์รอยต่อ Precast ชั้น 5", "planStart": "10 ก.ย. 69", "actPct": "100%", "planEnd": "16 ก.ย. 69", "note": ""}, {"item": "งานเกร้าท์รอยต่อ Precast ชั้น 4", "planStart": "30 ส.ค. 69", "actPct": "100%", "planEnd": "5 ก.ย. 69", "note": ""}, {"item": "งานเกร้าท์รอยต่อ Precast ชั้น 3", "planStart": "19 ส.ค. 69", "actPct": "100%", "planEnd": "25 ส.ค. 69", "note": ""}, {"item": "งานเกร้าท์รอยต่อ Precast ชั้น 2", "planStart": "8 ส.ค. 69", "actPct": "100%", "planEnd": "14 ส.ค. 69", "note": ""}]}, {"id": "wg2", "num": 2, "page": 16, "name": "งานติดตั้งราวระเบียง", "title": "งานติดตั้งราวระเบียง อาคาร B", "accum": 92.14, "plan": 100.0, "variance": -7.86, "scope": "FL 2 – FL 8", "rows": [{"item": "งานติดตั้งราวระเบียง ชั้น 8", "planStart": "23 ต.ค. 69", "actPct": "75%", "planEnd": "29 ต.ค. 69", "note": ""}, {"item": "งานติดตั้งราวระเบียง ชั้น 7", "planStart": "9 ต.ค. 69", "actPct": "95%", "planEnd": "15 ต.ค. 69", "note": ""}, {"item": "งานติดตั้งราวระเบียง ชั้น 6", "planStart": "28 ก.ย. 69", "actPct": "95%", "planEnd": "4 ต.ค. 69", "note": ""}, {"item": "งานติดตั้งราวระเบียง ชั้น 5", "planStart": "17 ก.ย. 69", "actPct": "95%", "planEnd": "23 ก.ย. 69", "note": ""}, {"item": "งานติดตั้งราวระเบียง ชั้น 4", "planStart": "6 ก.ย. 69", "actPct": "95%", "planEnd": "12 ก.ย. 69", "note": ""}, {"item": "งานติดตั้งราวระเบียง ชั้น 3", "planStart": "26 ส.ค. 69", "actPct": "95%", "planEnd": "1 ก.ย. 69", "note": ""}, {"item": "งานติดตั้งราวระเบียง ชั้น 2", "planStart": "15 ส.ค. 69", "actPct": "95%", "planEnd": "21 ส.ค. 69", "note": ""}]}, {"id": "wg3", "num": 3, "page": 17, "name": "งานเกร้าท์ผนัง RISER ห้องพัก", "title": "งานเกร้าท์ผนังตำแหน่งท่อ RISER ภายในห้องพัก อาคาร B", "accum": 67.14, "plan": 100.0, "variance": -32.86, "scope": "FL 2 – FL 8", "rows": [{"item": "งานเกร้าท์ผนังตำแหน่งท่อ RISER ภายในห้องพัก ชั้น 8", "planStart": "30 ต.ค. 69", "actPct": "-", "planEnd": "5 พ.ย. 69", "note": ""}, {"item": "งานเกร้าท์ผนังตำแหน่งท่อ RISER ภายในห้องพัก ชั้น 7", "planStart": "19 ต.ค. 69", "actPct": "-", "planEnd": "25 ต.ค. 69", "note": ""}, {"item": "งานเกร้าท์ผนังตำแหน่งท่อ RISER ภายในห้องพัก ชั้น 6", "planStart": "8 ต.ค. 69", "actPct": "80%", "planEnd": "14 ต.ค. 69", "note": ""}, {"item": "งานเกร้าท์ผนังตำแหน่งท่อ RISER ภายในห้องพัก ชั้น 5", "planStart": "27 ก.ย. 69", "actPct": "95%", "planEnd": "3 ต.ค. 69", "note": ""}, {"item": "งานเกร้าท์ผนังตำแหน่งท่อ RISER ภายในห้องพัก ชั้น 4", "planStart": "16 ก.ย. 69", "actPct": "95%", "planEnd": "22 ก.ย. 69", "note": ""}, {"item": "งานเกร้าท์ผนังตำแหน่งท่อ RISER ภายในห้องพัก ชั้น 3", "planStart": "5 ก.ย. 69", "actPct": "100%", "planEnd": "11 ก.ย. 69", "note": ""}, {"item": "งานเกร้าท์ผนังตำแหน่งท่อ RISER ภายในห้องพัก ชั้น 2", "planStart": "25 ส.ค. 69", "actPct": "100%", "planEnd": "31 ส.ค. 69", "note": ""}]}, {"id": "wg4", "num": 4, "page": 18, "name": "งานเทปรับระดับพื้น", "title": "งานเทปรับระดับพื้น อาคาร B", "accum": 48.57, "plan": 100.0, "variance": -51.43, "scope": "FL 2 – FL 8", "rows": [{"item": "งานเทปรับระดับพื้น ชั้น 8", "planStart": "10 พ.ย. 69", "actPct": "-", "planEnd": "16 พ.ย. 69", "note": ""}, {"item": "งานเทปรับระดับพื้น ชั้น 7", "planStart": "30 ต.ค. 69", "actPct": "-", "planEnd": "5 พ.ย. 69", "note": ""}, {"item": "งานเทปรับระดับพื้น ชั้น 6", "planStart": "19 ต.ค. 69", "actPct": "-", "planEnd": "25 ต.ค. 69", "note": ""}, {"item": "งานเทปรับระดับพื้น ชั้น 5", "planStart": "8 ต.ค. 69", "actPct": "40%", "planEnd": "14 ต.ค. 69", "note": ""}, {"item": "งานเทปรับระดับพื้น ชั้น 4", "planStart": "27 ก.ย. 69", "actPct": "100%", "planEnd": "3 ต.ค. 69", "note": ""}, {"item": "งานเทปรับระดับพื้น ชั้น 3", "planStart": "16 ก.ย. 69", "actPct": "100%", "planEnd": "22 ก.ย. 69", "note": ""}, {"item": "งานเทปรับระดับพื้น ชั้น 2", "planStart": "5 ก.ย. 69", "actPct": "100%", "planEnd": "11 ก.ย. 69", "note": ""}]}, {"id": "wg5", "num": 5, "page": 19, "name": "งานติดตั้งกระเบื้อง", "title": "งานติดตั้งกระเบื้อง อาคาร B", "accum": 39.18, "plan": 42.86, "variance": -3.68, "scope": "FL 2 – FL 8 (ผนังน้ำ 44.49% • พื้นน้ำ/ระเบียง 37.43%)", "rows": [{"item": "งานติดตั้งกระเบื้อง ชั้น 8", "planStart": "18 พ.ย. 69", "actPct": "-", "planEnd": "20 ธ.ค. 69", "note": ""}, {"item": "งานติดตั้งกระเบื้อง ชั้น 7", "planStart": "7 พ.ย. 69", "actPct": "-", "planEnd": "9 ธ.ค. 69", "note": ""}, {"item": "งานติดตั้งกระเบื้อง ชั้น 6", "planStart": "27 ต.ค. 69", "actPct": "-", "planEnd": "28 พ.ย. 69", "note": ""}, {"item": "งานติดตั้งกระเบื้อง ชั้น 5", "planStart": "16 ต.ค. 69", "actPct": "3.75%", "planEnd": "17 พ.ย. 69", "note": "ผนัง 15%"}, {"item": "งานติดตั้งกระเบื้อง ชั้น 4", "planStart": "5 ต.ค. 69", "actPct": "80.75%", "planEnd": "6 พ.ย. 69", "note": "ผนัง 90% • พื้น 75%"}, {"item": "งานติดตั้งกระเบื้อง ชั้น 3", "planStart": "24 ก.ย. 69", "actPct": "89.75%", "planEnd": "26 ต.ค. 69", "note": "ผนัง 90% • พื้น 87%"}, {"item": "งานติดตั้งกระเบื้อง ชั้น 2", "planStart": "13 ก.ย. 69", "actPct": "100.00%", "planEnd": "15 ต.ค. 69", "note": "ผนัง 100% • พื้น 100%"}]}, {"id": "wg6", "num": 6, "page": 20, "name": "งานกันซึมห้องน้ำระเบียง", "title": "งานกันซึมห้องน้ำระเบียง อาคาร B", "accum": 57.14, "plan": 100.0, "variance": -42.86, "scope": "FL 2 – FL 8", "rows": [{"item": "งานกันซึมห้องน้ำระเบียง ชั้น 8", "planStart": "14 พ.ย. 69", "actPct": "-", "planEnd": "17 พ.ย. 69", "note": ""}, {"item": "งานกันซึมห้องน้ำระเบียง ชั้น 7", "planStart": "3 พ.ย. 69", "actPct": "-", "planEnd": "6 พ.ย. 69", "note": ""}, {"item": "งานกันซึมห้องน้ำระเบียง ชั้น 6", "planStart": "23 ต.ค. 69", "actPct": "-", "planEnd": "26 ต.ค. 69", "note": ""}, {"item": "งานกันซึมห้องน้ำระเบียง ชั้น 5", "planStart": "12 ต.ค. 69", "actPct": "100%", "planEnd": "15 ต.ค. 69", "note": ""}, {"item": "งานกันซึมห้องน้ำระเบียง ชั้น 4", "planStart": "1 ต.ค. 69", "actPct": "100%", "planEnd": "4 ต.ค. 69", "note": ""}, {"item": "งานกันซึมห้องน้ำระเบียง ชั้น 3", "planStart": "20 ก.ย. 69", "actPct": "100%", "planEnd": "23 ก.ย. 69", "note": ""}, {"item": "งานกันซึมห้องน้ำระเบียง ชั้น 2", "planStart": "9 ก.ย. 69", "actPct": "100%", "planEnd": "12 ก.ย. 69", "note": ""}]}, {"id": "wg7", "num": 7, "page": 21, "name": "งานติดตั้ง Texca wall", "title": "งานติดตั้ง Texca wall อาคาร B", "accum": 97.14, "plan": 100.0, "variance": -2.86, "scope": "FL 2 – FL 8", "rows": [{"item": "งานติดตั้ง Texca wall ชั้น 8", "planStart": "11 ต.ค. 69", "actPct": "95%", "planEnd": "24 ต.ค. 69", "note": ""}, {"item": "งานติดตั้ง Texca wall ชั้น 7", "planStart": "30 ก.ย. 69", "actPct": "95%", "planEnd": "13 ต.ค. 69", "note": ""}, {"item": "งานติดตั้ง Texca wall ชั้น 6", "planStart": "19 ก.ย. 69", "actPct": "95%", "planEnd": "2 ต.ค. 69", "note": ""}, {"item": "งานติดตั้ง Texca wall ชั้น 5", "planStart": "8 ก.ย. 69", "actPct": "95%", "planEnd": "21 ก.ย. 69", "note": ""}, {"item": "งานติดตั้ง Texca wall ชั้น 4", "planStart": "28 ส.ค. 69", "actPct": "100%", "planEnd": "10 ก.ย. 69", "note": ""}, {"item": "งานติดตั้ง Texca wall ชั้น 3", "planStart": "17 ส.ค. 69", "actPct": "100%", "planEnd": "30 ส.ค. 69", "note": ""}, {"item": "งานติดตั้ง Texca wall ชั้น 2", "planStart": "6 ส.ค. 69", "actPct": "100%", "planEnd": "19 ส.ค. 69", "note": ""}]}, {"id": "wg8", "num": 8, "page": 22, "name": "งานติดตั้งอลูมิเนียม", "title": "งานติดตั้งอลูมิเนียม อาคาร B", "accum": 28.46, "plan": 70.0, "variance": -41.54, "scope": "FL 2 – FL 8 (หน้าต่าง 100% • ระเบียง 28.57% • ช่องนอน 5.29%)", "rows": [{"item": "งานติดตั้งอลูมิเนียม ชั้น 8", "planStart": "22 พ.ย. 69", "actPct": "25.00%", "planEnd": "28 พ.ย. 69", "note": "หน้าต่าง 100%"}, {"item": "งานติดตั้งอลูมิเนียม ชั้น 7", "planStart": "11 พ.ย. 69", "actPct": "25.00%", "planEnd": "17 พ.ย. 69", "note": "หน้าต่าง 100%"}, {"item": "งานติดตั้งอลูมิเนียม ชั้น 6", "planStart": "31 ต.ค. 69", "actPct": "25.00%", "planEnd": "6 พ.ย. 69", "note": "หน้าต่าง 100%"}, {"item": "งานติดตั้งอลูมิเนียม ชั้น 5", "planStart": "20 ต.ค. 69", "actPct": "25.00%", "planEnd": "26 ต.ค. 69", "note": "หน้าต่าง 100%"}, {"item": "งานติดตั้งอลูมิเนียม ชั้น 4", "planStart": "9 ต.ค. 69", "actPct": "35.00%", "planEnd": "15 ต.ค. 69", "note": "หน้าต่าง 100% • ระเบียง 40%"}, {"item": "งานติดตั้งอลูมิเนียม ชั้น 3", "planStart": "28 ก.ย. 69", "actPct": "45.00%", "planEnd": "4 ต.ค. 69", "note": "หน้าต่าง 100% • ระเบียง 80%"}, {"item": "งานติดตั้งอลูมิเนียม ชั้น 2", "planStart": "17 ก.ย. 69", "actPct": "54.25%", "planEnd": "23 ก.ย. 69", "note": "หน้าต่าง 100% • ระเบียง 80% • ช่องนอน 37%"}]}, {"id": "wg9", "num": 9, "page": 23, "name": "งานติดตั้งฝ้าเพดาน", "title": "งานติดตั้งฝ้าเพดาน อาคาร B", "accum": 45.71, "plan": 71.43, "variance": -25.72, "scope": "FL 2 – FL 8 (โครงฝ้า 51.43% • แผ่นฝ้า 40.00%)", "rows": [{"item": "งานติดตั้งฝ้าเพดาน ชั้น 8", "planStart": "25 พ.ย. 69", "actPct": "-", "planEnd": "6 ธ.ค. 69", "note": ""}, {"item": "งานติดตั้งฝ้าเพดาน ชั้น 7", "planStart": "14 พ.ย. 69", "actPct": "-", "planEnd": "25 พ.ย. 69", "note": ""}, {"item": "งานติดตั้งฝ้าเพดาน ชั้น 6", "planStart": "3 พ.ย. 69", "actPct": "-", "planEnd": "14 พ.ย. 69", "note": ""}, {"item": "งานติดตั้งฝ้าเพดาน ชั้น 5", "planStart": "23 ต.ค. 69", "actPct": "40.00%", "planEnd": "3 พ.ย. 69", "note": "โครงฝ้า 80%"}, {"item": "งานติดตั้งฝ้าเพดาน ชั้น 4", "planStart": "12 ต.ค. 69", "actPct": "80.00%", "planEnd": "23 ต.ค. 69", "note": "โครงฝ้า 80% • แผ่นฝ้า 80%"}, {"item": "งานติดตั้งฝ้าเพดาน ชั้น 3", "planStart": "1 ต.ค. 69", "actPct": "100.00%", "planEnd": "12 ต.ค. 69", "note": ""}, {"item": "งานติดตั้งฝ้าเพดาน ชั้น 2", "planStart": "20 ก.ย. 69", "actPct": "100.00%", "planEnd": "1 ต.ค. 69", "note": ""}]}, {"id": "wg10", "num": 10, "page": 24, "name": "งาน SKIM ห้องพัก", "title": "งาน SKIM ห้องพัก อาคาร B", "accum": 49.29, "plan": 71.43, "variance": -22.14, "scope": "FL 2 – FL 8", "rows": [{"item": "งาน SKIM ห้องพัก ชั้น 8", "planStart": "21 ต.ค. 69", "actPct": "-", "planEnd": "27 ต.ค. 69", "note": ""}, {"item": "งาน SKIM ห้องพัก ชั้น 7", "planStart": "10 ต.ค. 69", "actPct": "-", "planEnd": "16 ต.ค. 69", "note": ""}, {"item": "งาน SKIM ห้องพัก ชั้น 6", "planStart": "29 ก.ย. 69", "actPct": "-", "planEnd": "5 ต.ค. 69", "note": ""}, {"item": "งาน SKIM ห้องพัก ชั้น 5", "planStart": "18 ก.ย. 69", "actPct": "45%", "planEnd": "24 ก.ย. 69", "note": "เริ่มฉาบ Skim 45%"}, {"item": "งาน SKIM ห้องพัก ชั้น 4", "planStart": "7 ก.ย. 69", "actPct": "100%", "planEnd": "13 ก.ย. 69", "note": ""}, {"item": "งาน SKIM ห้องพัก ชั้น 3", "planStart": "27 ส.ค. 69", "actPct": "100%", "planEnd": "2 ก.ย. 69", "note": ""}, {"item": "งาน SKIM ห้องพัก ชั้น 2", "planStart": "16 ส.ค. 69", "actPct": "100%", "planEnd": "22 ส.ค. 69", "note": ""}]}, {"id": "wg11", "num": 11, "page": 25, "name": "งานทาสี", "title": "งานทาสี อาคาร B", "accum": 22.38, "plan": 57.14, "variance": -34.76, "scope": "FL 2 – FL 8 (สีรองพื้น 42.86% • สีจริงเที่ยว 1 24.29%)", "rows": [{"item": "งานทาสี ชั้น 8", "planStart": "25 ต.ค. 69", "actPct": "-", "planEnd": "29 ต.ค. 69", "note": ""}, {"item": "งานทาสี ชั้น 7", "planStart": "14 ต.ค. 69", "actPct": "-", "planEnd": "18 ต.ค. 69", "note": ""}, {"item": "งานทาสี ชั้น 6", "planStart": "3 ต.ค. 69", "actPct": "-", "planEnd": "7 ต.ค. 69", "note": ""}, {"item": "งานทาสี ชั้น 5", "planStart": "22 ก.ย. 69", "actPct": "-", "planEnd": "26 ก.ย. 69", "note": ""}, {"item": "งานทาสี ชั้น 4", "planStart": "11 ก.ย. 69", "actPct": "46.67%", "planEnd": "15 ก.ย. 69", "note": "รองพื้น 100% • สีจริงเที่ยว 1 40%"}, {"item": "งานทาสี ชั้น 3", "planStart": "31 ส.ค. 69", "actPct": "50.00%", "planEnd": "4 ก.ย. 69", "note": "รองพื้น 100% • สีจริงเที่ยว 1 50%"}, {"item": "งานทาสี ชั้น 2", "planStart": "20 ส.ค. 69", "actPct": "60.00%", "planEnd": "24 ส.ค. 69", "note": "รองพื้น 100% • สีจริงเที่ยว 1 80%"}]}, {"id": "wg12", "num": 12, "page": 26, "name": "งานติดตั้งวงกบและบานประตู", "title": "งานติดตั้งวงกบและบานประตู อาคาร B", "accum": 6.46, "plan": 42.86, "variance": -36.4, "scope": "FL 2 – FL 8 (วงกบ 11.86% • บานประตู 2.14%)", "rows": [{"item": "งานติดตั้งวงกบและบานประตู ชั้น 8", "planStart": "9 ม.ค. 70", "actPct": "-", "planEnd": "18 ม.ค. 70", "note": ""}, {"item": "งานติดตั้งวงกบและบานประตู ชั้น 7", "planStart": "29 ธ.ค. 69", "actPct": "-", "planEnd": "7 ม.ค. 70", "note": ""}, {"item": "งานติดตั้งวงกบและบานประตู ชั้น 6", "planStart": "18 ธ.ค. 69", "actPct": "-", "planEnd": "27 ธ.ค. 69", "note": ""}, {"item": "งานติดตั้งวงกบและบานประตู ชั้น 5", "planStart": "7 ธ.ค. 69", "actPct": "-", "planEnd": "16 ธ.ค. 69", "note": ""}, {"item": "งานติดตั้งวงกบและบานประตู ชั้น 4", "planStart": "26 พ.ย. 69", "actPct": "-", "planEnd": "5 ธ.ค. 69", "note": ""}, {"item": "งานติดตั้งวงกบและบานประตู ชั้น 3", "planStart": "15 พ.ย. 69", "actPct": "7.50%", "planEnd": "24 พ.ย. 69", "note": "วงกบหน้าห้อง 15% • วงกบห้องน้ำ 15%"}, {"item": "งานติดตั้งวงกบและบานประตู ชั้น 2", "planStart": "4 พ.ย. 69", "actPct": "37.75%", "planEnd": "13 พ.ย. 69", "note": "วงกบหน้าห้อง 68% • วงกบห้องน้ำ 68% • บานประตูห้องน้ำ 15%"}]}, {"id": "wg13", "num": 13, "page": 27, "name": "งานสุขภัณฑ์", "title": "งานสุขภัณฑ์ อาคาร B", "accum": 14.29, "plan": 14.29, "variance": 0.0, "scope": "FL 2 – FL 8", "rows": [{"item": "งานสุขภัณฑ์ ชั้น 8", "planStart": "19 ม.ค. 70", "actPct": "-", "planEnd": "25 ม.ค. 70", "note": ""}, {"item": "งานสุขภัณฑ์ ชั้น 7", "planStart": "8 ม.ค. 70", "actPct": "-", "planEnd": "14 ม.ค. 70", "note": ""}, {"item": "งานสุขภัณฑ์ ชั้น 6", "planStart": "28 ธ.ค. 69", "actPct": "-", "planEnd": "3 ม.ค. 70", "note": ""}, {"item": "งานสุขภัณฑ์ ชั้น 5", "planStart": "17 ธ.ค. 69", "actPct": "-", "planEnd": "23 ธ.ค. 69", "note": ""}, {"item": "งานสุขภัณฑ์ ชั้น 4", "planStart": "6 ธ.ค. 69", "actPct": "-", "planEnd": "12 ธ.ค. 69", "note": ""}, {"item": "งานสุขภัณฑ์ ชั้น 3", "planStart": "25 พ.ย. 69", "actPct": "-", "planEnd": "1 ธ.ค. 69", "note": ""}, {"item": "งานสุขภัณฑ์ ชั้น 2", "planStart": "14 พ.ย. 69", "actPct": "100%", "planEnd": "20 พ.ย. 69", "note": ""}]}, {"id": "wg14", "num": 14, "page": 28, "name": "งานติดตั้งพื้นกระเบื้องยาง SPC ห้องพัก", "title": "งานติดตั้งพื้นกระเบื้องยาง SPC ห้องพัก อาคาร B", "accum": 0.0, "plan": 14.29, "variance": -14.29, "scope": "FL 2 – FL 8", "rows": [{"item": "งานติดตั้งพื้นกระเบื้องยาง SPC ห้องพัก ชั้น 8", "planStart": "26 ม.ค. 70", "actPct": "-", "planEnd": "1 ก.พ. 70", "note": ""}, {"item": "งานติดตั้งพื้นกระเบื้องยาง SPC ห้องพัก ชั้น 7", "planStart": "15 ม.ค. 70", "actPct": "-", "planEnd": "21 ม.ค. 70", "note": ""}, {"item": "งานติดตั้งพื้นกระเบื้องยาง SPC ห้องพัก ชั้น 6", "planStart": "4 ม.ค. 70", "actPct": "-", "planEnd": "10 ม.ค. 70", "note": ""}, {"item": "งานติดตั้งพื้นกระเบื้องยาง SPC ห้องพัก ชั้น 5", "planStart": "24 ธ.ค. 69", "actPct": "-", "planEnd": "30 ธ.ค. 69", "note": ""}, {"item": "งานติดตั้งพื้นกระเบื้องยาง SPC ห้องพัก ชั้น 4", "planStart": "13 ธ.ค. 69", "actPct": "-", "planEnd": "19 ธ.ค. 69", "note": ""}, {"item": "งานติดตั้งพื้นกระเบื้องยาง SPC ห้องพัก ชั้น 3", "planStart": "2 ธ.ค. 69", "actPct": "-", "planEnd": "8 ธ.ค. 69", "note": ""}, {"item": "งานติดตั้งพื้นกระเบื้องยาง SPC ห้องพัก ชั้น 2", "planStart": "21 พ.ย. 69", "actPct": "-", "planEnd": "27 พ.ย. 69", "note": ""}]}]};
 
-    function init() {
-      initData();
-      renderKPI14();
-      populateDropdown();
-      renderSlideView();
-      renderMatrixView();
-      apply100GreenHighlights();
-    }
+    let currentData = JSON.parse(JSON.stringify(MASTER_B.packages));
+    let currentView = 'slide';
+    let currentUpdateDate = '24 พ.ย. 69';
 
-    function initData() {
+    // Initialize
+    window.addEventListener('DOMContentLoaded', () => {
       const savedDate = localStorage.getItem('pataya_building_b_date');
       if (savedDate) {
         currentUpdateDate = savedDate;
         document.getElementById('displayUpdateDate').textContent = savedDate;
         document.getElementById('updateDateInput').value = savedDate;
-        document.getElementById('kpiDateLabel').textContent = 'ณ วันที่ ' + savedDate;
+        document.getElementById('kpiDateLabel').textContent = `ณ วันที่ ${savedDate}`;
       }
-
-      const saved = localStorage.getItem('pataya_building_b_v2_14pkg');
-      if (saved) {
-        try {
-          currentData = JSON.parse(saved);
-          return;
-        } catch(e) {}
-      }
-      currentData = JSON.parse(JSON.stringify(MASTER_B.packages));
-    }
+      renderKPI14();
+      renderSlideView();
+      renderMatrixView();
+      apply100GreenHighlights();
+    });
 
     function applyCustomDate() {
       const val = document.getElementById('updateDateInput').value.trim();
-      if (!val) {
-        alert('กรุณากรอกวันที่อัปเดต');
-        return;
+      if (val) {
+        currentUpdateDate = val;
+        document.getElementById('displayUpdateDate').textContent = val;
+        document.getElementById('kpiDateLabel').textContent = `ณ วันที่ ${val}`;
+        localStorage.setItem('pataya_building_b_date', val);
       }
-      currentUpdateDate = val;
-      document.getElementById('displayUpdateDate').textContent = val;
-      document.getElementById('kpiDateLabel').textContent = 'ณ วันที่ ' + val;
-      localStorage.setItem('pataya_building_b_date', val);
-      alert('✅ ตั้งวันที่อัปเดตเป็น: ' + val + ' เรียบร้อยแล้ว');
     }
 
     function handleHistorySelect(val) {
@@ -722,260 +640,219 @@
         renderSlideView();
         renderMatrixView();
         apply100GreenHighlights();
+      } else if (val === '2026-11-23') {
+        currentUpdateDate = '23 พ.ย. 69';
+        document.getElementById('displayUpdateDate').textContent = currentUpdateDate;
+        document.getElementById('updateDateInput').value = currentUpdateDate;
+        document.getElementById('kpiDateLabel').textContent = 'ณ วันที่ 23 พ.ย. 69';
+        // Previous batch before 24/11
+        const histData = JSON.parse(JSON.stringify(MASTER_B.packages));
+        histData.forEach(p => {
+          if (p.id === 'wg1') { p.accum = 82.14; p.rows[1].actPct = '75%'; }
+          if (p.id === 'wg7') { p.accum = 92.86; p.rows[0].actPct = '80%'; p.rows[1].actPct = '80%'; }
+          if (p.id === 'wg10') { p.accum = 70.00; p.rows[2].actPct = '95%'; p.rows[3].actPct = '95%'; }
+          if (p.id === 'wg5') { p.accum = 38.68; }
+        });
+        currentData = histData;
+        renderKPI14(47.57);
+        renderSlideView();
+        renderMatrixView();
+        apply100GreenHighlights();
       } else if (val === '2026-11-21') {
         currentUpdateDate = '21 พ.ย. 69';
         document.getElementById('displayUpdateDate').textContent = currentUpdateDate;
         document.getElementById('updateDateInput').value = currentUpdateDate;
         document.getElementById('kpiDateLabel').textContent = 'ณ วันที่ 21 พ.ย. 69';
-        // Historical base adjustments
         const histData = JSON.parse(JSON.stringify(MASTER_B.packages));
         histData.forEach(p => {
-          if (p.id === 'wg1') p.accum = 80.71;
-          if (p.id === 'wg3') p.accum = 65.00;
-          if (p.id === 'wg4') p.accum = 43.93;
-          if (p.id === 'wg5') p.accum = 36.82;
-          if (p.id === 'wg7') p.accum = 92.14;
-          if (p.id === 'wg9') p.accum = 44.29;
-          if (p.id === 'wg11') p.accum = 17.62;
-          if (p.id === 'wg12') p.accum = 0.00;
+          if (p.id === 'wg1') { p.accum = 80.71; }
+          if (p.id === 'wg3') { p.accum = 65.00; }
+          if (p.id === 'wg4') { p.accum = 43.93; }
+          if (p.id === 'wg5') { p.accum = 37.50; }
+          if (p.id === 'wg7') { p.accum = 91.00; }
+          if (p.id === 'wg10') { p.accum = 68.00; }
         });
         currentData = histData;
-        renderKPI14();
+        renderKPI14(47.88);
         renderSlideView();
         renderMatrixView();
         apply100GreenHighlights();
       }
+      localStorage.setItem('pataya_building_b_date', currentUpdateDate);
     }
 
-    function renderKPI14() {
+    function renderKPI14(overrideAvg) {
       const grid = document.getElementById('kpi14Grid');
-      if (!grid) return;
-      
+      grid.innerHTML = '';
       let sum = 0;
-      currentData.forEach(p => { sum += p.accum; });
-      const avg = sum / currentData.length;
-      document.getElementById('kpiOverallPct').textContent = avg.toFixed(2) + '%';
-      document.getElementById('headerOverallPct').textContent = avg.toFixed(2) + '%';
-
-      grid.innerHTML = currentData.map(p => {
-        const variance = p.accum - p.plan;
-        const isBehind = variance < -0.01;
-        const cardClass = isBehind ? 'behind' : 'ontrack';
-        const varClass = isBehind ? 'behind' : 'ontrack';
-        const is100 = p.accum >= 100.0;
-        const highlightClass = is100 ? 'highlight-100' : '';
-        const varSign = variance >= 0 ? '+' : '';
-        const varText = isBehind
-          ? '⚠️ ' + varSign + variance.toFixed(1) + '%'
-          : '✅ ' + varSign + variance.toFixed(1) + '%';
-        
-        return `<div class="kpi14-card ${cardClass} ${highlightClass}" onclick="filterToPackage('${p.id}')">
-          <div class="kpi14-num">#${String(p.num).padStart(2,'0')} • หน้า ${p.page}</div>
-          <div class="kpi14-name">${p.name}</div>
-          <div class="kpi14-actual">${p.accum.toFixed(2)}<span style="font-size:15px">%</span></div>
-          <div class="kpi14-plan-row">
-            <span class="kpi14-plan-label">แผน ${p.plan.toFixed(1)}%</span>
-            <span class="kpi14-variance ${varClass}">${varText}</span>
-          </div>
-        </div>`;
-      }).join('');
-    }
-
-    function filterToPackage(pkgId) {
-      const sel = document.getElementById('pkgSelect');
-      sel.value = pkgId;
-      switchView('slide');
-      renderSlideView();
-    }
-
-    function populateDropdown() {
-      const sel = document.getElementById('pkgSelect');
-      sel.innerHTML = '<option value="all">🌟 แสดงครบทั้ง 14 หมวดงานทางการ (Full 14 Tables)</option>';
       currentData.forEach(p => {
-        const opt = document.createElement('option');
-        opt.value = p.id;
-        opt.textContent = `${String(p.num).padStart(2,'0')}. ${p.title} (สะสม ${p.accum.toFixed(2)}%)`;
-        sel.appendChild(opt);
+        sum += p.accum;
+        const card = document.createElement('div');
+        card.className = 'kpi14-card';
+        card.onclick = () => scrollToPackage(p.id);
+        const varClass = p.variance >= 0 ? 'kpi14-var-pos' : 'kpi14-var-neg';
+        const varSign = p.variance > 0 ? '+' : '';
+        card.innerHTML = `
+          <div class="kpi14-top">
+            <span class="kpi14-num">#${p.num}</span>
+            <span class="kpi14-page">หน้า ${p.page}</span>
+          </div>
+          <div class="kpi14-name" title="${p.name}">${p.name}</div>
+          <div class="kpi14-pct">${p.accum.toFixed(2)}%</div>
+          <div class="kpi14-meta">
+            <span>แผน: ${p.plan.toFixed(2)}%</span>
+            <span class="${varClass}">${varSign}${p.variance.toFixed(2)}%</span>
+          </div>
+        `;
+        grid.appendChild(card);
       });
+      const avg = overrideAvg !== undefined ? overrideAvg : (sum / currentData.length);
+      document.getElementById('kpiOverallPct').textContent = `${avg.toFixed(2)}%`;
     }
 
     function renderSlideView() {
-      const container = document.getElementById('slideCardsContainer');
-      const selected = document.getElementById('pkgSelect').value;
+      const container = document.getElementById('slideViewSection');
       container.innerHTML = '';
-
-      const listToRender = selected === 'all' 
-        ? currentData 
-        : currentData.filter(p => p.id === selected);
-
-      listToRender.forEach(pkg => {
+      currentData.forEach(p => {
         const card = document.createElement('div');
-        card.className = 'slide-card';
-        card.id = 'card-' + pkg.id;
-
-        const headerHtml = `
-          <div class="slide-card-header">
-            <h3>#${String(pkg.num).padStart(2,'0')} • ${pkg.title}</h3>
-            <span class="slide-badge">สไลด์หน้า ${pkg.page} • สะสม ${pkg.accum.toFixed(2)}%</span>
-          </div>
-        `;
-
+        card.className = 'package-card';
+        card.id = `pkg-${p.id}`;
         let rowsHtml = '';
-        pkg.rows.forEach((r, rIdx) => {
-          const is100 = r.actPct.trim() === '100%' || r.actPct.trim() === '100.00%';
-          const td100Class = is100 ? 'highlight-100' : '';
+        p.rows.forEach(r => {
           rowsHtml += `
             <tr>
               <td>${r.item}</td>
-              <td contenteditable="true" onblur="updateRowData('${pkg.id}', ${rIdx}, 'planStart', this.innerText)">${r.planStart || '-'}</td>
-              <td contenteditable="true" class="${td100Class}" onblur="updateRowData('${pkg.id}', ${rIdx}, 'actPct', this.innerText)">${r.actPct || '-'}</td>
-              <td contenteditable="true" onblur="updateRowData('${pkg.id}', ${rIdx}, 'planEnd', this.innerText)">${r.planEnd || '-'}</td>
-              <td contenteditable="true" onblur="updateRowData('${pkg.id}', ${rIdx}, 'note', this.innerText)">${r.note || '-'}</td>
+              <td>${r.planStart || '-'}</td>
+              <td class="act-cell">${r.actPct || '-'}</td>
+              <td>${r.planEnd || '-'}</td>
+              <td>${r.note || '-'}</td>
             </tr>
           `;
         });
-
-        const totalRowHtml = `
-          <tr class="total-row">
-            <td><strong>รวมความก้าวหน้าสะสมตามสไลด์:</strong></td>
-            <td>-</td>
-            <td class="${pkg.accum >= 100 ? 'highlight-100' : ''}" style="font-size:16px;"><strong>${pkg.accum.toFixed(2)}%</strong></td>
-            <td>-</td>
-            <td>${pkg.scope || ''}</td>
-          </tr>
-        `;
-
-        const tableHtml = `
-          <div class="table-container">
+        card.innerHTML = `
+          <div class="package-header">
+            <div class="package-title-left">
+              <span class="badge-index">#${p.num}</span>
+              <span class="badge-page">สไลด์หน้า ${p.page}</span>
+              <h3>${p.title}</h3>
+            </div>
+            <div class="package-header-right">
+              <span style="font-size:12px;opacity:0.9;">ขอบเขต: ${p.scope}</span>
+              <span class="badge-accum">สะสม: ${p.accum.toFixed(2)}%</span>
+            </div>
+          </div>
+          <div class="table-wrap">
             <table class="slide-table">
               <thead>
                 <tr>
-                  <th>รายการ</th>
+                  <th style="width:36%;">รายการ</th>
                   <th style="width:16%;">แผนเริ่ม</th>
-                  <th style="width:14%;">Actual (%)</th>
+                  <th style="width:16%;">Actual (%)</th>
                   <th style="width:16%;">แผนจบ</th>
-                  <th style="width:22%;">หมายเหตุ</th>
+                  <th style="width:16%;">หมายเหตุ</th>
                 </tr>
               </thead>
               <tbody>
                 ${rowsHtml}
-                ${totalRowHtml}
+                <tr class="total-row">
+                  <td>รวมความก้าวหน้าสะสมตามสไลด์:</td>
+                  <td></td>
+                  <td>${p.accum.toFixed(2)}%</td>
+                  <td></td>
+                  <td></td>
+                </tr>
               </tbody>
             </table>
           </div>
         `;
-
-        card.innerHTML = headerHtml + tableHtml;
         container.appendChild(card);
       });
-
-      apply100GreenHighlights();
     }
 
     function renderMatrixView() {
       const table = document.getElementById('matrixTable');
-      if (!table) return;
-
-      const floors = ['ชั้น 8', 'ชั้น 7', 'ชั้น 6', 'ชั้น 5', 'ชั้น 4', 'ชั้น 3', 'ชั้น 2'];
-
-      let thead = '<thead><tr><th style="text-align:left;width:24%;">หมวดงาน (14 หมวด)</th>';
-      floors.forEach(fl => { thead += `<th>${fl}</th>`; });
-      thead += '<th>ความก้าวหน้ารวม</th></tr></thead>';
-
+      const floors = ['FL 8', 'FL 7', 'FL 6', 'FL 5', 'FL 4', 'FL 3', 'FL 2'];
+      let thead = `
+        <thead>
+          <tr>
+            <th style="width:40px;">#</th>
+            <th style="width:220px;text-align:left;">รายการหมวดงาน</th>
+            <th style="width:60px;">หน้า</th>
+            <th style="width:75px;">สะสมรวม</th>
+            ${floors.map(f => `<th style="width:65px;">${f}</th>`).join('')}
+          </tr>
+        </thead>
+      `;
       let tbody = '<tbody>';
-      currentData.forEach(pkg => {
-        tbody += `<tr><td><strong>#${String(pkg.num).padStart(2,'0')} ${pkg.name}</strong></td>`;
-        floors.forEach(fl => {
-          const rowItem = pkg.rows.find(r => r.item.includes(fl));
-          const val = rowItem ? rowItem.actPct : '-';
-          const is100 = val.trim() === '100%' || val.trim() === '100.00%';
-          const cls = is100 ? 'highlight-100' : '';
-          tbody += `<td class="${cls}">${val || '-'}</td>`;
-        });
-        const isPkg100 = pkg.accum >= 100.0;
-        const pkgCls = isPkg100 ? 'highlight-100' : '';
-        tbody += `<td class="${pkgCls}"><strong>${pkg.accum.toFixed(2)}%</strong></td></tr>`;
+      currentData.forEach(p => {
+        tbody += `
+          <tr>
+            <td>${p.num}</td>
+            <td style="text-align:left;font-weight:400;">${p.name}</td>
+            <td>${p.page}</td>
+            <td style="font-weight:600;color:var(--navy-primary);">${p.accum.toFixed(2)}%</td>
+            ${p.rows.map(r => `<td class="act-cell">${r.actPct || '-'}</td>`).join('')}
+          </tr>
+        `;
       });
-      tbody += '</tbody>';
-
+      let sum = currentData.reduce((acc, cur) => acc + cur.accum, 0);
+      let avg = sum / currentData.length;
+      tbody += `
+        <tr class="matrix-avg-row">
+          <td colspan="3" style="text-align:right;padding-right:12px;">เฉลี่ยความก้าวหน้าสะสม 14 หมวดงาน:</td>
+          <td>${avg.toFixed(2)}%</td>
+          <td colspan="7"></td>
+        </tr>
+      </tbody>`;
       table.innerHTML = thead + tbody;
-      apply100GreenHighlights();
-    }
-
-    function switchView(viewName) {
-      document.getElementById('viewSlide').style.display = viewName === 'slide' ? 'block' : 'none';
-      document.getElementById('viewMatrix').style.display = viewName === 'matrix' ? 'block' : 'none';
-      document.getElementById('viewAudit').style.display = viewName === 'audit' ? 'block' : 'none';
-
-      document.getElementById('tabSlide').classList.toggle('active', viewName === 'slide');
-      document.getElementById('tabMatrix').classList.toggle('active', viewName === 'matrix');
-      document.getElementById('tabAudit').classList.toggle('active', viewName === 'audit');
-    }
-
-    function updateRowData(pkgId, rowIndex, field, value) {
-      const pkg = currentData.find(p => p.id === pkgId);
-      if (pkg && pkg.rows[rowIndex]) {
-        pkg.rows[rowIndex][field] = value.trim();
-        apply100GreenHighlights();
-      }
     }
 
     function apply100GreenHighlights() {
-      const cells = document.querySelectorAll('td');
-      cells.forEach(td => {
-        const text = td.innerText.trim();
-        if (text === '100%' || text === '100.00%' || text === '100') {
-          td.classList.add('highlight-100');
+      const cells = document.querySelectorAll('td.act-cell');
+      cells.forEach(c => {
+        const text = c.textContent.trim();
+        if (text === '100%' || text === '100.00%' || text === '100.0%') {
+          c.classList.add('cell-100');
+        } else {
+          c.classList.remove('cell-100');
         }
       });
     }
 
-    function saveToLocalStorage() {
-      localStorage.setItem('pataya_building_b_v2_14pkg', JSON.stringify(currentData));
-      localStorage.setItem('pataya_building_b_date', currentUpdateDate);
-      alert('✅ บันทึกข้อมูลสถานะอาคาร B ประจำวันที่ ' + currentUpdateDate + ' ลงในหน่วยความจำเบราว์เซอร์เรียบร้อยแล้ว');
+    function switchView(view) {
+      currentView = view;
+      if (view === 'slide') {
+        document.getElementById('slideViewSection').style.display = 'block';
+        document.getElementById('matrixViewSection').style.display = 'none';
+        document.getElementById('btnSlideView').classList.add('active');
+        document.getElementById('btnMatrixView').classList.remove('active');
+      } else {
+        document.getElementById('slideViewSection').style.display = 'none';
+        document.getElementById('matrixViewSection').style.display = 'block';
+        document.getElementById('btnSlideView').classList.remove('active');
+        document.getElementById('btnMatrixView').classList.add('active');
+      }
+      apply100GreenHighlights();
     }
 
-    function resetToOfficial() {
-      if (confirm('คุณต้องการรีเซ็ตข้อมูลทั้งหมดกลับเป็นค่าทางการ Well Graded 14 หมวดงาน ใช่หรือไม่?')) {
-        localStorage.removeItem('pataya_building_b_v2_14pkg');
-        localStorage.removeItem('pataya_building_b_date');
-        currentUpdateDate = '24 พ.ย. 69';
-        document.getElementById('displayUpdateDate').textContent = currentUpdateDate;
-        document.getElementById('updateDateInput').value = currentUpdateDate;
-        document.getElementById('kpiDateLabel').textContent = 'ณ วันที่ 24 พ.ย. 69';
-        currentData = JSON.parse(JSON.stringify(MASTER_B.packages));
-        renderKPI14();
-        populateDropdown();
-        renderSlideView();
-        renderMatrixView();
-        apply100GreenHighlights();
-        alert('🔄 รีเซ็ตข้อมูลกลับเป็นฉบับทางการ 14 หมวดงานเรียบร้อยแล้ว');
+    function handleSearch(query) {
+      const q = query.toLowerCase().trim();
+      const cards = document.querySelectorAll('.package-card');
+      cards.forEach(card => {
+        const text = card.textContent.toLowerCase();
+        card.style.display = text.includes(q) ? 'block' : 'none';
+      });
+    }
+
+    function scrollToPackage(id) {
+      if (currentView !== 'slide') switchView('slide');
+      const el = document.getElementById(`pkg-${id}`);
+      if (el) {
+        el.scrollIntoView({ behavior: 'smooth', block: 'center' });
+        el.style.boxShadow = '0 0 0 3px #ffd700';
+        setTimeout(() => { el.style.boxShadow = ''; }, 1500);
       }
     }
-
-    function shareSummary() {
-      let sum = 0;
-      currentData.forEach(p => { sum += p.accum; });
-      const avg = (sum / currentData.length).toFixed(2);
-      
-      let msg = `📊  สรุปสถานะงานก่อสร้าง อาคาร B (Well Graded 14 หมวดงาน)\n`;
-      msg += `📅 ประจำวันที่: ${currentUpdateDate}\n`;
-      msg += `📈 ความก้าวหน้ารวมเฉลี่ย: ${avg}%\n\n`;
-      msg += `รายการ 14 หมวดงานสำคัญ:\n`;
-      currentData.forEach(p => {
-        msg += `• #${String(p.num).padStart(2,'0')} ${p.name}: ${p.accum.toFixed(2)}% (แผน ${p.plan.toFixed(1)}%)\n`;
-      });
-      msg += `\n📌 ข้อมูลรายงานความก้าวหน้าโครงการเดอะ ออริจิ้น พัทยา (Well Graded)`;
-      
-      navigator.clipboard.writeText(msg).then(() => {
-        alert('📋 คัดลอกสรุปข้อความพร้อมส่ง LINE แล้ว! สามารถกด Paste ในแชต LINE ได้ทันที');
-      }).catch(() => {
-        alert(msg);
-      });
-    }
-
-    window.onload = init;
   </script>
 </body>
 </html>
