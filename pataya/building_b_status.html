@@ -141,6 +141,16 @@
       background: #f59e0b;
       color: #0a192f;
     }
+    .btn-print {
+      background: #10b981;
+      color: #ffffff;
+      border: 1px solid #059669;
+      font-weight: 500;
+    }
+    .btn-print:hover {
+      background: #059669;
+      color: #ffffff;
+    }
 
     /* Main Container */
     .container {
@@ -514,6 +524,102 @@
       font-weight: 600;
     }
 
+    /* PRINT MEDIA RULES */
+    @media print {
+      body {
+        background: #ffffff !important;
+        padding: 0 !important;
+        font-size: 11px !important;
+        color: #000000 !important;
+      }
+      .header-bar {
+        position: static !important;
+        box-shadow: none !important;
+        background: #0a192f !important;
+        color: #ffffff !important;
+        -webkit-print-color-adjust: exact !important;
+        print-color-adjust: exact !important;
+        padding: 10px 14px !important;
+      }
+      .header-right, .date-tracker-card, .controls-bar, .search-input, .btn-date-apply, .date-select {
+        display: none !important;
+      }
+      .container {
+        max-width: 100% !important;
+        padding: 0 !important;
+      }
+      .kpi-section-title {
+        color: #000000 !important;
+        font-size: 13px !important;
+        margin-bottom: 8px !important;
+      }
+      .kpi14-grid {
+        gap: 6px !important;
+        margin-bottom: 14px !important;
+      }
+      .kpi14-card {
+        border: 1px solid #94a3b8 !important;
+        box-shadow: none !important;
+        padding: 6px 8px !important;
+        page-break-inside: avoid !important;
+      }
+      .kpi14-pct {
+        font-size: 16px !important;
+      }
+      .package-card {
+        border: 1.5px solid #0f274a !important;
+        box-shadow: none !important;
+        page-break-inside: avoid !important;
+        margin-bottom: 14px !important;
+      }
+      .package-header {
+        background: #0a192f !important;
+        color: #ffffff !important;
+        -webkit-print-color-adjust: exact !important;
+        print-color-adjust: exact !important;
+        padding: 8px 12px !important;
+      }
+      table.slide-table th {
+        background: #0f274a !important;
+        color: #ffffff !important;
+        -webkit-print-color-adjust: exact !important;
+        print-color-adjust: exact !important;
+        padding: 6px 8px !important;
+      }
+      table.slide-table td {
+        padding: 5px 8px !important;
+        color: #000000 !important;
+      }
+      .cell-100 {
+        background-color: #dcfce7 !important;
+        -webkit-print-color-adjust: exact !important;
+        print-color-adjust: exact !important;
+      }
+      table.slide-table tr.total-row td {
+        background-color: #0f274a !important;
+        color: #ffffff !important;
+        -webkit-print-color-adjust: exact !important;
+        print-color-adjust: exact !important;
+      }
+      .matrix-card {
+        border: 1.5px solid #0f274a !important;
+        box-shadow: none !important;
+        page-break-inside: avoid !important;
+      }
+      table.matrix-table th {
+        background: #0f274a !important;
+        color: #ffffff !important;
+        -webkit-print-color-adjust: exact !important;
+        print-color-adjust: exact !important;
+      }
+      table.matrix-table tr.matrix-avg-row td {
+        background-color: #0f274a !important;
+        color: #ffffff !important;
+        -webkit-print-color-adjust: exact !important;
+        print-color-adjust: exact !important;
+      }
+    }
+
     /* Clean Layout - Zero Footer Banner */
   </style>
 </head>
@@ -529,6 +635,7 @@
       </div>
     </div>
     <div class="header-right">
+      <button class="header-btn btn-print" onclick="window.print()">🖨️ สั่งพิมพ์ A3/A4 / PDF</button>
       <a href="origin_pattaya_master_progress.html" class="header-btn btn-portal">🏢 ภาพรวม 38 ตาราง</a>
       <a href="building_a_status.html" class="header-btn btn-switch">🏢 สลับไปอาคาร A (56.63%)</a>
       <a href="index.html" class="header-btn btn-portal">🏠 หน้าหลักโครงการ</a>
@@ -571,8 +678,9 @@
         <button class="btn-view active" id="btnSlideView" onclick="switchView('slide')">📑 รูปแบบ 5 คอลัมน์ตามสไลด์ (14 หมวด)</button>
         <button class="btn-view" id="btnMatrixView" onclick="switchView('matrix')">📊 รูปแบบตารางเมทริกซ์เทียบทุกชั้น</button>
       </div>
-      <div>
+      <div style="display:flex;align-items:center;gap:10px;">
         <input type="text" id="searchInput" class="search-input" placeholder="🔍 ค้นหาหมวดงาน..." oninput="handleSearch(this.value)">
+        <button class="btn-view" onclick="window.print()" style="background:#10b981;color:#ffffff;border-color:#059669;font-weight:400;">🖨️ สั่งพิมพ์ A3/A4</button>
       </div>
     </div>
 
