@@ -1,0 +1,1344 @@
+<!DOCTYPE html>
+<html lang="th">
+<head>
+<meta charset="UTF-8"/>
+<meta name="viewport" content="width=device-width,initial-scale=1.0"/>
+<script src="https://www.gstatic.com/antigravity/web/dev/tailwindcss.min.js"></script>
+<style>
+@import url('https://fonts.googleapis.com/css2?family=Kanit:wght@300;400;500;600&display=swap');
+*{font-family:'Kanit',sans-serif;font-weight:300;box-sizing:border-box;}
+body{background:#0f1117;color:#e2e8f0;margin:0;padding:12px;min-width:1100px;}
+
+/* ===== PRINT STYLES ===== */
+@media print {
+  @page { size: A3 landscape; margin: 6mm 5mm; }
+  * { 
+    -webkit-print-color-adjust: exact !important; 
+    print-color-adjust: exact !important; 
+    color-adjust: exact !important; 
+    box-sizing: border-box !important;
+  }
+  body { background: #fff !important; color: #000000 !important; padding: 0 !important; margin: 0 !important; min-width: unset !important; font-weight: 500 !important; }
+  .no-print, .ctrl-row, #catFilterRow, .btn-add, .btn-add-sec, .btn-export, .btn-del, .btn-print-bar, .modal-overlay, .add-row-zone { display: none !important; }
+  
+  /* แบนเนอร์หัวเอกสารกว้างเต็มหน้ากระดาษ */
+  .banner { width: 100% !important; background: #f8fafc !important; border: 1.5px solid #000000 !important; border-radius: 4px; padding: 6px 12px; margin-bottom: 8px !important; }
+  .banner-tag { background: #f59e0b !important; color: #000000 !important; font-weight: bold !important; -webkit-print-color-adjust: exact !important; }
+  .banner-info { color: #000000 !important; font-weight: 600 !important; }
+  
+  /* กรอบตารางและตัวตารางกว้างเต็มหน้า 100% ปิดเส้นขอบทุกด้านสมบูรณ์ 4 ด้าน */
+  .tbl-wrap { 
+    width: 100% !important; 
+    border: 2px solid #000000 !important; 
+    border-radius: 0 !important; 
+    overflow: visible !important; 
+    background: #fff !important; 
+    margin: 0 !important; 
+    padding: 0 !important;
+  }
+  table { 
+    font-size: 10px !important; 
+    width: 100% !important; 
+    border-collapse: collapse !important; 
+    color: #000000 !important; 
+    table-layout: fixed !important; 
+  }
+  thead { display: table-header-group; }
+  
+  /* กำหนดความกว้างคอลัมน์คงที่เพื่อไม่ให้เส้นแหว่ง */
+  .th-num, .td-num { width: 28px !important; }
+  .th-cat, .td-cat { width: 95px !important; }
+  .th-name, .td-name { width: 240px !important; }
+  .th-assign, .td-assign { width: 75px !important; }
+  .th-start, .td-start { width: 70px !important; }
+  .th-end, .td-end { width: 70px !important; }
+  .th-status, .td-status { width: 34px !important; }
+  .th-pct, .td-pct { width: 38px !important; }
+  
+  /* หัวตารางตัวหนังสือดำเข้ม คมชัด เส้นกรอบเต็มทุกช่อง */
+  .th-week { color: #000000 !important; border: 1.5px solid #000000 !important; padding: 4px 1px !important; font-weight: 700 !important; -webkit-print-color-adjust: exact !important; }
+  .th-week span { color: #000000 !important; font-weight: 600 !important; }
+  .th-day { background: #f8fafc !important; color: #000000 !important; border: 1px solid #000000 !important; font-weight: 600 !important; text-align: center !important; }
+  .th-day div { color: #000000 !important; }
+  .th-day.sunday { background: #fee2e2 !important; color: #b91c1c !important; }
+  .th-day.sunday div { color: #b91c1c !important; }
+  .th-fixed { background: #f1f5f9 !important; color: #000000 !important; border: 1.5px solid #000000 !important; padding: 4px 4px !important; font-weight: 700 !important; }
+  
+  /* หัวข้อคั่นชั้นกว้างเต็มหน้ากระดาษ เส้นกรอบดำสนิทรอบด้าน */
+  .tr-section { width: 100% !important; -webkit-print-color-adjust: exact !important; print-color-adjust: exact !important; }
+  .tr-section td { border: 2px solid #000000 !important; padding: 6px 8px !important; -webkit-print-color-adjust: exact !important; }
+  .tr-section input { color: #000000 !important; font-weight: 800 !important; font-size: 12px !important; text-shadow: none !important; }
+
+  /* แถวงาน เส้นกรอบครบทั้ง 4 ด้าน ชัดเจน 100% ไม่มีเส้นแหว่ง */
+  .tr-task { background: #fff !important; }
+  .tr-task td { border: 1px solid #000000 !important; color: #000000 !important; }
+  .td-num { color: #000000 !important; font-weight: 600 !important; text-align: center !important; }
+  .td-num, .td-cat, .td-name, .td-assign, .td-start, .td-end, .td-status, .td-pct, .td-day { padding: 3px 2px !important; color: #000000 !important; }
+  .td-day { border: 1px solid #000000 !important; text-align: center !important; }
+  
+  /* บังคับพิมพ์แท่งสี Gantt รายวัน คมชัดเต็มตา */
+  .day-bar { 
+    width: 100% !important; 
+    height: 14px !important; 
+    margin: auto !important;
+    border-radius: 2px !important; 
+    -webkit-print-color-adjust: exact !important; 
+    print-color-adjust: exact !important; 
+  }
+
+  /* ซ่อน select ในช่องหมวดงานตอนพิมพ์ และแสดง text ธรรมดา */
+  .select-cat { 
+    display: block !important; 
+    appearance: none !important; 
+    -webkit-appearance: none !important; 
+    -moz-appearance: none !important; 
+    border: none !important; 
+    background: transparent !important; 
+    color: #000000 !important; 
+    font-size: 10px !important; 
+    font-weight: 700 !important; 
+    text-align: center !important; 
+    padding: 0 !important; 
+    box-shadow: none !important; 
+  }
+  .inp-select { 
+    background: transparent !important; 
+    border: none !important; 
+    color: #000000 !important; 
+    font-size: 10px !important; 
+    font-weight: 600 !important; 
+    padding: 0 !important; 
+    -webkit-appearance: none !important; 
+    appearance: none !important; 
+  }
+  .inp-textarea { color: #000000 !important; font-size: 10px !important; font-weight: 600 !important; line-height: 1.25 !important; }
+  .inp-pct { background: transparent !important; border: none !important; color: #000000 !important; font-size: 10px !important; font-weight: 700 !important; }
+  .cat-badge { font-size: 8px !important; padding: 1px 4px !important; font-weight: 600 !important; -webkit-print-color-adjust: exact !important; print-color-adjust: exact !important; }
+  .sum-box { background: #f8fafc !important; border: 1px solid #000000 !important; -webkit-print-color-adjust: exact !important; }
+  .sum-num { color: #000000 !important; font-weight: 800 !important; }
+  .sum-lbl { color: #000000 !important; font-weight: 600 !important; }
+  .pct-bar-bg { display: none; }
+  select { -webkit-appearance: none !important; appearance: none !important; color: #000000 !important; }
+}
+
+/* ===== PRINT PREVIEW MODAL ===== */
+.modal-overlay {
+  display: none; position: fixed; inset: 0; background: rgba(0,0,0,0.75);
+  z-index: 9999; align-items: center; justify-content: center;
+}
+.modal-overlay.show { display: flex; }
+.modal-box {
+  background: #1a1f2e; border: 1px solid #2d3748; border-radius: 12px;
+  padding: 20px; max-width: 600px; width: 90%; text-align: center;
+}
+.modal-title { font-size: 16px; font-weight: 500; color: #e2e8f0; margin-bottom: 8px; }
+.modal-sub { font-size: 12px; color: #64748b; margin-bottom: 20px; }
+.preview-card {
+  background: #fff; border-radius: 8px; padding: 12px;
+  margin: 0 auto 20px; position: relative; overflow: hidden;
+  width: 100%; max-width: 480px;
+  aspect-ratio: 1.414; /* A4 landscape ratio */
+  display: flex; flex-direction: column; gap: 4px;
+}
+.preview-header { height: 14%; background: #1e2535; border-radius: 4px; display: flex; align-items: center; padding: 0 8px; gap: 6px; }
+.preview-tag { background: #f59e0b; border-radius: 2px; width: 60px; height: 8px; }
+.preview-title { background: #374151; border-radius: 2px; flex: 1; height: 6px; }
+.preview-table { flex: 1; display: grid; grid-template-columns: 60px 1fr; gap: 2px; }
+.preview-left { display: flex; flex-direction: column; gap: 2px; }
+.preview-row-label { background: #e2e8f0; border-radius: 2px; height: 10px; }
+.preview-right { display: flex; flex-direction: column; gap: 2px; }
+.preview-gantt-row { display: flex; gap: 1px; height: 10px; }
+.preview-cell { flex: 1; border-radius: 1px; }
+.preview-bar { border-radius: 2px; height: 10px; }
+.print-info { background: rgba(59,130,246,0.1); border: 1px solid rgba(59,130,246,0.3); border-radius: 8px; padding: 10px 14px; text-align: left; margin-bottom: 16px; font-size: 12px; color: #94a3b8; line-height: 1.8; }
+.btn-confirm-print { background: #2563eb; color: #fff; border: none; border-radius: 8px; padding: 10px 24px; font-size: 14px; font-family: 'Kanit', sans-serif; cursor: pointer; font-weight: 400; }
+.btn-confirm-print:hover { background: #1d4ed8; }
+.btn-cancel-modal { background: transparent; color: #64748b; border: 1px solid #374151; border-radius: 8px; padding: 10px 20px; font-size: 13px; font-family: 'Kanit', sans-serif; cursor: pointer; }
+.btn-cancel-modal:hover { background: #1f2937; }
+.btn-print-main { background: linear-gradient(135deg, #1d4ed8, #2563eb); color: #fff; border: none; border-radius: 8px; padding: 7px 18px; font-size: 13px; font-family: 'Kanit', sans-serif; cursor: pointer; display: flex; align-items: center; gap: 6px; white-space: nowrap; box-shadow: 0 2px 8px rgba(37,99,235,0.4); }
+.btn-print-main:hover { background: linear-gradient(135deg, #1e40af, #1d4ed8); }
+
+/* Top Banner */
+.banner{background:#1a1f2e;border:1px solid #2d3748;border-radius:10px;padding:10px 16px;margin-bottom:12px;display:flex;align-items:center;gap:12px;flex-wrap:wrap;}
+.banner-tag{background:#f59e0b;color:#000;padding:3px 10px;border-radius:4px;font-size:11px;font-weight:500;white-space:nowrap;}
+.banner-info{font-size:12px;color:#94a3b8;}
+
+/* Controls */
+.ctrl-row{display:flex;align-items:center;gap:12px;margin-bottom:12px;flex-wrap:wrap;}
+.ctrl-label{font-size:12px;color:#94a3b8;}
+.date-input{background:#1e2535;border:1px solid #374151;color:#e2e8f0;border-radius:6px;padding:5px 10px;font-family:'Kanit',sans-serif;font-size:12px;}
+.date-input:focus{outline:2px solid #3b82f6;border-color:#3b82f6;}
+.today-btn{background:#2563eb;color:#fff;border:none;border-radius:6px;padding:5px 12px;font-size:12px;font-family:'Kanit',sans-serif;cursor:pointer;}
+.today-btn:hover{background:#1d4ed8;}
+
+/* Status chips */
+.chip{display:inline-flex;align-items:center;gap:4px;padding:3px 10px;border-radius:20px;font-size:11px;cursor:pointer;border:1px solid transparent;}
+.chip-all{background:#2d3748;color:#94a3b8;border-color:#374151;}
+.chip-ip{background:rgba(59,130,246,0.15);color:#60a5fa;border-color:rgba(59,130,246,0.3);}
+.chip-dn{background:rgba(16,185,129,0.15);color:#34d399;border-color:rgba(16,185,129,0.3);}
+.chip-dl{background:rgba(239,68,68,0.15);color:#f87171;border-color:rgba(239,68,68,0.3);}
+.chip-ns{background:rgba(107,114,128,0.15);color:#9ca3af;border-color:rgba(107,114,128,0.3);}
+.chip.active{filter:brightness(1.3);border-width:2px;}
+
+/* Category filter */
+.cat-btn{padding:4px 12px;border-radius:16px;font-size:11px;border:none;cursor:pointer;font-family:'Kanit',sans-serif;font-weight:300;transition:opacity 0.2s;}
+.cat-btn:hover{opacity:0.8;}
+.cat-btn.active{filter:brightness(1.2);font-weight:500;}
+
+/* Main table */
+.tbl-wrap{overflow-x:auto;border-radius:10px;border:1px solid #2d3748;background:#141824;}
+table{border-collapse:collapse;min-width:1200px;width:100%;}
+thead{position:sticky;top:0;z-index:10;}
+
+/* Header rows */
+.th-week{background:#1e2535;text-align:center;font-size:11px;font-weight:500;padding:6px 2px;border-bottom:1px solid #2d3748;border-right:1px solid #2d3748;color:#cbd5e1;}
+.th-day{background:#1a2033;text-align:center;font-size:9px;padding:2px 0;border-bottom:1px solid #2d3748;border-right:1px solid #1f2937;color:#64748b;width:19px;min-width:19px;}
+.th-day.weekend{color:#4b5563;}
+.th-fixed{background:#1e2535;padding:6px 6px;font-size:11px;font-weight:500;color:#94a3b8;border-bottom:1px solid #2d3748;border-right:1px solid #2d3748;white-space:nowrap;}
+
+/* Table rows */
+.tr-section{background:#1a2033;}
+.tr-section td{padding:5px 8px;font-size:12px;font-weight:500;border-bottom:1px solid #252d3d;}
+.tr-task{background:#141824;transition:background 0.15s;}
+.tr-task:hover{background:#1a2033;}
+.tr-task td{border-bottom:1px solid #1e2535;padding:0;}
+
+/* Fixed cells */
+.td-num{width:32px;min-width:32px;text-align:center;font-size:11px;color:#64748b;padding:0 2px;border-right:1px solid #1e2535;}
+.td-cat{width:110px;min-width:110px;padding:4px 4px;border-right:1px solid #1e2535;}
+.td-name{width:360px;min-width:320px;padding:4px 8px;border-right:1px solid #1e2535;}
+.td-assign{width:80px;min-width:80px;padding:4px 4px;border-right:1px solid #1e2535;}
+.td-start{width:85px;min-width:80px;padding:4px 2px;border-right:1px solid #1e2535;}
+.td-end{width:85px;min-width:80px;padding:4px 2px;border-right:1px solid #1e2535;}
+.td-status{width:36px;min-width:36px;text-align:center;padding:4px 2px;border-right:1px solid #1e2535;}
+.td-pct{width:46px;min-width:44px;text-align:center;padding:4px 2px;border-right:1px solid #1e2535;}
+.td-day{width:19px;min-width:19px;padding:2px 0;border-right:1px solid #1f2937;text-align:center;position:relative;}
+.td-actions{width:40px;min-width:40px;text-align:center;padding:2px;border-left:1px solid #1e2535;}
+
+/* Inputs inside table */
+.inp{background:transparent;border:none;color:#e2e8f0;font-family:'Kanit',sans-serif;font-size:12px;width:100%;outline:none;padding:2px 0;}
+.inp::placeholder{color:#374151;}
+.inp:focus{background:rgba(59,130,246,0.08);border-radius:3px;}
+.inp-textarea{
+  background:transparent;
+  border:none;
+  color:#e2e8f0;
+  font-family:'Kanit',sans-serif;
+  font-size:12px;
+  width:100%;
+  outline:none;
+  resize:none;
+  line-height:1.35;
+  padding:2px 0;
+  word-break:break-word;
+  overflow:hidden;
+  display:block;
+}
+.inp-textarea::placeholder{color:#374151;}
+.inp-textarea:focus{background:rgba(59,130,246,0.08);border-radius:3px;}
+.inp-date{background:transparent;border:none;color:#94a3b8;font-family:'Kanit',sans-serif;font-size:10px;width:100%;outline:none;}
+.inp-date::-webkit-calendar-picker-indicator{filter:invert(0.3);cursor:pointer;width:10px;height:10px;}
+.inp-pct{background:#1e2535;border:1px solid #374151;border-radius:4px;color:#e2e8f0;font-family:'Kanit',sans-serif;font-size:11px;width:40px;text-align:center;padding:2px 2px;}
+.inp-select{background:transparent;border:none;color:#94a3b8;font-family:'Kanit',sans-serif;font-size:11px;width:100%;outline:none;cursor:pointer;}
+.select-cat{
+  background:rgba(255,255,255,0.06);
+  border:1px solid rgba(255,255,255,0.12);
+  border-radius:6px;
+  padding:3px 6px;
+  color:#60a5fa;
+  font-weight:400;
+  width:100%;
+}
+.print-cat-text { display: none; }
+
+/* Day bar cell */
+.day-bar{width:15px;height:16px;border-radius:2px;margin:auto;cursor:pointer;transition:opacity 0.2s;}
+.day-bar:hover{opacity:0.7;}
+.day-bar.filled{opacity:1;}
+.day-bar.empty{background:transparent;border:1px dashed #2d3748;}
+.day-bar.empty:hover{border-color:#4b5563;}
+.th-day.sunday{background:rgba(239,68,68,0.12) !important;color:#ef4444 !important;}
+.td-day.sunday{background:rgba(239,68,68,0.04) !important;}
+.day-bar.sunday{cursor:not-allowed !important;}
+
+/* Category colors */
+.cat-structure{background:#ef4444;color:#fff;}
+.cat-arch{background:#8b5cf6;color:#fff;}
+.cat-elec{background:#f59e0b;color:#000;}
+.cat-plumb{background:#06b6d4;color:#000;}
+.cat-hvac{background:#10b981;color:#fff;}
+.cat-floor{background:#f97316;color:#fff;}
+.cat-wall{background:#6366f1;color:#fff;}
+.cat-finish{background:#ec4899;color:#fff;}
+.cat-other{background:#64748b;color:#fff;}
+
+/* Category mini badge */
+.cat-badge{display:inline-block;padding:1px 6px;border-radius:3px;font-size:10px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;max-width:82px;}
+
+/* Status icons */
+.sts-ns{color:#6b7280;font-size:14px;}
+.sts-ip{color:#3b82f6;font-size:14px;}
+.sts-dn{color:#10b981;font-size:14px;}
+.sts-dl{color:#ef4444;font-size:14px;}
+
+/* Pct bar under number */
+.pct-wrap{position:relative;text-align:center;}
+.pct-num{font-size:11px;color:#e2e8f0;}
+.pct-bar-bg{height:3px;background:#1f2937;border-radius:2px;margin-top:2px;}
+.pct-bar-fill{height:3px;border-radius:2px;transition:width 0.3s;}
+
+/* Week color headers */
+.wk1{background:#1a2a3a;border-top:2px solid #3b82f6;}
+.wk2{background:#1a2d2a;border-top:2px solid #10b981;}
+.wk3{background:#2a2a1a;border-top:2px solid #f59e0b;}
+.wk4{background:#2a1a2a;border-top:2px solid #8b5cf6;}
+.wk5{background:#2a1a1a;border-top:2px solid #ef4444;}
+.wk6{background:#1a2a2a;border-top:2px solid #06b6d4;}
+
+.wk1-day{background:rgba(59,130,246,0.04);}
+.wk2-day{background:rgba(16,185,129,0.04);}
+.wk3-day{background:rgba(245,158,11,0.04);}
+.wk4-day{background:rgba(139,92,246,0.04);}
+.wk5-day{background:rgba(239,68,68,0.04);}
+.wk6-day{background:rgba(6,182,212,0.04);}
+
+/* Bar colors per week */
+.bar-wk1{background:#3b82f6;}
+.bar-wk2{background:#10b981;}
+.bar-wk3{background:#f59e0b;}
+.bar-wk4{background:#8b5cf6;}
+.bar-wk5{background:#ef4444;}
+.bar-wk6{background:#06b6d4;}
+
+/* Buttons */
+.btn-add{background:#1d4ed8;color:#fff;border:none;border-radius:6px;padding:6px 14px;font-size:12px;font-family:'Kanit',sans-serif;cursor:pointer;}
+.btn-add:hover{background:#1e40af;}
+.btn-del{background:transparent;border:1px solid #374151;color:#6b7280;border-radius:4px;padding:2px 6px;font-size:11px;cursor:pointer;}
+.btn-del:hover{border-color:#ef4444;color:#ef4444;}
+.btn-add-sec{background:#2d3748;color:#94a3b8;border:1px dashed #374151;border-radius:6px;padding:5px 14px;font-size:11px;font-family:'Kanit',sans-serif;cursor:pointer;}
+.btn-add-sec:hover{background:#374151;}
+.btn-export{background:#1f2937;color:#94a3b8;border:1px solid #374151;border-radius:6px;padding:5px 12px;font-size:12px;font-family:'Kanit',sans-serif;cursor:pointer;}
+.btn-export:hover{background:#374151;}
+
+/* Summary bar */
+.sum-box{background:#1a1f2e;border:1px solid #2d3748;border-radius:8px;padding:8px 14px;text-align:center;min-width:80px;}
+.sum-num{font-size:18px;font-weight:500;}
+.sum-lbl{font-size:10px;color:#64748b;}
+
+/* Scrollbar */
+::-webkit-scrollbar{width:6px;height:6px;}
+::-webkit-scrollbar-track{background:#0f1117;}
+::-webkit-scrollbar-thumb{background:#2d3748;border-radius:3px;}
+::-webkit-scrollbar-thumb:hover{background:#374151;}
+</style>
+</head>
+<body>
+
+<!-- Banner -->
+<div class="banner">
+  <span class="banner-tag">CLUB HOUSE</span>
+  <span class="banner-info" id="bannerRange"></span>
+  <div style="margin-left:auto;display:flex;gap:8px;flex-wrap:wrap;">
+    <div id="chipAll" class="chip chip-all active" onclick="filterStatus('all')">🗂️ ทั้งหมด: <b id="cntAll">0</b></div>
+    <div id="chipIP" class="chip chip-ip" onclick="filterStatus('ip')">⚡ กำลังทำ: <b id="cntIP">0</b></div>
+    <div id="chipDN" class="chip chip-dn" onclick="filterStatus('dn')">✅ เสร็จ: <b id="cntDN">0</b></div>
+    <div id="chipDL" class="chip chip-dl" onclick="filterStatus('dl')">⚠️ ล่าช้า: <b id="cntDL">0</b></div>
+    <div id="chipNS" class="chip chip-ns" onclick="filterStatus('ns')">⏳ รอ: <b id="cntNS">0</b></div>
+  </div>
+</div>
+
+<!-- Controls -->
+<div class="ctrl-row">
+  <span class="ctrl-label">📅 เลือกวันเริ่มต้นแผน (Base Date):</span>
+  <input type="date" id="baseDate" class="date-input" value="2026-11-26" oninput="rebuildCalendar()"/>
+  <button class="today-btn" onclick="setToday()">ตั้งเป็นวันนี้</button>
+  <span style="font-size:11px;color:#64748b;margin-left:4px;" id="weekRangeLabel"></span>
+  <div style="margin-left:auto;display:flex;gap:6px;flex-wrap:wrap;">
+    <button class="btn-export" style="background:#047857;color:#fff;border-color:#059669;" onclick="saveToLocalStorage()">💾 บันทึกงาน</button>
+    <button class="btn-export" style="background:#0284c7;color:#fff;border-color:#0369a1;font-weight:500;box-shadow:0 2px 6px rgba(2,132,199,0.4);" onclick="downloadSavedHTML()">🌐 บันทึกเป็นไฟล์ HTML ส่งต่อ</button>
+    <button class="btn-export" style="background:#06c755;color:#fff;border-color:#059669;font-weight:500;" onclick="openLineShareModal()">💬 สรุปส่ง LINE</button>
+    <button class="btn-export" style="background:#4338ca;color:#fff;border-color:#4f46e5;" onclick="exportProjectJSON()">📤 ส่งต่อไฟล์ (.json)</button>
+    <button class="btn-export" style="background:#374151;color:#e2e8f0;border-color:#4b5563;" onclick="triggerImportJSON()">📥 โหลดไฟล์ (.json)</button>
+    <input type="file" id="jsonFileInput" accept=".json" style="display:none;" onchange="importProjectJSON(event)"/>
+    <button class="btn-export" onclick="exportCSV()">📊 Export CSV</button>
+    <button class="btn-print-main" onclick="showPrintPreview()">🖨️ พิมพ์ PDF แนวนอน</button>
+    <button class="btn-add" onclick="addRow()">➕ เพิ่มรายการงาน</button>
+  </div>
+</div>
+
+<!-- Line Share Modal -->
+<div class="modal-overlay" id="lineModal">
+  <div class="modal-box" style="max-width: 500px; text-align: left;">
+    <div class="modal-title" style="display:flex;align-items:center;gap:8px;">
+      <span style="color:#06c755;font-size:20px;">💬</span> คัดลอกสรุปงานส่งเข้าห้อง LINE
+    </div>
+    <div class="modal-sub">คัดลอกข้อความนี้ไปวางในกลุ่มไลน์ หรือแชตส่วนตัวของเพื่อนร่วมงานได้ทันที</div>
+    
+    <textarea id="lineMsgTextarea" rows="9" readonly style="width:100%;background:#0f1117;border:1px solid #374151;color:#e2e8f0;border-radius:6px;padding:8px;font-size:12px;font-family:'Kanit',sans-serif;resize:none;outline:none;margin-bottom:12px;"></textarea>
+
+    <div style="display:flex;gap:8px;justify-content:flex-end;">
+      <button class="btn-cancel-modal" onclick="closeLineShareModal()">ปิด</button>
+      <button class="btn-confirm-print" style="background:#06c755;" id="btnCopyLineMsg" onclick="copyLineMessage()">📋 คัดลอกข้อความ</button>
+    </div>
+  </div>
+</div>
+<div class="modal-overlay" id="printModal">
+  <div class="modal-box">
+    <div class="modal-title">🖨️ ตัวอย่างก่อนพิมพ์ PDF</div>
+    <div class="modal-sub">แนวนอน (Landscape) — กระดาษ A3</div>
+
+    <!-- Mini Preview Card -->
+    <div class="preview-card">
+      <!-- Header bar -->
+      <div class="preview-header">
+        <div class="preview-tag"></div>
+        <div class="preview-title"></div>
+        <div style="background:#374151;border-radius:2px;width:40px;height:6px;"></div>
+      </div>
+      <!-- Gantt rows preview -->
+      <div style="flex:1;display:flex;flex-direction:column;gap:2px;padding:4px 0;">
+        <!-- Week header -->
+        <div style="display:grid;grid-template-columns:60px repeat(6,1fr);gap:2px;height:8px;">
+          <div style="background:#e2e8f0;border-radius:2px;"></div>
+          <div style="background:#3b82f6;border-radius:2px;opacity:0.6;"></div>
+          <div style="background:#10b981;border-radius:2px;opacity:0.6;"></div>
+          <div style="background:#f59e0b;border-radius:2px;opacity:0.6;"></div>
+          <div style="background:#8b5cf6;border-radius:2px;opacity:0.6;"></div>
+          <div style="background:#ef4444;border-radius:2px;opacity:0.6;"></div>
+          <div style="background:#06b6d4;border-radius:2px;opacity:0.6;"></div>
+        </div>
+        <!-- Section row -->
+        <div style="display:grid;grid-template-columns:60px 1fr;gap:2px;height:7px;">
+          <div style="background:#dbeafe;border-radius:2px;border-left:3px solid #3b82f6;"></div>
+          <div style="background:#eff6ff;border-radius:2px;"></div>
+        </div>
+        <!-- Task rows with bars -->
+        ${[
+          {bar:'#3b82f6',w:'30%',off:'0%'},
+          {bar:'#10b981',w:'40%',off:'15%'},
+          {bar:'#f59e0b',w:'25%',off:'40%'},
+          {bar:'#8b5cf6',w:'50%',off:'10%'},
+          {bar:'#ef4444',w:'20%',off:'60%'},
+          {bar:'#06b6d4',w:'35%',off:'30%'},
+          {bar:'#ec4899',w:'45%',off:'5%'},
+          {bar:'#f97316',w:'30%',off:'50%'},
+        ].map(r=>`
+        <div style="display:grid;grid-template-columns:60px 1fr;gap:2px;height:7px;">
+          <div style="background:#f1f5f9;border-radius:2px;"></div>
+          <div style="background:#f8fafc;border-radius:2px;position:relative;">
+            <div style="position:absolute;left:${r.off};width:${r.w};height:7px;background:${r.bar};border-radius:2px;opacity:0.8;"></div>
+          </div>
+        </div>`).join('')}
+      </div>
+    </div>
+
+    <!-- Print Info -->
+    <div class="print-info">
+      📄 <b style="color:#e2e8f0;">ขนาดกระดาษ:</b> A3 แนวนอน (Landscape)<br/>
+      📐 <b style="color:#e2e8f0;">Margin:</b> 8mm (บน-ล่าง) / 6mm (ซ้าย-ขวา)<br/>
+      🖨️ <b style="color:#e2e8f0;">วิธีบันทึก PDF:</b> เลือก <b>"Save as PDF"</b> ใน Destination<br/>
+      📊 <b style="color:#e2e8f0;">เนื้อหา:</b> แสดงตาราง 6 สัปดาห์ทั้งหมด ซ่อนปุ่มควบคุม
+    </div>
+
+    <div style="display:flex;gap:10px;justify-content:center;">
+      <button class="btn-cancel-modal" onclick="closePrintPreview()">❌ ยกเลิก</button>
+      <button class="btn-confirm-print" onclick="doPrint()">🖨️ พิมพ์ / บันทึก PDF</button>
+    </div>
+  </div>
+</div>
+
+<!-- Category / Floor filter -->
+<div style="display:flex;gap:6px;flex-wrap:wrap;margin-bottom:10px;" id="catFilterRow">
+  <span style="font-size:11px;color:#64748b;align-self:center;">ชั้น / โซนงาน:</span>
+  <button class="cat-btn active" data-cat="all" style="background:#374151;color:#e2e8f0;" onclick="filterCat('all')">ทั้งหมด</button>
+  <button class="cat-btn" data-cat="ชั้นใต้ดิน (Basement)" style="background:#0284c7;color:#fff;" onclick="filterCat('ชั้นใต้ดิน (Basement)')">🏢 ชั้นใต้ดิน (Basement)</button>
+  <button class="cat-btn" data-cat="ชั้น 1 (Ground Floor)" style="background:#10b981;color:#fff;" onclick="filterCat('ชั้น 1 (Ground Floor)')">🏊 ชั้น 1 (สระว่ายน้ำ/โถง)</button>
+  <button class="cat-btn" data-cat="ชั้น 2 (Second Floor)" style="background:#8b5cf6;color:#fff;" onclick="filterCat('ชั้น 2 (Second Floor)')">🏋️ ชั้น 2 (Fitness/Lounge)</button>
+  <button class="cat-btn" data-cat="ชั้นดาดฟ้า (Roof Deck)" style="background:#f59e0b;color:#000;" onclick="filterCat('ชั้นดาดฟ้า (Roof Deck)')">☀️ ชั้นดาดฟ้า (Roof)</button>
+  <button class="cat-btn" data-cat="งานระบบและทดสอบ (MEP/Handover)" style="background:#ec4899;color:#fff;" onclick="filterCat('งานระบบและทดสอบ (MEP/Handover)')">⚡ งานระบบรวม/ส่งมอบ</button>
+</div>
+
+<!-- Summary boxes -->
+<div style="display:flex;gap:8px;margin-bottom:12px;flex-wrap:wrap;">
+  <div class="sum-box"><div class="sum-num" id="sTotal">0</div><div class="sum-lbl">งานทั้งหมด</div></div>
+  <div class="sum-box"><div class="sum-num" style="color:#3b82f6;" id="sIP">0</div><div class="sum-lbl">กำลังดำเนินการ</div></div>
+  <div class="sum-box"><div class="sum-num" style="color:#10b981;" id="sDN">0</div><div class="sum-lbl">เสร็จสิ้น</div></div>
+  <div class="sum-box"><div class="sum-num" style="color:#ef4444;" id="sDL">0</div><div class="sum-lbl">ล่าช้า</div></div>
+  <div class="sum-box"><div class="sum-num" style="color:#6b7280;" id="sNS">0</div><div class="sum-lbl">ยังไม่เริ่ม</div></div>
+  <div class="sum-box" style="margin-left:auto;min-width:120px;">
+    <div class="sum-num" id="sAvgPct" style="color:#f59e0b;">0%</div>
+    <div class="sum-lbl">ความคืบหน้าเฉลี่ย</div>
+  </div>
+</div>
+
+<!-- Table -->
+<div class="tbl-wrap">
+  <table id="mainTable">
+    <thead id="tableHead"></thead>
+    <tbody id="tableBody"></tbody>
+  </table>
+</div>
+
+<!-- Add buttons -->
+<div style="display:flex;gap:8px;margin-top:10px;flex-wrap:wrap;">
+  <button class="btn-add" onclick="addRow()">➕ เพิ่มรายการงาน</button>
+  <button class="btn-add-sec" onclick="addSection()">📂 เพิ่มหมวดงาน</button>
+  <span style="font-size:11px;color:#374151;align-self:center;">💡 คลิกแถบสีรายวันเพื่อเปิด/ปิดการทำงาน | กรอก % เพื่อแสดงความคืบหน้า</span>
+</div>
+
+<script>
+// ===== DATA =====
+let rows = [];
+let rowId = 0;
+let baseDateStr = '';
+let calDays = []; // Array of {date, weekIdx, dayName, isWeekend, label}
+let activeStatusFilter = 'all';
+let activeCatFilter = 'all';
+
+const CAT_COLORS = {
+  'ชั้นใต้ดิน (Basement)':'#0284c7',
+  'ชั้น 1 (Ground Floor)':'#10b981',
+  'ชั้น 2 (Second Floor)':'#8b5cf6',
+  'ชั้นดาดฟ้า (Roof Deck)':'#f59e0b',
+  'งานระบบและทดสอบ (MEP/Handover)':'#ec4899',
+  'อื่นๆ':'#64748b'
+};
+const CAT_TEXT = {
+  'ชั้นใต้ดิน (Basement)':'#fff',
+  'ชั้น 1 (Ground Floor)':'#fff',
+  'ชั้น 2 (Second Floor)':'#fff',
+  'ชั้นดาดฟ้า (Roof Deck)':'#000',
+  'งานระบบและทดสอบ (MEP/Handover)':'#fff',
+  'อื่นๆ':'#fff'
+};
+const WK_COLORS = ['#3b82f6','#10b981','#f59e0b','#8b5cf6','#ef4444','#06b6d4'];
+const WK_BG = ['rgba(59,130,246,0.18)','rgba(16,185,129,0.18)','rgba(245,158,11,0.18)',
+                'rgba(139,92,246,0.18)','rgba(239,68,68,0.18)','rgba(6,182,212,0.18)'];
+const STATUS_CFG = {
+  'ยังไม่เริ่ม': {icon:'⏳',cls:'sts-ns',key:'ns'},
+  'กำลังดำเนินการ': {icon:'🔵',cls:'sts-ip',key:'ip'},
+  'เสร็จสิ้น': {icon:'✅',cls:'sts-dn',key:'dn'},
+  'ล่าช้า': {icon:'⚠️',cls:'sts-dl',key:'dl'},
+};
+const DAYS_TH = ['อา','จ','อ','พ','พฤ','ศ','ส'];
+
+// ===== DATE UTILS =====
+// แปลงได้ทั้ง YYYY-MM-DD, DD/MM/YY, DD/MM/YYYY
+function parseDate(s){
+  if(!s) return null;
+  s = s.trim();
+  // รูปแบบ DD/MM/YY หรือ DD/MM/YYYY
+  if(s.includes('/')){
+    const parts = s.split('/');
+    if(parts.length === 3){
+      let day = +parts[0];
+      let month = +parts[1];
+      let year = +parts[2];
+      if(year < 100){
+        // แปลงปี 2 หลัก เช่น 26 -> 2026
+        year += 2000;
+      } else if(year > 2500){
+        // แปลง พ.ศ. เป็น ค.ศ.
+        year -= 543;
+      }
+      return new Date(year, month - 1, day);
+    }
+  }
+  // รูปแบบ YYYY-MM-DD
+  const p = s.split('-');
+  if(p.length === 3){
+    let yr = +p[0];
+    if(yr > 2400) yr -= 543;
+    return new Date(yr, +p[1]-1, +p[2]);
+  }
+  return null;
+}
+
+// จัดรูปแบบแสดงผลเป็น DD/MM/YY (เช่น 16/11/26)
+function formatShortDate(d){
+  if(!d || isNaN(d.getTime())) return '';
+  const day = String(d.getDate()).padStart(2, '0');
+  const month = String(d.getMonth() + 1).padStart(2, '0');
+  const year = String(d.getFullYear()).slice(-2); // ตัดเอาเฉพาะ 2 หลักท้าย เช่น 26
+  return `${day}/${month}/${year}`;
+}
+
+function normalizeDateStr(s){
+  const d = parseDate(s);
+  return d ? fmtDate(d) : '';
+}
+
+function fmtDate(d){
+  if(!d || isNaN(d.getTime())) return '';
+  return d.getFullYear()+'-'+String(d.getMonth()+1).padStart(2,'0')+'-'+String(d.getDate()).padStart(2,'0');
+}
+function addDays(d,n){const r=new Date(d);r.setDate(r.getDate()+n);return r;}
+function thDate(d){return d.toLocaleDateString('th-TH',{day:'numeric',month:'short'});}
+
+function buildCalendar(base){
+  calDays=[];
+  let cur=new Date(base);
+  for(let w=0;w<6;w++){
+    for(let d=0;d<7;d++){
+      const dow=cur.getDay();
+      calDays.push({
+        date:new Date(cur),
+        weekIdx:w,
+        dayOfWeek:dow,
+        dayName:DAYS_TH[dow],
+        isWeekend:(dow===0||dow===6),
+        dateStr:fmtDate(cur),
+        label:String(cur.getDate())
+      });
+      cur=addDays(cur,1);
+    }
+  }
+}
+
+function getWeekLabel(wIdx){
+  const days=calDays.filter(d=>d.weekIdx===wIdx);
+  if(!days.length)return '';
+  return `สัปดาห์ที่ ${wIdx+1} (${thDate(days[0].date)} – ${thDate(days[days.length-1].date)})`;
+}
+
+// ===== RENDER HEADER =====
+function renderHeader(){
+  const head=document.getElementById('tableHead');
+  
+  // Row 1: fixed cols + week spans
+  let r1='<tr>';
+  r1+=`<th class="th-fixed th-num" rowspan="2" style="width:32px;">#</th>`;
+  r1+=`<th class="th-fixed th-cat" rowspan="2" style="width:110px;">หมวดงาน</th>`;
+  r1+=`<th class="th-fixed th-name" rowspan="2" style="width:360px;">หัวข้องาน</th>`;
+  r1+=`<th class="th-fixed th-assign" rowspan="2" style="width:80px;">ผู้รับผิดชอบ</th>`;
+  r1+=`<th class="th-fixed th-start" rowspan="2" style="width:85px;">วันเริ่ม</th>`;
+  r1+=`<th class="th-fixed th-end" rowspan="2" style="width:85px;">วันจบ</th>`;
+  r1+=`<th class="th-fixed th-status" rowspan="2" style="width:36px;">สถานะ</th>`;
+  r1+=`<th class="th-fixed th-pct" rowspan="2" style="width:46px;">%</th>`;
+  
+  for(let w=0;w<6;w++){
+    const days=calDays.filter(d=>d.weekIdx===w);
+    const startLbl=thDate(days[0].date);
+    const c=WK_COLORS[w];
+    r1+=`<th class="th-week" colspan="7" style="border-top:3px solid ${c};background:rgba(${hexToRgb(c)},0.1);padding:4px 1px;">
+      สัปดาห์ที่ ${w+1} &nbsp;<span style="font-size:9px;font-weight:300;color:#64748b;">${startLbl}</span>
+    </th>`;
+  }
+  r1+=`<th class="th-fixed th-actions" rowspan="2" style="width:40px;">จัดการ</th>`;
+  r1+='</tr>';
+  
+  // Row 2: day labels
+  let r2='<tr>';
+  for(let w=0;w<6;w++){
+    const wdays=calDays.filter(d=>d.weekIdx===w);
+    wdays.forEach(cd=>{
+      const isSunday = (cd.dayOfWeek === 0);
+      const isSat = (cd.dayOfWeek === 6);
+      const c=WK_COLORS[w];
+      let thClass = isSunday ? 'th-day sunday' : 'th-day';
+      let thStyle = `border-top:1px solid rgba(${hexToRgb(c)},0.3);`;
+      let nameStyle = '';
+      if(isSunday){
+        thStyle += 'background:rgba(239,68,68,0.15);';
+        nameStyle = 'color:#ef4444;font-weight:700;';
+      } else if(isSat){
+        thStyle += 'color:#94a3b8;';
+      }
+      r2+=`<th class="${thClass}" style="${thStyle}" title="${isSunday ? 'วันอาทิตย์ (หยุดไม่ทำงาน)' : ''}">
+        <div style="${nameStyle}">${cd.dayName}</div>
+        <div style="font-size:9px;color:${isSunday?'#f87171':'#4b5563'};font-weight:${isSunday?'700':'normal'};">${cd.label}</div>
+      </th>`;
+    });
+  }
+  r2+='</tr>';
+  
+  head.innerHTML=r1+r2;
+}
+
+function hexToRgb(hex){
+  const r=parseInt(hex.slice(1,3),16),g=parseInt(hex.slice(3,5),16),b=parseInt(hex.slice(5,7),16);
+  return `${r},${g},${b}`;
+}
+
+// ===== RENDER BODY =====
+function renderBody(){
+  const body=document.getElementById('tableBody');
+  let taskNum=0;
+  let html='';
+  
+  rows.forEach(row=>{
+    if(row.type==='section'){
+      html+=renderSection(row);
+      return;
+    }
+    taskNum++;
+    const sCfg=STATUS_CFG[row.status]||STATUS_CFG['ยังไม่เริ่ม'];
+    
+    // Filter
+    if(activeStatusFilter!=='all'&&sCfg.key!==activeStatusFilter)return;
+    if(activeCatFilter!=='all'&&row.cat!==activeCatFilter)return;
+    
+    const catColor=CAT_COLORS[row.cat]||'#64748b';
+    const catText=CAT_TEXT[row.cat]||'#fff';
+    const pct=parseInt(row.pct)||0;
+    const pctColor=pct>=100?'#10b981':pct>=50?'#3b82f6':'#f59e0b';
+    
+    html+=`<tr class="tr-task" id="row_${row.id}">`;
+    html+=`<td class="td-num">${taskNum}</td>`;
+    
+    // Category
+    html+=`<td class="td-cat">
+      <select class="inp-select select-cat" onchange="updateRow(${row.id},'cat',this.value);renderAll()">
+        ${Object.keys(CAT_COLORS).map(c=>`<option value="${c}" ${row.cat===c?'selected':''}
+          style="background:#1f2937;color:${CAT_COLORS[c]}">${c}</option>`).join('')}
+        <option value="อื่นๆ" ${row.cat==='อื่นๆ'?'selected':''}>อื่นๆ</option>
+      </select>
+    </td>`;
+    
+    // Name
+    html+=`<td class="td-name">
+      <textarea class="inp-textarea" rows="2" placeholder="ระบุหัวข้องาน..." 
+        oninput="autoResizeTextarea(this);updateRow(${row.id},'name',this.value)" 
+        onchange="updateRow(${row.id},'name',this.value)">${esc(row.name)}</textarea>
+    </td>`;
+    
+    // Assignee
+    html+=`<td class="td-assign"><input class="inp" value="${esc(row.assign)}" placeholder="ผู้รับผิดชอบ..." 
+      onchange="updateRow(${row.id},'assign',this.value)"/></td>`;
+    
+    // Start
+    const dispStart = row.start ? formatShortDate(parseDate(row.start)) : '';
+    html+=`<td class="td-start"><input type="text" class="inp" style="font-size:11px;text-align:center;color:#60a5fa;" value="${dispStart}" placeholder="วว/ดด/26" 
+      onchange="handleTextDateChange(${row.id},'start',this.value)"/></td>`;
+    
+    // End
+    const dispEnd = row.end ? formatShortDate(parseDate(row.end)) : '';
+    html+=`<td class="td-end"><input type="text" class="inp" style="font-size:11px;text-align:center;color:#34d399;" value="${dispEnd}" placeholder="วว/ดด/26" 
+      onchange="handleTextDateChange(${row.id},'end',this.value)"/></td>`;
+    
+    // Status
+    html+=`<td class="td-status">
+      <select class="inp-select" style="text-align:center;font-size:14px;" onchange="updateRow(${row.id},'status',this.value);renderAll()">
+        ${Object.keys(STATUS_CFG).map(s=>`<option value="${s}" ${row.status===s?'selected':''}
+          style="background:#1f2937;">${STATUS_CFG[s].icon} ${s}</option>`).join('')}
+      </select>
+    </td>`;
+    
+    // Pct
+    html+=`<td class="td-pct">
+      <div class="pct-wrap">
+        <input class="inp-pct" type="number" min="0" max="100" value="${row.pct}" 
+          onchange="updateRow(${row.id},'pct',this.value);renderAll()"/>
+        <div class="pct-bar-bg" style="margin-top:2px;">
+          <div class="pct-bar-fill" style="width:${pct}%;background:${pctColor};"></div>
+        </div>
+      </div>
+    </td>`;
+    
+    // Day cells
+    const rowStartNorm = normalizeDateStr(row.start);
+    const rowEndNorm = normalizeDateStr(row.end);
+
+    calDays.forEach((cd,ci)=>{
+      const wk=cd.weekIdx;
+      const isSunday = (cd.dayOfWeek === 0);
+      const isActive = row.days && row.days[cd.dateStr];
+      // Auto-mark if within start-end range (วันอาทิตย์ไม่ทำงาน ให้ตัดออกเสมอ)
+      let inRange = false;
+      if(!isSunday){
+        if(rowStartNorm && rowEndNorm) {
+          inRange = (cd.dateStr >= rowStartNorm && cd.dateStr <= rowEndNorm);
+        } else if(rowStartNorm && !rowEndNorm) {
+          inRange = (cd.dateStr === rowStartNorm);
+        }
+      }
+      
+      const show = !isSunday && (isActive || inRange);
+      const bg = show ? WK_COLORS[wk] : 'transparent';
+      const brd = show ? 'none' : (isSunday ? 'none' : '1px dashed #2d3748');
+      const bgCell = isSunday ? 'rgba(239,68,68,0.06)' : (cd.dayOfWeek === 6 ? 'rgba(0,0,0,0.15)' : '');
+      const cursor = isSunday ? 'cursor:not-allowed;' : '';
+      const tooltip = isSunday ? `${cd.dateStr} (วันอาทิตย์ หยุดไม่ทำงาน)` : cd.dateStr;
+
+      html+=`<td class="td-day ${isSunday?'sunday':''}" style="background:${bgCell};">
+        <div class="day-bar ${isSunday?'sunday':''}" onclick="toggleDay(${row.id},'${cd.dateStr}')"
+          style="background:${bg};border:${brd};opacity:${show?1:(isSunday?0.1:0.6)};${cursor}"
+          title="${tooltip}">
+        </div>
+      </td>`;
+    });
+    
+    // Actions
+    html+=`<td class="td-actions" style="white-space:nowrap;">
+      <button class="btn-add no-print" style="padding:2px 6px;font-size:11px;margin-right:2px;background:#2563eb;" title="แทรกรายการงานต่อจากแถวนี้" onclick="addTaskAfter(${row.id})">➕</button>
+      <button class="btn-del" title="ลบรายการนี้" onclick="deleteRow(${row.id})">✕</button>
+    </td>`;
+    html+='</tr>';
+  });
+  
+  body.innerHTML=html;
+  // ปรับความสูงของ Textarea ให้พอดีกับเนื้อหาทุกตัว
+  setTimeout(()=>{
+    document.querySelectorAll('.inp-textarea').forEach(el=>autoResizeTextarea(el));
+  }, 10);
+  updateStats();
+}
+
+function renderSection(row){
+  const totalCols=8+(6*7)+1;
+  // สีประจำแต่ละชั้น
+  let secColor = '#3b82f6';
+  let secBg = 'rgba(59,130,246,0.18)';
+  let secBorder = '#2563eb';
+
+  if(row.name.includes('ชั้นใต้ดิน') || row.name.includes('Basement')) {
+    secColor = '#38bdf8'; secBg = 'rgba(2,132,199,0.25)'; secBorder = '#0284c7';
+  } else if(row.name.includes('ชั้น 1') || row.name.includes('Ground')) {
+    secColor = '#34d399'; secBg = 'rgba(16,185,129,0.25)'; secBorder = '#10b981';
+  } else if(row.name.includes('ชั้น 2') || row.name.includes('Second')) {
+    secColor = '#c084fc'; secBg = 'rgba(139,92,246,0.25)'; secBorder = '#8b5cf6';
+  } else if(row.name.includes('ดาดฟ้า') || row.name.includes('Roof')) {
+    secColor = '#fbbf24'; secBg = 'rgba(245,158,11,0.25)'; secBorder = '#f59e0b';
+  } else if(row.name.includes('ส่งมอบ') || row.name.includes('ระบบรวม')) {
+    secColor = '#f472b6'; secBg = 'rgba(236,72,153,0.25)'; secBorder = '#ec4899';
+  }
+
+  return `<tr class="tr-section" style="background:${secBg}; border-top:2px solid ${secBorder}; border-bottom:2px solid ${secBorder};">
+    <td colspan="2" style="border-right:1px solid rgba(255,255,255,0.1); padding:8px 6px; text-align:center;">
+      <span style="font-size:14px;">📌</span>
+    </td>
+    <td colspan="${totalCols-2}" style="padding:6px 12px;">
+      <div style="display:flex; align-items:center; gap:10px;">
+        <input class="inp" value="${esc(row.name)}" placeholder="ชื่อหมวดชั้น..." 
+          style="font-size:14px; font-weight:600; color:${secColor}; width:100%; letter-spacing:0.3px; text-shadow:0 1px 2px rgba(0,0,0,0.8);"
+          onchange="updateRow(${row.id},'name',this.value)"/>
+        <button class="btn-add no-print" style="margin-left:auto; padding:4px 14px; font-size:12px; font-weight:400; white-space:nowrap; background:${secBorder}; border-radius:6px; box-shadow:0 2px 6px rgba(0,0,0,0.3);" onclick="addRowAfter(${row.id})">➕ เพิ่มหัวข้องานในหมวดนี้</button>
+        <button class="btn-del no-print" style="margin-left:6px; padding:4px 8px;" onclick="deleteRow(${row.id})">✕ ลบหมวด</button>
+      </div>
+    </td>
+  </tr>`;
+}
+
+function renderAll(){
+  renderHeader();
+  renderBody();
+}
+
+// ===== DATA OPS =====
+function autoResizeTextarea(el){
+  el.style.height = 'auto';
+  el.style.height = (el.scrollHeight) + 'px';
+}
+
+function updateRow(id,field,val){
+  const r=rows.find(r=>r.id===id);
+  if(r)r[field]=val;
+}
+
+function handleTextDateChange(id, field, val){
+  const r = rows.find(r=>r.id===id);
+  if(!r) return;
+  const d = parseDate(val);
+  if(d){
+    r[field] = fmtDate(d);
+  } else {
+    r[field] = '';
+  }
+  updateRowDayBars(id);
+}
+
+function updateRowDayBars(id){
+  const r = rows.find(r=>r.id===id);
+  const tr = document.getElementById('row_' + id);
+  if(!r || !tr) return;
+
+  const rowStartNorm = normalizeDateStr(r.start);
+  const rowEndNorm = normalizeDateStr(r.end);
+
+  const dayCells = tr.querySelectorAll('.day-bar');
+  calDays.forEach((cd, ci)=>{
+    if(ci < dayCells.length){
+      const bar = dayCells[ci];
+      const wk = cd.weekIdx;
+      const isSunday = (cd.dayOfWeek === 0);
+      const isActive = r.days && r.days[cd.dateStr];
+      let inRange = false;
+      if(!isSunday){
+        if(rowStartNorm && rowEndNorm){
+          inRange = (cd.dateStr >= rowStartNorm && cd.dateStr <= rowEndNorm);
+        } else if(rowStartNorm && !rowEndNorm){
+          inRange = (cd.dateStr === rowStartNorm);
+        }
+      }
+      const show = !isSunday && (isActive || inRange);
+      bar.style.background = show ? WK_COLORS[wk] : 'transparent';
+      bar.style.border = show ? 'none' : (isSunday ? 'none' : '1px dashed #2d3748');
+      bar.style.opacity = show ? '1' : (isSunday ? '0.1' : '0.6');
+      bar.style.cursor = isSunday ? 'not-allowed' : 'pointer';
+      bar.title = isSunday ? `${cd.dateStr} (วันอาทิตย์ หยุดไม่ทำงาน)` : cd.dateStr;
+    }
+  });
+}
+
+function toggleDay(id,dateStr){
+  const cd = calDays.find(d=>d.dateStr===dateStr);
+  if(cd && cd.dayOfWeek === 0){
+    // วันอาทิตย์ หยุดไม่ทำงาน ไม่อนุญาตให้คลิกเพิ่มงาน
+    return;
+  }
+  const r=rows.find(r=>r.id===id);
+  if(!r)return;
+  if(!r.days)r.days={};
+  r.days[dateStr]=!r.days[dateStr];
+  renderBody();
+}
+
+function addRow(){
+  rows.push({id:++rowId,type:'task',name:'',cat:'งานโครงสร้าง',assign:'',start:'',end:'',status:'ยังไม่เริ่ม',pct:0,days:{}});
+  renderAll();
+  setTimeout(()=>{
+    const inputs=document.querySelectorAll('.tr-task .inp');
+    if(inputs.length)inputs[inputs.length-6].focus();
+  },50);
+}
+
+function addRowAfter(secId){
+  const idx=rows.findIndex(r=>r.id===secId);
+  const parentSec = rows[idx];
+  let defaultCat = 'อื่นๆ';
+  if(parentSec.name.includes('ชั้นใต้ดิน') || parentSec.name.includes('Basement')) defaultCat = 'ชั้นใต้ดิน (Basement)';
+  else if(parentSec.name.includes('ชั้น 1') || parentSec.name.includes('Ground')) defaultCat = 'ชั้น 1 (Ground Floor)';
+  else if(parentSec.name.includes('ชั้น 2') || parentSec.name.includes('Second')) defaultCat = 'ชั้น 2 (Second Floor)';
+  else if(parentSec.name.includes('ดาดฟ้า') || parentSec.name.includes('Roof')) defaultCat = 'ชั้นดาดฟ้า (Roof Deck)';
+  else if(parentSec.name.includes('ส่งมอบ') || parentSec.name.includes('ระบบรวม')) defaultCat = 'งานระบบและทดสอบ (MEP/Handover)';
+
+  rows.splice(idx+1,0,{id:++rowId,type:'task',name:'',cat:defaultCat,assign:'',start:'',end:'',status:'ยังไม่เริ่ม',pct:0,days:{}});
+  renderAll();
+}
+
+function addTaskAfter(taskId){
+  const idx = rows.findIndex(r => r.id === taskId);
+  if(idx === -1) return;
+  const currentTask = rows[idx];
+  const cat = currentTask.cat || 'อื่นๆ';
+  rows.splice(idx + 1, 0, {
+    id: ++rowId,
+    type: 'task',
+    name: '',
+    cat: cat,
+    assign: '',
+    start: '',
+    end: '',
+    status: 'ยังไม่เริ่ม',
+    pct: 0,
+    days: {}
+  });
+  renderAll();
+}
+
+function addSection(){
+  rows.push({id:++rowId,type:'section',name:'หมวดงานใหม่'});
+  renderAll();
+}
+
+function deleteRow(id){rows=rows.filter(r=>r.id!==id);renderAll();}
+
+function esc(s){return (s||'').replace(/"/g,'&quot;').replace(/</g,'&lt;');}
+
+// ===== FILTERS =====
+function filterStatus(f){
+  activeStatusFilter=f;
+  ['all','ip','dn','dl','ns'].forEach(k=>{
+    const el=document.getElementById('chip'+k.charAt(0).toUpperCase()+k.slice(1));
+    if(el)el.classList.toggle('active',k===f);
+  });
+  renderBody();
+}
+
+function filterCat(c){
+  activeCatFilter=c;
+  document.querySelectorAll('.cat-btn').forEach(b=>{
+    b.classList.toggle('active',b.dataset.cat===c);
+  });
+  renderBody();
+}
+
+// ===== STATS =====
+function updateStats(){
+  const tasks=rows.filter(r=>r.type==='task');
+  const sCounts={ns:0,ip:0,dn:0,dl:0};
+  let pctSum=0;
+  tasks.forEach(t=>{
+    const k=(STATUS_CFG[t.status]||STATUS_CFG['ยังไม่เริ่ม']).key;
+    sCounts[k]=(sCounts[k]||0)+1;
+    pctSum+=parseInt(t.pct)||0;
+  });
+  document.getElementById('sTotal').textContent=tasks.length;
+  document.getElementById('sIP').textContent=sCounts.ip;
+  document.getElementById('sDN').textContent=sCounts.dn;
+  document.getElementById('sDL').textContent=sCounts.dl;
+  document.getElementById('sNS').textContent=sCounts.ns;
+  document.getElementById('sAvgPct').textContent=tasks.length?Math.round(pctSum/tasks.length)+'%':'0%';
+  document.getElementById('cntAll').textContent=tasks.length;
+  document.getElementById('cntIP').textContent=sCounts.ip;
+  document.getElementById('cntDN').textContent=sCounts.dn;
+  document.getElementById('cntDL').textContent=sCounts.dl;
+  document.getElementById('cntNS').textContent=sCounts.ns;
+}
+
+// ===== CALENDAR SETUP =====
+function setToday(){
+  const t=new Date();
+  // go back to nearest Monday
+  const dow=t.getDay();
+  const mon=addDays(t,dow===0?-6:1-dow);
+  document.getElementById('baseDate').value=fmtDate(mon);
+  rebuildCalendar();
+}
+
+function rebuildCalendar(){
+  const v=document.getElementById('baseDate').value;
+  if(!v)return;
+  baseDateStr=v;
+  buildCalendar(parseDate(v));
+  const end=addDays(parseDate(v),41);
+  document.getElementById('bannerRange').textContent=`ช่วงแผนงาน: ${thDate(parseDate(v))} – ${thDate(end)} (42 วัน)`;
+  document.getElementById('weekRangeLabel').textContent=getWeekLabel(0).replace('สัปดาห์ที่ 1 ','');
+  renderAll();
+}
+
+// ===== PRINT =====
+  function showPrintPreview(){
+    document.getElementById('printModal').classList.add('show');
+  }
+  function closePrintPreview(){
+    document.getElementById('printModal').classList.remove('show');
+  }
+  function doPrint(){
+    closePrintPreview();
+    setTimeout(()=>{ window.print(); }, 150);
+  }
+  // Close modal on overlay click
+  document.getElementById('printModal').addEventListener('click', function(e){
+    if(e.target===this) closePrintPreview();
+  });
+
+  // ===== SAVE & IMPORT / EXPORT SYSTEM =====
+const STORAGE_KEY = 'clubhouse_schedule_data_v1';
+
+function saveToLocalStorage(isAuto=false){
+  const payload = {
+    version: 1,
+    savedAt: new Date().toISOString(),
+    baseDate: document.getElementById('baseDate').value,
+    rows: rows
+  };
+  localStorage.setItem(STORAGE_KEY, JSON.stringify(payload));
+  if(!isAuto){
+    alert('✅ บันทึกข้อมูลแผนงานลงเครื่องเรียบร้อยแล้ว!\nเปิดมาใหม่ ข้อมูลเดิมจะอยู่ครบ 100%');
+  }
+}
+
+function shiftProjectDates(daysDiff){
+  if(document.getElementById('baseDate').value){
+    const bd = parseDate(document.getElementById('baseDate').value);
+    if(bd) document.getElementById('baseDate').value = fmtDate(addDays(bd, daysDiff));
+  }
+  rows.forEach(r => {
+    if(r.start){
+      const sd = parseDate(r.start);
+      if(sd) r.start = fmtDate(addDays(sd, daysDiff));
+    }
+    if(r.end){
+      const ed = parseDate(r.end);
+      if(ed) r.end = fmtDate(addDays(ed, daysDiff));
+    }
+    if(r.days && typeof r.days === 'object'){
+      const newDays = {};
+      Object.keys(r.days).forEach(k => {
+        const kd = parseDate(k);
+        if(kd && r.days[k]){
+          newDays[fmtDate(addDays(kd, daysDiff))] = r.days[k];
+        }
+      });
+      r.days = newDays;
+    }
+  });
+}
+
+function loadFromLocalStorage(){
+  const raw = localStorage.getItem(STORAGE_KEY);
+  if(!raw) return false;
+  try {
+    const payload = JSON.parse(raw);
+    if(payload && Array.isArray(payload.rows) && payload.rows.length > 0){
+      rows = payload.rows;
+      rowId = Math.max(...rows.map(r=>r.id || 0), 0);
+      if(payload.baseDate){
+        document.getElementById('baseDate').value = payload.baseDate;
+      }
+      // อัปเกรดอัตโนมัติ: หากเป็นข้อมูลเดิมที่เริ่ม 16/11/2026 ให้เลื่อนวันเริ่มทั้งหมดเป็น 26/11/2026 (+10 วัน) ทันที
+      if(document.getElementById('baseDate').value === '2026-11-16'){
+        shiftProjectDates(10);
+        saveToLocalStorage(true);
+      }
+      return true;
+    }
+  } catch(e){
+    console.error('Error loading saved data:', e);
+  }
+  return false;
+}
+
+// ส่งต่อไฟล์แผนงาน (.json) ให้ทีมอื่นนำไปเปิดทำต่อได้ทันที
+function exportProjectJSON(){
+  saveToLocalStorage(true);
+  const payload = {
+    projectName: 'Clubhouse Construction Schedule',
+    version: 1,
+    exportedAt: new Date().toISOString(),
+    baseDate: document.getElementById('baseDate').value,
+    rows: rows
+  };
+  const jsonStr = JSON.stringify(payload, null, 2);
+  const blob = new Blob([jsonStr], {type:'application/json;charset=utf-8'});
+  const url = URL.createObjectURL(blob);
+  const a = document.createElement('a');
+  const d = new Date();
+  const dateTag = `${d.getFullYear()}${String(d.getMonth()+1).padStart(2,'0')}${String(d.getDate()).padStart(2,'0')}`;
+  a.href = url;
+  a.download = `Clubhouse_Schedule_Export_${dateTag}.json`;
+  a.click();
+  URL.revokeObjectURL(url);
+}
+
+function triggerImportJSON(){
+  document.getElementById('jsonFileInput').click();
+}
+
+function importProjectJSON(event){
+  const file = event.target.files[0];
+  if(!file) return;
+  const reader = new FileReader();
+  reader.onload = function(e){
+    try {
+      const payload = JSON.parse(e.target.result);
+      if(payload && Array.isArray(payload.rows)){
+        rows = payload.rows;
+        rowId = Math.max(...rows.map(r=>r.id || 0), 0);
+        if(payload.baseDate){
+          document.getElementById('baseDate').value = payload.baseDate;
+          rebuildCalendar();
+        } else {
+          renderAll();
+        }
+        saveToLocalStorage(true);
+        alert('🎉 นำเข้าข้อมูลแผนงานสำเร็จ 100%!\nสามารถแก้ไขและทำงานต่อได้ทันที');
+      } else {
+        alert('❌ รูปแบบไฟล์แผนงานไม่ถูกต้อง');
+      }
+    } catch(err){
+      alert('❌ เกิดข้อผิดพลาดในการอ่านไฟล์: ' + err.message);
+    }
+    event.target.value = ''; // reset file input
+  };
+  reader.readAsText(file, 'utf-8');
+}
+
+function openLineShareModal(){
+  saveToLocalStorage(true);
+  const tasks = rows.filter(r => r.type === 'task');
+  const total = tasks.length;
+  const inProgress = tasks.filter(r => r.status === 'กำลังดำเนินการ').length;
+  const done = tasks.filter(r => r.status === 'เสร็จสิ้น').length;
+  const delayed = tasks.filter(r => r.status === 'ล่าช้า').length;
+  const waiting = tasks.filter(r => r.status === 'ยังไม่เริ่ม').length;
+  
+  let pctSum = 0;
+  tasks.forEach(t => pctSum += (parseInt(t.pct) || 0));
+  const avgPct = total ? Math.round(pctSum / total) : 0;
+  
+  const rangeTxt = document.getElementById('bannerRange').innerText || '';
+  const activeTasks = tasks.filter(t => t.status === 'กำลังดำเนินการ' || t.status === 'ล่าช้า').slice(0, 5);
+  let taskHighlights = '';
+  if(activeTasks.length > 0){
+    taskHighlights = '\n📌 งานสำคัญช่วงนี้:\n' + activeTasks.map(t => {
+      const sIcon = t.status === 'ล่าช้า' ? '⚠️' : '⚡';
+      const st = t.start ? formatShortDate(parseDate(t.start)) : '-';
+      const en = t.end ? formatShortDate(parseDate(t.end)) : '-';
+      return `${sIcon} ${t.name.slice(0, 30)}... (${st} - ${en}) [${t.pct}%]`;
+    }).join('\n') + '\n';
+  }
+
+  const msg = 
+`🏛️ แผนงานก่อสร้าง Clubhouse 6-Week
+${rangeTxt}
+----------------------------------
+📊 ความคืบหน้าเฉลี่ย: ${avgPct}%
+🗂️ งานทั้งหมด: ${total} รายการ
+⚡ กำลังดำเนินการ: ${inProgress} รายการ
+✅ เสร็จสิ้น: ${done} รายการ
+⚠️ ล่าช้า: ${delayed} รายการ
+⏳ ยังไม่เริ่ม: ${waiting} รายการ
+${taskHighlights}
+----------------------------------
+🌐 ส่งต่อไฟล์: แนบไฟล์ clubhouse_schedule.html ส่งให้เพื่อนร่วมงานเปิดใช้งานต่อได้ทันที
+🏢 โครงการเดอะ ออริจิ้น พัทยา (Well Graded)
+ลิงก์ตรง: https://line.me/R/ti/p/`;
+
+  document.getElementById('lineMsgTextarea').value = msg;
+  document.getElementById('lineModal').classList.add('show');
+}
+
+function closeLineShareModal(){
+  document.getElementById('lineModal').classList.remove('show');
+}
+
+function copyLineMessage(){
+  const ta = document.getElementById('lineMsgTextarea');
+  ta.select();
+  navigator.clipboard.writeText(ta.value).then(()=>{
+    const btn = document.getElementById('btnCopyLineMsg');
+    btn.innerText = '✅ คัดลอกสำเร็จแล้ว!';
+    setTimeout(()=>{ btn.innerText = '📋 คัดลอกข้อความ'; closeLineShareModal(); }, 1200);
+  }).catch(()=>{
+    alert('กรุณากดคัดลอกข้อความจากในกล่องข้อความ');
+  });
+}
+
+// ฟังก์ชันเซฟทั้งไฟล์ HTML พร้อมข้อมูลปัจจุบันทั้งหมด ให้คนอื่นเปิดทำต่อได้ทันที 100%
+function downloadSavedHTML(){
+  saveToLocalStorage(true);
+  
+  let fullHTML = document.documentElement.outerHTML;
+  const serializedRows = JSON.stringify(rows);
+  const baseDateVal = document.getElementById('baseDate').value;
+  
+  const injectScript = '// Embedded Latest Data\n' +
+    'rows = ' + serializedRows + ';\n' +
+    'rowId = Math.max(...rows.map(r=>r.id || 0), 0);\n' +
+    'document.getElementById("baseDate").value = "' + baseDateVal + '";\n' +
+    'rebuildCalendar();\n' +
+    'saveToLocalStorage(true);\n';
+  
+  fullHTML = fullHTML.replace('if(!loadFromLocalStorage()){', injectScript + 'if(false && !loadFromLocalStorage()){');
+
+  const blob = new Blob(['<!DOCTYPE html>\n<html lang="th">\n' + fullHTML + '\n</html>'], {type: 'text/html;charset=utf-8'});
+  const url = URL.createObjectURL(blob);
+  const a = document.createElement('a');
+  const d = new Date();
+  const dateTag = `${d.getFullYear()}${String(d.getMonth()+1).padStart(2,'0')}${String(d.getDate()).padStart(2,'0')}_${String(d.getHours()).padStart(2,'0')}${String(d.getMinutes()).padStart(2,'0')}`;
+  a.href = url;
+  a.download = `clubhouse_schedule_${dateTag}.html`;
+  a.click();
+  URL.revokeObjectURL(url);
+}
+
+// ===== EXPORT =====
+function exportCSV(){
+  const tasks=rows.filter(r=>r.type==='task');
+  const header='ลำดับ,หมวดงาน,หัวข้องาน,ผู้รับผิดชอบ,วันเริ่ม,วันจบ,สถานะ,%ความคืบหน้า\n';
+  const csv=header+tasks.map((r,i)=>
+    `${i+1},"${r.cat}","${r.name}","${r.assign}","${r.start}","${r.end}","${r.status}","${r.pct}%"`
+  ).join('\n');
+  const blob=new Blob(['\uFEFF'+csv],{type:'text/csv;charset=utf-8'});
+  const url=URL.createObjectURL(blob);
+  const a=document.createElement('a');
+  a.href=url;a.download='Clubhouse_6Week_Schedule.csv';a.click();
+  URL.revokeObjectURL(url);
+}
+
+// ===== DEFAULT DATA =====
+function loadDefault(){
+  const data=[
+    // ══════════════════════════════════════════════════════════════════
+    // 1. ชั้นใต้ดิน (BASEMENT FLOOR - LEVEL -2.40)
+    // ══════════════════════════════════════════════════════════════════
+    {type:'section',name:'🏢 ชั้นใต้ดิน (Basement Level -2.40) — ห้องน้ำ / Surge Tank / ทางบันไดขึ้น'},
+    {type:'task',name:'งานก่อผนังภายใน Texca Wall หนา 7.5, 9, 11.5 ซม. (แบ่งโซนห้องน้ำ)ห้องน้ำชาย/หญิง/คนพิการ',cat:'ชั้นใต้ดิน (Basement)',assign:'',start:'2026-11-26',end:'2026-12-02',pct:0},
+    {type:'task',name:'งานฉาบปูนผนังภายในเรียบและจับเซี้ยม ห้องเครื่อง',cat:'ชั้นใต้ดิน (Basement)',assign:'',start:'2026-12-02',end:'2026-12-10',pct:0},
+    {type:'task',name:'งานระบบทากันซึมพื้น ห้องน้ำชาย-หญิง และห้องน้ำผู้พิการ รวมทดสอบขังน้ำ',cat:'ชั้นใต้ดิน (Basement)',assign:'',start:'2026-11-30',end:'2026-12-05',pct:0},
+    {type:'task',name:'งานปูกระเบื้องพื้นห้องน้ำ ขนาด 30x30 ซม. (กันลื่น)',cat:'ชั้นใต้ดิน (Basement)',assign:'',pct:0},
+    {type:'task',name:'งานกรุกระเบื้องผนังห้องน้ำ ขนาด 60x60 ซม. สูงชนฝ้า',cat:'ชั้นใต้ดิน (Basement)',assign:'',pct:0},
+    {type:'task',name:'งานติดตั้งเคาน์เตอร์อ่างล้างหน้า Top หินสังเคราะห์ / กระจกเงาบานใหญ่',cat:'ชั้นใต้ดิน (Basement)',assign:'',pct:0},
+    {type:'task',name:'งานติดตั้งสุขภัณฑ์ห้องน้ำ ชาย / หญิง / ราวจับห้องน้ำผู้พิการ',cat:'ชั้นใต้ดิน (Basement)',assign:'',pct:0},
+    {type:'task',name:'งานติดตั้งบานประตูสำเร็จรูป D1, บานเลื่อน D2 (ห้องน้ำผู้พิการ)',cat:'ชั้นใต้ดิน (Basement)',assign:'',pct:0},
+    {type:'task',name:'งานติดตั้งโครงฝ้าเพดานแผ่นยิปซัมทนชื้น หนา 9 มม. พร้อมช่อง Service',cat:'ชั้นใต้ดิน (Basement)',assign:'',pct:0},
+    {type:'task',name:'งานท่อร้อยสายไฟ EMT, ดวงโคม Downlight กันละอองน้ำ ชั้นใต้ดิน',cat:'ชั้นใต้ดิน (Basement)',assign:'',pct:0},
+    {type:'task',name:'งานเดินท่อสุขาภิบาล ท่อน้ำดี PPR และท่อน้ำทิ้ง PVC จาก Surge Tank & ปั๊มน้ำ',cat:'ชั้นใต้ดิน (Basement)',assign:'',pct:0},
+    {type:'task',name:'งานพื้นคอนกรีตขัดมัน Floor Hardener บริเวณห้องเครื่องปั๊มน้ำ/Surge Tank',cat:'ชั้นใต้ดิน (Basement)',assign:'',pct:0},
+    {type:'task',name:'งานบันไดคอนกรีตทางขึ้น CST2 / ราวกันตกเหล็กสีดำ Charcoal Masks',cat:'ชั้นใต้ดิน (Basement)',assign:'',pct:0},
+
+    // ══════════════════════════════════════════════════════════════════
+    // 2. ชั้น 1 (GROUND FLOOR - LEVEL +1.20)
+    // ══════════════════════════════════════════════════════════════════
+    {type:'section',name:'🏊 ชั้น 1 (Ground Floor Level +1.20) — ลานสระว่ายน้ำ / โถงทางเข้า / บันไดวน'},
+    {type:'task',name:'งานเทปรับระดับและปูพื้นไม้เทียม WPC สระว่ายน้ำ / Pool Deck',cat:'ชั้น 1 (Ground Floor)',assign:'',pct:0},
+    {type:'task',name:'งานปูกระเบื้องหิน Stone Roccotto สระว่ายน้ำและขอบสระ',cat:'ชั้น 1 (Ground Floor)',assign:'',pct:0},
+    {type:'task',name:'งานปูกระเบื้องแกรนิตโต้ 60x60 ซม. โถง Lobby และทางเดินรอบสระ',cat:'ชั้น 1 (Ground Floor)',assign:'',pct:0},
+    {type:'task',name:'งานติดตั้งผนังกระจกโค้งนิรภัย Facade อาคาร (Tempered Laminated 10+10 mm)',cat:'ชั้น 1 (Ground Floor)',assign:'',pct:0},
+    {type:'task',name:'งานติดตั้งประตูบานเลื่อนกระจกกรอบอะลูมิเนียม Powder Coat โถงทางเข้า',cat:'ชั้น 1 (Ground Floor)',assign:'',pct:0},
+    {type:'task',name:'งานประกอบและติดตั้งบันไดวนเหล็ก (Spiral Staircase) แผ่นลายตีนเป็ด 4.5 มม.',cat:'ชั้น 1 (Ground Floor)',assign:'',pct:0},
+    {type:'task',name:'งานพ่นสีบันไดวน TOA Seamless / สี Charcoal Masks ตามแบบสเปก',cat:'ชั้น 1 (Ground Floor)',assign:'',pct:0},
+    {type:'task',name:'งานติดตั้งราวกระจกกันตกภายนอก Tempered Glass 12 มม. เสาสแตนเลส',cat:'ชั้น 1 (Ground Floor)',assign:'',pct:0},
+    {type:'task',name:'งานโครงสร้างและตกแต่งปล่องลิฟต์โดยสาร ชั้น 1',cat:'ชั้น 1 (Ground Floor)',assign:'',pct:0},
+    {type:'task',name:'งานท่อร้อยสายไฟและติดตั้งโคมไฟส่องสว่าง Landscape / โคมทางเดิน Pool Deck',cat:'ชั้น 1 (Ground Floor)',assign:'',pct:0},
+    {type:'task',name:'งานติดตั้งระบบระบายน้ำรอบสระว่ายน้ำและ Scupper Drain',cat:'ชั้น 1 (Ground Floor)',assign:'',pct:0},
+
+    // ══════════════════════════════════════════════════════════════════
+    // 3. ชั้น 2 (SECOND FLOOR - LEVEL +4.70)
+    // ══════════════════════════════════════════════════════════════════
+    {type:'section',name:'🏋️ ชั้น 2 (Second Floor Level +4.70) — ห้องออกกำลังกาย Fitness / Lounge'},
+    {type:'task',name:'งานปรับระดับพื้นและปูพื้น SPC หนา 5 มม. ลายไม้ (พื้นที่ออกกำลังกาย)',cat:'ชั้น 2 (Second Floor)',assign:'',pct:0},
+    {type:'task',name:'งานปูกระเบื้องพอร์ซเลน 60x120 ซม. โซน Lounge พักผ่อน',cat:'ชั้น 2 (Second Floor)',assign:'',pct:0},
+    {type:'task',name:'งานผนังเบายิปซัมกั้นห้องสองชั้น เสริมฉนวนกันเสียง Rockwool',cat:'ชั้น 2 (Second Floor)',assign:'',pct:0},
+    {type:'task',name:'งานกรุกระจกเงาผนังห้อง Fitness ซ่อนไฟ LED Warm White',cat:'ชั้น 2 (Second Floor)',assign:'',pct:0},
+    {type:'task',name:'งานติดตั้งชุดหน้าต่างกระจกบานฟิกซ์โค้งรับวิว Arch Window สูงชนฝ้า',cat:'ชั้น 2 (Second Floor)',assign:'',pct:0},
+    {type:'task',name:'งานฝ้าเพดานยิปซัมฉาบเรียบ ซ่อนรางม่านและซ่อนไฟหลืบ Indirect Light',cat:'ชั้น 2 (Second Floor)',assign:'',pct:0},
+    {type:'task',name:'งานทาสีผนังภายในอะคริลิกด้าน (TOA SuperShield DuraClean A+)',cat:'ชั้น 2 (Second Floor)',assign:'',pct:0},
+    {type:'task',name:'งานติดตั้งประตูโถงลิฟต์และงานตกแต่งซุ้มประตู ชั้น 2',cat:'ชั้น 2 (Second Floor)',assign:'',pct:0},
+    {type:'task',name:'งานติดตั้งระบบปรับอากาศ Cassette Type 4 ทิศทาง / VRV ชั้น 2',cat:'ชั้น 2 (Second Floor)',assign:'',pct:0},
+    {type:'task',name:'งานสวิตช์-ปลั๊กไฟ Floor Outlet และสาย LAN / Wi-Fi Access Point',cat:'ชั้น 2 (Second Floor)',assign:'',pct:0},
+
+    // ══════════════════════════════════════════════════════════════════
+    // 4. ชั้นดาดฟ้า (ROOF / PARAPET - LEVEL +8.20 ถึง +12.35)
+    // ══════════════════════════════════════════════════════════════════
+    {type:'section',name:'☀️ ชั้นดาดฟ้า (Roof Deck Level +8.20 / Parapet) — ดาดฟ้า / ถังเก็บน้ำ / ห้องเครื่องลิฟต์'},
+    {type:'task',name:'งานปรับ Slop พื้นดาดฟ้า คอนกรีตผสมน้ำยากันซึม เทลาดเข้าจุด Drain',cat:'ชั้นดาดฟ้า (Roof Deck)',assign:'',pct:0},
+    {type:'task',name:'งานทาระบบกันซึมดาดฟ้า Polyurethane (PU Waterproof Membrane) 3 เที่ยว',cat:'ชั้นดาดฟ้า (Roof Deck)',assign:'',pct:0},
+    {type:'task',name:'งานทดสอบขังน้ำดาดฟ้า (Water Ponding Test) ตรวจสอบการรั่วซึม 48 ชม.',cat:'ชั้นดาดฟ้า (Roof Deck)',assign:'',pct:0},
+    {type:'task',name:'งานฉาบผนังกันตก (Parapet Wall สูง 1.20-1.80 ม.) ปาดบัวหยดน้ำขอบบน',cat:'ชั้นดาดฟ้า (Roof Deck)',assign:'',pct:0},
+    {type:'task',name:'งานติดตั้งตะแกรงระบายน้ำ Roof Drain หัวโดมทองเหลืองป้องกันเศษใบไม้',cat:'ชั้นดาดฟ้า (Roof Deck)',assign:'',pct:0},
+    {type:'task',name:'งานเทฐานคอนกรีตวาง CDU แอร์ และฐานถังเก็บน้ำบนดาดฟ้า',cat:'ชั้นดาดฟ้า (Roof Deck)',assign:'',pct:0},
+    {type:'task',name:'งานติดตั้งชุดเครื่องยนต์ลิฟต์ (Elevator Machine Room) ชั้นบนสุด (+12.35)',cat:'ชั้นดาดฟ้า (Roof Deck)',assign:'',pct:0},
+    {type:'task',name:'งานติดตั้งบันไดลิงเหล็กขึ้นบำรุงรักษาหลังคาดาดฟ้า (Cat Ladder)',cat:'ชั้นดาดฟ้า (Roof Deck)',assign:'',pct:0},
+    {type:'task',name:'งานติดตั้งเสาล่อฟ้า (Lightning Protection System) และสายกราวด์ลงดิน',cat:'ชั้นดาดฟ้า (Roof Deck)',assign:'',pct:0},
+
+    // ══════════════════════════════════════════════════════════════════
+    // 5. งานระบบรวม ตรวจสอบ และส่งมอบ (MEP & COMMISSIONING)
+    // ══════════════════════════════════════════════════════════════════
+    {type:'section',name:'📋 งานระบบรวม ตรวจสอบความเรียบร้อย และตรวจรับส่งมอบ (Handover)'},
+    {type:'task',name:'งานติดตั้งระบบเตือนอัคคีภัย Fire Alarm & อุปกรณ์กระจายสัญญาณ Smoke Detector ทุกชั้น',cat:'งานระบบและทดสอบ (MEP/Handover)',assign:'',pct:0},
+    {type:'task',name:'งาน Commissioning ระบบลิฟต์โดยสารร่วมกับบริษัทผู้ผลิต',cat:'งานระบบและทดสอบ (MEP/Handover)',assign:'',pct:0},
+    {type:'task',name:'งานทดสอบระบบบำบัดน้ำดี-น้ำเสีย และทดสอบแรงดันระบบท่อทั้งอาคาร',cat:'งานระบบและทดสอบ (MEP/Handover)',assign:'',pct:0},
+    {type:'task',name:'งานตรวจเช็ก Punch List รอบที่ 1 (ผู้ควบคุมงาน CM ร่วมกับผู้รับเหมา)',cat:'งานระบบและทดสอบ (MEP/Handover)',assign:'',pct:0},
+    {type:'task',name:'งานแก้ไขข้อบกพร่อง Defect งานสถาปัตย์และระบบทุกจุด',cat:'งานระบบและทดสอบ (MEP/Handover)',assign:'',pct:0},
+    {type:'task',name:'งานทำความสะอาด Big Cleaning ภายใน-ภายนอกทุกชั้นอาคาร',cat:'งานระบบและทดสอบ (MEP/Handover)',assign:'',pct:0},
+    {type:'task',name:'งานตรวจสอบส่งมอบอาคาร Clubhouse และส่งมอบเล่ม As-Built Drawings',cat:'งานระบบและทดสอบ (MEP/Handover)',assign:'',pct:0},
+  ];
+  data.forEach(d=>{
+    rows.push({id:++rowId,start:'',end:'',status:'ยังไม่เริ่ม',days:{},...d});
+  });
+}
+
+// ===== INIT =====
+if(!loadFromLocalStorage()){
+  loadDefault();
+  document.getElementById('baseDate').value = '2026-11-26';
+  rebuildCalendar();
+} else {
+  rebuildCalendar();
+}
+</script>
+</body>
+</html>

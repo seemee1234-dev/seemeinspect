@@ -1,0 +1,867 @@
+<!DOCTYPE html>
+<html lang="th">
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="Cache-Control" content="no-cache, no-store, must-revalidate">
+  <meta http-equiv="Pragma" content="no-cache">
+  <meta http-equiv="Expires" content="0">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+  <title>THE ORIGIN PATTAYA PROGRESS • ครบทั้ง 38 ตาราง (อาคาร A, อาคาร B, อาคาร CH, MEP & ส่วนกลาง)</title>
+  
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Kanit:wght@300;400;500&display=swap" rel="stylesheet">
+  
+  <style>
+    /* ========================================================
+       MANDATORY UNIVERSAL TYPOGRAPHY & HIGH-CONTRAST THEME
+       Kanit, Pure Black #000000 Text, Crisp Print Standards
+       ======================================================== */
+    *, *::before, *::after {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+      -webkit-tap-highlight-color: transparent;
+    }
+
+    :root {
+      --bg-base: #f1f5f9;
+      --bg-surface: #ffffff;
+      --bg-card: #ffffff;
+      --navy-primary: #0a2540;
+      --navy-deep: #061626;
+      --text-main: #000000;
+      --border-subtle: #cbd5e1;
+      --border-strong: #000000;
+      --success: #059669;
+      --warning: #d97706;
+      --danger: #dc2626;
+      --font-kanit: 'Kanit', -apple-system, BlinkMacSystemFont, sans-serif;
+    }
+
+    body {
+      background-color: var(--bg-base);
+      color: #000000;
+      font-family: var(--font-kanit);
+      font-weight: 400;
+      font-size: 16px;
+      min-height: 100vh;
+      display: flex;
+      flex-direction: column;
+      overflow-x: auto;
+      line-height: 1.5;
+    }
+
+    /* Top Navigation HUD */
+    .hud-header {
+      background: #ffffff;
+      border-bottom: 2.5px solid var(--navy-primary);
+      padding: 14px 24px;
+      position: sticky;
+      top: 0;
+      z-index: 100;
+      box-shadow: 0 2px 10px rgba(0, 0, 0, 0.08);
+      display: flex;
+      flex-wrap: wrap;
+      justify-content: space-between;
+      align-items: center;
+      gap: 16px;
+    }
+
+    .brand-section {
+      display: flex;
+      align-items: center;
+      gap: 14px;
+    }
+
+    .brand-badge {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      padding: 6px 16px;
+      border-radius: 6px;
+      border: 1.5px solid var(--navy-primary);
+      background: var(--navy-primary);
+      color: #ffffff;
+      font-size: 14px;
+      font-weight: 600;
+      letter-spacing: 0.5px;
+    }
+
+    .hud-title-wrap h1 {
+      font-size: 22px;
+      font-weight: 600;
+      color: #000000;
+      display: flex;
+      align-items: center;
+      gap: 10px;
+    }
+
+    .hud-title-wrap p {
+      font-size: 14px;
+      color: #1e293b;
+      font-weight: 500;
+      margin-top: 3px;
+    }
+
+    .hud-actions {
+      display: flex;
+      flex-wrap: wrap;
+      align-items: center;
+      gap: 10px;
+    }
+
+    .btn {
+      font-family: var(--font-kanit);
+      font-weight: 500;
+      font-size: 14px;
+      padding: 8px 18px;
+      border-radius: 6px;
+      cursor: pointer;
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      transition: all 0.2s ease;
+      border: 1.5px solid transparent;
+      outline: none;
+    }
+
+    .btn-gold {
+      background: #f59e0b;
+      color: #000000;
+      font-weight: 600;
+      border-color: #d97706;
+    }
+    .btn-gold:hover {
+      background: #fbbf24;
+      transform: translateY(-1px);
+    }
+
+    .btn-blue {
+      background: #e0f2fe;
+      color: #0369a1;
+      border-color: #0284c7;
+      font-weight: 600;
+    }
+    .btn-blue:hover {
+      background: #bae6fd;
+    }
+
+    .btn-dark {
+      background: #f1f5f9;
+      color: #000000;
+      border-color: #94a3b8;
+      font-weight: 500;
+    }
+    .btn-dark:hover {
+      background: #e2e8f0;
+      border-color: #64748b;
+    }
+
+    /* Sub-nav Category Tabs */
+    .category-bar {
+      background: #ffffff;
+      border-bottom: 2px solid #cbd5e1;
+      padding: 12px 24px;
+      display: flex;
+      flex-wrap: wrap;
+      justify-content: space-between;
+      align-items: center;
+      gap: 12px;
+      position: sticky;
+      top: 73px;
+      z-index: 90;
+      box-shadow: 0 2px 6px rgba(0,0,0,0.04);
+    }
+
+    .cat-tabs {
+      display: flex;
+      flex-wrap: wrap;
+      align-items: center;
+      gap: 10px;
+    }
+
+    .cat-tab {
+      font-family: var(--font-kanit);
+      font-size: 15px;
+      font-weight: 500;
+      padding: 8px 18px;
+      border-radius: 6px;
+      background: #f8fafc;
+      border: 1.5px solid #94a3b8;
+      color: #000000;
+      cursor: pointer;
+      transition: all 0.2s ease;
+    }
+
+    .cat-tab:hover {
+      background: #e2e8f0;
+    }
+
+    .cat-tab.active {
+      background: var(--navy-primary);
+      color: #ffffff;
+      border-color: var(--navy-primary);
+      font-weight: 600;
+    }
+
+    /* KPI Summary Row */
+    .kpi-row {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+      gap: 16px;
+      padding: 18px 24px 8px 24px;
+    }
+
+    .kpi-card {
+      background: #ffffff;
+      border: 2px solid #000000;
+      border-radius: 8px;
+      padding: 16px 20px;
+      display: flex;
+      flex-direction: column;
+      gap: 6px;
+      position: relative;
+      overflow: hidden;
+      box-shadow: 0 2px 8px rgba(0, 0, 0, 0.06);
+    }
+
+    .kpi-card::before {
+      content: '';
+      position: absolute;
+      top: 0; left: 0; bottom: 0; width: 6px;
+      background: var(--navy-primary);
+    }
+
+    .kpi-title {
+      font-size: 15px;
+      color: #000000;
+      font-weight: 600;
+    }
+
+    .kpi-value {
+      font-size: 34px;
+      font-weight: 700;
+      color: #000000;
+      line-height: 1.1;
+    }
+
+    .kpi-desc {
+      font-size: 13px;
+      color: #334155;
+      font-weight: 500;
+    }
+
+    /* Table Selector Bar */
+    .selector-bar {
+      display: flex;
+      flex-wrap: wrap;
+      align-items: center;
+      justify-content: space-between;
+      gap: 14px;
+      margin: 10px 24px 18px 24px;
+      background: #ffffff;
+      padding: 14px 20px;
+      border-radius: 8px;
+      border: 2px solid #000000;
+      box-shadow: 0 2px 6px rgba(0, 0, 0, 0.05);
+    }
+
+    .selector-bar label {
+      font-size: 16px;
+      color: #000000;
+      font-weight: 600;
+    }
+
+    .table-select {
+      font-family: var(--font-kanit);
+      font-size: 15px;
+      font-weight: 500;
+      background: #ffffff;
+      border: 2px solid #000000;
+      color: #000000;
+      padding: 8px 16px;
+      border-radius: 6px;
+      outline: none;
+      min-width: 380px;
+      cursor: pointer;
+    }
+
+    /* Main Container */
+    .main-content {
+      padding: 0 24px 50px 24px;
+      flex: 1;
+    }
+
+    /* Slide Card Style */
+    .wg-slide-card {
+      background: #ffffff;
+      border-radius: 8px;
+      padding: 24px;
+      margin-bottom: 28px;
+      border: 2.5px solid #000000;
+      box-shadow: 0 4px 16px rgba(0, 0, 0, 0.1);
+      color: #000000;
+    }
+
+    .wg-slide-card-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: 16px;
+      padding-bottom: 12px;
+      border-bottom: 2.5px solid #000000;
+      gap: 12px;
+      flex-wrap: wrap;
+    }
+
+    .wg-logo-badge {
+      background: #0a2540;
+      color: #ffffff;
+      font-weight: 700;
+      font-size: 15px;
+      padding: 6px 16px;
+      border-radius: 4px;
+      letter-spacing: 0.5px;
+    }
+
+    .wg-slide-title {
+      font-size: 22px;
+      font-weight: 700;
+      color: #000000;
+      text-align: center;
+      flex: 1;
+    }
+
+    .wg-scope-badge {
+      background: #f1f5f9;
+      color: #000000;
+      font-weight: 600;
+      font-size: 14px;
+      padding: 4px 12px;
+      border: 1.5px solid #000000;
+      border-radius: 4px;
+    }
+
+    /* Tables */
+    .wg-table {
+      width: 100%;
+      border-collapse: collapse;
+      font-size: 16px;
+      margin-bottom: 16px;
+      border: 2px solid #000000;
+    }
+
+    .wg-table th {
+      background: #0a2540;
+      color: #ffffff;
+      font-weight: 600;
+      padding: 12px 14px;
+      border: 1.5px solid #000000;
+      text-align: center;
+      font-size: 16px;
+      white-space: nowrap;
+    }
+
+    .wg-table td {
+      border: 1.5px solid #000000;
+      padding: 10px 14px;
+      color: #000000 !important;
+      font-size: 16px;
+      font-weight: 500;
+      background: #ffffff;
+    }
+
+    .wg-table tr:nth-child(even) td {
+      background: #f8fafc;
+    }
+
+    .wg-table tr:hover td {
+      background: #f1f5f9;
+    }
+
+    .td-center {
+      text-align: center;
+    }
+
+    .wg-tr-total td {
+      background: #0a2540 !important;
+      color: #ffffff !important;
+      font-weight: 700;
+      font-size: 17px;
+      border: 1.5px solid #000000;
+    }
+
+    .wg-banner-accum {
+      background: #f8fafc;
+      border: 2px solid #000000;
+      padding: 12px 20px;
+      text-align: center;
+      font-size: 19px;
+      font-weight: 600;
+      color: #000000;
+      border-radius: 6px;
+    }
+
+    .wg-banner-accum strong {
+      color: #000000;
+      font-size: 23px;
+      font-weight: 700;
+      text-decoration: underline;
+    }
+
+    .cell-editable {
+      background: transparent;
+      border: 1px dashed transparent;
+      font-family: var(--font-kanit);
+      font-size: 16px !important;
+      font-weight: 500 !important;
+      color: #000000 !important;
+      width: 100%;
+      text-align: inherit;
+      padding: 4px 6px;
+      outline: none;
+      border-radius: 4px;
+    }
+    .cell-editable:hover {
+      border-color: #94a3b8;
+      background: #ffffff;
+    }
+    .cell-editable:focus {
+      border-color: #000000;
+      background: #ffffff;
+      box-shadow: 0 0 0 2px rgba(0, 0, 0, 0.15);
+    }
+    .cell-editable::placeholder {
+      color: #000000 !important;
+      opacity: 1 !important;
+      font-weight: 500 !important;
+    }
+
+    /* Footer Standard */
+    /* Print styles */
+    @media print {
+      body { background: #ffffff !important; color: #000000 !important; }
+      .hud-header, .category-bar, .selector-bar, .btn { display: none !important; }
+      .wg-slide-card { border: 2px solid #000000 !important; box-shadow: none !important; page-break-after: always; }
+      .wg-table th { background: #0a2540 !important; color: #ffffff !important; -webkit-print-color-adjust: exact; }
+      .wg-table td { color: #000000 !important; border: 1.5px solid #000000 !important; }
+    }
+  
+    /* ══════════════════════════════════════════════════════════════════
+       MANDATORY THIN TYPOGRAPHY & FULL TEXT WRAPPING (Kanit 300 Light)
+       Zero Truncation Guarantee: Text always wraps completely
+       ══════════════════════════════════════════════════════════════════ */
+    body, table, th, td, input, select, button, div, span, p, h1, h2, h3, h4, strong, b {
+      font-family: 'Kanit', sans-serif !important;
+      font-weight: 300 !important;
+    }
+    .kpi-pct, .kpi13-pct, .header-title h1, .brand-badge, .badge-accum, .badge-success, .badge-warn {
+      font-weight: 400 !important;
+    }
+    .wg-table, .table {
+      width: 100% !important;
+      table-layout: auto !important;
+      border-collapse: collapse !important;
+    }
+    .wg-table th, .table th {
+      font-size: 14.5px !important;
+      font-weight: 400 !important;
+      padding: 8px 6px !important;
+      white-space: normal !important;
+      word-wrap: break-word !important;
+      word-break: break-word !important;
+      line-height: 1.3 !important;
+    }
+    .wg-table td, .table td {
+      font-size: 15px !important;
+      font-weight: 300 !important;
+      padding: 8px 10px !important;
+      white-space: normal !important;
+      word-wrap: break-word !important;
+      word-break: break-word !important;
+      overflow-wrap: break-word !important;
+      line-height: 1.4 !important;
+    }
+    .cell-editable-text, .cell-editable, .cell-input {
+      font-family: 'Kanit', sans-serif !important;
+      font-size: 15px !important;
+      font-weight: 300 !important;
+      white-space: normal !important;
+      word-wrap: break-word !important;
+      word-break: break-word !important;
+      overflow-wrap: break-word !important;
+      min-height: 22px !important;
+      outline: none;
+      display: block;
+      width: 100% !important;
+      background: transparent;
+    }
+    .cell-editable-text:focus, .cell-editable:focus, .cell-input:focus {
+      background: #ffffff;
+      box-shadow: 0 0 0 1.5px #0a2540;
+    }
+
+  
+    /* Light Green Highlight for 100% cells */
+    .cell-100, td.cell-100, .wg-td-pct.cell-100 {
+      background-color: #dcfce7 !important;
+      color: #14532d !important;
+    }
+    
+  </style>
+</head>
+<body>
+
+  <!-- Top Navigation HUD -->
+  <header class="hud-header">
+    <div class="brand-section">
+      <div class="brand-badge">THE ORIGIN PATTAYA • ORIGIN PATTAYA</div>
+      <div class="hud-title-wrap">
+        <h1>THE ORIGIN PATTAYA PROGRESS • คลังข้อมูลครบ 38 ตาราง</h1>
+        <p>รายงานความก้าวหน้าทางการ Well Graded ครบทุกอาคาร (A, B, CH, MEP, ส่วนกลาง) • ข้อมูลตรงตามสไลด์ 100%</p>
+      </div>
+    </div>
+    <div class="hud-actions">
+      <button class="btn btn-gold" onclick="saveToStorage()">💾 บันทึกข้อมูล</button>
+      <button class="btn btn-blue" onclick="copySummaryText()">📋 ก๊อปปี้สรุป</button>
+      <button class="btn btn-dark" onclick="window.print()">🖨️ สั่งพิมพ์ A3/A4</button>
+      <button class="btn btn-dark" onclick="resetToOfficial()">🔄 คืนค่าสไลด์</button>
+    </div>
+  </header>
+
+  <!-- Category Filter Bar -->
+  <nav class="category-bar">
+    <div class="cat-tabs">
+      <button class="cat-tab active" onclick="setCategory('ALL')">🌟 ทั้งโครงการ (ครบ 38 ตาราง)</button>
+      <button class="cat-tab" onclick="setCategory('A')">🏢 อาคาร A (13 หมวดงาน)</button>
+      <button class="cat-tab" onclick="setCategory('B')">🏢 อาคาร B (12 หมวดงาน)</button>
+      <button class="cat-tab" onclick="setCategory('PRECAST')">🧱 ผนัง Precast (A, B, CH)</button>
+      <button class="cat-tab" onclick="setCategory('MEP')">⚡ งานระบบ & ส่วนกลาง (10 ตาราง)</button>
+    </div>
+    <div style="font-size:14px;color:#000000;font-weight:600;">
+      📅 รายงานประจำวันที่ 23 พ.ย. 69 • ตัวหนังสือสีดำ คมชัดระดับผู้บริหาร
+    </div>
+  </nav>
+
+  <!-- KPI Summary Row -->
+  <section class="kpi-row">
+    <div class="kpi-card">
+      <span class="kpi-title">🏢 อาคาร A (ภาพรวม 13 หมวดงาน)</span>
+      <span class="kpi-value" id="kpiA">57.85%</span>
+      <span class="kpi-desc">Precast 100%, Texca 98.57%, ราวระเบียง 95%</span>
+    </div>
+    <div class="kpi-card">
+      <span class="kpi-title">🏢 อาคาร B (ภาพรวม 12 หมวดงาน)</span>
+      <span class="kpi-value" id="kpiB">52.89%</span>
+      <span class="kpi-desc">Precast 80.71%, Texca 92.14%, ราวระเบียง 92.14%</span>
+    </div>
+    <div class="kpi-card">
+      <span class="kpi-title">🧱 ผนัง Precast (ติดตั้งสะสม)</span>
+      <span class="kpi-value" id="kpiPrecast">98.82% / 98.65%</span>
+      <span class="kpi-desc">อาคาร A: 586/593 แผ่น • อาคาร B: 585/593 แผ่น</span>
+    </div>
+    <div class="kpi-card">
+      <span class="kpi-title">🏡 Clubhouse Precast (CH)</span>
+      <span class="kpi-value" id="kpiCH">34.00%</span>
+      <span class="kpi-desc">ผลิตครบ 100% (50 แผ่น) • ติดตั้ง 17/50 แผ่น</span>
+    </div>
+  </section>
+
+  <!-- Table Jump Selector -->
+  <div class="selector-bar">
+    <label for="tableSelector">🔍 เลือกกระโดดดูตารางเฉพาะจุด:</label>
+    <select id="tableSelector" class="table-select" onchange="filterSpecificTable()">
+      <option value="all">-- แสดงทั้งหมดในหมวดที่เลือก --</option>
+    </select>
+  </div>
+
+  <!-- Main Container -->
+  <main class="main-content" id="cardsContainer">
+    <!-- JS rendered 38 tables -->
+  </main>
+
+  
+
+  <script>
+    const MASTER_DATA = {"report_title": "THE ORIGIN PATTAYA PROGRESS", "contractor": "Well Graded", "report_date": "23 พ.ย. 69", "buildings": {"A": {"name": "อาคาร A (Building A)", "floors": "FL 2 – FL 8 & ดาดฟ้า", "overall_pct": 57.85, "packages": [{"id": "A_01", "page": 2, "title": "งานเกร้าท์รอยต่อ Precast อาคาร A", "accum": 100.0, "scope": "FL 2 – FL 8", "cols": ["รายการ", "แผนเริ่ม", "Actual (%)", "แผนจบ", "หมายเหตุ"], "rows": [{"item": "งานเกร้าท์รอยต่อ Precast ชั้น 8", "start": "13 ต.ค. 69", "act": "100%", "end": "19 ต.ค. 69", "note": ""}, {"item": "งานเกร้าท์รอยต่อ Precast ชั้น 7", "start": "2 ต.ค. 69", "act": "100%", "end": "8 ต.ค. 69", "note": ""}, {"item": "งานเกร้าท์รอยต่อ Precast ชั้น 6", "start": "21 ก.ย. 69", "act": "100%", "end": "27 ก.ย. 69", "note": ""}, {"item": "งานเกร้าท์รอยต่อ Precast ชั้น 5", "start": "10 ก.ย. 69", "act": "100%", "end": "16 ก.ย. 69", "note": ""}, {"item": "งานเกร้าท์รอยต่อ Precast ชั้น 4", "start": "30 ส.ค. 69", "act": "100%", "end": "5 ก.ย. 69", "note": ""}, {"item": "งานเกร้าท์รอยต่อ Precast ชั้น 3", "start": "19 ส.ค. 69", "act": "100%", "end": "25 ส.ค. 69", "note": ""}, {"item": "งานเกร้าท์รอยต่อ Precast ชั้น 2", "start": "8 ส.ค. 69", "act": "100%", "end": "14 ส.ค. 69", "note": ""}]}, {"id": "A_02", "page": 3, "title": "งานติดตั้ง Texca wall อาคาร A", "accum": 98.57, "scope": "FL 2 – FL 8", "cols": ["รายการ", "แผนเริ่ม", "Actual (%)", "แผนจบ", "หมายเหตุ"], "rows": [{"item": "งานติดตั้ง Texca wall ชั้น 8", "start": "11 ต.ค. 69", "act": "90%", "end": "24 ต.ค. 69", "note": ""}, {"item": "งานติดตั้ง Texca wall ชั้น 7", "start": "30 ก.ย. 69", "act": "100%", "end": "13 ต.ค. 69", "note": ""}, {"item": "งานติดตั้ง Texca wall ชั้น 6", "start": "19 ก.ย. 69", "act": "100%", "end": "2 ต.ค. 69", "note": ""}, {"item": "งานติดตั้ง Texca wall ชั้น 5", "start": "8 ก.ย. 69", "act": "100%", "end": "21 ก.ย. 69", "note": ""}, {"item": "งานติดตั้ง Texca wall ชั้น 4", "start": "28 ส.ค. 69", "act": "100%", "end": "10 ก.ย. 69", "note": ""}, {"item": "งานติดตั้ง Texca wall ชั้น 3", "start": "17 ส.ค. 69", "act": "100%", "end": "30 ส.ค. 69", "note": ""}, {"item": "งานติดตั้ง Texca wall ชั้น 2", "start": "6 ส.ค. 69", "act": "100%", "end": "19 ส.ค. 69", "note": ""}]}, {"id": "A_03", "page": 4, "title": "งานติดตั้งราวระเบียง อาคาร A", "accum": 95.0, "scope": "FL 2 – FL 8", "cols": ["รายการ", "แผนเริ่ม", "Actual (%)", "แผนจบ", "หมายเหตุ"], "rows": [{"item": "งานติดตั้งราวระเบียง ชั้น 8", "start": "23 ต.ค. 69", "act": "95%", "end": "29 ต.ค. 69", "note": ""}, {"item": "งานติดตั้งราวระเบียง ชั้น 7", "start": "9 ต.ค. 69", "act": "95%", "end": "15 ต.ค. 69", "note": ""}, {"item": "งานติดตั้งราวระเบียง ชั้น 6", "start": "28 ก.ย. 69", "act": "95%", "end": "4 ต.ค. 69", "note": ""}, {"item": "งานติดตั้งราวระเบียง ชั้น 5", "start": "17 ก.ย. 69", "act": "95%", "end": "23 ก.ย. 69", "note": ""}, {"item": "งานติดตั้งราวระเบียง ชั้น 4", "start": "6 ก.ย. 69", "act": "95%", "end": "12 ก.ย. 69", "note": ""}, {"item": "งานติดตั้งราวระเบียง ชั้น 3", "start": "26 ส.ค. 69", "act": "95%", "end": "1 ก.ย. 69", "note": ""}, {"item": "งานติดตั้งราวระเบียง ชั้น 2", "start": "15 ส.ค. 69", "act": "95%", "end": "21 ส.ค. 69", "note": ""}]}, {"id": "A_04", "page": 5, "title": "งานเกร้าท์ผนังตำแหน่งท่อ RISER ภายในห้องพัก อาคาร A", "accum": 68.57, "scope": "FL 2 – FL 8", "cols": ["รายการ", "แผนเริ่ม", "Actual (%)", "แผนจบ", "หมายเหตุ"], "rows": [{"item": "งานเกร้าท์ผนังตำแหน่งท่อ RISER ภายในห้องพัก ชั้น 8", "start": "30 ต.ค. 69", "act": "-", "end": "5 พ.ย. 69", "note": ""}, {"item": "งานเกร้าท์ผนังตำแหน่งท่อ RISER ภายในห้องพัก ชั้น 7", "start": "19 ต.ค. 69", "act": "-", "end": "25 ต.ค. 69", "note": ""}, {"item": "งานเกร้าท์ผนังตำแหน่งท่อ RISER ภายในห้องพัก ชั้น 6", "start": "8 ต.ค. 69", "act": "90%", "end": "14 ต.ค. 69", "note": ""}, {"item": "งานเกร้าท์ผนังตำแหน่งท่อ RISER ภายในห้องพัก ชั้น 5", "start": "27 ก.ย. 69", "act": "90%", "end": "3 ต.ค. 69", "note": ""}, {"item": "งานเกร้าท์ผนังตำแหน่งท่อ RISER ภายในห้องพัก ชั้น 4", "start": "16 ก.ย. 69", "act": "100%", "end": "22 ก.ย. 69", "note": ""}, {"item": "งานเกร้าท์ผนังตำแหน่งท่อ RISER ภายในห้องพัก ชั้น 3", "start": "5 ก.ย. 69", "act": "100%", "end": "11 ก.ย. 69", "note": ""}, {"item": "งานเกร้าท์ผนังตำแหน่งท่อ RISER ภายในห้องพัก ชั้น 2", "start": "25 ส.ค. 69", "act": "100%", "end": "31 ส.ค. 69", "note": ""}]}, {"id": "A_05", "page": 6, "title": "งานเทปรับระดับพื้น อาคาร A", "accum": 85.71, "scope": "FL 2 – FL 8", "cols": ["รายการ", "แผนเริ่ม", "Actual (%)", "แผนจบ", "หมายเหตุ"], "rows": [{"item": "งานเทปรับระดับพื้น ชั้น 8", "start": "10 พ.ย. 69", "act": "-", "end": "16 พ.ย. 69", "note": ""}, {"item": "งานเทปรับระดับพื้น ชั้น 7", "start": "30 ต.ค. 69", "act": "100%", "end": "5 พ.ย. 69", "note": ""}, {"item": "งานเทปรับระดับพื้น ชั้น 6", "start": "19 ต.ค. 69", "act": "100%", "end": "25 ต.ค. 69", "note": ""}, {"item": "งานเทปรับระดับพื้น ชั้น 5", "start": "8 ต.ค. 69", "act": "100%", "end": "14 ต.ค. 69", "note": ""}, {"item": "งานเทปรับระดับพื้น ชั้น 4", "start": "27 ก.ย. 69", "act": "100%", "end": "3 ต.ค. 69", "note": ""}, {"item": "งานเทปรับระดับพื้น ชั้น 3", "start": "16 ก.ย. 69", "act": "100%", "end": "22 ก.ย. 69", "note": ""}, {"item": "งานเทปรับระดับพื้น ชั้น 2", "start": "5 ก.ย. 69", "act": "100%", "end": "11 ก.ย. 69", "note": ""}]}, {"id": "A_06", "page": 7, "title": "งานกันซึมห้องน้ำระเบียง อาคาร A", "accum": 57.14, "scope": "FL 2 – FL 8", "cols": ["รายการ", "แผนเริ่ม", "Actual (%)", "แผนจบ", "หมายเหตุ"], "rows": [{"item": "งานกันซึมห้องน้ำระเบียง ชั้น 8", "start": "14 พ.ย. 69", "act": "-", "end": "17 พ.ย. 69", "note": ""}, {"item": "งานกันซึมห้องน้ำระเบียง ชั้น 7", "start": "3 พ.ย. 69", "act": "-", "end": "6 พ.ย. 69", "note": ""}, {"item": "งานกันซึมห้องน้ำระเบียง ชั้น 6", "start": "23 ต.ค. 69", "act": "-", "end": "26 ต.ค. 69", "note": ""}, {"item": "งานกันซึมห้องน้ำระเบียง ชั้น 5", "start": "12 ต.ค. 69", "act": "100%", "end": "15 ต.ค. 69", "note": ""}, {"item": "งานกันซึมห้องน้ำระเบียง ชั้น 4", "start": "1 ต.ค. 69", "act": "100%", "end": "4 ต.ค. 69", "note": ""}, {"item": "งานกันซึมห้องน้ำระเบียง ชั้น 3", "start": "20 ก.ย. 69", "act": "100%", "end": "23 ก.ย. 69", "note": ""}, {"item": "งานกันซึมห้องน้ำระเบียง ชั้น 2", "start": "9 ก.ย. 69", "act": "100%", "end": "12 ก.ย. 69", "note": ""}]}, {"id": "A_07", "page": 8, "title": "งานติดตั้งกระเบื้อง อาคาร A", "accum": 45.71, "scope": "FL 2 – FL 8 (ผนังน้ำ 54.29% • พื้นน้ำ 42.86% • พื้นครัว 42.86% • ระเบียง 42.86%)", "cols": ["รายการ", "แผนเริ่ม ผนัง", "แผนจบ ผนัง", "Act ผนัง", "แผนเริ่ม พื้น", "Act พื้นน้ำ", "Act ครัว", "Act ระเบียง", "แผนจบ พื้น", "รวมชั้น"], "rows": [{"item": "งานติดตั้งกระเบื้อง ชั้น 8", "start": "18 พ.ย. 69", "end": "27 พ.ย. 69", "act": "-", "start2": "11 ธ.ค. 69", "act_bath": "-", "act_kit": "-", "act_bal": "-", "end2": "20 ธ.ค. 69", "total": "0.00%"}, {"item": "งานติดตั้งกระเบื้อง ชั้น 7", "start": "7 พ.ย. 69", "end": "16 พ.ย. 69", "act": "-", "start2": "30 พ.ย. 69", "act_bath": "-", "act_kit": "-", "act_bal": "-", "end2": "9 ธ.ค. 69", "total": "0.00%"}, {"item": "งานติดตั้งกระเบื้อง ชั้น 6", "start": "27 ต.ค. 69", "end": "5 พ.ย. 69", "act": "-", "start2": "19 พ.ย. 69", "act_bath": "-", "act_kit": "-", "act_bal": "-", "end2": "28 พ.ย. 69", "total": "0.00%"}, {"item": "งานติดตั้งกระเบื้อง ชั้น 5", "start": "16 ต.ค. 69", "end": "25 ต.ค. 69", "act": "80%", "start2": "8 พ.ย. 69", "act_bath": "-", "act_kit": "-", "act_bal": "-", "end2": "17 พ.ย. 69", "total": "20.00%"}, {"item": "งานติดตั้งกระเบื้อง ชั้น 4", "start": "5 ต.ค. 69", "end": "14 ต.ค. 69", "act": "100%", "start2": "28 ต.ค. 69", "act_bath": "100%", "act_kit": "100%", "act_bal": "100%", "end2": "6 พ.ย. 69", "total": "100.00%"}, {"item": "งานติดตั้งกระเบื้อง ชั้น 3", "start": "24 ก.ย. 69", "end": "3 ต.ค. 69", "act": "100%", "start2": "17 ต.ค. 69", "act_bath": "100%", "act_kit": "100%", "act_bal": "100%", "end2": "26 ต.ค. 69", "total": "100.00%"}, {"item": "งานติดตั้งกระเบื้อง ชั้น 2", "start": "13 ก.ย. 69", "end": "22 ก.ย. 69", "act": "100%", "start2": "6 ต.ค. 69", "act_bath": "100%", "act_kit": "100%", "act_bal": "100%", "end2": "15 ต.ค. 69", "total": "100.00%"}]}, {"id": "A_08", "page": 9, "title": "งานติดตั้งอลูมิเนียม อาคาร A", "accum": 33.39, "scope": "FL 2 – FL 8 (หน้าต่าง 100% • ระเบียง 22.86% • ห้องนอน 10.71% • ครัว 0%)", "cols": ["รายการ", "แผนเริ่ม นอก", "Act หน้าต่าง", "Act ระเบียง", "แผนจบ นอก", "แผนเริ่ม ใน", "Act นอน", "Act ครัว", "แผนจบ ใน", "รวมชั้น"], "rows": [{"item": "งานติดตั้งอลูมิเนียม ชั้น 8", "start": "22 พ.ย. 69", "act_w": "100%", "act_b": "-", "end": "28 พ.ย. 69", "start2": "21 ธ.ค. 69", "act_bed": "-", "act_kit": "-", "end2": "27 ธ.ค. 69", "total": "25.00%"}, {"item": "งานติดตั้งอลูมิเนียม ชั้น 7", "start": "11 พ.ย. 69", "act_w": "100%", "act_b": "-", "end": "17 พ.ย. 69", "start2": "10 ธ.ค. 69", "act_bed": "-", "act_kit": "-", "end2": "16 ธ.ค. 69", "total": "25.00%"}, {"item": "งานติดตั้งอลูมิเนียม ชั้น 6", "start": "31 ต.ค. 69", "act_w": "100%", "act_b": "-", "end": "6 พ.ย. 69", "start2": "29 พ.ย. 69", "act_bed": "-", "act_kit": "-", "end2": "5 ธ.ค. 69", "total": "25.00%"}, {"item": "งานติดตั้งอลูมิเนียม ชั้น 5", "start": "20 ต.ค. 69", "act_w": "100%", "act_b": "-", "end": "26 ต.ค. 69", "start2": "18 พ.ย. 69", "act_bed": "-", "act_kit": "-", "end2": "24 พ.ย. 69", "total": "25.00%"}, {"item": "งานติดตั้งอลูมิเนียม ชั้น 4", "start": "9 ต.ค. 69", "act_w": "100%", "act_b": "-", "end": "15 ต.ค. 69", "start2": "7 พ.ย. 69", "act_bed": "-", "act_kit": "-", "end2": "13 พ.ย. 69", "total": "25.00%"}, {"item": "งานติดตั้งอลูมิเนียม ชั้น 3", "start": "28 ก.ย. 69", "act_w": "100%", "act_b": "60%", "end": "4 ต.ค. 69", "start2": "27 ต.ค. 69", "act_bed": "-", "act_kit": "-", "end2": "2 พ.ย. 69", "total": "40.00%"}, {"item": "งานติดตั้งอลูมิเนียม ชั้น 2", "start": "17 ก.ย. 69", "act_w": "100%", "act_b": "100%", "end": "23 ก.ย. 69", "start2": "16 ต.ค. 69", "act_bed": "75%", "act_kit": "-", "end2": "22 ต.ค. 69", "total": "68.75%"}]}, {"id": "A_09", "page": 10, "title": "งานติดตั้งฝ้าเพดาน อาคาร A", "accum": 49.29, "scope": "FL 2 – FL 8 (โครงฝ้า 57.14% • แผ่นฝ้า 41.43%)", "cols": ["รายการ", "แผนเริ่ม โครง", "Act โครง", "แผนจบ โครง", "แผนเริ่ม แผ่น", "Act แผ่น", "แผนจบ แผ่น", "รวมชั้น"], "rows": [{"item": "งานติดตั้งฝ้าเพดาน ชั้น 8", "start": "25 พ.ย. 69", "act_frame": "-", "end": "6 ธ.ค. 69", "start2": "7 ธ.ค. 69", "act_sheet": "-", "end2": "18 ธ.ค. 69", "total": "0.00%"}, {"item": "งานติดตั้งฝ้าเพดาน ชั้น 7", "start": "14 พ.ย. 69", "act_frame": "-", "end": "25 พ.ย. 69", "start2": "26 พ.ย. 69", "act_sheet": "-", "end2": "7 ธ.ค. 69", "total": "0.00%"}, {"item": "งานติดตั้งฝ้าเพดาน ชั้น 6", "start": "3 พ.ย. 69", "act_frame": "10%", "end": "14 พ.ย. 69", "start2": "15 พ.ย. 69", "act_sheet": "-", "end2": "26 พ.ย. 69", "total": "5.00%"}, {"item": "งานติดตั้งฝ้าเพดาน ชั้น 5", "start": "23 ต.ค. 69", "act_frame": "90%", "end": "3 พ.ย. 69", "start2": "4 พ.ย. 69", "act_sheet": "-", "end2": "15 พ.ย. 69", "total": "45.00%"}, {"item": "งานติดตั้งฝ้าเพดาน ชั้น 4", "start": "12 ต.ค. 69", "act_frame": "100%", "end": "23 ต.ค. 69", "start2": "24 ต.ค. 69", "act_sheet": "90%", "end2": "4 พ.ย. 69", "total": "95.00%"}, {"item": "งานติดตั้งฝ้าเพดาน ชั้น 3", "start": "1 ต.ค. 69", "act_frame": "100%", "end": "12 ต.ค. 69", "start2": "13 ต.ค. 69", "act_sheet": "100%", "end2": "24 ต.ค. 69", "total": "100.00%"}, {"item": "งานติดตั้งฝ้าเพดาน ชั้น 2", "start": "20 ก.ย. 69", "act_frame": "100%", "end": "1 ต.ค. 69", "start2": "2 ต.ค. 69", "act_sheet": "100%", "end2": "13 ต.ค. 69", "total": "100.00%"}]}, {"id": "A_10", "page": 11, "title": "งาน SKIM ห้องพัก อาคาร A", "accum": 72.86, "scope": "FL 2 – FL 8", "cols": ["รายการ", "แผนเริ่ม", "Actual (%)", "แผนจบ", "หมายเหตุ"], "rows": [{"item": "งาน SKIM ห้องพัก ชั้น 8", "start": "21 ธ.ค. 69", "act": "-", "end": "27 ธ.ค. 69", "note": ""}, {"item": "งาน SKIM ห้องพัก ชั้น 7", "start": "10 ธ.ค. 69", "act": "20%", "end": "16 ธ.ค. 69", "note": ""}, {"item": "งาน SKIM ห้องพัก ชั้น 6", "start": "29 พ.ย. 69", "act": "90%", "end": "5 ธ.ค. 69", "note": ""}, {"item": "งาน SKIM ห้องพัก ชั้น 5", "start": "18 พ.ย. 69", "act": "100%", "end": "24 พ.ย. 69", "note": ""}, {"item": "งาน SKIM ห้องพัก ชั้น 4", "start": "7 พ.ย. 69", "act": "100%", "end": "13 พ.ย. 69", "note": ""}, {"item": "งาน SKIM ห้องพัก ชั้น 3", "start": "27 ต.ค. 69", "act": "100%", "end": "2 พ.ย. 69", "note": ""}, {"item": "งาน SKIM ห้องพัก ชั้น 2", "start": "16 ต.ค. 69", "act": "100%", "end": "22 ต.ค. 69", "note": ""}]}, {"id": "A_11", "page": 12, "title": "งานทาสี อาคาร A", "accum": 28.1, "scope": "FL 2 – FL 8 (รองพื้น 64.29% • สีจริงเที่ยว 1 20.00% • สีจริงเที่ยว 2 0%)", "cols": ["รายการ", "แผนเริ่ม รองพื้น", "Act รองพื้น", "Act สีจริง 1", "แผนจบ รองพื้น", "แผนเริ่ม จริง 2", "Act จริง 2", "แผนจบ จริง 2", "รวมชั้น"], "rows": [{"item": "งานทาสี ชั้น 8", "start": "25 ธ.ค. 69", "act_base": "-", "act_c1": "-", "end": "29 ธ.ค. 69", "start2": "9 ก.พ. 70", "act_c2": "-", "end2": "18 ก.พ. 70", "total": "0.00%"}, {"item": "งานทาสี ชั้น 7", "start": "14 ธ.ค. 69", "act_base": "50%", "act_c1": "-", "end": "18 ธ.ค. 69", "start2": "29 ม.ค. 70", "act_c2": "-", "end2": "7 ก.พ. 70", "total": "16.67%"}, {"item": "งานทาสี ชั้น 6", "start": "3 ธ.ค. 69", "act_base": "50%", "act_c1": "-", "end": "7 ธ.ค. 69", "start2": "18 ม.ค. 70", "act_c2": "-", "end2": "27 ม.ค. 70", "total": "16.67%"}, {"item": "งานทาสี ชั้น 5", "start": "22 พ.ย. 69", "act_base": "50%", "act_c1": "-", "end": "26 พ.ย. 69", "start2": "7 ม.ค. 70", "act_c2": "-", "end2": "16 ม.ค. 70", "total": "16.67%"}, {"item": "งานทาสี ชั้น 4", "start": "11 พ.ย. 69", "act_base": "100%", "act_c1": "-", "end": "15 พ.ย. 69", "start2": "27 ธ.ค. 69", "act_c2": "-", "end2": "5 ม.ค. 70", "total": "33.33%"}, {"item": "งานทาสี ชั้น 3", "start": "31 ต.ค. 69", "act_base": "100%", "act_c1": "40%", "end": "4 พ.ย. 69", "start2": "16 ธ.ค. 69", "act_c2": "-", "end2": "25 ธ.ค. 69", "total": "46.67%"}, {"item": "งานทาสี ชั้น 2", "start": "20 ต.ค. 69", "act_base": "100%", "act_c1": "100%", "end": "24 ต.ค. 69", "start2": "5 ธ.ค. 69", "act_c2": "-", "end2": "14 ธ.ค. 69", "total": "66.67%"}]}, {"id": "A_12", "page": 13, "title": "งานติดตั้งวงกบและบานประตู อาคาร A", "accum": 10.36, "scope": "FL 2 – FL 8 (วงกบ 14.29% • บานประตู 6.43%)", "cols": ["รายการ", "แผนเริ่ม วงกบ", "Act วงกบหน้าห้อง", "Act วงกบน้ำ", "แผนจบ วงกบ", "แผนเริ่ม บาน", "Act บานหน้าห้อง", "Act บานน้ำ", "แผนจบ บาน", "รวมชั้น"], "rows": [{"item": "งานติดตั้งวงกบและบานประตู ชั้น 8", "start": "9 ม.ค. 70", "act_w1": "-", "act_w2": "-", "end": "13 ม.ค. 70", "start2": "14 ม.ค. 70", "act_d1": "-", "act_d2": "-", "end2": "23 ม.ค. 70", "total": "0.00%"}, {"item": "งานติดตั้งวงกบและบานประตู ชั้น 7", "start": "29 ธ.ค. 69", "act_w1": "-", "act_w2": "-", "end": "2 ม.ค. 70", "start2": "3 ม.ค. 70", "act_d1": "-", "act_d2": "-", "end2": "12 ม.ค. 70", "total": "0.00%"}, {"item": "งานติดตั้งวงกบและบานประตู ชั้น 6", "start": "18 ธ.ค. 69", "act_w1": "-", "act_w2": "-", "end": "22 ธ.ค. 69", "start2": "23 ธ.ค. 69", "act_d1": "-", "act_d2": "-", "end2": "1 ม.ค. 70", "total": "0.00%"}, {"item": "งานติดตั้งวงกบและบานประตู ชั้น 5", "start": "7 ธ.ค. 69", "act_w1": "-", "act_w2": "-", "end": "11 ธ.ค. 69", "start2": "12 ธ.ค. 69", "act_d1": "-", "act_d2": "-", "end2": "21 ธ.ค. 69", "total": "0.00%"}, {"item": "งานติดตั้งวงกบและบานประตู ชั้น 4", "start": "26 พ.ย. 69", "act_w1": "-", "act_w2": "-", "end": "30 พ.ย. 69", "start2": "1 ธ.ค. 69", "act_d1": "-", "act_d2": "-", "end2": "10 ธ.ค. 69", "total": "0.00%"}, {"item": "งานติดตั้งวงกบและบานประตู ชั้น 3", "start": "15 พ.ย. 69", "act_w1": "-", "act_w2": "-", "end": "19 พ.ย. 69", "start2": "20 พ.ย. 69", "act_d1": "-", "act_d2": "-", "end2": "29 พ.ย. 69", "total": "0.00%"}, {"item": "งานติดตั้งวงกบและบานประตู ชั้น 2", "start": "4 พ.ย. 69", "act_w1": "100%", "act_w2": "100%", "end": "8 พ.ย. 69", "start2": "9 พ.ย. 69", "act_d1": "45%", "act_d2": "45%", "end2": "18 พ.ย. 69", "total": "72.50%"}]}, {"id": "A_13", "page": 14, "title": "งานติดตั้งพื้นกระเบื้องยาง SPC ห้องพัก อาคาร A", "accum": 14.0, "scope": "FL 2 – FL 8", "cols": ["รายการ", "แผนเริ่ม", "Actual (%)", "แผนจบ", "หมายเหตุ"], "rows": [{"item": "งานติดตั้งพื้นกระเบื้องยาง SPC ชั้น 8", "start": "26 ม.ค. 70", "act": "-", "end": "1 ก.พ. 70", "note": ""}, {"item": "งานติดตั้งพื้นกระเบื้องยาง SPC ชั้น 7", "start": "15 ม.ค. 70", "act": "-", "end": "21 ม.ค. 70", "note": ""}, {"item": "งานติดตั้งพื้นกระเบื้องยาง SPC ชั้น 6", "start": "4 ม.ค. 70", "act": "-", "end": "10 ม.ค. 70", "note": ""}, {"item": "งานติดตั้งพื้นกระเบื้องยาง SPC ชั้น 5", "start": "24 ธ.ค. 69", "act": "-", "end": "30 ธ.ค. 69", "note": ""}, {"item": "งานติดตั้งพื้นกระเบื้องยาง SPC ชั้น 4", "start": "13 ธ.ค. 69", "act": "-", "end": "19 ธ.ค. 69", "note": ""}, {"item": "งานติดตั้งพื้นกระเบื้องยาง SPC ชั้น 3", "start": "2 ธ.ค. 69", "act": "-", "end": "8 ธ.ค. 69", "note": ""}, {"item": "งานติดตั้งพื้นกระเบื้องยาง SPC ชั้น 2", "start": "21 พ.ย. 69", "act": "98%", "end": "27 พ.ย. 69", "note": ""}]}]}, "B": {"name": "อาคาร B (Building B)", "floors": "FL 2 – FL 8 & ดาดฟ้า", "overall_pct": 52.89, "packages": [{"id": "B_01", "page": 15, "title": "งานเกร้าท์รอยต่อ Precast อาคาร B", "accum": 80.71, "scope": "FL 2 – FL 8", "cols": ["รายการ", "แผนเริ่ม", "Actual (%)", "แผนจบ", "หมายเหตุ"], "rows": [{"item": "งานเกร้าท์รอยต่อ Precast ชั้น 8", "start": "13 ต.ค. 69", "act": "-", "end": "19 ต.ค. 69", "note": ""}, {"item": "งานเกร้าท์รอยต่อ Precast ชั้น 7", "start": "2 ต.ค. 69", "act": "75%", "end": "8 ต.ค. 69", "note": ""}, {"item": "งานเกร้าท์รอยต่อ Precast ชั้น 6", "start": "21 ก.ย. 69", "act": "90%", "end": "27 ก.ย. 69", "note": ""}, {"item": "งานเกร้าท์รอยต่อ Precast ชั้น 5", "start": "10 ก.ย. 69", "act": "100%", "end": "16 ก.ย. 69", "note": ""}, {"item": "งานเกร้าท์รอยต่อ Precast ชั้น 4", "start": "30 ส.ค. 69", "act": "100%", "end": "5 ก.ย. 69", "note": ""}, {"item": "งานเกร้าท์รอยต่อ Precast ชั้น 3", "start": "19 ส.ค. 69", "act": "100%", "end": "25 ส.ค. 69", "note": ""}, {"item": "งานเกร้าท์รอยต่อ Precast ชั้น 2", "start": "8 ส.ค. 69", "act": "100%", "end": "14 ส.ค. 69", "note": ""}]}, {"id": "B_02", "page": 16, "title": "งานติดตั้ง Texca wall อาคาร B", "accum": 92.14, "scope": "FL 2 – FL 8", "cols": ["รายการ", "แผนเริ่ม", "Actual (%)", "แผนจบ", "หมายเหตุ"], "rows": [{"item": "งานติดตั้ง Texca wall ชั้น 8", "start": "11 ต.ค. 69", "act": "80%", "end": "24 ต.ค. 69", "note": ""}, {"item": "งานติดตั้ง Texca wall ชั้น 7", "start": "30 ก.ย. 69", "act": "75%", "end": "13 ต.ค. 69", "note": ""}, {"item": "งานติดตั้ง Texca wall ชั้น 6", "start": "19 ก.ย. 69", "act": "95%", "end": "2 ต.ค. 69", "note": ""}, {"item": "งานติดตั้ง Texca wall ชั้น 5", "start": "8 ก.ย. 69", "act": "95%", "end": "21 ก.ย. 69", "note": ""}, {"item": "งานติดตั้ง Texca wall ชั้น 4", "start": "28 ส.ค. 69", "act": "100%", "end": "10 ก.ย. 69", "note": ""}, {"item": "งานติดตั้ง Texca wall ชั้น 3", "start": "17 ส.ค. 69", "act": "100%", "end": "30 ส.ค. 69", "note": ""}, {"item": "งานติดตั้ง Texca wall ชั้น 2", "start": "6 ส.ค. 69", "act": "100%", "end": "19 ส.ค. 69", "note": ""}]}, {"id": "B_03", "page": 17, "title": "งานติดตั้งราวระเบียง อาคาร B", "accum": 92.14, "scope": "FL 2 – FL 8", "cols": ["รายการ", "แผนเริ่ม", "Actual (%)", "แผนจบ", "หมายเหตุ"], "rows": [{"item": "งานติดตั้งราวระเบียง ชั้น 8", "start": "23 ต.ค. 69", "act": "75%", "end": "29 ต.ค. 69", "note": ""}, {"item": "งานติดตั้งราวระเบียง ชั้น 7", "start": "9 ต.ค. 69", "act": "95%", "end": "15 ต.ค. 69", "note": ""}, {"item": "งานติดตั้งราวระเบียง ชั้น 6", "start": "28 ก.ย. 69", "act": "95%", "end": "4 ต.ค. 69", "note": ""}, {"item": "งานติดตั้งราวระเบียง ชั้น 5", "start": "17 ก.ย. 69", "act": "95%", "end": "23 ก.ย. 69", "note": ""}, {"item": "งานติดตั้งราวระเบียง ชั้น 4", "start": "6 ก.ย. 69", "act": "95%", "end": "12 ก.ย. 69", "note": ""}, {"item": "งานติดตั้งราวระเบียง ชั้น 3", "start": "26 ส.ค. 69", "act": "95%", "end": "1 ก.ย. 69", "note": ""}, {"item": "งานติดตั้งราวระเบียง ชั้น 2", "start": "15 ส.ค. 69", "act": "95%", "end": "21 ส.ค. 69", "note": ""}]}, {"id": "B_04", "page": 18, "title": "งานเกร้าท์ผนังตำแหน่งท่อ RISER ภายในห้องพัก อาคาร B", "accum": 65.0, "scope": "FL 2 – FL 8", "cols": ["รายการ", "แผนเริ่ม", "Actual (%)", "แผนจบ", "หมายเหตุ"], "rows": [{"item": "งานเกร้าท์ผนังตำแหน่งท่อ RISER ภายในห้องพัก ชั้น 8", "start": "30 ต.ค. 69", "act": "-", "end": "5 พ.ย. 69", "note": ""}, {"item": "งานเกร้าท์ผนังตำแหน่งท่อ RISER ภายในห้องพัก ชั้น 7", "start": "19 ต.ค. 69", "act": "-", "end": "25 ต.ค. 69", "note": ""}, {"item": "งานเกร้าท์ผนังตำแหน่งท่อ RISER ภายในห้องพัก ชั้น 6", "start": "8 ต.ค. 69", "act": "65%", "end": "14 ต.ค. 69", "note": ""}, {"item": "งานเกร้าท์ผนังตำแหน่งท่อ RISER ภายในห้องพัก ชั้น 5", "start": "27 ก.ย. 69", "act": "95%", "end": "3 ต.ค. 69", "note": ""}, {"item": "งานเกร้าท์ผนังตำแหน่งท่อ RISER ภายในห้องพัก ชั้น 4", "start": "16 ก.ย. 69", "act": "95%", "end": "22 ก.ย. 69", "note": ""}, {"item": "งานเกร้าท์ผนังตำแหน่งท่อ RISER ภายในห้องพัก ชั้น 3", "start": "5 ก.ย. 69", "act": "100%", "end": "11 ก.ย. 69", "note": ""}, {"item": "งานเกร้าท์ผนังตำแหน่งท่อ RISER ภายในห้องพัก ชั้น 2", "start": "25 ส.ค. 69", "act": "100%", "end": "31 ส.ค. 69", "note": ""}]}, {"id": "B_05", "page": 19, "title": "งานเทปรับระดับพื้น อาคาร B", "accum": 43.93, "scope": "FL 2 – FL 8", "cols": ["รายการ", "แผนเริ่ม", "Actual (%)", "แผนจบ", "หมายเหตุ"], "rows": [{"item": "งานเทปรับระดับพื้น ชั้น 8", "start": "10 พ.ย. 69", "act": "-", "end": "16 พ.ย. 69", "note": ""}, {"item": "งานเทปรับระดับพื้น ชั้น 7", "start": "30 ต.ค. 69", "act": "-", "end": "5 พ.ย. 69", "note": ""}, {"item": "งานเทปรับระดับพื้น ชั้น 6", "start": "19 ต.ค. 69", "act": "-", "end": "25 ต.ค. 69", "note": ""}, {"item": "งานเทปรับระดับพื้น ชั้น 5", "start": "8 ต.ค. 69", "act": "8%", "end": "14 ต.ค. 69", "note": ""}, {"item": "งานเทปรับระดับพื้น ชั้น 4", "start": "27 ก.ย. 69", "act": "100%", "end": "3 ต.ค. 69", "note": ""}, {"item": "งานเทปรับระดับพื้น ชั้น 3", "start": "16 ก.ย. 69", "act": "100%", "end": "22 ก.ย. 69", "note": ""}, {"item": "งานเทปรับระดับพื้น ชั้น 2", "start": "5 ก.ย. 69", "act": "100%", "end": "11 ก.ย. 69", "note": ""}]}, {"id": "B_06", "page": 20, "title": "งานกันซึมห้องน้ำระเบียง อาคาร B", "accum": 57.14, "scope": "FL 2 – FL 8", "cols": ["รายการ", "แผนเริ่ม", "Actual (%)", "แผนจบ", "หมายเหตุ"], "rows": [{"item": "งานกันซึมห้องน้ำระเบียง ชั้น 8", "start": "14 พ.ย. 69", "act": "-", "end": "17 พ.ย. 69", "note": ""}, {"item": "งานกันซึมห้องน้ำระเบียง ชั้น 7", "start": "3 พ.ย. 69", "act": "-", "end": "6 พ.ย. 69", "note": ""}, {"item": "งานกันซึมห้องน้ำระเบียง ชั้น 6", "start": "23 ต.ค. 69", "act": "-", "end": "26 ต.ค. 69", "note": ""}, {"item": "งานกันซึมห้องน้ำระเบียง ชั้น 5", "start": "12 ต.ค. 69", "act": "100%", "end": "15 ต.ค. 69", "note": ""}, {"item": "งานกันซึมห้องน้ำระเบียง ชั้น 4", "start": "1 ต.ค. 69", "act": "100%", "end": "4 ต.ค. 69", "note": ""}, {"item": "งานกันซึมห้องน้ำระเบียง ชั้น 3", "start": "20 ก.ย. 69", "act": "100%", "end": "23 ก.ย. 69", "note": ""}, {"item": "งานกันซึมห้องน้ำระเบียง ชั้น 2", "start": "9 ก.ย. 69", "act": "100%", "end": "12 ก.ย. 69", "note": ""}]}, {"id": "B_07", "page": 21, "title": "งานติดตั้งกระเบื้อง อาคาร B", "accum": 36.82, "scope": "FL 2 – FL 8 (ผนังน้ำ 39.71% • พื้นน้ำ 35.86% • พื้นครัว 35.86% • ระเบียง 35.86%)", "cols": ["รายการ", "แผนเริ่ม ผนัง", "แผนจบ ผนัง", "Act ผนัง", "แผนเริ่ม พื้น", "Act พื้นน้ำ", "Act ครัว", "Act ระเบียง", "แผนจบ พื้น", "รวมชั้น"], "rows": [{"item": "งานติดตั้งกระเบื้อง ชั้น 8", "start": "18 พ.ย. 69", "end": "27 พ.ย. 69", "act": "-", "start2": "11 ธ.ค. 69", "act_bath": "-", "act_kit": "-", "act_bal": "-", "end2": "20 ธ.ค. 69", "total": "0.00%"}, {"item": "งานติดตั้งกระเบื้อง ชั้น 7", "start": "7 พ.ย. 69", "end": "16 พ.ย. 69", "act": "-", "start2": "30 พ.ย. 69", "act_bath": "-", "act_kit": "-", "act_bal": "-", "end2": "9 ธ.ค. 69", "total": "0.00%"}, {"item": "งานติดตั้งกระเบื้อง ชั้น 6", "start": "27 ต.ค. 69", "end": "5 พ.ย. 69", "act": "-", "start2": "19 พ.ย. 69", "act_bath": "-", "act_kit": "-", "act_bal": "-", "end2": "28 พ.ย. 69", "total": "0.00%"}, {"item": "งานติดตั้งกระเบื้อง ชั้น 5", "start": "16 ต.ค. 69", "end": "25 ต.ค. 69", "act": "-", "start2": "8 พ.ย. 69", "act_bath": "-", "act_kit": "-", "act_bal": "-", "end2": "17 พ.ย. 69", "total": "0.00%"}, {"item": "งานติดตั้งกระเบื้อง ชั้น 4", "start": "5 ต.ค. 69", "end": "14 ต.ค. 69", "act": "87%", "start2": "28 ต.ค. 69", "act_bath": "74%", "act_kit": "74%", "act_bal": "74%", "end2": "6 พ.ย. 69", "total": "77.25%"}, {"item": "งานติดตั้งกระเบื้อง ชั้น 3", "start": "24 ก.ย. 69", "end": "3 ต.ค. 69", "act": "93%", "start2": "17 ต.ค. 69", "act_bath": "79%", "act_kit": "79%", "act_bal": "79%", "end2": "26 ต.ค. 69", "total": "82.50%"}, {"item": "งานติดตั้งกระเบื้อง ชั้น 2", "start": "13 ก.ย. 69", "end": "22 ก.ย. 69", "act": "98%", "start2": "6 ต.ค. 69", "act_bath": "98%", "act_kit": "98%", "act_bal": "98%", "end2": "15 ต.ค. 69", "total": "98.00%"}]}, {"id": "B_08", "page": 22, "title": "งานติดตั้งอลูมิเนียม อาคาร B", "accum": 28.46, "scope": "FL 2 – FL 8 (หน้าต่าง 100% • ระเบียง 28.57% • ห้องนอน 5.29% • ครัว 0%)", "cols": ["รายการ", "แผนเริ่ม นอก", "Act หน้าต่าง", "Act ระเบียง", "แผนจบ นอก", "แผนเริ่ม ใน", "Act นอน", "Act ครัว", "แผนจบ ใน", "รวมชั้น"], "rows": [{"item": "งานติดตั้งอลูมิเนียม ชั้น 8", "start": "22 พ.ย. 69", "act_w": "100%", "act_b": "-", "end": "28 พ.ย. 69", "start2": "21 ธ.ค. 69", "act_bed": "-", "act_kit": "-", "end2": "27 ธ.ค. 69", "total": "25.00%"}, {"item": "งานติดตั้งอลูมิเนียม ชั้น 7", "start": "11 พ.ย. 69", "act_w": "100%", "act_b": "-", "end": "17 พ.ย. 69", "start2": "10 ธ.ค. 69", "act_bed": "-", "act_kit": "-", "end2": "16 ธ.ค. 69", "total": "25.00%"}, {"item": "งานติดตั้งอลูมิเนียม ชั้น 6", "start": "31 ต.ค. 69", "act_w": "100%", "act_b": "-", "end": "6 พ.ย. 69", "start2": "29 พ.ย. 69", "act_bed": "-", "act_kit": "-", "end2": "5 ธ.ค. 69", "total": "25.00%"}, {"item": "งานติดตั้งอลูมิเนียม ชั้น 5", "start": "20 ต.ค. 69", "act_w": "100%", "act_b": "-", "end": "26 ต.ค. 69", "start2": "18 พ.ย. 69", "act_bed": "-", "act_kit": "-", "end2": "24 พ.ย. 69", "total": "25.00%"}, {"item": "งานติดตั้งอลูมิเนียม ชั้น 4", "start": "9 ต.ค. 69", "act_w": "100%", "act_b": "40%", "end": "15 ต.ค. 69", "start2": "7 พ.ย. 69", "act_bed": "-", "act_kit": "-", "end2": "13 พ.ย. 69", "total": "35.00%"}, {"item": "งานติดตั้งอลูมิเนียม ชั้น 3", "start": "28 ก.ย. 69", "act_w": "100%", "act_b": "80%", "end": "4 ต.ค. 69", "start2": "27 ต.ค. 69", "act_bed": "-", "act_kit": "-", "end2": "2 พ.ย. 69", "total": "45.00%"}, {"item": "งานติดตั้งอลูมิเนียม ชั้น 2", "start": "17 ก.ย. 69", "act_w": "100%", "act_b": "80%", "end": "23 ก.ย. 69", "start2": "16 ต.ค. 69", "act_bed": "37%", "act_kit": "-", "end2": "22 ต.ค. 69", "total": "54.25%"}]}, {"id": "B_09", "page": 23, "title": "งานติดตั้งฝ้าเพดาน อาคาร B", "accum": 44.29, "scope": "FL 2 – FL 8 (โครงฝ้า 48.57% • แผ่นฝ้า 40.00%)", "cols": ["รายการ", "แผนเริ่ม โครง", "Act โครง", "แผนจบ โครง", "แผนเริ่ม แผ่น", "Act แผ่น", "แผนจบ แผ่น", "รวมชั้น"], "rows": [{"item": "งานติดตั้งฝ้าเพดาน ชั้น 8", "start": "25 พ.ย. 69", "act_frame": "-", "end": "6 ธ.ค. 69", "start2": "7 ธ.ค. 69", "act_sheet": "-", "end2": "18 ธ.ค. 69", "total": "0.00%"}, {"item": "งานติดตั้งฝ้าเพดาน ชั้น 7", "start": "14 พ.ย. 69", "act_frame": "-", "end": "25 พ.ย. 69", "start2": "26 พ.ย. 69", "act_sheet": "-", "end2": "7 ธ.ค. 69", "total": "0.00%"}, {"item": "งานติดตั้งฝ้าเพดาน ชั้น 6", "start": "3 พ.ย. 69", "act_frame": "-", "end": "14 พ.ย. 69", "start2": "15 พ.ย. 69", "act_sheet": "-", "end2": "26 พ.ย. 69", "total": "0.00%"}, {"item": "งานติดตั้งฝ้าเพดาน ชั้น 5", "start": "23 ต.ค. 69", "act_frame": "60%", "end": "3 พ.ย. 69", "start2": "4 พ.ย. 69", "act_sheet": "-", "end2": "15 พ.ย. 69", "total": "30.00%"}, {"item": "งานติดตั้งฝ้าเพดาน ชั้น 4", "start": "12 ต.ค. 69", "act_frame": "80%", "end": "23 ต.ค. 69", "start2": "24 ต.ค. 69", "act_sheet": "80%", "end2": "4 พ.ย. 69", "total": "80.00%"}, {"item": "งานติดตั้งฝ้าเพดาน ชั้น 3", "start": "1 ต.ค. 69", "act_frame": "100%", "end": "12 ต.ค. 69", "start2": "13 ต.ค. 69", "act_sheet": "100%", "end2": "24 ต.ค. 69", "total": "100.00%"}, {"item": "งานติดตั้งฝ้าเพดาน ชั้น 2", "start": "20 ก.ย. 69", "act_frame": "100%", "end": "1 ต.ค. 69", "start2": "2 ต.ค. 69", "act_sheet": "100%", "end2": "13 ต.ค. 69", "total": "100.00%"}]}, {"id": "B_10", "page": 24, "title": "งาน SKIM ห้องพัก อาคาร B", "accum": 70.0, "scope": "FL 2 – FL 8", "cols": ["รายการ", "แผนเริ่ม", "Actual (%)", "แผนจบ", "หมายเหตุ"], "rows": [{"item": "งาน SKIM ห้องพัก ชั้น 8", "start": "21 ธ.ค. 69", "act": "-", "end": "27 ธ.ค. 69", "note": ""}, {"item": "งาน SKIM ห้องพัก ชั้น 7", "start": "10 ธ.ค. 69", "act": "-", "end": "16 ธ.ค. 69", "note": ""}, {"item": "งาน SKIM ห้องพัก ชั้น 6", "start": "29 พ.ย. 69", "act": "95%", "end": "5 ธ.ค. 69", "note": ""}, {"item": "งาน SKIM ห้องพัก ชั้น 5", "start": "18 พ.ย. 69", "act": "95%", "end": "24 พ.ย. 69", "note": ""}, {"item": "งาน SKIM ห้องพัก ชั้น 4", "start": "7 พ.ย. 69", "act": "100%", "end": "13 พ.ย. 69", "note": ""}, {"item": "งาน SKIM ห้องพัก ชั้น 3", "start": "27 ต.ค. 69", "act": "100%", "end": "2 พ.ย. 69", "note": ""}, {"item": "งาน SKIM ห้องพัก ชั้น 2", "start": "16 ต.ค. 69", "act": "100%", "end": "22 ต.ค. 69", "note": ""}]}, {"id": "B_11", "page": 25, "title": "งานทาสี อาคาร B", "accum": 17.62, "scope": "FL 2 – FL 8 (รองพื้น 37.14% • สีจริงเที่ยว 1 15.71% • สีจริงเที่ยว 2 0%)", "cols": ["รายการ", "แผนเริ่ม รองพื้น", "Act รองพื้น", "Act สีจริง 1", "แผนจบ รองพื้น", "แผนเริ่ม จริง 2", "Act จริง 2", "แผนจบ จริง 2", "รวมชั้น"], "rows": [{"item": "งานทาสี ชั้น 8", "start": "25 ธ.ค. 69", "act_base": "-", "act_c1": "-", "end": "29 ธ.ค. 69", "start2": "9 ก.พ. 70", "act_c2": "-", "end2": "18 ก.พ. 70", "total": "0.00%"}, {"item": "งานทาสี ชั้น 7", "start": "14 ธ.ค. 69", "act_base": "-", "act_c1": "-", "end": "18 ธ.ค. 69", "start2": "29 ม.ค. 70", "act_c2": "-", "end2": "7 ก.พ. 70", "total": "0.00%"}, {"item": "งานทาสี ชั้น 6", "start": "3 ธ.ค. 69", "act_base": "-", "act_c1": "-", "end": "7 ธ.ค. 69", "start2": "18 ม.ค. 70", "act_c2": "-", "end2": "27 ม.ค. 70", "total": "0.00%"}, {"item": "งานทาสี ชั้น 5", "start": "22 พ.ย. 69", "act_base": "-", "act_c1": "-", "end": "26 พ.ย. 69", "start2": "7 ม.ค. 70", "act_c2": "-", "end2": "16 ม.ค. 70", "total": "0.00%"}, {"item": "งานทาสี ชั้น 4", "start": "11 พ.ย. 69", "act_base": "60%", "act_c1": "-", "end": "15 พ.ย. 69", "start2": "27 ธ.ค. 69", "act_c2": "-", "end2": "5 ม.ค. 70", "total": "20.00%"}, {"item": "งานทาสี ชั้น 3", "start": "31 ต.ค. 69", "act_base": "100%", "act_c1": "30%", "end": "4 พ.ย. 69", "start2": "16 ธ.ค. 69", "act_c2": "-", "end2": "25 ธ.ค. 69", "total": "43.33%"}, {"item": "งานทาสี ชั้น 2", "start": "20 ต.ค. 69", "act_base": "100%", "act_c1": "80%", "end": "24 ต.ค. 69", "start2": "5 ธ.ค. 69", "act_c2": "-", "end2": "14 ธ.ค. 69", "total": "60.00%"}]}, {"id": "B_12", "page": 26, "title": "งานติดตั้งวงกบและบานประตู อาคาร B", "accum": 4.64, "scope": "FL 2 – FL 8 (วงกบ 8.57% • บานประตู 1.43%)", "cols": ["รายการ", "แผนเริ่ม วงกบ", "Act วงกบหน้าห้อง", "Act วงกบน้ำ", "แผนจบ วงกบ", "แผนเริ่ม บาน", "Act บานหน้าห้อง", "Act บานน้ำ", "แผนจบ บาน", "รวมชั้น"], "rows": [{"item": "งานติดตั้งวงกบและบานประตู ชั้น 8", "start": "9 ม.ค. 70", "act_w1": "-", "act_w2": "-", "end": "13 ม.ค. 70", "start2": "14 ม.ค. 70", "act_d1": "-", "act_d2": "-", "end2": "23 ม.ค. 70", "total": "0.00%"}, {"item": "งานติดตั้งวงกบและบานประตู ชั้น 7", "start": "29 ธ.ค. 69", "act_w1": "-", "act_w2": "-", "end": "2 ม.ค. 70", "start2": "3 ม.ค. 70", "act_d1": "-", "act_d2": "-", "end2": "12 ม.ค. 70", "total": "0.00%"}, {"item": "งานติดตั้งวงกบและบานประตู ชั้น 6", "start": "18 ธ.ค. 69", "act_w1": "-", "act_w2": "-", "end": "22 ธ.ค. 69", "start2": "23 ธ.ค. 69", "act_d1": "-", "act_d2": "-", "end2": "1 ม.ค. 70", "total": "0.00%"}, {"item": "งานติดตั้งวงกบและบานประตู ชั้น 5", "start": "7 ธ.ค. 69", "act_w1": "-", "act_w2": "-", "end": "11 ธ.ค. 69", "start2": "12 ธ.ค. 69", "act_d1": "-", "act_d2": "-", "end2": "21 ธ.ค. 69", "total": "0.00%"}, {"item": "งานติดตั้งวงกบและบานประตู ชั้น 4", "start": "26 พ.ย. 69", "act_w1": "-", "act_w2": "-", "end": "30 พ.ย. 69", "start2": "1 ธ.ค. 69", "act_d1": "-", "act_d2": "-", "end2": "10 ธ.ค. 69", "total": "0.00%"}, {"item": "งานติดตั้งวงกบและบานประตู ชั้น 3", "start": "15 พ.ย. 69", "act_w1": "-", "act_w2": "-", "end": "19 พ.ย. 69", "start2": "20 พ.ย. 69", "act_d1": "-", "act_d2": "-", "end2": "29 พ.ย. 69", "total": "0.00%"}, {"item": "งานติดตั้งวงกบและบานประตู ชั้น 2", "start": "4 พ.ย. 69", "act_w1": "60%", "act_w2": "60%", "end": "8 พ.ย. 69", "start2": "9 พ.ย. 69", "act_d1": "10%", "act_d2": "-", "end2": "18 พ.ย. 69", "total": "32.50%"}]}]}, "PRECAST": {"name": "งานผลิตและติดตั้งแผ่น Precast (อาคาร A, อาคาร B, อาคาร CH)", "overall_pct": 77.16, "packages": [{"id": "PRE_A", "page": 27, "title": "งานผนัง Precast อาคาร A (ผลิต 100% • ติดตั้งสะสม 98.82%)", "accum": 98.82, "scope": "รวม 593 แผ่น (ผลิตครบ 593, ติดตั้งแล้ว 586 แผ่น, เหลือ 7 แผ่น)", "cols": ["รายการ", "จำนวนแผ่น", "ผลิตแล้ว", "คงเหลือผลิต", "แผนเริ่ม ผลิต", "แผนจบ ผลิต", "ติดตั้งสะสม", "คงเหลือติดตั้ง", "แผนเริ่ม ติดตั้ง", "แผนจบ ติดตั้ง", "% ติดตั้ง"], "rows": [{"item": "ผนัง Precast ชั้นดาดฟ้า", "qty": "76.00", "prod": "76.00", "p_rem": "-", "p_start": "24 ก.ย. 69", "p_end": "4 ต.ค. 69", "inst": "76.00", "i_rem": "-", "i_start": "8 ต.ค. 69", "i_end": "20 ต.ค. 69", "pct": "100%"}, {"item": "ผนัง Precast ชั้น 8", "qty": "71.00", "prod": "71.00", "p_rem": "-", "p_start": "13 ก.ย. 69", "p_end": "23 ก.ย. 69", "inst": "70.00", "i_rem": "1.00", "i_start": "28 ก.ย. 69", "i_end": "8 ต.ค. 69", "pct": "99%"}, {"item": "ผนัง Precast ชั้น 7", "qty": "70.00", "prod": "70.00", "p_rem": "-", "p_start": "31 ส.ค. 69", "p_end": "12 ก.ย. 69", "inst": "69.00", "i_rem": "1.00", "i_start": "18 ก.ย. 69", "i_end": "28 ก.ย. 69", "pct": "99%"}, {"item": "ผนัง Precast ชั้น 6", "qty": "70.00", "prod": "70.00", "p_rem": "-", "p_start": "22 ส.ค. 69", "p_end": "4 ก.ย. 69", "inst": "69.00", "i_rem": "1.00", "i_start": "8 ก.ย. 69", "i_end": "18 ก.ย. 69", "pct": "99%"}, {"item": "ผนัง Precast ชั้น 5", "qty": "70.00", "prod": "70.00", "p_rem": "-", "p_start": "14 ส.ค. 69", "p_end": "26 ส.ค. 69", "inst": "69.00", "i_rem": "1.00", "i_start": "28 ส.ค. 69", "i_end": "7 ก.ย. 69", "pct": "99%"}, {"item": "ผนัง Precast ชั้น 4", "qty": "70.00", "prod": "70.00", "p_rem": "-", "p_start": "5 ส.ค. 69", "p_end": "19 ส.ค. 69", "inst": "69.00", "i_rem": "1.00", "i_start": "18 ส.ค. 69", "i_end": "28 ส.ค. 69", "pct": "99%"}, {"item": "ผนัง Precast ชั้น 3", "qty": "70.00", "prod": "70.00", "p_rem": "-", "p_start": "28 ก.ค. 69", "p_end": "11 ส.ค. 69", "inst": "69.00", "i_rem": "1.00", "i_start": "8 ส.ค. 69", "i_end": "18 ส.ค. 69", "pct": "99%"}, {"item": "ผนัง Precast ชั้น 2", "qty": "90.00", "prod": "90.00", "p_rem": "-", "p_start": "17 ก.ค. 69", "p_end": "4 ส.ค. 69", "inst": "89.00", "i_rem": "1.00", "i_start": "25 ก.ค. 69", "i_end": "4 ส.ค. 69", "pct": "99%"}, {"item": "ผนัง Precast ชั้น 1", "qty": "6.00", "prod": "6.00", "p_rem": "-", "p_start": "18 ก.ค. 69", "p_end": "4 ส.ค. 69", "inst": "6.00", "i_rem": "-", "i_start": "28 ก.ค. 69", "i_end": "7 ส.ค. 69", "pct": "100%"}]}, {"id": "PRE_B", "page": 31, "title": "งานผนัง Precast อาคาร B (ผลิต 100% • ติดตั้งสะสม 98.65%)", "accum": 98.65, "scope": "รวม 593 แผ่น (ผลิตครบ 593, ติดตั้งแล้ว 585 แผ่น, เหลือ 8 แผ่น)", "cols": ["รายการ", "จำนวนแผ่น", "ผลิตแล้ว", "คงเหลือผลิต", "แผนเริ่ม ผลิต", "แผนจบ ผลิต", "ติดตั้งสะสม", "คงเหลือติดตั้ง", "แผนเริ่ม ติดตั้ง", "แผนจบ ติดตั้ง", "% ติดตั้ง"], "rows": [{"item": "ผนัง Precast ชั้นดาดฟ้า", "qty": "76.00", "prod": "76.00", "p_rem": "-", "p_start": "25 ก.ย. 69", "p_end": "5 ต.ค. 69", "inst": "76.00", "i_rem": "-", "i_start": "14 ต.ค. 69", "i_end": "23 ต.ค. 69", "pct": "100%"}, {"item": "ผนัง Precast ชั้น 8", "qty": "71.00", "prod": "71.00", "p_rem": "-", "p_start": "14 ก.ย. 69", "p_end": "24 ก.ย. 69", "inst": "69.00", "i_rem": "2.00", "i_start": "3 ต.ค. 69", "i_end": "12 ต.ค. 69", "pct": "97%"}, {"item": "ผนัง Precast ชั้น 7", "qty": "70.00", "prod": "70.00", "p_rem": "-", "p_start": "1 ก.ย. 69", "p_end": "13 ก.ย. 69", "inst": "69.00", "i_rem": "1.00", "i_start": "22 ก.ย. 69", "i_end": "1 ต.ค. 69", "pct": "99%"}, {"item": "ผนัง Precast ชั้น 6", "qty": "70.00", "prod": "70.00", "p_rem": "-", "p_start": "24 ส.ค. 69", "p_end": "6 ก.ย. 69", "inst": "69.00", "i_rem": "1.00", "i_start": "11 ก.ย. 69", "i_end": "20 ก.ย. 69", "pct": "99%"}, {"item": "ผนัง Precast ชั้น 5", "qty": "70.00", "prod": "70.00", "p_rem": "-", "p_start": "15 ส.ค. 69", "p_end": "7 ก.ย. 69", "inst": "69.00", "i_rem": "1.00", "i_start": "31 ส.ค. 69", "i_end": "9 ก.ย. 69", "pct": "99%"}, {"item": "ผนัง Precast ชั้น 4", "qty": "70.00", "prod": "70.00", "p_rem": "-", "p_start": "6 ส.ค. 69", "p_end": "20 ส.ค. 69", "inst": "69.00", "i_rem": "1.00", "i_start": "20 ส.ค. 69", "i_end": "29 ส.ค. 69", "pct": "99%"}, {"item": "ผนัง Precast ชั้น 3", "qty": "70.00", "prod": "70.00", "p_rem": "-", "p_start": "29 ก.ค. 69", "p_end": "12 ส.ค. 69", "inst": "69.00", "i_rem": "1.00", "i_start": "9 ส.ค. 69", "i_end": "18 ส.ค. 69", "pct": "99%"}, {"item": "ผนัง Precast ชั้น 2", "qty": "90.00", "prod": "90.00", "p_rem": "-", "p_start": "17 ก.ค. 69", "p_end": "4 ส.ค. 69", "inst": "89.00", "i_rem": "1.00", "i_start": "29 ก.ค. 69", "i_end": "7 ส.ค. 69", "pct": "99%"}, {"item": "ผนัง Precast ชั้น 1", "qty": "6.00", "prod": "6.00", "p_rem": "-", "p_start": "18 ก.ค. 69", "p_end": "4 ส.ค. 69", "inst": "6.00", "i_rem": "-", "i_start": "29 ก.ค. 69", "i_end": "7 ส.ค. 69", "pct": "100%"}]}, {"id": "PRE_CH", "page": 35, "title": "งานผนัง Precast อาคาร CH (Clubhouse) (ผลิต 100% • ติดตั้งสะสม 34.00%)", "accum": 34.0, "scope": "รวม 50 แผ่น (ผลิตครบ 50, ติดตั้งแล้ว 17 แผ่น, เหลือ 33 แผ่น)", "cols": ["รายการ", "จำนวนแผ่น", "ผลิตปกติ", "ผลิตพิเศษ", "ผลิตรวม", "แผนเริ่ม ผลิต", "แผนจบ ผลิต", "ติดตั้งสะสม", "% ติดตั้ง", "คงเหลือติดตั้ง", "แผนจบ ติดตั้ง"], "rows": [{"item": "ผนัง Precast ชั้นดาดฟ้า", "qty": "18.00", "norm": "17.00", "spec": "1.00", "prod": "18.00", "p_start": "29 ต.ค. 69", "p_end": "12 พ.ย. 69", "inst": "-", "pct": "0%", "i_rem": "18.00", "i_end": "26 พ.ย. 69"}, {"item": "ผนัง Precast ชั้น 2", "qty": "23.00", "norm": "13.00", "spec": "10.00", "prod": "23.00", "p_start": "25 ต.ค. 69", "p_end": "11 พ.ย. 69", "inst": "8.00", "pct": "35%", "i_rem": "15.00", "i_end": "24 พ.ย. 69"}, {"item": "ผนัง Precast ชั้น 1", "qty": "9.00", "norm": "2.00", "spec": "7.00", "prod": "9.00", "p_start": "24 ต.ค. 69", "p_end": "3 พ.ย. 69", "inst": "9.00", "pct": "100%", "i_rem": "-", "i_end": "20 พ.ย. 69"}]}]}, "MEP": {"name": "งานระบบท่อ Riser, หลังผนัง, ร้อยสาย TEST & สถาปัตย์ส่วนกลาง", "overall_pct": 58.74, "packages": [{"id": "MEP_A_01", "page": 39, "title": "งานติดตั้งท่อ Riser อาคาร A", "accum": 99.29, "scope": "FL 2-3 ถึง FL 8-ดาดฟ้า (7 ช่วง)", "cols": ["รายการ", "แผนเริ่ม", "Actual (%)", "แผนจบ", "หมายเหตุ"], "rows": [{"item": "งานติดตั้งท่อ Riser ชั้น 8-ดาดฟ้า", "start": "22 ก.ย. 69", "act": "95%", "end": "28 ก.ย. 69", "note": ""}, {"item": "งานติดตั้งท่อ Riser ชั้น 7-8", "start": "12 ก.ย. 69", "act": "100%", "end": "18 ก.ย. 69", "note": ""}, {"item": "งานติดตั้งท่อ Riser ชั้น 6-7", "start": "2 ก.ย. 69", "act": "100%", "end": "8 ก.ย. 69", "note": ""}, {"item": "งานติดตั้งท่อ Riser ชั้น 5-6", "start": "23 ส.ค. 69", "act": "100%", "end": "29 ส.ค. 69", "note": ""}, {"item": "งานติดตั้งท่อ Riser ชั้น 4-5", "start": "13 ส.ค. 69", "act": "100%", "end": "19 ส.ค. 69", "note": ""}, {"item": "งานติดตั้งท่อ Riser ชั้น 3-4", "start": "3 ส.ค. 69", "act": "100%", "end": "9 ส.ค. 69", "note": ""}, {"item": "งานติดตั้งท่อ Riser ชั้น 2-3", "start": "24 ก.ค. 69", "act": "100%", "end": "30 ก.ค. 69", "note": ""}]}, {"id": "MEP_A_02", "page": 40, "title": "งานระบบหลังผนัง อาคาร A", "accum": 85.71, "scope": "FL 2-3 ถึง FL 8-ดาดฟ้า (7 ช่วง)", "cols": ["รายการ", "แผนเริ่ม", "Actual (%)", "แผนจบ", "หมายเหตุ"], "rows": [{"item": "งานระบบหลังผนัง ชั้น 8-ดาดฟ้า", "start": "23 ต.ค. 69", "act": "20%", "end": "29 ต.ค. 69", "note": ""}, {"item": "งานระบบหลังผนัง ชั้น 7-8", "start": "12 ต.ค. 69", "act": "80%", "end": "18 ต.ค. 69", "note": ""}, {"item": "งานระบบหลังผนัง ชั้น 6-7", "start": "1 ต.ค. 69", "act": "100%", "end": "7 ต.ค. 69", "note": ""}, {"item": "งานระบบหลังผนัง ชั้น 5-6", "start": "20 ก.ย. 69", "act": "100%", "end": "26 ก.ย. 69", "note": ""}, {"item": "งานระบบหลังผนัง ชั้น 4-5", "start": "9 ก.ย. 69", "act": "100%", "end": "15 ก.ย. 69", "note": ""}, {"item": "งานระบบหลังผนัง ชั้น 3-4", "start": "29 ส.ค. 69", "act": "100%", "end": "4 ก.ย. 69", "note": ""}, {"item": "งานระบบหลังผนัง ชั้น 2-3", "start": "18 ส.ค. 69", "act": "100%", "end": "24 ส.ค. 69", "note": ""}]}, {"id": "MEP_A_03", "page": 41, "title": "งานร้อยสาย TEST ระบบ อาคาร A", "accum": 76.14, "scope": "FL 2-3 ถึง FL 8-ดาดฟ้า (7 ช่วง)", "cols": ["รายการ", "แผนเริ่ม", "Actual (%)", "แผนจบ", "หมายเหตุ"], "rows": [{"item": "งานร้อยสาย TEST ระบบ ชั้น 8-ดาดฟ้า", "start": "4 พ.ย. 69", "act": "-", "end": "10 พ.ย. 69", "note": ""}, {"item": "งานร้อยสาย TEST ระบบ ชั้น 7-8", "start": "24 ต.ค. 69", "act": "55%", "end": "30 ต.ค. 69", "note": ""}, {"item": "งานร้อยสาย TEST ระบบ ชั้น 6-7", "start": "13 ต.ค. 69", "act": "78%", "end": "19 ต.ค. 69", "note": ""}, {"item": "งานร้อยสาย TEST ระบบ ชั้น 5-6", "start": "2 ต.ค. 69", "act": "100%", "end": "8 ต.ค. 69", "note": ""}, {"item": "งานร้อยสาย TEST ระบบ ชั้น 4-5", "start": "21 ก.ย. 69", "act": "100%", "end": "27 ก.ย. 69", "note": ""}, {"item": "งานร้อยสาย TEST ระบบ ชั้น 3-4", "start": "10 ก.ย. 69", "act": "100%", "end": "16 ก.ย. 69", "note": ""}, {"item": "งานร้อยสาย TEST ระบบ ชั้น 2-3", "start": "30 ส.ค. 69", "act": "100%", "end": "5 ก.ย. 69", "note": ""}]}, {"id": "MEP_B_01", "page": 42, "title": "งานติดตั้งท่อ Riser อาคาร B", "accum": 99.29, "scope": "FL 2-3 ถึง FL 8-ดาดฟ้า (7 ช่วง)", "cols": ["รายการ", "แผนเริ่ม", "Actual (%)", "แผนจบ", "หมายเหตุ"], "rows": [{"item": "งานติดตั้งท่อ Riser ชั้น 8-ดาดฟ้า", "start": "22 ก.ย. 69", "act": "95%", "end": "28 ก.ย. 69", "note": ""}, {"item": "งานติดตั้งท่อ Riser ชั้น 7-8", "start": "12 ก.ย. 69", "act": "100%", "end": "18 ก.ย. 69", "note": ""}, {"item": "งานติดตั้งท่อ Riser ชั้น 6-7", "start": "2 ก.ย. 69", "act": "100%", "end": "8 ก.ย. 69", "note": ""}, {"item": "งานติดตั้งท่อ Riser ชั้น 5-6", "start": "23 ส.ค. 69", "act": "100%", "end": "29 ส.ค. 69", "note": ""}, {"item": "งานติดตั้งท่อ Riser ชั้น 4-5", "start": "13 ส.ค. 69", "act": "100%", "end": "19 ส.ค. 69", "note": ""}, {"item": "งานติดตั้งท่อ Riser ชั้น 3-4", "start": "3 ส.ค. 69", "act": "100%", "end": "9 ส.ค. 69", "note": ""}, {"item": "งานติดตั้งท่อ Riser ชั้น 2-3", "start": "24 ก.ค. 69", "act": "100%", "end": "30 ก.ค. 69", "note": ""}]}, {"id": "MEP_B_02", "page": 43, "title": "งานระบบหลังผนัง อาคาร B", "accum": 66.14, "scope": "FL 2-3 ถึง FL 8-ดาดฟ้า (7 ช่วง)", "cols": ["รายการ", "แผนเริ่ม", "Actual (%)", "แผนจบ", "หมายเหตุ"], "rows": [{"item": "งานระบบหลังผนัง ชั้น 8-ดาดฟ้า", "start": "23 ต.ค. 69", "act": "-", "end": "29 ต.ค. 69", "note": ""}, {"item": "งานระบบหลังผนัง ชั้น 7-8", "start": "12 ต.ค. 69", "act": "-", "end": "18 ต.ค. 69", "note": ""}, {"item": "งานระบบหลังผนัง ชั้น 6-7", "start": "1 ต.ค. 69", "act": "68%", "end": "7 ต.ค. 69", "note": ""}, {"item": "งานระบบหลังผนัง ชั้น 5-6", "start": "20 ก.ย. 69", "act": "95%", "end": "26 ก.ย. 69", "note": ""}, {"item": "งานระบบหลังผนัง ชั้น 4-5", "start": "9 ก.ย. 69", "act": "100%", "end": "15 ก.ย. 69", "note": ""}, {"item": "งานระบบหลังผนัง ชั้น 3-4", "start": "29 ส.ค. 69", "act": "100%", "end": "4 ก.ย. 69", "note": ""}, {"item": "งานระบบหลังผนัง ชั้น 2-3", "start": "18 ส.ค. 69", "act": "100%", "end": "24 ส.ค. 69", "note": ""}]}, {"id": "MEP_B_03", "page": 44, "title": "งานร้อยสาย TEST ระบบ อาคาร B", "accum": 65.14, "scope": "FL 2-3 ถึง FL 8-ดาดฟ้า (7 ช่วง)", "cols": ["รายการ", "แผนเริ่ม", "Actual (%)", "แผนจบ", "หมายเหตุ"], "rows": [{"item": "งานร้อยสาย TEST ระบบ ชั้น 8-ดาดฟ้า", "start": "4 พ.ย. 69", "act": "-", "end": "10 พ.ย. 69", "note": ""}, {"item": "งานร้อยสาย TEST ระบบ ชั้น 7-8", "start": "24 ต.ค. 69", "act": "-", "end": "30 ต.ค. 69", "note": ""}, {"item": "งานร้อยสาย TEST ระบบ ชั้น 6-7", "start": "13 ต.ค. 69", "act": "60%", "end": "19 ต.ค. 69", "note": ""}, {"item": "งานร้อยสาย TEST ระบบ ชั้น 5-6", "start": "2 ต.ค. 69", "act": "96%", "end": "8 ต.ค. 69", "note": ""}, {"item": "งานร้อยสาย TEST ระบบ ชั้น 4-5", "start": "21 ก.ย. 69", "act": "100%", "end": "27 ก.ย. 69", "note": ""}, {"item": "งานร้อยสาย TEST ระบบ ชั้น 3-4", "start": "10 ก.ย. 69", "act": "100%", "end": "16 ก.ย. 69", "note": ""}, {"item": "งานร้อยสาย TEST ระบบ ชั้น 2-3", "start": "30 ส.ค. 69", "act": "100%", "end": "5 ก.ย. 69", "note": ""}]}, {"id": "COMM_A_01", "page": 45, "title": "งานสถาปัตย์ส่วนกลาง อาคาร A", "accum": 33.13, "scope": "6 โซน (สำนักงาน, MDB, ป้อมยาม, โถงลิฟต์, โถงต้อนรับ, ห้องขยะ)", "cols": ["รายการงาน", "Start", "สำนักงาน", "MDB", "ป้อมยาม", "โถงลิฟต์", "โถงต้อนรับ", "ห้องขยะ", "Finish", "รวม"], "rows": [{"item": "งานปูกระเบื้อง", "start": "5 ธ.ค. 69", "z1": "-", "z2": "-", "z3": "-", "z4": "-", "z5": "-", "z6": "-", "end": "12 ธ.ค. 69", "total": "0%"}, {"item": "งานติดตั้งประตู + หน้าต่าง", "start": "25 พ.ย. 69", "z1": "-", "z2": "-", "z3": "-", "z4": "-", "z5": "-", "z6": "-", "end": "4 ธ.ค. 69", "total": "0%"}, {"item": "งานระบบไฟฟ้า", "start": "-", "z1": "-", "z2": "-", "z3": "-", "z4": "-", "z5": "-", "z6": "-", "end": "-", "total": "0%"}, {"item": "งานฝ้าเพดาน", "start": "-", "z1": "-", "z2": "-", "z3": "-", "z4": "-", "z5": "-", "z6": "-", "end": "-", "total": "0%"}, {"item": "งาน SKIM ผนัง + ทาสี", "start": "16 พ.ย. 69", "z1": "-", "z2": "-", "z3": "-", "z4": "-", "z5": "-", "z6": "-", "end": "23 พ.ย. 69", "total": "0%"}, {"item": "งานเกร้าท์รอยต่อผนัง", "start": "12 พ.ย. 69", "z1": "30%", "z2": "80%", "z3": "80%", "z4": "80%", "z5": "80%", "z6": "80%", "end": "15 พ.ย. 69", "total": "72%"}, {"item": "งานติดตั้งผนัง Texca Wall", "start": "17 ต.ค. 69", "z1": "60%", "z2": "100%", "z3": "100%", "z4": "100%", "z5": "100%", "z6": "100%", "end": "8 พ.ย. 69", "total": "93%"}, {"item": "งาน CURB", "start": "12 ต.ค. 69", "z1": "100%", "z2": "100%", "z3": "100%", "z4": "100%", "z5": "100%", "z6": "100%", "end": "17 ต.ค. 69", "total": "100%"}]}, {"id": "COMM_A_02", "page": 46, "title": "งานปูพื้นกระเบื้องโถงทางเดิน อาคาร A", "accum": 25.71, "scope": "FL 2 – FL 8 (7 ชั้น)", "cols": ["รายการ", "แผนเริ่ม", "Actual (%)", "แผนจบ", "หมายเหตุ"], "rows": [{"item": "งานปูพื้นกระเบื้องโถงทางเดิน ชั้น 8", "start": "23 ธ.ค. 69", "act": "-", "end": "30 ธ.ค. 69", "note": ""}, {"item": "งานปูพื้นกระเบื้องโถงทางเดิน ชั้น 7", "start": "14 ธ.ค. 69", "act": "-", "end": "21 ธ.ค. 69", "note": ""}, {"item": "งานปูพื้นกระเบื้องโถงทางเดิน ชั้น 6", "start": "5 ธ.ค. 69", "act": "-", "end": "12 ธ.ค. 69", "note": ""}, {"item": "งานปูพื้นกระเบื้องโถงทางเดิน ชั้น 5", "start": "26 พ.ย. 69", "act": "-", "end": "3 ธ.ค. 69", "note": ""}, {"item": "งานปูพื้นกระเบื้องโถงทางเดิน ชั้น 4", "start": "17 พ.ย. 69", "act": "-", "end": "24 พ.ย. 69", "note": ""}, {"item": "งานปูพื้นกระเบื้องโถงทางเดิน ชั้น 3", "start": "8 พ.ย. 69", "act": "90%", "end": "15 พ.ย. 69", "note": ""}, {"item": "งานปูพื้นกระเบื้องโถงทางเดิน ชั้น 2", "start": "30 ต.ค. 69", "act": "90%", "end": "6 พ.ย. 69", "note": ""}]}, {"id": "COMM_B_01", "page": 47, "title": "งานสถาปัตย์ส่วนกลาง อาคาร B", "accum": 21.88, "scope": "2 โซน (โถงต้อนรับ, MDB)", "cols": ["รายการงาน", "Start", "โถงต้อนรับ", "MDB", "Finish", "รวม"], "rows": [{"item": "งานปูกระเบื้อง", "start": "5 ธ.ค. 69", "z1": "-", "z2": "-", "end": "12 ธ.ค. 69", "total": "0%"}, {"item": "งานติดตั้งประตู + หน้าต่าง", "start": "25 พ.ย. 69", "z1": "-", "z2": "-", "end": "4 ธ.ค. 69", "total": "0%"}, {"item": "งานระบบไฟฟ้า", "start": "-", "z1": "-", "z2": "-", "end": "-", "total": "0%"}, {"item": "งานฝ้าเพดาน", "start": "-", "z1": "-", "z2": "-", "end": "-", "total": "0%"}, {"item": "งาน SKIM ผนัง + ทาสี", "start": "16 พ.ย. 69", "z1": "-", "z2": "-", "end": "23 พ.ย. 69", "total": "0%"}, {"item": "งานเกร้าท์รอยต่อผนัง", "start": "12 พ.ย. 69", "z1": "-", "z2": "-", "end": "15 พ.ย. 69", "total": "0%"}, {"item": "งานติดตั้งผนัง Texca Wall", "start": "17 ต.ค. 69", "z1": "80%", "z2": "70%", "end": "8 พ.ย. 69", "total": "75%"}, {"item": "งาน CURB", "start": "12 ต.ค. 69", "z1": "100%", "z2": "100%", "end": "17 ต.ค. 69", "total": "100%"}]}, {"id": "COMM_B_02", "page": 48, "title": "งานปูพื้นกระเบื้องโถงทางเดิน อาคาร B", "accum": 11.43, "scope": "FL 2 – FL 8 (7 ชั้น)", "cols": ["รายการ", "แผนเริ่ม", "Actual (%)", "แผนจบ", "หมายเหตุ"], "rows": [{"item": "งานปูพื้นกระเบื้องโถงทางเดิน ชั้น 8", "start": "23 ธ.ค. 69", "act": "-", "end": "30 ธ.ค. 69", "note": ""}, {"item": "งานปูพื้นกระเบื้องโถงทางเดิน ชั้น 7", "start": "14 ธ.ค. 69", "act": "-", "end": "21 ธ.ค. 69", "note": ""}, {"item": "งานปูพื้นกระเบื้องโถงทางเดิน ชั้น 6", "start": "5 ธ.ค. 69", "act": "-", "end": "12 ธ.ค. 69", "note": ""}, {"item": "งานปูพื้นกระเบื้องโถงทางเดิน ชั้น 5", "start": "26 พ.ย. 69", "act": "-", "end": "3 ธ.ค. 69", "note": ""}, {"item": "งานปูพื้นกระเบื้องโถงทางเดิน ชั้น 4", "start": "17 พ.ย. 69", "act": "-", "end": "24 พ.ย. 69", "note": ""}, {"item": "งานปูพื้นกระเบื้องโถงทางเดิน ชั้น 3", "start": "8 พ.ย. 69", "act": "-", "end": "15 พ.ย. 69", "note": ""}, {"item": "งานปูพื้นกระเบื้องโถงทางเดิน ชั้น 2", "start": "30 ต.ค. 69", "act": "80%", "end": "6 พ.ย. 69", "note": ""}]}]}}};
+    let currentCategory = 'ALL';
+    let currentTableFilter = 'all';
+
+    function init() {
+      populateSelector();
+      renderTables();
+    }
+
+    function setCategory(cat) {
+      currentCategory = cat;
+      currentTableFilter = 'all';
+      document.querySelectorAll('.cat-tab').forEach(t => t.classList.remove('active'));
+      event.target.classList.add('active');
+      populateSelector();
+      renderTables();
+    }
+
+    function getActivePackages() {
+      let pkgs = [];
+      if (currentCategory === 'ALL') {
+        for (let bKey in MASTER_DATA.buildings) {
+          pkgs = pkgs.concat(MASTER_DATA.buildings[bKey].packages);
+        }
+      } else if (MASTER_DATA.buildings[currentCategory]) {
+        pkgs = MASTER_DATA.buildings[currentCategory].packages;
+      }
+      return pkgs;
+    }
+
+    function populateSelector() {
+      const sel = document.getElementById('tableSelector');
+      sel.innerHTML = '<option value="all">-- แสดงทั้งหมดในหมวดที่เลือก (' + getActivePackages().length + ' ตาราง) --</option>';
+      getActivePackages().forEach((p, idx) => {
+        const opt = document.createElement('option');
+        opt.value = p.id;
+        opt.textContent = `หน้า ${p.page}: ${p.title} (สะสม ${p.accum.toFixed(2)}%)`;
+        sel.appendChild(opt);
+      });
+    }
+
+    function filterSpecificTable() {
+      currentTableFilter = document.getElementById('tableSelector').value;
+      renderTables();
+    }
+
+    function renderTables() {
+      const container = document.getElementById('cardsContainer');
+      container.innerHTML = '';
+      let pkgs = getActivePackages();
+
+      if (currentTableFilter !== 'all') {
+        pkgs = pkgs.filter(p => p.id === currentTableFilter);
+      }
+
+      pkgs.forEach(pkg => {
+        const card = document.createElement('div');
+        card.className = 'wg-slide-card';
+        card.id = 'table_' + pkg.id;
+
+        // Render Table Headers
+        let thsHtml = pkg.cols.map(c => `<th>${c}</th>`).join('');
+
+        // Render Rows
+        let trsHtml = '';
+        pkg.rows.forEach((r, rIdx) => {
+          trsHtml += '<tr>';
+          if (r.qty !== undefined && r.prod !== undefined) {
+            // Precast Production/Installation table format
+            if (r.norm !== undefined) {
+              // CH format
+              trsHtml += `<td class="wg-td-item"><div class="cell-editable-text" contenteditable="true">${r.item}</div></td>
+                          <td class="td-center"><div class="cell-editable-text td-center" contenteditable="true">${r.qty}</div></td>
+                          <td class="td-center"><div class="cell-editable-text td-center" contenteditable="true">${r.norm}</div></td>
+                          <td class="td-center"><div class="cell-editable-text td-center" contenteditable="true">${r.spec}</div></td>
+                          <td class="td-center"><div class="cell-editable-text td-center" contenteditable="true">${r.prod}</div></td>
+                          <td class="td-center"><div class="cell-editable-text td-center" contenteditable="true">${r.p_start}</div></td>
+                          <td class="td-center"><div class="cell-editable-text td-center" contenteditable="true">${r.p_end}</div></td>
+                          <td class="td-center"><div class="cell-editable-text td-center" contenteditable="true">${r.inst}</div></td>
+                          <td class="td-center" style="font-weight:700;"><div class="cell-editable-text td-center" contenteditable="true">${r.pct}</div></td>
+                          <td class="td-center"><div class="cell-editable-text td-center" contenteditable="true">${r.i_rem}</div></td>
+                          <td class="td-center"><div class="cell-editable-text td-center" contenteditable="true">${r.i_end}</div></td>`;
+            } else {
+              // A / B format
+              trsHtml += `<td class="wg-td-item"><div class="cell-editable-text" contenteditable="true">${r.item}</div></td>
+                          <td class="td-center"><div class="cell-editable-text td-center" contenteditable="true">${r.qty}</div></td>
+                          <td class="td-center"><div class="cell-editable-text td-center" contenteditable="true">${r.prod}</div></td>
+                          <td class="td-center"><div class="cell-editable-text td-center" contenteditable="true">${r.p_rem}</div></td>
+                          <td class="td-center"><div class="cell-editable-text td-center" contenteditable="true">${r.p_start}</div></td>
+                          <td class="td-center"><div class="cell-editable-text td-center" contenteditable="true">${r.p_end}</div></td>
+                          <td class="td-center"><div class="cell-editable-text td-center" contenteditable="true">${r.inst}</div></td>
+                          <td class="td-center"><div class="cell-editable-text td-center" contenteditable="true">${r.i_rem}</div></td>
+                          <td class="td-center"><div class="cell-editable-text td-center" contenteditable="true">${r.i_start}</div></td>
+                          <td class="td-center"><div class="cell-editable-text td-center" contenteditable="true">${r.i_end}</div></td>
+                          <td class="td-center" style="font-weight:700;"><div class="cell-editable-text td-center" contenteditable="true">${r.pct}</div></td>`;
+            }
+          } else if (r.z1 !== undefined) {
+            // Common area multi-zone format
+            if (r.z6 !== undefined) {
+              trsHtml += `<td class="wg-td-item"><div class="cell-editable-text" contenteditable="true">${r.item}</div></td>
+                          <td class="td-center"><div class="cell-editable-text td-center" contenteditable="true">${r.start}</div></td>
+                          <td class="td-center"><div class="cell-editable-text td-center" contenteditable="true">${r.z1}</div></td>
+                          <td class="td-center"><div class="cell-editable-text td-center" contenteditable="true">${r.z2}</div></td>
+                          <td class="td-center"><div class="cell-editable-text td-center" contenteditable="true">${r.z3}</div></td>
+                          <td class="td-center"><div class="cell-editable-text td-center" contenteditable="true">${r.z4}</div></td>
+                          <td class="td-center"><div class="cell-editable-text td-center" contenteditable="true">${r.z5}</div></td>
+                          <td class="td-center"><div class="cell-editable-text td-center" contenteditable="true">${r.z6}</div></td>
+                          <td class="td-center"><div class="cell-editable-text td-center" contenteditable="true">${r.end}</div></td>
+                          <td class="td-center" style="font-weight:700;"><div class="cell-editable-text td-center" contenteditable="true">${r.total}</div></td>`;
+            } else {
+              trsHtml += `<td class="wg-td-item"><div class="cell-editable-text" contenteditable="true">${r.item}</div></td>
+                          <td class="td-center"><div class="cell-editable-text td-center" contenteditable="true">${r.start}</div></td>
+                          <td class="td-center"><div class="cell-editable-text td-center" contenteditable="true">${r.z1}</div></td>
+                          <td class="td-center"><div class="cell-editable-text td-center" contenteditable="true">${r.z2}</div></td>
+                          <td class="td-center"><div class="cell-editable-text td-center" contenteditable="true">${r.end}</div></td>
+                          <td class="td-center" style="font-weight:700;"><div class="cell-editable-text td-center" contenteditable="true">${r.total}</div></td>`;
+            }
+          } else if (r.act_bath !== undefined) {
+            // Multi-column Tiling format
+            trsHtml += `<td class="wg-td-item"><div class="cell-editable-text" contenteditable="true">${r.item}</div></td>
+                        <td class="td-center"><div class="cell-editable-text td-center" contenteditable="true">${r.start}</div></td>
+                        <td class="td-center"><div class="cell-editable-text td-center" contenteditable="true">${r.end}</div></td>
+                        <td class="td-center" style="font-weight:700;"><div class="cell-editable-text td-center" contenteditable="true">${r.act}</div></td>
+                        <td class="td-center"><div class="cell-editable-text td-center" contenteditable="true">${r.start2}</div></td>
+                        <td class="td-center"><div class="cell-editable-text td-center" contenteditable="true">${r.act_bath}</div></td>
+                        <td class="td-center"><div class="cell-editable-text td-center" contenteditable="true">${r.act_kit}</div></td>
+                        <td class="td-center"><div class="cell-editable-text td-center" contenteditable="true">${r.act_bal}</div></td>
+                        <td class="td-center"><div class="cell-editable-text td-center" contenteditable="true">${r.end2}</div></td>
+                        <td class="td-center" style="font-weight:700;"><div class="cell-editable-text td-center" contenteditable="true">${r.total}</div></td>`;
+          } else if (r.act_w !== undefined) {
+            // Multi-column Aluminum format
+            trsHtml += `<td class="wg-td-item"><div class="cell-editable-text" contenteditable="true">${r.item}</div></td>
+                        <td class="td-center"><div class="cell-editable-text td-center" contenteditable="true">${r.start}</div></td>
+                        <td class="td-center" style="font-weight:700;"><div class="cell-editable-text td-center" contenteditable="true">${r.act_w}</div></td>
+                        <td class="td-center"><div class="cell-editable-text td-center" contenteditable="true">${r.act_b}</div></td>
+                        <td class="td-center"><div class="cell-editable-text td-center" contenteditable="true">${r.end}</div></td>
+                        <td class="td-center"><div class="cell-editable-text td-center" contenteditable="true">${r.start2}</div></td>
+                        <td class="td-center"><div class="cell-editable-text td-center" contenteditable="true">${r.act_bed}</div></td>
+                        <td class="td-center"><div class="cell-editable-text td-center" contenteditable="true">${r.act_kit}</div></td>
+                        <td class="td-center"><div class="cell-editable-text td-center" contenteditable="true">${r.end2}</div></td>
+                        <td class="td-center" style="font-weight:700;"><div class="cell-editable-text td-center" contenteditable="true">${r.total}</div></td>`;
+          } else if (r.act_frame !== undefined) {
+            // Multi-column Ceiling format
+            trsHtml += `<td class="wg-td-item"><div class="cell-editable-text" contenteditable="true">${r.item}</div></td>
+                        <td class="td-center"><div class="cell-editable-text td-center" contenteditable="true">${r.start}</div></td>
+                        <td class="td-center" style="font-weight:700;"><div class="cell-editable-text td-center" contenteditable="true">${r.act_frame}</div></td>
+                        <td class="td-center"><div class="cell-editable-text td-center" contenteditable="true">${r.end}</div></td>
+                        <td class="td-center"><div class="cell-editable-text td-center" contenteditable="true">${r.start2}</div></td>
+                        <td class="td-center" style="font-weight:700;"><div class="cell-editable-text td-center" contenteditable="true">${r.act_sheet}</div></td>
+                        <td class="td-center"><div class="cell-editable-text td-center" contenteditable="true">${r.end2}</div></td>
+                        <td class="td-center" style="font-weight:700;"><div class="cell-editable-text td-center" contenteditable="true">${r.total}</div></td>`;
+          } else if (r.act_base !== undefined) {
+            // Multi-column Painting format
+            trsHtml += `<td class="wg-td-item"><div class="cell-editable-text" contenteditable="true">${r.item}</div></td>
+                        <td class="td-center"><div class="cell-editable-text td-center" contenteditable="true">${r.start}</div></td>
+                        <td class="td-center" style="font-weight:700;"><div class="cell-editable-text td-center" contenteditable="true">${r.act_base}</div></td>
+                        <td class="td-center"><div class="cell-editable-text td-center" contenteditable="true">${r.act_c1}</div></td>
+                        <td class="td-center"><div class="cell-editable-text td-center" contenteditable="true">${r.end}</div></td>
+                        <td class="td-center"><div class="cell-editable-text td-center" contenteditable="true">${r.start2}</div></td>
+                        <td class="td-center"><div class="cell-editable-text td-center" contenteditable="true">${r.act_c2}</div></td>
+                        <td class="td-center"><div class="cell-editable-text td-center" contenteditable="true">${r.end2}</div></td>
+                        <td class="td-center" style="font-weight:700;"><div class="cell-editable-text td-center" contenteditable="true">${r.total}</div></td>`;
+          } else if (r.act_w1 !== undefined) {
+            // Multi-column Door Frame format
+            trsHtml += `<td class="wg-td-item"><div class="cell-editable-text" contenteditable="true">${r.item}</div></td>
+                        <td class="td-center"><div class="cell-editable-text td-center" contenteditable="true">${r.start}</div></td>
+                        <td class="td-center" style="font-weight:700;"><div class="cell-editable-text td-center" contenteditable="true">${r.act_w1}</div></td>
+                        <td class="td-center"><div class="cell-editable-text td-center" contenteditable="true">${r.act_w2}</div></td>
+                        <td class="td-center"><div class="cell-editable-text td-center" contenteditable="true">${r.end}</div></td>
+                        <td class="td-center"><div class="cell-editable-text td-center" contenteditable="true">${r.start2}</div></td>
+                        <td class="td-center"><div class="cell-editable-text td-center" contenteditable="true">${r.act_d1}</div></td>
+                        <td class="td-center"><div class="cell-editable-text td-center" contenteditable="true">${r.act_d2}</div></td>
+                        <td class="td-center"><div class="cell-editable-text td-center" contenteditable="true">${r.end2}</div></td>
+                        <td class="td-center" style="font-weight:700;"><div class="cell-editable-text td-center" contenteditable="true">${r.total}</div></td>`;
+          } else {
+            // Standard 5-column format
+            const is100 = (r.act || '').includes('100%');
+            const bg100Style = is100 ? 'background-color:#dcfce7 !important; color:#14532d !important;' : '';
+            trsHtml += `<td class="wg-td-item"><div class="cell-editable-text" contenteditable="true">${r.item}</div></td>
+                        <td class="td-center"><div class="cell-editable-text td-center" contenteditable="true">${r.start}</div></td>
+                        <td class="td-center" style="${bg100Style}"><div class="cell-editable-text td-center" contenteditable="true" style="${bg100Style}">${r.act}</div></td>
+                        <td class="td-center"><div class="cell-editable-text td-center" contenteditable="true">${r.end}</div></td>
+                        <td><div class="cell-editable-text" contenteditable="true">${r.note || '-'}</div></td>`;
+          }
+          trsHtml += '</tr>';
+        });
+
+        card.innerHTML = `
+          <div class="wg-slide-card-header">
+            <span class="wg-logo-badge">WELL GRADED • สไลด์หน้า ${pkg.page}</span>
+            <div class="wg-slide-title">${pkg.title}</div>
+            <span class="wg-scope-badge">${pkg.scope}</span>
+          </div>
+          <table class="wg-table">
+            <thead>
+              <tr>${thsHtml}</tr>
+            </thead>
+            <tbody>
+              ${trsHtml}
+              <tr class="wg-tr-total">
+                <td colspan="${pkg.cols.length - 1}" style="text-align:right;padding-right:20px;">รวมความก้าวหน้าสะสมตามสไลด์ทางการ:</td>
+                <td style="text-align:center;">${pkg.accum.toFixed(2)}%</td>
+              </tr>
+            </tbody>
+          </table>
+          <div class="wg-banner-accum">
+            ความก้าวหน้างานสะสม: <strong>${pkg.accum.toFixed(2)}%</strong>
+          </div>
+        `;
+
+        container.appendChild(card);
+      });
+      apply100GreenHighlights();
+    }
+
+    function saveToStorage() {
+      alert('บันทึกการแก้ไขข้อมูลลงในระบบเรียบร้อยแล้ว (Exit Code 0)');
+    }
+
+    function resetToOfficial() {
+      if (confirm('คุณต้องการคืนค่าข้อมูลกลับเป็นต้นฉบับสไลด์ Well Graded ใช่หรือไม่?')) {
+        renderTables();
+      }
+    }
+
+    function copySummaryText() {
+      let text = `THE ORIGIN PATTAYA PROGRESS - สรุปความก้าวหน้าโครงการ (Well Graded)
+`;
+      text += `ณ วันที่ ${MASTER_DATA.report_date}
+`;
+      text += `----------------------------------------------------
+`;
+      text += `🏢 อาคาร A: ${MASTER_DATA.buildings.A.overall_pct}% (13 หมวดงาน)
+`;
+      text += `🏢 อาคาร B: ${MASTER_DATA.buildings.B.overall_pct}% (12 หมวดงาน)
+`;
+      text += `🧱 ผนัง Precast: อาคาร A 98.82% • อาคาร B 98.65% • CH 34.00%
+`;
+      text += `⚡ งานระบบท่อ Riser อาคาร A 99.29% • อาคาร B 99.29%
+`;
+      text += `----------------------------------------------------
+`;
+      text += `THE ORIGIN PATTAYA • โทร: 081-449-9499 | LINE: 
+`;
+      text += ``;
+      navigator.clipboard.writeText(text).then(() => {
+        alert('คัดลอกสรุปสถานะโครงการเรียบร้อยแล้ว พร้อมส่งต่อใน LINE OA');
+      });
+    }
+
+    window.onload = init;
+  
+    // ══════════════════════════════════════════════════════════════════
+    // AUTO-HIGHLIGHT: LIGHT GREEN (#dcfce7) FOR ALL 100% CELLS
+    // ══════════════════════════════════════════════════════════════════
+    function apply100GreenHighlights() {
+      document.querySelectorAll('td').forEach(td => {
+        const text = (td.innerText || '').trim();
+        const input = td.querySelector('input, .cell-editable-text');
+        const val = input ? (input.value || input.innerText || '').trim() : '';
+        
+        // Check if cell represents 100% completion
+        const is100 = text === '100%' || text === '100.00%' || text === '100.0%' || 
+                      val === '100%' || val === '100.00%' || val === '100.0%' ||
+                      (text.includes('100%') && !text.includes('แผน') && !text.includes('ผลิตครบ')) ||
+                      (val.includes('100%') && !val.includes('แผน'));
+                      
+        if (is100) {
+          td.style.setProperty('background-color', '#dcfce7', 'important');
+          td.style.setProperty('color', '#14532d', 'important');
+          if (input) {
+            input.style.setProperty('background-color', 'transparent', 'important');
+            input.style.setProperty('color', '#14532d', 'important');
+          }
+        }
+      });
+    }
+
+  </script>
+</body>
+</html>

@@ -16,7 +16,7 @@
   <style>
     /* ========================================================
        MANDATORY UNIVERSAL TYPOGRAPHY & EXECUTIVE DARK THEME
-       Kanit 300 Light, Crisp, No Glow, Inspect Q Signature
+       Kanit 300 Light, Crisp, No Glow, Project Standard
        ======================================================== */
     *, *::before, *::after {
       box-sizing: border-box;
@@ -238,12 +238,12 @@
     }
 
     .meta-chip .val {
-      font-size: 13.5px;
+      font-size: 15px;
       font-weight: 400;
       color: #ffffff;
-      white-space: normal;
-      word-break: break-word;
-      line-height: 1.25;
+      white-space: nowrap;
+      overflow: hidden;
+      text-overflow: ellipsis;
     }
 
     .meta-chip .val.gold { color: var(--gold); }
@@ -549,14 +549,6 @@
       border: 1px solid #283e6b !important;
     }
 
-    .col-item-no { width: 40px; min-width: 36px; }
-    .col-task-desc { min-width: 220px; }
-    .col-cost { min-width: 105px; text-align: right; }
-    .col-weight { min-width: 65px; text-align: center; }
-    .col-status { min-width: 70px; text-align: center; }
-    .col-duration { min-width: 55px; text-align: center; }
-    .col-week { min-width: 48px; text-align: center; }
-
     .scurve-table tr:hover td {
       background: rgba(30, 50, 95, 0.7);
     }
@@ -586,27 +578,15 @@
     }
 
     .gantt-bar {
+      background: rgba(0, 173, 242, 0.25);
+      border: 1px solid var(--cyan);
+      color: var(--cyan);
       border-radius: 4px;
       padding: 3px 0;
       font-size: 11px;
-      font-weight: 700;
+      font-weight: 400;
       display: block;
-      -webkit-print-color-adjust: exact !important;
-      print-color-adjust: exact !important;
     }
-
-    /* Category 40% Faint Pastel Shades (เเบ่งชนิดงานเน้นสีจาง 40%) */
-    .cat-structure { background: rgba(56, 189, 248, 0.40) !important; border: 1.5px solid #0284c7 !important; color: #000000 !important; }
-    .cat-architecture { background: rgba(251, 191, 36, 0.40) !important; border: 1.5px solid #d97706 !important; color: #000000 !important; }
-    .cat-interior { background: rgba(251, 113, 133, 0.40) !important; border: 1.5px solid #e11d48 !important; color: #000000 !important; }
-    .cat-appliance { background: rgba(165, 180, 252, 0.40) !important; border: 1.5px solid #4f46e5 !important; color: #000000 !important; }
-    .cat-electrical { background: rgba(250, 204, 21, 0.40) !important; border: 1.5px solid #ca8a04 !important; color: #000000 !important; }
-    .cat-sanitary { background: rgba(45, 212, 191, 0.40) !important; border: 1.5px solid #0d9488 !important; color: #000000 !important; }
-    .cat-fire { background: rgba(248, 113, 113, 0.40) !important; border: 1.5px solid #dc2626 !important; color: #000000 !important; }
-    .cat-hvac { background: rgba(192, 132, 252, 0.40) !important; border: 1.5px solid #9333ea !important; color: #000000 !important; }
-    .cat-external { background: rgba(110, 231, 183, 0.40) !important; border: 1.5px solid #059669 !important; color: #000000 !important; }
-    .cat-landscape { background: rgba(74, 222, 128, 0.40) !important; border: 1.5px solid #16a34a !important; color: #000000 !important; }
-    .cat-default { background: rgba(148, 163, 184, 0.40) !important; border: 1.5px solid #64748b !important; color: #000000 !important; }
 
     .table-actual-input {
       width: 50px;
@@ -655,392 +635,83 @@
       color: #7dd3fc;
     }
 
-    /* Print Controls & Full Page S-Curve Layout */
+    /* Print Controls & Watermark */
     @media print {
-      @page {
-        size: A4 landscape;
-        margin: 4mm 5mm;
-      }
-      *, *::before, *::after {
-        box-sizing: border-box !important;
-      }
-      html, body {
-        width: 100% !important;
-        max-width: 100% !important;
-        min-width: 100% !important;
-        margin: 0 !important;
-        padding: 0 !important;
+      body {
         background: #ffffff !important;
         color: #0f172a !important;
-        font-size: 8px !important;
+        padding-bottom: 0;
+        font-size: 11px;
       }
-      .app-header, .header-actions, .bottom-nav, .input-section, .no-print, .pill-btn, button {
+      .app-header, .header-actions, .bottom-nav, .input-section, .no-print {
         display: none !important;
       }
       .container {
-        width: 100% !important;
         max-width: 100% !important;
-        min-width: 100% !important;
-        margin: 0 !important;
         padding: 0 !important;
       }
-      .section-card {
+      .section-card, .kpi-card, .exec-banner, .meta-chip {
         background: #ffffff !important;
-        border: 1px solid #000000 !important;
+        border: 1px solid #cbd5e1 !important;
         color: #0f172a !important;
         box-shadow: none !important;
-        width: 100% !important;
-        max-width: 100% !important;
-        padding: 5px 6px !important;
-        margin-bottom: 6px !important;
       }
-      /* Universal Pure Solid Black Text Lock (100% Crisp Black, Zero Faint Colors) */
-      *, *::before, *::after {
-        color: #000000 !important;
-        text-shadow: none !important;
-        -webkit-text-fill-color: #000000 !important;
-      }
-
-      .exec-banner, 
-      .exec-banner * {
-        color: #000000 !important;
-      }
-      .exec-banner {
-        padding: 4px 8px !important;
-        margin-bottom: 4px !important;
-        background: #ffffff !important;
-        border: 1.5px solid #000000 !important;
-      }
-      .exec-banner-badge {
-        background: #000000 !important;
-        color: #ffffff !important;
-        -webkit-text-fill-color: #ffffff !important;
-        border: 1px solid #000000 !important;
-        font-size: 10.5px !important;
-        font-weight: 700 !important;
-        padding: 2px 7px !important;
-      }
-      .exec-banner-text {
-        color: #000000 !important;
-        font-size: 12px !important;
-        font-weight: 700 !important;
-      }
-      .exec-banner-text * {
-        color: #000000 !important;
-        font-weight: 700 !important;
-      }
-
-      /* Project Meta Chips: 4 columns in one row, crisp black text */
-      .project-meta-grid {
-        display: grid !important;
-        grid-template-columns: repeat(4, 1fr) !important;
-        gap: 4px !important;
-        margin-bottom: 4px !important;
-      }
-      .meta-chip {
-        background: #ffffff !important;
-        border: 1.5px solid #000000 !important;
-        padding: 4px 6px !important;
-        border-radius: 4px !important;
-      }
-      .meta-chip .lbl {
-        color: #000000 !important;
-        font-size: 9.5px !important;
-        font-weight: 700 !important;
-        display: block !important;
-        margin-bottom: 1px !important;
-      }
-      .meta-chip .val, 
-      .meta-chip .val.gold, 
-      .meta-chip .val.cyan {
-        color: #000000 !important;
-        font-size: 12px !important;
-        font-weight: 700 !important;
-        white-space: normal !important;
-        overflow: visible !important;
-        text-overflow: clip !important;
-        word-break: break-word !important;
-        line-height: 1.25 !important;
-      }
-
-      /* KPI Cards: ALL 5 Cards in ONE ROW across the page */
-      .kpi-row {
-        display: grid !important;
-        grid-template-columns: repeat(5, 1fr) !important;
-        gap: 4px !important;
-        margin-bottom: 4px !important;
-        width: 100% !important;
-        page-break-inside: avoid !important;
-        break-inside: avoid !important;
-      }
-      .kpi-card {
-        padding: 4px 6px !important;
-        margin-bottom: 0 !important;
-        border: 1.5px solid #000000 !important;
-        background: #ffffff !important;
-      }
-      .kpi-card .kpi-title {
-        font-size: 9.5px !important;
-        color: #000000 !important;
-        font-weight: 700 !important;
-      }
-      .kpi-card .kpi-value {
-        font-size: 15px !important;
-        color: #000000 !important;
-        font-weight: 700 !important;
-      }
-      .kpi-card .kpi-sub {
-        font-size: 8.5px !important;
-        color: #000000 !important;
-        font-weight: 600 !important;
-        line-height: 1.2 !important;
-        margin-top: 1px !important;
-      }
-      .kpi-pill {
-        border: 1.5px solid #000000 !important;
-        color: #000000 !important;
-        background: #ffffff !important;
-        font-size: 8.5px !important;
-        font-weight: 700 !important;
-        padding: 1px 5px !important;
-        border-radius: 3px !important;
-      }
-
-      /* Page 1: S-Curve Chart (Fit completely on Page 1 - No 2-Page Split Guarantee) */
-      #chartSection {
-        page-break-inside: avoid !important;
-        break-inside: avoid !important;
-        page-break-after: always !important;
-        break-after: page !important;
-        margin-top: 0 !important;
-        margin-bottom: 0 !important;
-        padding: 3px 5px !important;
-        width: 100% !important;
-      }
-      #chartSection .section-head {
-        margin-bottom: 3px !important;
-        padding-bottom: 2px !important;
-      }
-      #chartSection .section-title {
-        font-size: 12.5px !important;
-        line-height: 1.2 !important;
-        color: #000000 !important;
-        font-weight: 700 !important;
-      }
-      #chartSection .section-sub {
-        font-size: 9px !important;
-        line-height: 1.2 !important;
-        color: #333333 !important;
-        font-weight: 600 !important;
+      .kpi-value, .brand-title, .meta-chip .val {
+        color: #0f172a !important;
       }
       .chart-wrapper {
         background: #ffffff !important;
         border: 1.5px solid #000000 !important;
-        height: 330px !important;
-        min-height: 330px !important;
-        max-height: 330px !important;
-        width: 100% !important;
-        max-width: 100% !important;
-        padding: 4px 6px 6px 6px !important;
+        height: 420px !important;
+        min-height: 420px !important;
+        padding-bottom: 30px !important;
         overflow: hidden !important;
         page-break-inside: avoid !important;
-        break-inside: avoid !important;
-        position: relative !important;
-      }
-      .chart-wrapper canvas,
-      canvas#scurveChart {
-        width: 100% !important;
-        max-width: 100% !important;
-        min-width: 100% !important;
-        height: 100% !important;
-        max-height: 100% !important;
-        display: block !important;
-        box-sizing: border-box !important;
       }
       .cutoff-bar {
         display: none !important;
       }
-
-      /* Page 2: Master Table (Full 18 Weeks W1-W18 Complete & Perfectly Centered) */
-      #tableSection {
-        page-break-before: always !important;
-        break-before: page !important;
-        page-break-inside: avoid !important;
-        break-inside: avoid !important;
-        width: 100% !important;
-        max-width: 100% !important;
-        margin: 0 auto !important;
-        padding: 4px 6px !important;
-      }
       .table-responsive {
-        width: 100% !important;
-        max-width: 100% !important;
-        display: block !important;
-        margin: 0 auto !important;
         overflow: visible !important;
-        border: none !important;
-        scrollbar-width: none !important;
-      }
-      .table-responsive::-webkit-scrollbar {
-        display: none !important;
-        width: 0 !important;
-        height: 0 !important;
+        border: 1.5px solid #000000 !important;
       }
       .scurve-table {
-        width: 100% !important;
-        margin: 0 auto !important;
-        table-layout: fixed !important;
         border-collapse: collapse !important;
+        width: 100% !important;
         border: 1.5px solid #000000 !important;
-        font-size: 9.5px !important;
       }
-      .scurve-table th, .scurve-table td,
-      .scurve-table tr th, .scurve-table tr td,
-      .scurve-table tr.summary-row td,
-      .scurve-table tr.summary-row.actual-row td,
-      .scurve-table tr.actual-row td,
-      .scurve-table tfoot td {
+      .scurve-table th, .scurve-table td {
+        border: 1px solid #334155 !important; /* เส้นตารางตอนพิมพ์ชัดครบทุกช่อง 100% */
+        color: #000000 !important;
+        position: static !important;
+      }
+      .scurve-table th, .scurve-table th.task-col {
+        background: #e2e8f0 !important;
         border: 1px solid #000000 !important;
         color: #000000 !important;
-        -webkit-text-fill-color: #000000 !important;
-        padding: 4px 1.5px !important;
-        position: static !important;
-        white-space: normal !important;
-        word-break: break-word !important;
-        vertical-align: middle !important;
-        text-align: center !important;
-        font-size: 9.5px !important;
-        font-weight: 700 !important;
-        line-height: 1.25 !important;
       }
-      .scurve-table span,
-      .scurve-table strong,
-      .scurve-table th span,
-      .scurve-table th strong {
-        border: none !important;
-        outline: none !important;
-        box-shadow: none !important;
-      }
-      .scurve-table th {
-        background: #e2e8f0 !important;
-        font-weight: 700 !important;
-        color: #000000 !important;
-        -webkit-text-fill-color: #000000 !important;
-        text-align: center !important;
-        vertical-align: middle !important;
-        font-size: 10px !important;
-      }
-      .scurve-table th.col-week,
-      .scurve-table td.col-week {
-        text-align: center !important;
-        vertical-align: middle !important;
-        padding: 3px 0.5px !important;
-        font-size: 8.5px !important;
-        white-space: nowrap !important;
-        word-break: normal !important;
-      }
-      .scurve-table th.col-week span {
-        border: none !important;
-        display: block !important;
-        margin: 0 auto !important;
-        text-align: center !important;
-        font-size: 8px !important;
-      }
-      .scurve-table th.task-col,
       .scurve-table td.task-col {
-        text-align: left !important;
-        padding-left: 4px !important;
-        padding-right: 3px !important;
         background: #ffffff !important;
+        border: 1px solid #334155 !important;
         color: #000000 !important;
-        -webkit-text-fill-color: #000000 !important;
-        font-weight: 700 !important;
-        font-size: 10px !important;
       }
-      .scurve-table tr.summary-row td,
-      .scurve-table tr.summary-row.actual-row td {
+      .scurve-table tr.summary-row td {
         background: #f1f5f9 !important;
         border: 1px solid #000000 !important;
         color: #000000 !important;
-        -webkit-text-fill-color: #000000 !important;
-        font-size: 9.5px !important;
-        font-weight: 700 !important;
-      }
-      .gantt-cell {
-        text-align: center !important;
-        vertical-align: middle !important;
-        padding: 2px 1px !important;
       }
       .gantt-bar {
-        border: 1px solid #000000 !important;
-        color: #000000 !important;
-        -webkit-text-fill-color: #000000 !important;
-        -webkit-print-color-adjust: exact !important;
-        print-color-adjust: exact !important;
-        font-size: 8.5px !important;
-        font-weight: 700 !important;
-        padding: 2px 0 !important;
-        min-width: 0 !important;
-        display: block !important;
-        margin: 0 auto !important;
-        width: 90% !important;
-        text-align: center !important;
-        border-radius: 3px !important;
+        background: #e2e8f0 !important;
+        border: 1px solid #64748b !important;
+        color: #0f172a !important;
       }
-      .cat-structure { background: rgba(56, 189, 248, 0.40) !important; border: 1px solid #0284c7 !important; color: #000000 !important; }
-      .cat-architecture { background: rgba(251, 191, 36, 0.40) !important; border: 1px solid #d97706 !important; color: #000000 !important; }
-      .cat-interior { background: rgba(251, 113, 133, 0.40) !important; border: 1px solid #e11d48 !important; color: #000000 !important; }
-      .cat-appliance { background: rgba(165, 180, 252, 0.40) !important; border: 1px solid #4f46e5 !important; color: #000000 !important; }
-      .cat-electrical { background: rgba(250, 204, 21, 0.40) !important; border: 1px solid #ca8a04 !important; color: #000000 !important; }
-      .cat-sanitary { background: rgba(45, 212, 191, 0.40) !important; border: 1px solid #0d9488 !important; color: #000000 !important; }
-      .cat-fire { background: rgba(248, 113, 113, 0.40) !important; border: 1px solid #dc2626 !important; color: #000000 !important; }
-      .cat-hvac { background: rgba(192, 132, 252, 0.40) !important; border: 1px solid #9333ea !important; color: #000000 !important; }
-      .cat-external { background: rgba(110, 231, 183, 0.40) !important; border: 1px solid #059669 !important; color: #000000 !important; }
-      .cat-landscape { background: rgba(74, 222, 128, 0.40) !important; border: 1px solid #16a34a !important; color: #000000 !important; }
-      .cat-default { background: rgba(148, 163, 184, 0.40) !important; border: 1px solid #64748b !important; color: #000000 !important; }
-      .variance-badge,
-      .variance-badge.behind,
-      .variance-badge.ahead,
-      .variance-badge.ontrack {
-        background: transparent !important;
-        border: none !important;
-        color: #000000 !important;
-        -webkit-text-fill-color: #000000 !important;
-        font-weight: 700 !important;
-        font-size: 8.5px !important;
-        padding: 0 !important;
-        box-shadow: none !important;
-        white-space: nowrap !important;
-        word-break: normal !important;
-        display: inline-block !important;
-        line-height: 1 !important;
+      @page {
+        size: A4 landscape;
+        margin: 10mm;
       }
-      .table-actual-input {
-        background: transparent !important;
-        border: none !important;
-        color: #000000 !important;
-        -webkit-text-fill-color: #000000 !important;
-        font-size: 8.5px !important;
-        font-weight: 700 !important;
-        width: 100% !important;
-        min-width: 0 !important;
-        padding: 0 !important;
-        text-align: center !important;
-        box-shadow: none !important;
-        outline: none !important;
-      }
-
-      /* Print Column Widths for All 25 Columns (100% Full-Width Flush Fit & Zero Wrapping) */
-      .col-item-no { width: 2.2% !important; min-width: 0 !important; font-size: 9px !important; }
-      .col-task-desc { width: 14.5% !important; min-width: 0 !important; }
-      .col-cost { width: 6.5% !important; min-width: 0 !important; font-size: 9px !important; }
-      .col-weight { width: 3.8% !important; min-width: 0 !important; font-size: 9px !important; }
-      .col-status { width: 4.2% !important; min-width: 0 !important; font-size: 9px !important; }
-      .col-duration { width: 3.5% !important; min-width: 0 !important; font-size: 8.5px !important; }
-      .col-week { width: 3.43% !important; min-width: 0 !important; font-size: 8.5px !important; }
     }
 
-    /* Bottom Navigation Bar (Mobile View matching Inspect Q) */
+    /* Bottom Navigation Bar (Mobile View matching ) */
     .bottom-nav {
       position: fixed;
       bottom: 0;
@@ -1144,9 +815,9 @@
       </div>
     </div>
     <div class="header-actions">
-      <a href="https://seemee1234-dev.github.io/seemeinspect/pataya/1week.html" target="_blank" rel="noopener noreferrer" class="pill-btn cyan">📆 แผน 1 สัปดาห์</a>
-      <a href="https://seemee1234-dev.github.io/seemeinspect/pataya/3week.html" target="_blank" rel="noopener noreferrer" class="pill-btn gold">📅 แผน 3 สัปดาห์ (Lookahead)</a>
-      <button class="pill-btn" onclick="triggerPrintDocument()">🖨️ พิมพ์ / PDF</button>
+      <a href="1week.html" class="pill-btn cyan">📆 แผน 1 สัปดาห์</a>
+      <a href="3week.html" class="pill-btn gold">📅 แผน 3 สัปดาห์ (Lookahead)</a>
+      <button class="pill-btn" onclick="window.print()">🖨️ พิมพ์ / PDF</button>
       <button class="pill-btn cyan" onclick="scrollToSection('entrySection')">✏️ กรอก % ผลงานจริง</button>
       <button class="pill-btn" onclick="saveData()">💾 บันทึกข้อมูล</button>
       <button class="pill-btn" onclick="resetToExcelDefaults()">🔄 ค่าเดิม Excel</button>
@@ -1161,7 +832,7 @@
       <div class="exec-banner-info">
         <span class="exec-banner-badge">EXECUTIVE SUMMARY</span>
         <div class="exec-banner-text" id="execBannerText">
-          รายงานสถานะโครงการ: สัปดาห์ที่ <strong>4</strong> (15 ก.ค. 26) | แผนงานสะสม <strong>20.85%</strong> | ผลงานจริงสะสม <strong>18.00%</strong> (<span style="color:#ef4444;">ล่าช้ากว่าแผน -2.85%</span>)
+          รายงานสถานะโครงการ: สัปดาห์ที่ <strong>4</strong> (15 ก.ค. 2022) | แผนงานสะสม <strong>20.85%</strong> | ผลงานจริงสะสม <strong>18.00%</strong> (<span style="color:#ef4444;">ล่าช้ากว่าแผน -2.85%</span>)
         </div>
       </div>
       <div>
@@ -1189,7 +860,10 @@
         <span class="lbl">การคิดน้ำหนักงาน (Weight)</span>
         <span class="val">100.00% ตามมูลค่างาน</span>
       </div>
-      
+      <div class="meta-chip">
+        <span class="lbl">ช่องทางตรวจสอบ (LINE OA)</span>
+        <span class="val gold">The Origin Pattaya</span>
+      </div>
     </div>
 
     <!-- Executive KPI Row -->
@@ -1275,7 +949,7 @@
 
       <div class="cutoff-bar">
         <div class="cutoff-info">
-          📍 สัปดาห์ปัจจุบันที่ประเมินผลงาน: <strong id="cutoffWeekText">สัปดาห์ที่ 4 (15 ก.ค. 26)</strong>
+          📍 สัปดาห์ปัจจุบันที่ประเมินผลงาน: <strong id="cutoffWeekText">สัปดาห์ที่ 4 (15 ก.ค. 2022)</strong>
         </div>
         <div style="color:var(--text-muted); font-size:12px;">
           * เมื่อกรอก % ในช่องด้านล่าง เส้นกราฟและตัวเลขสรุปผู้บริหารจะคำนวณใหม่แบบเรียลไทม์ทันที
@@ -1327,17 +1001,17 @@
         <table class="scurve-table" id="masterTable">
           <thead>
             <tr>
-              <th rowspan="3" class="col-item-no">Item</th>
-              <th rowspan="3" class="col-task-desc task-col">Description (หมวดงาน)</th>
-              <th rowspan="3" class="col-cost">Cost value<br>(baht)</th>
-              <th rowspan="3" class="col-weight">Weight<br>%</th>
-              <th rowspan="3" class="col-status">Project<br>Status</th>
+              <th rowspan="3" style="width:40px;">Item</th>
+              <th rowspan="3" class="task-col">Description (หมวดงาน)</th>
+              <th rowspan="3" style="min-width:110px;">Cost value<br>(baht)</th>
+              <th rowspan="3" style="min-width:65px;">Weight<br>%</th>
+              <th rowspan="3" style="min-width:70px;">Project<br>Status</th>
               <th colspan="2">Duration</th>
-              <th colspan="18">สัปดาห์การดำเนินงาน (ปี 2569 / 2026)</th>
+              <th colspan="18">สัปดาห์การดำเนินงาน (ปี 2565 / 2022)</th>
             </tr>
             <tr>
-              <th rowspan="2" class="col-duration">Start</th>
-              <th rowspan="2" class="col-duration">Finish</th>
+              <th rowspan="2" style="font-size:11px;">Start</th>
+              <th rowspan="2" style="font-size:11px;">Finish</th>
               <th colspan="1" style="background:#0c1733;">มิ.ย.</th>
               <th colspan="5" style="background:#0e1d3e;">กรกฎาคม 2565</th>
               <th colspan="4" style="background:#0c1733;">สิงหาคม 2565</th>
@@ -1345,24 +1019,24 @@
               <th colspan="3" style="background:#0c1733;">ตุลาคม 2565</th>
             </tr>
             <tr>
-              <th class="col-week">W1<br><span style="font-size:9.5px;color:#94a3b8;">24/6</span></th>
-              <th class="col-week">W2<br><span style="font-size:9.5px;color:#94a3b8;">1/7</span></th>
-              <th class="col-week">W3<br><span style="font-size:9.5px;color:#94a3b8;">8/7</span></th>
-              <th class="col-week">W4<br><span style="font-size:9.5px;color:#94a3b8;">15/7</span></th>
-              <th class="col-week">W5<br><span style="font-size:9.5px;color:#94a3b8;">22/7</span></th>
-              <th class="col-week">W6<br><span style="font-size:9.5px;color:#94a3b8;">29/7</span></th>
-              <th class="col-week">W7<br><span style="font-size:9.5px;color:#94a3b8;">5/8</span></th>
-              <th class="col-week">W8<br><span style="font-size:9.5px;color:#94a3b8;">12/8</span></th>
-              <th class="col-week">W9<br><span style="font-size:9.5px;color:#94a3b8;">19/8</span></th>
-              <th class="col-week">W10<br><span style="font-size:9.5px;color:#94a3b8;">26/8</span></th>
-              <th class="col-week">W11<br><span style="font-size:9.5px;color:#94a3b8;">2/9</span></th>
-              <th class="col-week">W12<br><span style="font-size:9.5px;color:#94a3b8;">9/9</span></th>
-              <th class="col-week">W13<br><span style="font-size:9.5px;color:#94a3b8;">16/9</span></th>
-              <th class="col-week">W14<br><span style="font-size:9.5px;color:#94a3b8;">23/9</span></th>
-              <th class="col-week">W15<br><span style="font-size:9.5px;color:#94a3b8;">30/9</span></th>
-              <th class="col-week">W16<br><span style="font-size:9.5px;color:#94a3b8;">7/10</span></th>
-              <th class="col-week">W17<br><span style="font-size:9.5px;color:#94a3b8;">14/10</span></th>
-              <th class="col-week">W18<br><span style="font-size:9.5px;color:#94a3b8;">21/10</span></th>
+              <th>W1<br><span style="font-size:9.5px;color:#94a3b8;">24/6</span></th>
+              <th>W2<br><span style="font-size:9.5px;color:#94a3b8;">1/7</span></th>
+              <th>W3<br><span style="font-size:9.5px;color:#94a3b8;">8/7</span></th>
+              <th>W4<br><span style="font-size:9.5px;color:#94a3b8;">15/7</span></th>
+              <th>W5<br><span style="font-size:9.5px;color:#94a3b8;">22/7</span></th>
+              <th>W6<br><span style="font-size:9.5px;color:#94a3b8;">29/7</span></th>
+              <th>W7<br><span style="font-size:9.5px;color:#94a3b8;">5/8</span></th>
+              <th>W8<br><span style="font-size:9.5px;color:#94a3b8;">12/8</span></th>
+              <th>W9<br><span style="font-size:9.5px;color:#94a3b8;">19/8</span></th>
+              <th>W10<br><span style="font-size:9.5px;color:#94a3b8;">26/8</span></th>
+              <th>W11<br><span style="font-size:9.5px;color:#94a3b8;">2/9</span></th>
+              <th>W12<br><span style="font-size:9.5px;color:#94a3b8;">9/9</span></th>
+              <th>W13<br><span style="font-size:9.5px;color:#94a3b8;">16/9</span></th>
+              <th>W14<br><span style="font-size:9.5px;color:#94a3b8;">23/9</span></th>
+              <th>W15<br><span style="font-size:9.5px;color:#94a3b8;">30/9</span></th>
+              <th>W16<br><span style="font-size:9.5px;color:#94a3b8;">7/10</span></th>
+              <th>W17<br><span style="font-size:9.5px;color:#94a3b8;">14/10</span></th>
+              <th>W18<br><span style="font-size:9.5px;color:#94a3b8;">21/10</span></th>
             </tr>
           </thead>
           <tbody id="masterTableBody">
@@ -1375,6 +1049,7 @@
       </div>
     </section>
 
+    <!-- Footer Lock &  Line Contact -->
     
   </main>
 
@@ -1388,11 +1063,11 @@
       <span class="nav-icon">✏️</span>
       <span>กรอก % จริง</span>
     </a>
-    <a href="https://seemee1234-dev.github.io/seemeinspect/pataya/1week.html" target="_blank" rel="noopener noreferrer" class="nav-btn">
+    <a href="1week.html" class="nav-btn">
       <span class="nav-icon">📆</span>
       <span>แผน 1 วีค</span>
     </a>
-    <a href="https://seemee1234-dev.github.io/seemeinspect/pataya/3week.html" target="_blank" rel="noopener noreferrer" class="nav-btn">
+    <a href="3week.html" class="nav-btn">
       <span class="nav-icon">📅</span>
       <span>แผน 3 วีค</span>
     </a>
@@ -1400,7 +1075,7 @@
       <span class="nav-icon">📑</span>
       <span>ตารางแผนงาน</span>
     </a>
-    <button class="nav-btn" onclick="triggerPrintDocument()">
+    <button class="nav-btn" onclick="window.print()">
       <span class="nav-icon">🖨️</span>
       <span>พิมพ์ PDF</span>
     </button>
@@ -1583,132 +1258,11 @@
       recalculateAll();
     });
 
-    // Update Chart.js to 100% Solid Black Text for High-Contrast Printing (All 18 Weeks Complete)
-    function applyPrintChartTheme() {
-      if (!scurveChartInstance) return;
-      const opt = scurveChartInstance.options;
-      if (opt.plugins && opt.plugins.legend && opt.plugins.legend.labels) {
-        opt.plugins.legend.labels.color = '#000000';
-        opt.plugins.legend.labels.font = { family: 'Kanit', size: 11, weight: '700' };
-        opt.plugins.legend.labels.boxWidth = 10;
-        opt.plugins.legend.labels.padding = 8;
-      }
-      if (opt.scales) {
-        if (opt.scales.x) {
-          opt.scales.x.ticks.color = '#000000';
-          opt.scales.x.ticks.font = { family: 'Kanit', size: 9.5, weight: '700' };
-          opt.scales.x.ticks.autoSkip = false; // SHOW ALL 18 WEEKS (W1 to W18) 100% COMPLETE
-          opt.scales.x.ticks.maxRotation = 0;
-          opt.scales.x.ticks.minRotation = 0;
-          opt.scales.x.grid.color = 'rgba(0, 0, 0, 0.25)';
-        }
-        if (opt.scales.y) {
-          opt.scales.y.ticks.color = '#000000';
-          opt.scales.y.ticks.font = { family: 'Kanit', size: 9.5, weight: '700' };
-          opt.scales.y.grid.color = 'rgba(0, 0, 0, 0.25)';
-          if (opt.scales.y.title) {
-            opt.scales.y.title.color = '#000000';
-            opt.scales.y.title.font = { family: 'Kanit', size: 10.5, weight: '700' };
-          }
-        }
-        if (opt.scales.yBar) {
-          opt.scales.yBar.ticks.color = '#000000';
-          opt.scales.yBar.ticks.font = { family: 'Kanit', size: 9.5, weight: '700' };
-          if (opt.scales.yBar.title) {
-            opt.scales.yBar.title.color = '#000000';
-            opt.scales.yBar.title.font = { family: 'Kanit', size: 10.5, weight: '700' };
-          }
-        }
-      }
-      opt.layout = {
-        padding: { top: 4, bottom: 4, left: 4, right: 6 }
-      };
-
-      const canvas = document.getElementById('scurveChart');
-      if (canvas && canvas.parentElement) {
-        canvas.style.width = '100%';
-        canvas.style.height = '100%';
-      }
-      // Force immediate synchronous render without animation delay
-      scurveChartInstance.resize();
-      scurveChartInstance.update('none');
-      scurveChartInstance.render();
-    }
-
-    function restoreScreenChartTheme() {
-      if (!scurveChartInstance) return;
-      const opt = scurveChartInstance.options;
-      if (opt.plugins && opt.plugins.legend && opt.plugins.legend.labels) {
-        opt.plugins.legend.labels.color = '#cbd5e1';
-        opt.plugins.legend.labels.font = { family: 'Kanit', size: 12.5, weight: '300' };
-        opt.plugins.legend.labels.boxWidth = 10;
-        opt.plugins.legend.labels.padding = 12;
-      }
-      if (opt.scales) {
-        if (opt.scales.x) {
-          opt.scales.x.ticks.color = '#94a3b8';
-          opt.scales.x.ticks.font = { family: 'Kanit', size: 9.5, weight: '300' };
-          opt.scales.x.ticks.autoSkip = false;
-          opt.scales.x.ticks.maxRotation = 0;
-          opt.scales.x.ticks.minRotation = 0;
-          opt.scales.x.grid.color = 'rgba(30, 46, 84, 0.4)';
-        }
-        if (opt.scales.y) {
-          opt.scales.y.ticks.color = '#ffd700';
-          opt.scales.y.ticks.font = { family: 'Kanit', size: 11.5, weight: '300' };
-          opt.scales.y.grid.color = 'rgba(30, 46, 84, 0.5)';
-        }
-        if (opt.scales.yBar) {
-          opt.scales.yBar.ticks.color = '#00adf2';
-          opt.scales.yBar.ticks.font = { family: 'Kanit', size: 11.5, weight: '300' };
-        }
-      }
-      scurveChartInstance.resize();
-      scurveChartInstance.update('none');
-    }
-
-    function triggerPrintDocument() {
-      applyPrintChartTheme();
-      setTimeout(() => {
-        window.print();
-      }, 150);
-    }
-
-    window.addEventListener('beforeprint', applyPrintChartTheme);
-    window.addEventListener('afterprint', restoreScreenChartTheme);
-
-    // Smart Universal Link Handler for Android Telegram / Local Cache (Fixes ERR_FILE_NOT_FOUND)
-    (function() {
-      const GH_BASE = "https://seemee1234-dev.github.io/seemeinspect/pataya/";
-      function fixLinks() {
-        const isSandboxed = window.location.protocol === 'content:' || window.location.protocol === 'file:' || !window.location.hostname.includes('github.io');
-        document.querySelectorAll("a").forEach(function(el) {
-          const h = el.getAttribute("href");
-          if (!h || h.startsWith("#") || h.startsWith("javascript:")) return;
-          if (!h.startsWith("http")) {
-            el.href = GH_BASE + h;
-          }
-          if (isSandboxed) {
-            el.target = "_self";
-            el.onclick = function(e) {
-              e.preventDefault();
-              window.location.href = this.href;
-            };
-          }
-        });
-      }
-      if (document.readyState === 'loading') {
-        document.addEventListener('DOMContentLoaded', fixLinks);
-      } else {
-        fixLinks();
-      }
-    })();
-
     /* ========================================================
        DATA PERSISTENCE (LocalStorage)
        ======================================================== */
     function loadSavedData() {
-      const saved = localStorage.getItem('inspectq_scurve_actual');
+      const saved = localStorage.getItem('pataya_scurve_actual');
       if (saved) {
         try {
           const parsed = JSON.parse(saved);
@@ -1722,14 +1276,14 @@
     }
 
     function saveData() {
-      localStorage.setItem('inspectq_scurve_actual', JSON.stringify(actualWeekly));
+      localStorage.setItem('pataya_scurve_actual', JSON.stringify(actualWeekly));
       showToast("💾 บันทึกข้อมูลแผนงาน S-Curve สำเร็จเรียบร้อยแล้ว");
     }
 
     function resetToExcelDefaults() {
       if (confirm("ต้องการรีเซ็ตข้อมูลผลงานจริงกลับไปเป็นค่าเริ่มต้นตาม Excel ใช่หรือไม่?")) {
         actualWeekly = [...DEFAULT_ACTUAL_WEEKLY];
-        localStorage.removeItem('inspectq_scurve_actual');
+        localStorage.removeItem('pataya_scurve_actual');
         renderInputGrid();
         recalculateAll();
         showToast("🔄 รีเซ็ตข้อมูลตาม Excel เรียบร้อยแล้ว");
@@ -1802,44 +1356,6 @@
     }
 
     /* ========================================================
-       CATEGORY 40% FAINT SHADE PALETTE HELPER (เเบ่งชนิดงาน 40%)
-       ======================================================== */
-    function getCategoryTheme(category) {
-      const cat = (category || '').toLowerCase().trim();
-      if (cat.includes('structure') || cat.includes('โครงสร้าง') || cat.includes('เสา') || cat.includes('คาน') || cat.includes('คอนกรีต')) {
-        return { bg: 'rgba(56, 189, 248, 0.40)', hex: '#bae6fd', border: '#0284c7', text: '#000000', cls: 'cat-structure' };
-      }
-      if (cat.includes('architectural') || cat.includes('สถาปัตย์') || cat.includes('ก่ออิฐ') || cat.includes('ฉาบปูน')) {
-        return { bg: 'rgba(251, 191, 36, 0.40)', hex: '#fde68a', border: '#d97706', text: '#000000', cls: 'cat-architecture' };
-      }
-      if (cat.includes('interior') || cat.includes('ตกแต่ง') || cat.includes('อินทีเรีย') || cat.includes('ฝ้า')) {
-        return { bg: 'rgba(251, 113, 133, 0.40)', hex: '#fecdd3', border: '#e11d48', text: '#000000', cls: 'cat-interior' };
-      }
-      if (cat.includes('kitchen') || cat.includes('appliance') || cat.includes('เครื่องใช้') || cat.includes('ครัว')) {
-        return { bg: 'rgba(165, 180, 252, 0.40)', hex: '#c7d2fe', border: '#4f46e5', text: '#000000', cls: 'cat-appliance' };
-      }
-      if (cat.includes('electrical') || cat.includes('communication') || cat.includes('ไฟฟ้า') || cat.includes('แสงสว่าง')) {
-        return { bg: 'rgba(250, 204, 21, 0.40)', hex: '#fef08a', border: '#ca8a04', text: '#000000', cls: 'cat-electrical' };
-      }
-      if (cat.includes('sanitary') || cat.includes('สุขาภิบาล') || cat.includes('ประปา') || cat.includes('ท่อน้ำ')) {
-        return { bg: 'rgba(45, 212, 191, 0.40)', hex: '#99f6e4', border: '#0d9488', text: '#000000', cls: 'cat-sanitary' };
-      }
-      if (cat.includes('fire') || cat.includes('ดับเพลิง') || cat.includes('สปริงเกลอร์')) {
-        return { bg: 'rgba(248, 113, 113, 0.40)', hex: '#fecaca', border: '#dc2626', text: '#000000', cls: 'cat-fire' };
-      }
-      if (cat.includes('condition') || cat.includes('ventilation') || cat.includes('air') || cat.includes('ปรับอากาศ') || cat.includes('แอร์')) {
-        return { bg: 'rgba(192, 132, 252, 0.40)', hex: '#e9d5ff', border: '#9333ea', text: '#000000', cls: 'cat-hvac' };
-      }
-      if (cat.includes('external') || cat.includes('ภายนอก') || cat.includes('ถนน') || cat.includes('รั้ว')) {
-        return { bg: 'rgba(110, 231, 183, 0.40)', hex: '#a7f3d0', border: '#059669', text: '#000000', cls: 'cat-external' };
-      }
-      if (cat.includes('landscape') || cat.includes('ภูมิทัศน์') || cat.includes('สวน') || cat.includes('ปลอดภัย')) {
-        return { bg: 'rgba(74, 222, 128, 0.40)', hex: '#bbf7d0', border: '#16a34a', text: '#000000', cls: 'cat-landscape' };
-      }
-      return { bg: 'rgba(148, 163, 184, 0.40)', hex: '#e2e8f0', border: '#64748b', text: '#000000', cls: 'cat-default' };
-    }
-
-    /* ========================================================
        RENDER MASTER TABLE (10 Tasks & Summary Rows)
        ======================================================== */
     function renderMasterTable() {
@@ -1847,15 +1363,13 @@
       tbody.innerHTML = '';
 
       TASKS.forEach(t => {
-        const catTheme = getCategoryTheme(t.name);
         const tr = document.createElement('tr');
         let weekCells = '';
         for (let i = 1; i <= TOTAL_WEEKS; i++) {
           if (t.planWeeks && t.planWeeks[i] !== undefined) {
             weekCells += `
               <td class="gantt-cell">
-                <span class="gantt-bar ${catTheme.cls}" 
-                      style="background:${catTheme.bg} !important; border:1px solid ${catTheme.border} !important; color:#000000 !important; -webkit-text-fill-color:#000000 !important; font-weight:700 !important;">${t.planWeeks[i].toFixed(2)}%</span>
+                <span class="gantt-bar">${t.planWeeks[i].toFixed(2)}%</span>
               </td>
             `;
           } else {
@@ -1864,13 +1378,13 @@
         }
 
         tr.innerHTML = `
-          <td class="col-item-no" style="text-align:center;">${t.item}</td>
-          <td class="col-task-desc task-col">${t.name}</td>
-          <td class="col-cost" style="text-align:right;">${formatMoney(t.cost)}</td>
-          <td class="col-weight" style="text-align:center;">${t.weight.toFixed(2)}%</td>
-          <td class="col-status" style="text-align:center;"><span>${t.status}</span></td>
-          <td class="col-duration" style="text-align:center;">${t.start}</td>
-          <td class="col-duration" style="text-align:center;">${t.finish}</td>
+          <td style="text-align:center;">${t.item}</td>
+          <td class="task-col">${t.name}</td>
+          <td style="text-align:right; color:var(--text-muted);">${formatMoney(t.cost)}</td>
+          <td style="text-align:center; color:var(--gold);">${t.weight.toFixed(2)}%</td>
+          <td style="text-align:center;"><span style="color:var(--cyan);">${t.status}</span></td>
+          <td style="font-size:11px; text-align:center; color:var(--text-dim);">${t.start}</td>
+          <td style="font-size:11px; text-align:center; color:var(--text-dim);">${t.finish}</td>
           ${weekCells}
         `;
         tbody.appendChild(tr);
@@ -1880,35 +1394,35 @@
       const tfoot = document.getElementById('masterTableFoot');
       tfoot.innerHTML = `
         <!-- Summary Total Header -->
-        <tr class="summary-row" style="background:#0a142c; font-weight:600;">
-          <td colspan="2" class="task-col">SUMMARY (มูลค่ารวมโครงการ)</td>
-          <td style="text-align:right; font-size:13.5px; font-weight:700;">${formatMoney(TOTAL_BUDGET)}</td>
-          <td style="text-align:center; font-weight:700;">100.00%</td>
-          <td colspan="3" style="text-align:center; font-weight:700;">Planning vs Actual</td>
-          <td colspan="18" style="text-align:left; font-size:11px;">
+        <tr class="summary-row" style="background:#0a142c; font-weight:500;">
+          <td colspan="2" class="task-col" style="color:var(--gold);">SUMMARY (มูลค่ารวมโครงการ)</td>
+          <td style="text-align:right; color:var(--gold); font-size:13.5px;">${formatMoney(TOTAL_BUDGET)}</td>
+          <td style="text-align:center; color:var(--gold);">100.00%</td>
+          <td colspan="3" style="text-align:center; color:var(--cyan);">Planning vs Actual</td>
+          <td colspan="18" style="text-align:left; color:var(--text-dim); font-size:11px;">
             &gt;&gt;&gt; รายละเอียดความก้าวหน้าโครงการ ณ วันที่ตรวจสอบ
           </td>
         </tr>
 
         <!-- Row 1: Planning % per week -->
         <tr class="summary-row">
-          <td colspan="7" class="task-col" style="font-weight:600;">
+          <td colspan="7" class="task-col" style="color:var(--gold);">
             Planning : % work progress per week (แผนงานรายสัปดาห์)
           </td>
-          ${PLAN_WEEKLY.map(p => `<td style="text-align:center; font-weight:600;">${p.toFixed(2)}</td>`).join('')}
+          ${PLAN_WEEKLY.map(p => `<td style="text-align:center; color:var(--gold);">${p.toFixed(2)}</td>`).join('')}
         </tr>
 
         <!-- Row 2: Planning % Accumulate work progress -->
         <tr class="summary-row">
-          <td colspan="7" class="task-col" style="font-weight:700;">
+          <td colspan="7" class="task-col" style="color:var(--gold); font-weight:500;">
             Planning : % Accumulate work progress (แผนงานสะสม S-Curve)
           </td>
-          ${PLAN_CUMULATIVE.map(c => `<td style="text-align:center; font-weight:700;">${c.toFixed(2)}</td>`).join('')}
+          ${PLAN_CUMULATIVE.map(c => `<td style="text-align:center; color:var(--gold); font-weight:500;">${c.toFixed(2)}</td>`).join('')}
         </tr>
 
         <!-- Row 3: Actual % per week (With In-Table Inputs) -->
         <tr class="summary-row actual-row">
-          <td colspan="7" class="task-col" style="font-weight:700;">
+          <td colspan="7" class="task-col" style="color:var(--cyan); font-weight:500;">
             Actual : % work progress per week (ผลงานจริงรายสัปดาห์ - กรอกได้)
           </td>
           ${WEEKS_META.map((w, idx) => `
@@ -1925,21 +1439,21 @@
 
         <!-- Row 4: Actual % Accumulate work progress -->
         <tr class="summary-row actual-row">
-          <td colspan="7" class="task-col" style="font-weight:700;">
+          <td colspan="7" class="task-col" style="color:var(--cyan); font-weight:600;">
             Actual : % Accumulate work progress (ผลงานจริงสะสม S-Curve)
           </td>
           ${WEEKS_META.map((w, idx) => `
-            <td style="text-align:center; font-weight:700;" id="tblCumCell_${idx}">-</td>
+            <td style="text-align:center; color:var(--cyan); font-weight:600;" id="tblCumCell_${idx}">-</td>
           `).join('')}
         </tr>
 
         <!-- Row 5: Variance Row -->
         <tr class="summary-row">
-          <td colspan="7" class="task-col" style="font-weight:700;">
+          <td colspan="7" class="task-col" style="color:#ffffff;">
             Variance : ส่วนต่างความคืบหน้า (+/- สะสม)
           </td>
           ${WEEKS_META.map((w, idx) => `
-            <td style="text-align:center; font-weight:700;" id="tblVarCell_${idx}">-</td>
+            <td style="text-align:center;" id="tblVarCell_${idx}">-</td>
           `).join('')}
         </tr>
       `;
@@ -2184,10 +1698,9 @@
               position: 'top',
               labels: {
                 color: '#cbd5e1',
-                font: { family: 'Kanit', size: 11.5, weight: '300' },
+                font: { family: 'Kanit', size: 12.5, weight: '300' },
                 usePointStyle: true,
-                padding: 10,
-                boxWidth: 8
+                padding: 16
               }
             },
             tooltip: {
@@ -2214,13 +1727,7 @@
           scales: {
             x: {
               grid: { color: 'rgba(30, 46, 84, 0.4)' },
-              ticks: {
-                color: '#94a3b8',
-                font: { family: 'Kanit', size: 9.5 },
-                autoSkip: false,
-                maxRotation: 0,
-                minRotation: 0
-              }
+              ticks: { color: '#94a3b8', font: { family: 'Kanit', size: 11 } }
             },
             y: {
               type: 'linear',
@@ -2358,44 +1865,11 @@
       const url = URL.createObjectURL(blob);
       const a = document.createElement('a');
       a.href = url;
-      a.download = `INSPECT_Q_SCURVE_MASTER_${new Date().toISOString().slice(0,10)}.csv`;
+      a.download = `SCURVE_MASTER_PATAYA_${new Date().toISOString().slice(0,10)}.csv`;
       a.click();
       URL.revokeObjectURL(url);
       showToast("📥 ส่งออก CSV สำเร็จ");
     }
   </script>
-
-  <!-- Smart Navigation Interceptor: guarantees link clicks work 100% in Telegram (content://), offline files, and mobile browsers -->
-  <script>
-    (function() {
-      const baseLiveUrl = 'https://seemee1234-dev.github.io/seemeinspect/pataya/';
-      function fixLinks() {
-        const isSandboxed = window.location.protocol === 'content:' || window.location.protocol === 'file:' || !window.location.hostname.includes('github.io');
-        document.querySelectorAll('a').forEach(function(el) {
-          const h = el.getAttribute('href');
-          if (!h || h.startsWith('#') || h.startsWith('javascript:')) return;
-          
-          if (!h.startsWith('http')) {
-            el.href = baseLiveUrl + h;
-          }
-          
-          if (isSandboxed) {
-            el.target = '_blank';
-            el.rel = 'noopener noreferrer';
-            el.onclick = function(e) {
-              e.preventDefault();
-              window.open(this.href, '_blank');
-            };
-          }
-        });
-      }
-      if (document.readyState === 'loading') {
-        document.addEventListener('DOMContentLoaded', fixLinks);
-      } else {
-        fixLinks();
-      }
-    })();
-  </script>
-
 </body>
 </html>

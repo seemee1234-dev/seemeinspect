@@ -6,7 +6,7 @@
   <meta http-equiv="Pragma" content="no-cache">
   <meta http-equiv="Expires" content="0">
   <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-  <title>THE ORIGIN PATTAYA • DAILY REPORT | รายงานประจำวันงานก่อสร้าง</title>
+  <title>THE ORIGIN PATTAYA • DAILY REPORT | รายงานประจำวันงานก่อสร้าง โครงการพัทยา</title>
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Kanit:wght@300;400;500;600&display=swap" rel="stylesheet">
@@ -14,7 +14,7 @@
   <style>
     /* ========================================================
        MANDATORY UNIVERSAL TYPOGRAPHY & EXECUTIVE DARK THEME
-       Kanit 300 Light, Crisp, No Glow, Inspect Q Signature
+       Kanit 300 Light, Crisp, No Glow, Project Standard
        ======================================================== */
     *, *::before, *::after {
       box-sizing: border-box;
@@ -399,45 +399,6 @@
       text-align: center;
     }
 
-    
-    /* Compact Date Cell (Short /26 Format) */
-    .date-cell-wrap {
-      position: relative;
-      display: inline-flex;
-      justify-content: center;
-      align-items: center;
-      width: 100%;
-    }
-    .date-hidden-native {
-      position: absolute;
-      opacity: 0;
-      width: 0;
-      height: 0;
-      pointer-events: none;
-    }
-    .date-btn {
-      background: rgba(13, 26, 56, 0.9);
-      border: 1px solid rgba(0, 173, 242, 0.45);
-      color: #ffffff;
-      border-radius: 4px;
-      padding: 3px 2px;
-      font-family: 'Kanit', sans-serif;
-      font-size: 12px;
-      font-weight: 300;
-      width: 62px;
-      text-align: center;
-      cursor: pointer;
-      transition: all 0.15s ease;
-      white-space: nowrap;
-      letter-spacing: -0.2px;
-      display: inline-block;
-    }
-    .date-btn:hover {
-      border-color: var(--cyan);
-      background: rgba(0, 173, 242, 0.25);
-    }
-    .print-val { display: none; }
-
     .badge-status.done { background: rgba(16, 185, 129, 0.2); color: var(--green); border: 1px solid var(--green); }
     .badge-status.progress { background: rgba(0, 173, 242, 0.2); color: var(--cyan); border: 1px solid var(--cyan); }
     .badge-status.pending { background: rgba(245, 158, 11, 0.2); color: var(--amber); border: 1px solid var(--amber); }
@@ -573,111 +534,37 @@
       transform: translateY(0);
     }
 
-    /* Print Styles: A4 Landscape Full Width */
+    /* Print Styles */
     @media print {
-      @page {
-        size: A4 landscape;
-        margin: 6mm;
-      }
-      *, *::before, *::after {
-        box-sizing: border-box !important;
-        color: #000000 !important;
-        -webkit-text-fill-color: #000000 !important;
-        text-shadow: none !important;
-      }
-      html, body {
-        width: 100% !important;
-        max-width: 100% !important;
-        min-width: 100% !important;
-        margin: 0 !important;
-        padding: 0 !important;
+      body {
         background: #ffffff !important;
         color: #000000 !important;
-        -webkit-text-fill-color: #000000 !important;
-        font-size: 10px !important;
-        font-weight: 600 !important;
+        padding-bottom: 0 !important;
       }
-      
-      .date-cell-wrap, .date-btn, .date-hidden-native {
-        display: none !important;
-      }
-      .print-val {
-        display: block !important;
-        font-size: 10px !important;
-        font-weight: 600 !important;
-        color: #000000 !important;
-        -webkit-text-fill-color: #000000 !important;
-        text-align: center !important;
-        white-space: nowrap !important;
-      }
-
       .app-header, .suite-nav-bar, .bottom-nav, .header-actions, .no-print {
         display: none !important;
-      }
-      .container {
-        width: 100% !important;
-        max-width: 100% !important;
-        min-width: 100% !important;
-        margin: 0 !important;
-        padding: 0 !important;
       }
       .section-box, .control-card, .kpi-card {
         background: #ffffff !important;
         border: 1px solid #000000 !important;
         color: #000000 !important;
         box-shadow: none !important;
-        width: 100% !important;
-        max-width: 100% !important;
-        margin-bottom: 10px !important;
-        padding: 8px 12px !important;
-      }
-      .kpi-grid {
-        display: flex !important;
-        flex-direction: row !important;
-        gap: 8px !important;
-        width: 100% !important;
-      }
-      .kpi-card {
-        flex: 1 !important;
-        margin-bottom: 0 !important;
-      }
-      .control-card {
-        display: flex !important;
-        flex-direction: row !important;
-        justify-content: space-between !important;
-      }
-      .table-container {
-        width: 100% !important;
-        max-width: 100% !important;
-        overflow: visible !important;
-        border: none !important;
-      }
-      .data-table {
-        width: 100% !important;
-        min-width: 100% !important;
-        table-layout: auto !important;
-        border-collapse: collapse !important;
-        font-size: 11px !important;
       }
       .data-table th, .data-table td {
-        border: 1px solid #000000 !important;
+        border: 1px solid #334155 !important;
         color: #000000 !important;
-        padding: 5px 6px !important;
-        white-space: normal !important;
-        font-size: 11px !important;
-        font-weight: 700 !important;
       }
       .data-table th {
         background: #e2e8f0 !important;
-        font-weight: 700 !important;
       }
       .data-table input, .data-table select, .note-textarea {
         border: none !important;
         background: transparent !important;
         color: #000000 !important;
-        font-size: 11px !important;
-        font-weight: 700 !important;
-        padding: 0 !important;
+      }
+      @page {
+        size: A4 portrait;
+        margin: 8mm;
       }
     }
   </style>
@@ -692,7 +579,7 @@
         <div class="brand-title">
           THE ORIGIN PATTAYA <span class="ver-pill">DAILY REPORT</span>
         </div>
-        <div class="brand-sub">รายงานประจำวันงานก่อสร้าง ควบคุมคุณภาพและสถิติแรงงาน</div>
+        <div class="brand-sub">รายงานประจำวันงานก่อสร้าง ควบคุมคุณภาพและสถิติแรงงาน • โครงการพัทยา</div>
       </div>
     </div>
     <div class="header-actions">
@@ -706,12 +593,12 @@
 
     <!-- Suite Switcher Bar -->
     <div class="suite-nav-bar no-print">
-      <a href="https://seemee1234-dev.github.io/seemeinspect/pataya/scurve.html" target="_blank" rel="noopener noreferrer" class="suite-nav-link">📈 S-Curve 18 สัปดาห์</a>
-      <a href="https://seemee1234-dev.github.io/seemeinspect/pataya/3week.html" target="_blank" rel="noopener noreferrer" class="suite-nav-link">📅 แผน 3 สัปดาห์</a>
-      <a href="https://seemee1234-dev.github.io/seemeinspect/pataya/1week.html" target="_blank" rel="noopener noreferrer" class="suite-nav-link">📆 แผน 1 สัปดาห์</a>
-      <a href="https://seemee1234-dev.github.io/seemeinspect/pataya/daily_report.html" target="_blank" rel="noopener noreferrer" class="suite-nav-link active">📋 รายงานประจำวัน</a>
-      <a href="https://seemee1234-dev.github.io/seemeinspect/pataya/procurement_plan.html" target="_blank" rel="noopener noreferrer" class="suite-nav-link">🛒 แผนสั่งของ 5 ช่วง</a>
-      <a href="https://seemee1234-dev.github.io/seemeinspect/pataya/logistics_manpower.html" target="_blank" rel="noopener noreferrer" class="suite-nav-link">🚚 นำของเข้า & จัดคน</a>
+      <a href="scurve.html" class="suite-nav-link">📈 S-Curve 18 สัปดาห์</a>
+      <a href="3week.html" class="suite-nav-link">📅 แผน 3 สัปดาห์</a>
+      <a href="1week.html" class="suite-nav-link">📆 แผน 1 สัปดาห์</a>
+      <a href="daily_report.html" class="suite-nav-link active">📋 รายงานประจำวัน</a>
+      <a href="procurement_plan.html" class="suite-nav-link">🛒 แผนสั่งของ 5 ช่วง</a>
+      <a href="logistics_manpower.html" class="suite-nav-link">🚚 นำของเข้า & จัดคน</a>
     </div>
 
     <!-- Control Bar: Date, Weather, Shift, Site Condition -->
@@ -735,7 +622,7 @@
       </div>
       <div class="ctrl-group">
         <label>👷 วิศวกรผู้บันทึก:</label>
-        <input type="text" id="engineerName" class="ctrl-input" value="วิศวกรควบคุมงาน (Inspect Q)">
+        <input type="text" id="engineerName" class="ctrl-input" value="วิศวกรควบคุมงานโครงการ">
       </div>
     </section>
 
@@ -893,7 +780,7 @@
       </div>
     </section>
 
-    <!-- Section 5: QC Inspection & Daily Defects (การตรวจสอบคุณภาพและจุดบกพร่อง) -->
+    <!-- Section 5: QC Check & Daily Defects (การตรวจสอบคุณภาพและจุดบกพร่อง) -->
     <section class="section-box">
       <div class="section-title-bar">
         <div class="section-title">
@@ -941,27 +828,27 @@
 
   <!-- Mobile Bottom Navigation Bar -->
   <nav class="bottom-nav no-print">
-    <a href="https://seemee1234-dev.github.io/seemeinspect/pataya/scurve.html" target="_blank" rel="noopener noreferrer" class="nav-btn">
+    <a href="scurve.html" class="nav-btn">
       <span class="nav-icon">📈</span>
       <span>S-Curve</span>
     </a>
-    <a href="https://seemee1234-dev.github.io/seemeinspect/pataya/3week.html" target="_blank" rel="noopener noreferrer" class="nav-btn">
+    <a href="3week.html" class="nav-btn">
       <span class="nav-icon">📅</span>
       <span>แผน 3 วีค</span>
     </a>
-    <a href="https://seemee1234-dev.github.io/seemeinspect/pataya/1week.html" target="_blank" rel="noopener noreferrer" class="nav-btn">
+    <a href="1week.html" class="nav-btn">
       <span class="nav-icon">📆</span>
       <span>แผน 1 วีค</span>
     </a>
-    <a href="https://seemee1234-dev.github.io/seemeinspect/pataya/daily_report.html" target="_blank" rel="noopener noreferrer" class="nav-btn active">
+    <a href="daily_report.html" class="nav-btn active">
       <span class="nav-icon">📋</span>
       <span>รายงานวัน</span>
     </a>
-    <a href="https://seemee1234-dev.github.io/seemeinspect/pataya/procurement_plan.html" target="_blank" rel="noopener noreferrer" class="nav-btn">
+    <a href="procurement_plan.html" class="nav-btn">
       <span class="nav-icon">🛒</span>
       <span>สั่งของ 5 ช่วง</span>
     </a>
-    <a href="https://seemee1234-dev.github.io/seemeinspect/pataya/logistics_manpower.html" target="_blank" rel="noopener noreferrer" class="nav-btn">
+    <a href="logistics_manpower.html" class="nav-btn">
       <span class="nav-icon">🚚</span>
       <span>นำของ & คน</span>
     </a>
@@ -986,7 +873,7 @@
       { cat: "8. งานระบบปรับอากาศ (HVAC)", contractor: "ทีมติดตั้งแอร์ VRV", day: 6, ot: 0, area: "ระเบียงคอมเพรสเซอร์แอร์" },
       { cat: "9. งานภายนอกอาคาร (External)", contractor: "ช่างรั้วและถนน", day: 5, ot: 0, area: "ทางเข้าโครงการ" },
       { cat: "10. งานภูมิทัศน์ (Landscape)", contractor: "ทีมจัดสวนและดินปลูก", day: 4, ot: 0, area: "สวนหน้าอาคาร" },
-      { cat: "ทีมวิศวกรและควบคุมงาน", contractor: "Inspect Q Supervision", day: 3, ot: 1, area: "ทั่วทั้งโครงการ" }
+      { cat: "ทีมวิศวกรและควบคุมงาน", contractor: "Well Graded Supervision", day: 3, ot: 1, area: "ทั่วทั้งโครงการ" }
     ];
 
     const DEFAULT_ACTIVITIES = [
@@ -1018,7 +905,7 @@
       date: new Date().toISOString().slice(0, 10),
       weather: "sunny",
       temp: "31°C",
-      engineer: "วิศวกรควบคุมงาน (Inspect Q)",
+      engineer: "วิศวกรควบคุมงานโครงการ",
       tomorrowPlan: "1. เทคอนกรีตเสาชั้น 3 ต่อเนื่อง\n2. งานติดตั้งโครงฝ้าฉาบเรียบชั้น 2\n3. งานเดินท่อน้ำดีเข้าห้องน้ำห้อง 201-204",
       issues: "- ช่วงบ่ายแดดจัด จัดจุดพักน้ำดื่มให้ช่างทำงานปลอดภัย\n- การจราจรหน้าโครงการคล่องตัว การขนส่งวัสดุตรงตามกำหนด",
       manpower: [...DEFAULT_MANPOWER],
@@ -1043,7 +930,7 @@
     }
 
     function getStorageKey(dateStr) {
-      return `inspectq_daily_report_pataya_${dateStr}`;
+      return `pataya_daily_report_pataya_${dateStr}`;
     }
 
     function loadSavedData(dateStr) {
@@ -1062,7 +949,7 @@
       document.getElementById('reportDate').value = reportData.date || dateStr;
       document.getElementById('weatherSelect').value = reportData.weather || "sunny";
       document.getElementById('tempInput').value = reportData.temp || "31°C";
-      document.getElementById('engineerName').value = reportData.engineer || "วิศวกรควบคุมงาน (Inspect Q)";
+      document.getElementById('engineerName').value = reportData.engineer || "วิศวกรควบคุมงานโครงการ";
       document.getElementById('tomorrowPlanNotes').value = reportData.tomorrowPlan || "";
       document.getElementById('issuesNotes').value = reportData.issues || "";
     }
@@ -1077,7 +964,7 @@
 
       localStorage.setItem(getStorageKey(reportData.date), JSON.stringify(reportData));
       calcStats();
-      if (showToastMsg) showToast("💾 บันทึกรายงานประจำวันเรียบร้อย");
+      if (showToastMsg) showToast("💾 บันทึกรายงานประจำวันโครงการพัทยาเรียบร้อย");
     }
 
     function renderAll() {
@@ -1290,13 +1177,7 @@
           </td>
           <td><input type="text" value="${escapeHtml(d.action)}" onchange="updateDefect(${idx}, 'action', this.value)"></td>
           <td><input type="text" style="width:100px;" value="${escapeHtml(d.resp)}" onchange="updateDefect(${idx}, 'resp', this.value)"></td>
-          <td style="text-align:center;">
-            <div class="date-cell-wrap no-print">
-              <input type="date" id="defect_date_${idx}" class="date-hidden-native" value="${d.due}" onchange="updateDefect(${idx}, 'due', this.value)">
-              <button type="button" class="date-btn" onclick="openDatePicker('defect_date_${idx}')">${fmtDate(d.due)}</button>
-            </div>
-            <span class="print-val">${fmtDate(d.due)}</span>
-          </td>
+          <td><input type="date" style="width:110px;" value="${d.due}" onchange="updateDefect(${idx}, 'due', this.value)"></td>
           <td><input type="text" style="width:100px;" value="${escapeHtml(d.status)}" onchange="updateDefect(${idx}, 'status', this.value)"></td>
           <td style="text-align:center;" class="no-print"><button class="btn-action-icon" onclick="deleteDefectRow(${idx})">🗑️</button></td>
         `;
@@ -1324,32 +1205,6 @@
     }
 
     // Calculations & KPIs
-    
-    function fmtDate(dStr) {
-      if (!dStr) return '-';
-      const p = dStr.split('-');
-      if (p.length === 3) {
-        let yr = p[0].length === 4 ? p[0].slice(2) : p[0];
-        if (yr === '22') yr = '26';
-        return `${p[2]}/${p[1]}/${yr}`;
-      }
-      return dStr;
-    }
-
-    function openDatePicker(id) {
-      const el = document.getElementById(id);
-      if (el) {
-        if (typeof el.showPicker === 'function') {
-          try {
-            el.showPicker();
-            return;
-          } catch(e) {}
-        }
-        el.focus();
-        el.click();
-      }
-    }
-
     function calcStats() {
       let dayTotal = 0;
       let otTotal = 0;
@@ -1388,7 +1243,7 @@
       const dataStr = "data:text/json;charset=utf-8," + encodeURIComponent(JSON.stringify(reportData, null, 2));
       const a = document.createElement('a');
       a.href = dataStr;
-      a.download = `INSPECT_Q_DAILY_REPORT_PATAYA_${reportData.date}.json`;
+      a.download = `DAILY_REPORT_PATAYA_${reportData.date}.json`;
       a.click();
     }
 
@@ -1399,37 +1254,5 @@
 
     window.addEventListener('DOMContentLoaded', initPage);
   </script>
-
-  <!-- Smart Navigation Interceptor: guarantees link clicks work 100% in Telegram (content://), offline files, and mobile browsers -->
-  <script>
-    (function() {
-      const baseLiveUrl = 'https://seemee1234-dev.github.io/seemeinspect/pataya/';
-      function fixLinks() {
-        const isSandboxed = window.location.protocol === 'content:' || window.location.protocol === 'file:' || !window.location.hostname.includes('github.io');
-        document.querySelectorAll('a').forEach(function(el) {
-          const h = el.getAttribute('href');
-          if (!h || h.startsWith('#') || h.startsWith('javascript:')) return;
-          
-          if (!h.startsWith('http')) {
-            el.href = baseLiveUrl + h;
-          }
-          
-          if (isSandboxed) {
-            el.target = '_self';
-            el.onclick = function(e) {
-              e.preventDefault();
-              window.location.href = this.href;
-            };
-          }
-        });
-      }
-      if (document.readyState === 'loading') {
-        document.addEventListener('DOMContentLoaded', fixLinks);
-      } else {
-        fixLinks();
-      }
-    })();
-  </script>
-
 </body>
 </html>

@@ -1,9 +1,9 @@
 @echo off
 chcp 65001 >nul
-title INSPECT Q - S-Curve โครงการพัทยา
+title โครงการเดอะ ออริจิ้น พัทยา - S-Curve โครงการพัทยา
 echo ========================================================
 echo   กำลังเปิดแผนงาน S-Curve โครงการพัทยา (Executive Suite)
-echo   Inspect Q - LINE OA: @inspectq | โทร 081-449-9499
+echo   โครงการเดอะ ออริจิ้น พัทยา | ระบบติดตามงานก่อสร้าง
 echo ========================================================
 start "" "C:\Users\ADMIN\Documents\pataya\scurve.html"
 exit

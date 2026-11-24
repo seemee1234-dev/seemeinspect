@@ -1,0 +1,607 @@
+<!DOCTYPE html>
+<html lang="th">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>ตารางเช็คสถานะงานระบบ MEP (อาคาร A & อาคาร B)</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Kanit:wght@300;400;500&display=swap" rel="stylesheet">
+  <style>
+    :root {
+      --bg-base: #f1f5f9;
+      --bg-surface: #ffffff;
+      --bg-card: #ffffff;
+      --navy-primary: #0a2540;
+      --navy-deep: #061626;
+      --border-subtle: #cbd5e1;
+      --border-strong: #000000;
+      --text-main: #000000;
+      --text-muted: #1e293b;
+      --success: #059669;
+      --warning: #d97706;
+      --danger: #dc2626;
+      --font-kanit: 'Kanit', -apple-system, BlinkMacSystemFont, sans-serif;
+    }
+
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+
+    body {
+      font-family: var(--font-kanit);
+      font-weight: 300;
+      background-color: var(--bg-base);
+      color: var(--text-main);
+      line-height: 1.5;
+      padding-bottom: 60px;
+    }
+
+    .top-header {
+      background: #ffffff;
+      border-bottom: 2px solid #0a2540;
+      padding: 16px 24px;
+      display: flex;
+      flex-wrap: wrap;
+      justify-content: space-between;
+      align-items: center;
+      gap: 16px;
+      box-shadow: 0 2px 8px rgba(0,0,0,0.06);
+    }
+
+    .header-left { display: flex; align-items: center; gap: 16px; }
+    .brand-badge {
+      background: #0a2540;
+      color: #ffd700;
+      padding: 6px 14px;
+      border-radius: 8px;
+      font-weight: 600;
+      font-size: 14px;
+    }
+
+    .header-title h1 { font-size: 20px; font-weight: 700; color: #000000; }
+    .header-title p { font-size: 13px; color: #475569; }
+
+    .header-actions { display: flex; flex-wrap: wrap; gap: 8px; }
+    .btn {
+      font-family: var(--font-kanit);
+      font-size: 13px;
+      font-weight: 500;
+      padding: 8px 14px;
+      border-radius: 6px;
+      cursor: pointer;
+      border: 1px solid transparent;
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      text-decoration: none;
+    }
+    .btn-gold { background: #f59e0b; color: #000; font-weight: 600; }
+    .btn-dark { background: #0a2540; color: #fff; }
+    .btn-outline { background: #fff; color: #000; border-color: #94a3b8; }
+
+    .mode-bar {
+      background: #ffffff;
+      border-bottom: 1px solid #cbd5e1;
+      padding: 0 24px;
+      display: flex;
+      gap: 8px;
+      overflow-x: auto;
+    }
+
+    .mode-tab {
+      font-family: var(--font-kanit);
+      font-size: 15px;
+      font-weight: 500;
+      padding: 14px 20px;
+      background: none;
+      border: none;
+      border-bottom: 3px solid transparent;
+      color: #475569;
+      cursor: pointer;
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      white-space: nowrap;
+    }
+    .mode-tab.active {
+      color: #0a2540;
+      font-weight: 600;
+      border-bottom-color: #0a2540;
+    }
+
+    .main-container {
+      max-width: 1440px;
+      margin: 24px auto;
+      padding: 0 20px;
+    }
+
+    .kpi-row {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+      gap: 16px;
+      margin-bottom: 24px;
+    }
+
+    .kpi-card {
+      background: #ffffff;
+      border: 1px solid #000000;
+      border-radius: 10px;
+      padding: 16px;
+      box-shadow: 0 2px 4px rgba(0,0,0,0.04);
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+    }
+
+    .kpi-title {
+      font-size: 13px;
+      font-weight: 600;
+      color: #1e293b;
+      margin-bottom: 8px;
+    }
+
+    .kpi-pct {
+      font-size: 30px;
+      font-weight: 700;
+      color: #000000;
+      line-height: 1;
+      margin-bottom: 8px;
+    }
+
+    .kpi-subtext { font-size: 12px; font-weight: 500; color: #334155; }
+    .progress-bar-bg {
+      width: 100%;
+      height: 6px;
+      background: #e2e8f0;
+      border-radius: 3px;
+      overflow: hidden;
+      margin-top: 8px;
+    }
+    .progress-bar-fill { height: 100%; background: #059669; }
+
+    .content-card {
+      background: #ffffff;
+      border: 1px solid #000000;
+      border-radius: 12px;
+      padding: 24px;
+      margin-bottom: 24px;
+    }
+
+    .card-header-line {
+      display: flex;
+      flex-wrap: wrap;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: 16px;
+      padding-bottom: 12px;
+      border-bottom: 2px solid #0a2540;
+    }
+
+    .card-header-line h2 { font-size: 18px; font-weight: 700; color: #000; }
+    .badge-page {
+      background: #f1f5f9;
+      border: 1px solid #94a3b8;
+      font-size: 13px;
+      font-weight: 600;
+      padding: 2px 10px;
+      border-radius: 4px;
+      color: #0a2540;
+    }
+    .badge-accum {
+      background: #ecfdf5;
+      color: #065f46;
+      border: 1px solid #059669;
+      padding: 4px 12px;
+      border-radius: 6px;
+      font-weight: 700;
+      font-size: 15px;
+    }
+
+    .wg-table {
+      width: 100%;
+      border-collapse: collapse;
+      font-size: 16px;
+      color: #000000;
+    }
+
+    .wg-table th {
+      background-color: #0a2540;
+      color: #ffffff;
+      font-weight: 600;
+      font-size: 15px;
+      padding: 12px 10px;
+      text-align: center;
+      border: 1px solid #000000;
+      white-space: nowrap;
+    }
+
+    .wg-table td {
+      padding: 10px;
+      border: 1px solid #000000;
+      font-size: 16px;
+      color: #000000;
+      vertical-align: middle;
+    }
+
+    .wg-table tr:nth-child(even) { background-color: #f8fafc; }
+    .wg-table tr:hover { background-color: #eff6ff; }
+
+    .td-num { text-align: center; font-weight: 600; width: 50px; }
+    .td-page { text-align: center; font-weight: 600; width: 90px; }
+    .td-bld { font-weight: 600; font-size: 17px; }
+    .td-center { text-align: center; }
+
+    @media print {
+      .top-header, .mode-bar, .header-actions { display: none !important; }
+      .main-container { max-width: 100%; margin: 0; padding: 0; }
+      .content-card { border: 1px solid #000; box-shadow: none; }
+      body { background: #fff; }
+    }
+  
+    /* ══════════════════════════════════════════════════════════════════
+       MANDATORY THIN TYPOGRAPHY & FULL TEXT WRAPPING (Kanit 300 Light)
+       Zero Truncation Guarantee: Text always wraps completely
+       ══════════════════════════════════════════════════════════════════ */
+    body, table, th, td, input, select, button, div, span, p, h1, h2, h3, h4, strong, b {
+      font-family: 'Kanit', sans-serif !important;
+      font-weight: 300 !important;
+    }
+    .kpi-pct, .kpi13-pct, .header-title h1, .brand-badge, .badge-accum, .badge-success, .badge-warn {
+      font-weight: 400 !important;
+    }
+    .wg-table, .table {
+      width: 100% !important;
+      table-layout: auto !important;
+      border-collapse: collapse !important;
+    }
+    .wg-table th, .table th {
+      font-size: 14.5px !important;
+      font-weight: 400 !important;
+      padding: 8px 6px !important;
+      white-space: normal !important;
+      word-wrap: break-word !important;
+      word-break: break-word !important;
+      line-height: 1.3 !important;
+    }
+    .wg-table td, .table td {
+      font-size: 15px !important;
+      font-weight: 300 !important;
+      padding: 8px 10px !important;
+      white-space: normal !important;
+      word-wrap: break-word !important;
+      word-break: break-word !important;
+      overflow-wrap: break-word !important;
+      line-height: 1.4 !important;
+    }
+    .cell-editable-text, .cell-editable, .cell-input {
+      font-family: 'Kanit', sans-serif !important;
+      font-size: 15px !important;
+      font-weight: 300 !important;
+      white-space: normal !important;
+      word-wrap: break-word !important;
+      word-break: break-word !important;
+      overflow-wrap: break-word !important;
+      min-height: 22px !important;
+      outline: none;
+      display: block;
+      width: 100% !important;
+      background: transparent;
+    }
+    .cell-editable-text:focus, .cell-editable:focus, .cell-input:focus {
+      background: #ffffff;
+      box-shadow: 0 0 0 1.5px #0a2540;
+    }
+
+  
+    /* Light Green Highlight for 100% cells */
+    .cell-100, td.cell-100, .wg-td-pct.cell-100 {
+      background-color: #dcfce7 !important;
+      color: #14532d !important;
+    }
+    
+  </style>
+</head>
+<body>
+
+  <header class="top-header">
+    <div class="header-left">
+      <div class="brand-badge">THE ORIGIN PATTAYA • งานระบบ MEP</div>
+      <div class="header-title">
+        <h1>ตารางเช็คสถานะงานระบบ MEP (อาคาร A & อาคาร B)</h1>
+        <p>โครงการเดอะ ออริจิ้น พัทยา • ข้อมูลทางการ Well Graded ครบทั้ง 6 หมวดงาน (หน้า 39 – 44)</p>
+      </div>
+    </div>
+    <div class="header-actions">
+      <button class="btn btn-gold" onclick="saveToStorage()">💾 บันทึกข้อมูล</button>
+      <button class="btn btn-dark" onclick="copySummaryText()">💬 สรุปส่ง LINE</button>
+      <button class="btn btn-outline" onclick="window.print()">🖨️ สั่งพิมพ์ A3/A4</button>
+      <button class="btn btn-outline" onclick="exportJSON()">📥 สำรอง JSON</button>
+      <button class="btn btn-outline" onclick="resetToOfficial()">🔄 รีเซ็ตค่าสไลด์</button>
+    </div>
+  </header>
+
+  <nav class="mode-bar">
+    <button class="mode-tab active" id="tabOverview" onclick="switchMode('overview')">
+      📊 ตารางสรุปภาพรวม 6 หมวดงาน (หน้า 39 – 44)
+    </button>
+    <button class="mode-tab" id="tabSlides" onclick="switchMode('slides')">
+      📑 ตารางตามสไลด์ Well Graded ละเอียดทุกช่วงชั้น
+    </button>
+    <button class="mode-tab" id="tabMatrix" onclick="switchMode('matrix')">
+      🏢 ตาราง Matrix เปรียบเทียบชั้นต่อชั้น (FL 2-3 ถึง 8-ดาดฟ้า)
+    </button>
+  </nav>
+
+  <main class="main-container">
+
+    <section class="kpi-row">
+      <div class="kpi-card">
+        <div class="kpi-title">ท่อ Riser อาคาร A (หน้า 39)</div>
+        <div class="kpi-pct" style="color:#059669;">99.29%</div>
+        <div class="kpi-subtext">ชั้น 2-8 ครบ 100% • ดาดฟ้า 95%</div>
+        <div class="progress-bar-bg"><div class="progress-bar-fill" style="width: 99.29%;"></div></div>
+      </div>
+
+      <div class="kpi-card">
+        <div class="kpi-title">หลังผนัง อาคาร A (หน้า 40)</div>
+        <div class="kpi-pct" style="color:#0a2540;">85.71%</div>
+        <div class="kpi-subtext">ชั้น 2-6 ครบ 100% • ชั้น 7 (80%)</div>
+        <div class="progress-bar-bg"><div class="progress-bar-fill" style="width: 85.71%;"></div></div>
+      </div>
+
+      <div class="kpi-card">
+        <div class="kpi-title">ร้อยสาย TEST A (หน้า 41)</div>
+        <div class="kpi-pct" style="color:#0a2540;">76.14%</div>
+        <div class="kpi-subtext">ชั้น 2-5 ครบ 100% • ชั้น 6 (80%)</div>
+        <div class="progress-bar-bg"><div class="progress-bar-fill" style="width: 76.14%;"></div></div>
+      </div>
+
+      <div class="kpi-card">
+        <div class="kpi-title">ท่อ Riser อาคาร B (หน้า 42)</div>
+        <div class="kpi-pct" style="color:#059669;">99.29%</div>
+        <div class="kpi-subtext">ชั้น 2-8 ครบ 100% • ดาดฟ้า 95%</div>
+        <div class="progress-bar-bg"><div class="progress-bar-fill" style="width: 99.29%;"></div></div>
+      </div>
+
+      <div class="kpi-card">
+        <div class="kpi-title">หลังผนัง อาคาร B (หน้า 43)</div>
+        <div class="kpi-pct" style="color:#d97706;">66.14%</div>
+        <div class="kpi-subtext">ชั้น 2-5 ครบ 100% • ชั้น 6 (63%)</div>
+        <div class="progress-bar-bg"><div class="progress-bar-fill" style="width: 66.14%; background:#d97706;"></div></div>
+      </div>
+
+      <div class="kpi-card">
+        <div class="kpi-title">ร้อยสาย TEST B (หน้า 44)</div>
+        <div class="kpi-pct" style="color:#d97706;">65.14%</div>
+        <div class="kpi-subtext">ชั้น 2-4 ครบ 100% • ชั้น 5 (90%)</div>
+        <div class="progress-bar-bg"><div class="progress-bar-fill" style="width: 65.14%; background:#d97706;"></div></div>
+      </div>
+    </section>
+
+    <div id="viewOverview">
+      <div class="content-card">
+        <div class="card-header-line">
+          <h2><span>4. งานระบบ MEP (6 ตาราง: อาคาร A & อาคาร B)</span></h2>
+          <span class="badge-accum">หน้า 39 – 44</span>
+        </div>
+        <div style="overflow-x: auto;">
+          <table class="wg-table" id="tableOverviewRender">
+            <thead>
+              <tr>
+                <th style="width:50px;">#</th>
+                <th style="width:100px;">สไลด์หน้า</th>
+                <th>รายการหมวดงาน</th>
+                <th>ขอบเขตงาน</th>
+                <th style="width:140px;">ความก้าวหน้าสะสม</th>
+                <th>สถานะการดำเนินงาน</th>
+              </tr>
+            </thead>
+            <tbody></tbody>
+          </table>
+        </div>
+      </div>
+    </div>
+
+    <div id="viewSlides" style="display: none;"></div>
+
+    <div id="viewMatrix" style="display: none;">
+      <div class="content-card">
+        <div class="card-header-line">
+          <h2>📊 ตาราง Matrix เปรียบเทียบงานระบบ MEP แยกตามชั้น (FL 2-3 ถึง 8-ดาดฟ้า)</h2>
+          <span class="badge-page">7 ช่วงชั้น</span>
+        </div>
+        <div style="overflow-x: auto;">
+          <table class="wg-table" id="tableMatrixRender"></table>
+        </div>
+      </div>
+    </div>
+
+  </main>
+
+  <script>
+    const MASTER_MEP = {"report_title": "ตารางเช็คสถานะงานระบบ MEP • โครงการเดอะ ออริจิ้น พัทยา (อาคาร A & อาคาร B)", "contractor": "Well Graded", "report_date": "23 พ.ย. 69", "overview_rows": [{"num": 29, "page": "หน้า 39", "name": "งานติดตั้งท่อ Riser อาคาร A", "scope": "FL 2-3 ถึง FL 8-ดาดฟ้า (7 ช่วง)", "accum_pct": 99.29, "status": "ชั้น 2-8 เสร็จ 100% • ชั้น 8-ดาดฟ้า ได้ 95%", "link_id": "slide_mep_a_01"}, {"num": 30, "page": "หน้า 40", "name": "งานระบบหลังผนัง อาคาร A", "scope": "FL 2-3 ถึง FL 8-ดาดฟ้า (7 ช่วง)", "accum_pct": 85.71, "status": "ชั้น 2-6 เสร็จ 100% • ชั้น 7 ได้ 80% • ชั้น 8 ได้ 20%", "link_id": "slide_mep_a_02"}, {"num": 31, "page": "หน้า 41", "name": "งานร้อยสาย TEST ระบบ อาคาร A", "scope": "FL 2-3 ถึง FL 8-ดาดฟ้า (7 ช่วง)", "accum_pct": 76.14, "status": "ชั้น 2-5 เสร็จ 100% • ชั้น 6 ได้ 80% • ชั้น 7 ได้ 53%", "link_id": "slide_mep_a_03"}, {"num": 32, "page": "หน้า 42", "name": "งานติดตั้งท่อ Riser อาคาร B", "scope": "FL 2-3 ถึง FL 8-ดาดฟ้า (7 ช่วง)", "accum_pct": 99.29, "status": "ชั้น 2-8 เสร็จ 100% • ชั้น 8-ดาดฟ้า ได้ 95%", "link_id": "slide_mep_b_01"}, {"num": 33, "page": "หน้า 43", "name": "งานระบบหลังผนัง อาคาร B", "scope": "FL 2-3 ถึง FL 8-ดาดฟ้า (7 ช่วง)", "accum_pct": 66.14, "status": "ชั้น 2-5 เสร็จ 100% • ชั้น 6 ได้ 63% • ชั้น 7-8 ยังไม่เริ่ม", "link_id": "slide_mep_b_02"}, {"num": 34, "page": "หน้า 44", "name": "งานร้อยสาย TEST ระบบ อาคาร B", "scope": "FL 2-3 ถึง FL 8-ดาดฟ้า (7 ช่วง)", "accum_pct": 65.14, "status": "ชั้น 2-4 เสร็จ 100% • ชั้น 5 ได้ 90% • ชั้น 6 ได้ 66%", "link_id": "slide_mep_b_03"}], "slides": [{"id": "slide_mep_a_01", "num": 29, "page": 39, "title": "งานติดตั้งท่อ Riser อาคาร A", "accum_pct": 99.29, "scope": "FL 2-3 ถึง FL 8-ดาดฟ้า (7 ช่วง)", "cols": ["รายการ", "แผนเริ่ม", "Actual (%)", "แผนจบ", "หมายเหตุ"], "rows": [{"item": "งานติดตั้งท่อ Riser ชั้น 8-ดาดฟ้า", "start": "22 ก.ย. 69", "act": "95%", "end": "28 ก.ย. 69", "note": ""}, {"item": "งานติดตั้งท่อ Riser ชั้น 7-8", "start": "11 ก.ย. 69", "act": "100%", "end": "17 ก.ย. 69", "note": ""}, {"item": "งานติดตั้งท่อ Riser ชั้น 6-7", "start": "31 ส.ค. 69", "act": "100%", "end": "6 ก.ย. 69", "note": ""}, {"item": "งานติดตั้งท่อ Riser ชั้น 5-6", "start": "20 ส.ค. 69", "act": "100%", "end": "26 ส.ค. 69", "note": ""}, {"item": "งานติดตั้งท่อ Riser ชั้น 4-5", "start": "9 ส.ค. 69", "act": "100%", "end": "15 ส.ค. 69", "note": ""}, {"item": "งานติดตั้งท่อ Riser ชั้น 3-4", "start": "29 ก.ค. 69", "act": "100%", "end": "4 ส.ค. 69", "note": ""}, {"item": "งานติดตั้งท่อ Riser ชั้น 2-3", "start": "18 ก.ค. 69", "act": "100%", "end": "24 ก.ค. 69", "note": ""}]}, {"id": "slide_mep_a_02", "num": 30, "page": 40, "title": "งานระบบหลังผนัง อาคาร A", "accum_pct": 85.71, "scope": "FL 2-3 ถึง FL 8-ดาดฟ้า (7 ช่วง)", "cols": ["รายการ", "แผนเริ่ม", "Actual (%)", "แผนจบ", "หมายเหตุ"], "rows": [{"item": "งานระบบหลังผนัง ชั้น 8-ดาดฟ้า", "start": "23 ต.ค. 69", "act": "20%", "end": "29 ต.ค. 69", "note": ""}, {"item": "งานระบบหลังผนัง ชั้น 7-8", "start": "12 ต.ค. 69", "act": "80%", "end": "18 ต.ค. 69", "note": ""}, {"item": "งานระบบหลังผนัง ชั้น 6-7", "start": "1 ต.ค. 69", "act": "100%", "end": "7 ต.ค. 69", "note": ""}, {"item": "งานระบบหลังผนัง ชั้น 5-6", "start": "20 ก.ย. 69", "act": "100%", "end": "26 ก.ย. 69", "note": ""}, {"item": "งานระบบหลังผนัง ชั้น 4-5", "start": "9 ก.ย. 69", "act": "100%", "end": "15 ก.ย. 69", "note": ""}, {"item": "งานระบบหลังผนัง ชั้น 3-4", "start": "29 ส.ค. 69", "act": "100%", "end": "4 ก.ย. 69", "note": ""}, {"item": "งานระบบหลังผนัง ชั้น 2-3", "start": "18 ส.ค. 69", "act": "100%", "end": "24 ส.ค. 69", "note": ""}]}, {"id": "slide_mep_a_03", "num": 31, "page": 41, "title": "งานร้อยสาย TEST ระบบ อาคาร A", "accum_pct": 76.14, "scope": "FL 2-3 ถึง FL 8-ดาดฟ้า (7 ช่วง)", "cols": ["รายการ", "แผนเริ่ม", "Actual (%)", "แผนจบ", "หมายเหตุ"], "rows": [{"item": "งานร้อยสาย TEST ระบบ ชั้น 8-ดาดฟ้า", "start": "4 พ.ย. 69", "act": "-", "end": "10 พ.ย. 69", "note": ""}, {"item": "งานร้อยสาย TEST ระบบ ชั้น 7-8", "start": "24 ต.ค. 69", "act": "53%", "end": "30 ต.ค. 69", "note": ""}, {"item": "งานร้อยสาย TEST ระบบ ชั้น 6-7", "start": "13 ต.ค. 69", "act": "80%", "end": "19 ต.ค. 69", "note": ""}, {"item": "งานร้อยสาย TEST ระบบ ชั้น 5-6", "start": "2 ต.ค. 69", "act": "100%", "end": "8 ต.ค. 69", "note": ""}, {"item": "งานร้อยสาย TEST ระบบ ชั้น 4-5", "start": "21 ก.ย. 69", "act": "100%", "end": "27 ก.ย. 69", "note": ""}, {"item": "งานร้อยสาย TEST ระบบ ชั้น 3-4", "start": "10 ก.ย. 69", "act": "100%", "end": "16 ก.ย. 69", "note": ""}, {"item": "งานร้อยสาย TEST ระบบ ชั้น 2-3", "start": "30 ส.ค. 69", "act": "100%", "end": "5 ก.ย. 69", "note": ""}]}, {"id": "slide_mep_b_01", "num": 32, "page": 42, "title": "งานติดตั้งท่อ Riser อาคาร B", "accum_pct": 99.29, "scope": "FL 2-3 ถึง FL 8-ดาดฟ้า (7 ช่วง)", "cols": ["รายการ", "แผนเริ่ม", "Actual (%)", "แผนจบ", "หมายเหตุ"], "rows": [{"item": "งานติดตั้งท่อ Riser ชั้น 8-ดาดฟ้า", "start": "22 ก.ย. 69", "act": "95%", "end": "28 ก.ย. 69", "note": ""}, {"item": "งานติดตั้งท่อ Riser ชั้น 7-8", "start": "11 ก.ย. 69", "act": "100%", "end": "17 ก.ย. 69", "note": ""}, {"item": "งานติดตั้งท่อ Riser ชั้น 6-7", "start": "31 ส.ค. 69", "act": "100%", "end": "6 ก.ย. 69", "note": ""}, {"item": "งานติดตั้งท่อ Riser ชั้น 5-6", "start": "20 ส.ค. 69", "act": "100%", "end": "26 ส.ค. 69", "note": ""}, {"item": "งานติดตั้งท่อ Riser ชั้น 4-5", "start": "9 ส.ค. 69", "act": "100%", "end": "15 ส.ค. 69", "note": ""}, {"item": "งานติดตั้งท่อ Riser ชั้น 3-4", "start": "29 ก.ค. 69", "act": "100%", "end": "4 ส.ค. 69", "note": ""}, {"item": "งานติดตั้งท่อ Riser ชั้น 2-3", "start": "18 ก.ค. 69", "act": "100%", "end": "24 ก.ค. 69", "note": ""}]}, {"id": "slide_mep_b_02", "num": 33, "page": 43, "title": "งานระบบหลังผนัง อาคาร B", "accum_pct": 66.14, "scope": "FL 2-3 ถึง FL 8-ดาดฟ้า (7 ช่วง)", "cols": ["รายการ", "แผนเริ่ม", "Actual (%)", "แผนจบ", "หมายเหตุ"], "rows": [{"item": "งานระบบหลังผนัง ชั้น 8-ดาดฟ้า", "start": "23 ต.ค. 69", "act": "-", "end": "29 ต.ค. 69", "note": ""}, {"item": "งานระบบหลังผนัง ชั้น 7-8", "start": "12 ต.ค. 69", "act": "-", "end": "18 ต.ค. 69", "note": ""}, {"item": "งานระบบหลังผนัง ชั้น 6-7", "start": "1 ต.ค. 69", "act": "63%", "end": "7 ต.ค. 69", "note": ""}, {"item": "งานระบบหลังผนัง ชั้น 5-6", "start": "20 ก.ย. 69", "act": "100%", "end": "26 ก.ย. 69", "note": ""}, {"item": "งานระบบหลังผนัง ชั้น 4-5", "start": "9 ก.ย. 69", "act": "100%", "end": "15 ก.ย. 69", "note": ""}, {"item": "งานระบบหลังผนัง ชั้น 3-4", "start": "29 ส.ค. 69", "act": "100%", "end": "4 ก.ย. 69", "note": ""}, {"item": "งานระบบหลังผนัง ชั้น 2-3", "start": "18 ส.ค. 69", "act": "100%", "end": "24 ส.ค. 69", "note": ""}]}, {"id": "slide_mep_b_03", "num": 34, "page": 44, "title": "งานร้อยสาย TEST ระบบ อาคาร B", "accum_pct": 65.14, "scope": "FL 2-3 ถึง FL 8-ดาดฟ้า (7 ช่วง)", "cols": ["รายการ", "แผนเริ่ม", "Actual (%)", "แผนจบ", "หมายเหตุ"], "rows": [{"item": "งานร้อยสาย TEST ระบบ ชั้น 8-ดาดฟ้า", "start": "4 พ.ย. 69", "act": "-", "end": "10 พ.ย. 69", "note": ""}, {"item": "งานร้อยสาย TEST ระบบ ชั้น 7-8", "start": "24 ต.ค. 69", "act": "-", "end": "30 ต.ค. 69", "note": ""}, {"item": "งานร้อยสาย TEST ระบบ ชั้น 6-7", "start": "13 ต.ค. 69", "act": "66%", "end": "19 ต.ค. 69", "note": ""}, {"item": "งานร้อยสาย TEST ระบบ ชั้น 5-6", "start": "2 ต.ค. 69", "act": "90%", "end": "8 ต.ค. 69", "note": ""}, {"item": "งานร้อยสาย TEST ระบบ ชั้น 4-5", "start": "21 ก.ย. 69", "act": "100%", "end": "27 ก.ย. 69", "note": ""}, {"item": "งานร้อยสาย TEST ระบบ ชั้น 3-4", "start": "10 ก.ย. 69", "act": "100%", "end": "16 ก.ย. 69", "note": ""}, {"item": "งานร้อยสาย TEST ระบบ ชั้น 2-3", "start": "30 ส.ค. 69", "act": "100%", "end": "5 ก.ย. 69", "note": ""}]}]};
+    let currentData = null;
+
+    function initData() {
+      const saved = localStorage.getItem('pataya_mep_data_v1');
+      if (saved) {
+        try {
+          currentData = JSON.parse(saved);
+        } catch(e) {
+          currentData = JSON.parse(JSON.stringify(MASTER_MEP));
+        }
+      } else {
+        currentData = JSON.parse(JSON.stringify(MASTER_MEP));
+      }
+    }
+
+    function renderOverviewTable() {
+      const tbody = document.querySelector('#tableOverviewRender tbody');
+      let html = '';
+      currentData.overview_rows.forEach(r => {
+        html += `
+          <tr>
+            <td class="td-num">${r.num}</td>
+            <td class="td-page"><span class="badge-page">${r.page}</span></td>
+            <td class="td-bld">${r.name}</td>
+            <td><strong>${r.scope}</strong></td>
+            <td class="td-center" style="font-weight:700;font-size:17px;color:#000000;background:#fefce8;">
+              ${r.accum_pct.toFixed(2)}%
+            </td>
+            <td>${r.status}</td>
+          </tr>
+        `;
+      });
+      tbody.innerHTML = html;
+      apply100GreenHighlights();
+    }
+
+    function renderSlideTables() {
+      const container = document.getElementById('viewSlides');
+      let html = '';
+
+      currentData.slides.forEach(slide => {
+        html += `
+          <div class="content-card" id="${slide.id}">
+            <div class="card-header-line">
+              <h2>
+                <span class="badge-page">สไลด์ ${slide.page}</span>
+                <span>${slide.title}</span>
+              </h2>
+              <div style="display:flex;gap:10px;align-items:center;">
+                <span style="font-size:14px;color:#475569;font-weight:500;">${slide.scope}</span>
+                <span class="badge-accum">สะสม: ${slide.accum_pct.toFixed(2)}%</span>
+              </div>
+            </div>
+            <div style="overflow-x:auto;">
+              <table class="wg-table">
+                <thead><tr>${slide.cols.map(c => `<th>${c}</th>`).join('')}</tr></thead>
+                <tbody>
+        `;
+
+        slide.rows.forEach(row => {
+          html += `<tr>
+            <td style="font-weight:600;">${row.item}</td>
+            <td class="td-center">${row.start}</td>
+            <td class="td-center" style="font-weight:700;background:#fefce8;">${row.act}</td>
+            <td class="td-center">${row.end}</td>
+            <td>${row.note || '-'}</td>
+          </tr>`;
+        });
+
+        html += `</tbody></table></div></div>`;
+      });
+
+      container.innerHTML = html;
+      apply100GreenHighlights();
+    }
+
+    function renderMatrixTable() {
+      const table = document.getElementById('tableMatrixRender');
+      const floors = ['ชั้น 8-ดาดฟ้า', 'ชั้น 7-8', 'ชั้น 6-7', 'ชั้น 5-6', 'ชั้น 4-5', 'ชั้น 3-4', 'ชั้น 2-3'];
+
+      let thead = '<thead><tr><th>หมวดงานระบบ MEP</th>';
+      floors.forEach(f => { thead += `<th>${f}</th>`; });
+      thead += '<th>% รวมสะสม</th></tr></thead>';
+
+      let tbody = '<tbody>';
+      currentData.slides.forEach(s => {
+        tbody += `<tr><td class="td-bld">${s.title}</td>`;
+        floors.forEach(f => {
+          const r = s.rows.find(x => x.item.includes(f));
+          const val = r ? (r.act || '-') : '-';
+          const bg = val === '100%' ? '#ecfdf5' : (val !== '-' ? '#fefce8' : '#ffffff');
+          tbody += `<td class="td-center" style="background:${bg};font-weight:600;">${val}</td>`;
+        });
+        tbody += `<td class="td-center" style="background:#0a2540;color:#ffffff;font-weight:700;">${s.accum_pct.toFixed(2)}%</td></tr>`;
+      });
+      tbody += '</tbody>';
+
+      table.innerHTML = thead + tbody;
+    }
+
+    function switchMode(mode) {
+      document.getElementById('viewOverview').style.display = mode === 'overview' ? 'block' : 'none';
+      document.getElementById('viewSlides').style.display = mode === 'slides' ? 'block' : 'none';
+      document.getElementById('viewMatrix').style.display = mode === 'matrix' ? 'block' : 'none';
+
+      document.getElementById('tabOverview').classList.toggle('active', mode === 'overview');
+      document.getElementById('tabSlides').classList.toggle('active', mode === 'slides');
+      document.getElementById('tabMatrix').classList.toggle('active', mode === 'matrix');
+    }
+
+    function saveToStorage() {
+      localStorage.setItem('pataya_mep_data_v1', JSON.stringify(currentData));
+      alert('บันทึกข้อมูลงานระบบ MEP สำเร็จ');
+    }
+
+    function resetToOfficial() {
+      if (confirm('คุณต้องการคืนค่าเป็นข้อมูลสไลด์ต้นฉบับ Well Graded ใช่หรือไม่?')) {
+        localStorage.removeItem('pataya_mep_data_v1');
+        initData();
+        renderOverviewTable();
+        renderSlideTables();
+        renderMatrixTable();
+      }
+    }
+
+    function copySummaryText() {
+      let text = `รายงานสถานะงานระบบ MEP • โครงการ THE ORIGIN PATTAYA\n`;
+      text += `------------------------------------------------\n`;
+      currentData.overview_rows.forEach(r => {
+        text += `• ${r.name} (${r.page}): ${r.accum_pct.toFixed(2)}% (${r.status})\n`;
+      });
+      text += `------------------------------------------------\n`;
+      text += `THE ORIGIN PATTAYA • โทร: 081-449-9499 | LINE: \n`;
+      text += ``;
+      navigator.clipboard.writeText(text).then(() => {
+        alert('คัดลอกสรุปสถานะงานระบบ MEP เรียบร้อยแล้ว');
+      });
+    }
+
+    function exportJSON() {
+      const blob = new Blob([JSON.stringify(currentData, null, 2)], { type: 'application/json' });
+      const url = URL.createObjectURL(blob);
+      const a = document.createElement('a');
+      a.href = url;
+      a.download = 'mep_system_pattaya_status.json';
+      a.click();
+    }
+
+    window.onload = function() {
+      initData();
+      renderOverviewTable();
+      renderSlideTables();
+      renderMatrixTable();
+    
+      apply100GreenHighlights();
+    };
+  
+    // ══════════════════════════════════════════════════════════════════
+    // AUTO-HIGHLIGHT: LIGHT GREEN (#dcfce7) FOR ALL 100% CELLS
+    // ══════════════════════════════════════════════════════════════════
+    function apply100GreenHighlights() {
+      document.querySelectorAll('td').forEach(td => {
+        const text = (td.innerText || '').trim();
+        const input = td.querySelector('input, .cell-editable-text');
+        const val = input ? (input.value || input.innerText || '').trim() : '';
+        
+        // Check if cell represents 100% completion
+        const is100 = text === '100%' || text === '100.00%' || text === '100.0%' || 
+                      val === '100%' || val === '100.00%' || val === '100.0%' ||
+                      (text.includes('100%') && !text.includes('แผน') && !text.includes('ผลิตครบ')) ||
+                      (val.includes('100%') && !val.includes('แผน'));
+                      
+        if (is100) {
+          td.style.setProperty('background-color', '#dcfce7', 'important');
+          td.style.setProperty('color', '#14532d', 'important');
+          if (input) {
+            input.style.setProperty('background-color', 'transparent', 'important');
+            input.style.setProperty('color', '#14532d', 'important');
+          }
+        }
+      });
+    }
+
+  </script>
+</body>
+</html>

@@ -1,0 +1,825 @@
+<!DOCTYPE html>
+<html lang="th">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>ตารางเช็คสถานะงาน ผลิตและติดตั้งผนัง Precast (อาคาร A, อาคาร B, Clubhouse)</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Kanit:wght@300;400;500&display=swap" rel="stylesheet">
+  <style>
+    :root {
+      --bg-base: #f1f5f9;
+      --bg-surface: #ffffff;
+      --bg-card: #ffffff;
+      --navy-primary: #0a2540;
+      --navy-deep: #061626;
+      --border-subtle: #cbd5e1;
+      --border-strong: #000000;
+      --text-main: #000000;
+      --text-muted: #1e293b;
+      --success: #059669;
+      --warning: #d97706;
+      --danger: #dc2626;
+      --font-kanit: 'Kanit', -apple-system, BlinkMacSystemFont, sans-serif;
+    }
+
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+
+    body {
+      font-family: var(--font-kanit);
+      font-weight: 300;
+      background-color: var(--bg-base);
+      color: var(--text-main);
+      line-height: 1.5;
+      padding-bottom: 60px;
+    }
+
+    /* Top HUD Header */
+    .top-header {
+      background: #ffffff;
+      border-bottom: 2px solid #0a2540;
+      padding: 16px 24px;
+      display: flex;
+      flex-wrap: wrap;
+      justify-content: space-between;
+      align-items: center;
+      gap: 16px;
+      box-shadow: 0 2px 8px rgba(0,0,0,0.06);
+    }
+
+    .header-left {
+      display: flex;
+      align-items: center;
+      gap: 16px;
+    }
+
+    .brand-badge {
+      background: #0a2540;
+      color: #ffd700;
+      padding: 6px 14px;
+      border-radius: 8px;
+      font-weight: 600;
+      font-size: 14px;
+      letter-spacing: 0.5px;
+    }
+
+    .header-title h1 {
+      font-size: 20px;
+      font-weight: 700;
+      color: #000000;
+    }
+
+    .header-title p {
+      font-size: 13px;
+      color: #475569;
+      font-weight: 400;
+    }
+
+    .header-actions {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 8px;
+    }
+
+    .btn {
+      font-family: var(--font-kanit);
+      font-size: 13px;
+      font-weight: 500;
+      padding: 8px 14px;
+      border-radius: 6px;
+      cursor: pointer;
+      border: 1px solid transparent;
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      transition: all 0.15s ease;
+      text-decoration: none;
+    }
+
+    .btn-gold {
+      background: #f59e0b;
+      color: #000000;
+      font-weight: 600;
+    }
+    .btn-gold:hover { background: #d97706; }
+
+    .btn-dark {
+      background: #0a2540;
+      color: #ffffff;
+    }
+    .btn-dark:hover { background: #061626; }
+
+    .btn-outline {
+      background: #ffffff;
+      color: #000000;
+      border-color: #94a3b8;
+    }
+    .btn-outline:hover { background: #f8fafc; border-color: #000000; }
+
+    /* Mode Navigation Tabs */
+    .mode-bar {
+      background: #ffffff;
+      border-bottom: 1px solid #cbd5e1;
+      padding: 0 24px;
+      display: flex;
+      gap: 8px;
+      overflow-x: auto;
+    }
+
+    .mode-tab {
+      font-family: var(--font-kanit);
+      font-size: 15px;
+      font-weight: 500;
+      padding: 14px 20px;
+      background: none;
+      border: none;
+      border-bottom: 3px solid transparent;
+      color: #475569;
+      cursor: pointer;
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      white-space: nowrap;
+    }
+
+    .mode-tab:hover {
+      color: #000000;
+    }
+
+    .mode-tab.active {
+      color: #0a2540;
+      font-weight: 600;
+      border-bottom-color: #0a2540;
+    }
+
+    /* Main Container */
+    .main-container {
+      max-width: 1440px;
+      margin: 24px auto;
+      padding: 0 20px;
+    }
+
+    /* KPI Summary Row */
+    .kpi-row {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+      gap: 16px;
+      margin-bottom: 24px;
+    }
+
+    .kpi-card {
+      background: #ffffff;
+      border: 1px solid #000000;
+      border-radius: 10px;
+      padding: 16px;
+      box-shadow: 0 2px 4px rgba(0,0,0,0.04);
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+    }
+
+    .kpi-title {
+      font-size: 14px;
+      font-weight: 600;
+      color: #1e293b;
+      margin-bottom: 8px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+    }
+
+    .kpi-pct {
+      font-size: 32px;
+      font-weight: 700;
+      color: #000000;
+      line-height: 1;
+      margin-bottom: 8px;
+    }
+
+    .kpi-subtext {
+      font-size: 13px;
+      font-weight: 500;
+      color: #334155;
+    }
+
+    .progress-bar-bg {
+      width: 100%;
+      height: 8px;
+      background: #e2e8f0;
+      border-radius: 4px;
+      overflow: hidden;
+      margin-top: 10px;
+    }
+
+    .progress-bar-fill {
+      height: 100%;
+      background: #059669;
+      border-radius: 4px;
+    }
+
+    /* Card Wrapper */
+    .content-card {
+      background: #ffffff;
+      border: 1px solid #000000;
+      border-radius: 12px;
+      padding: 24px;
+      margin-bottom: 24px;
+      box-shadow: 0 4px 6px -1px rgba(0,0,0,0.05);
+    }
+
+    .card-header-line {
+      display: flex;
+      flex-wrap: wrap;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: 16px;
+      padding-bottom: 12px;
+      border-bottom: 2px solid #0a2540;
+    }
+
+    .card-header-line h2 {
+      font-size: 18px;
+      font-weight: 700;
+      color: #000000;
+      display: flex;
+      align-items: center;
+      gap: 10px;
+    }
+
+    .badge-page {
+      background: #f1f5f9;
+      border: 1px solid #94a3b8;
+      font-size: 13px;
+      font-weight: 600;
+      padding: 2px 10px;
+      border-radius: 4px;
+      color: #0a2540;
+    }
+
+    .badge-accum {
+      background: #ecfdf5;
+      color: #065f46;
+      border: 1px solid #059669;
+      padding: 4px 12px;
+      border-radius: 6px;
+      font-weight: 700;
+      font-size: 15px;
+    }
+
+    /* Table Styles (Black & Crisp Solid Text) */
+    .wg-table {
+      width: 100%;
+      border-collapse: collapse;
+      font-size: 16px;
+      color: #000000;
+    }
+
+    .wg-table th {
+      background-color: #0a2540;
+      color: #ffffff;
+      font-weight: 600;
+      font-size: 15px;
+      padding: 12px 10px;
+      text-align: center;
+      border: 1px solid #000000;
+      white-space: nowrap;
+    }
+
+    .wg-table td {
+      padding: 10px;
+      border: 1px solid #000000;
+      font-size: 16px;
+      color: #000000;
+      vertical-align: middle;
+    }
+
+    .wg-table tr:nth-child(even) {
+      background-color: #f8fafc;
+    }
+
+    .wg-table tr:hover {
+      background-color: #eff6ff;
+    }
+
+    .td-num { text-align: center; font-weight: 600; width: 50px; }
+    .td-page { text-align: center; font-weight: 600; width: 90px; }
+    .td-bld { font-weight: 600; font-size: 17px; }
+    .td-center { text-align: center; }
+    .td-right { text-align: right; }
+
+    .badge-success {
+      background: #ecfdf5;
+      color: #047857;
+      border: 1px solid #10b981;
+      padding: 2px 8px;
+      border-radius: 4px;
+      font-weight: 600;
+      font-size: 14px;
+    }
+
+    .badge-warn {
+      background: #fef3c7;
+      color: #b45309;
+      border: 1px solid #f59e0b;
+      padding: 2px 8px;
+      border-radius: 4px;
+      font-weight: 600;
+      font-size: 14px;
+    }
+
+    /* Editable inputs */
+    .cell-input {
+      width: 100%;
+      border: 1px solid transparent;
+      background: transparent;
+      font-family: inherit;
+      font-size: 16px;
+      color: #000000;
+      padding: 4px;
+      border-radius: 4px;
+    }
+    .cell-input:focus {
+      background: #ffffff;
+      border-color: #0a2540;
+      outline: none;
+      box-shadow: 0 0 0 2px rgba(10,37,64,0.15);
+    }
+    .cell-input.center { text-align: center; }
+
+    @media print {
+      .top-header, .mode-bar, .header-actions { display: none !important; }
+      .main-container { max-width: 100%; margin: 0; padding: 0; }
+      .content-card { border: 1px solid #000; box-shadow: none; page-break-inside: avoid; }
+      body { background: #fff; }
+    }
+  
+    /* ══════════════════════════════════════════════════════════════════
+       MANDATORY THIN TYPOGRAPHY & FULL TEXT WRAPPING (Kanit 300 Light)
+       Zero Truncation Guarantee: Text always wraps completely
+       ══════════════════════════════════════════════════════════════════ */
+    body, table, th, td, input, select, button, div, span, p, h1, h2, h3, h4, strong, b {
+      font-family: 'Kanit', sans-serif !important;
+      font-weight: 300 !important;
+    }
+    .kpi-pct, .kpi13-pct, .header-title h1, .brand-badge, .badge-accum, .badge-success, .badge-warn {
+      font-weight: 400 !important;
+    }
+    .wg-table, .table {
+      width: 100% !important;
+      table-layout: auto !important;
+      border-collapse: collapse !important;
+    }
+    .wg-table th, .table th {
+      font-size: 14.5px !important;
+      font-weight: 400 !important;
+      padding: 8px 6px !important;
+      white-space: normal !important;
+      word-wrap: break-word !important;
+      word-break: break-word !important;
+      line-height: 1.3 !important;
+    }
+    .wg-table td, .table td {
+      font-size: 15px !important;
+      font-weight: 300 !important;
+      padding: 8px 10px !important;
+      white-space: normal !important;
+      word-wrap: break-word !important;
+      word-break: break-word !important;
+      overflow-wrap: break-word !important;
+      line-height: 1.4 !important;
+    }
+    .cell-editable-text, .cell-editable, .cell-input {
+      font-family: 'Kanit', sans-serif !important;
+      font-size: 15px !important;
+      font-weight: 300 !important;
+      white-space: normal !important;
+      word-wrap: break-word !important;
+      word-break: break-word !important;
+      overflow-wrap: break-word !important;
+      min-height: 22px !important;
+      outline: none;
+      display: block;
+      width: 100% !important;
+      background: transparent;
+    }
+    .cell-editable-text:focus, .cell-editable:focus, .cell-input:focus {
+      background: #ffffff;
+      box-shadow: 0 0 0 1.5px #0a2540;
+    }
+
+  
+    /* Light Green Highlight for 100% cells */
+    .cell-100, td.cell-100, .wg-td-pct.cell-100 {
+      background-color: #dcfce7 !important;
+      color: #14532d !important;
+    }
+    
+  </style>
+</head>
+<body>
+
+  <!-- Top HUD Header -->
+  <header class="top-header">
+    <div class="header-left">
+      <div class="brand-badge">THE ORIGIN PATTAYA • PRECAST</div>
+      <div class="header-title">
+        <h1>ตารางเช็คสถานะงาน ผลิตและติดตั้งผนัง Precast (ครบ 3 โครงการ)</h1>
+        <p>โครงการเดอะ ออริจิ้น พัทยา • ข้อมูลทางการ Well Graded ครบทั้ง อาคาร A, อาคาร B, อาคาร CH (Clubhouse)</p>
+      </div>
+    </div>
+    <div class="header-actions">
+      <button class="btn btn-gold" onclick="saveToStorage()">💾 บันทึกข้อมูล</button>
+      <button class="btn btn-dark" onclick="copySummaryText()">💬 สรุปส่ง LINE</button>
+      <button class="btn btn-outline" onclick="window.print()">🖨️ สั่งพิมพ์ A3/A4</button>
+      <button class="btn btn-outline" onclick="exportJSON()">📥 สำรอง JSON</button>
+      <button class="btn btn-outline" onclick="resetToOfficial()">🔄 รีเซ็ตค่าสไลด์</button>
+    </div>
+  </header>
+
+  <!-- Mode Navigation Tabs -->
+  <nav class="mode-bar">
+    <button class="mode-tab active" id="tabOverview" onclick="switchMode('overview')">
+      📊 ตารางสรุปภาพรวม 3 โครงการ/อาคาร
+    </button>
+    <button class="mode-tab" id="tabSlides" onclick="switchMode('slides')">
+      📑 ตารางตามสไลด์ Well Graded แยกชั้น (หน้า 27, 31, 35)
+    </button>
+    <button class="mode-tab" id="tabMatrix" onclick="switchMode('matrix')">
+      🏢 ตาราง Matrix เปรียบเทียบชั้นต่อชั้น (FL 1 – FL ดาดฟ้า)
+    </button>
+  </nav>
+
+  <main class="main-container">
+
+    <!-- KPI Summary Row -->
+    <section class="kpi-row">
+      <div class="kpi-card">
+        <div class="kpi-title">
+          <span>🧱 ติดตั้งรวมทั้งโครงการ</span>
+          <span class="badge-success">ติดตั้งสะสม</span>
+        </div>
+        <div class="kpi-pct" id="kpiTotalInst">97.73%</div>
+        <div class="kpi-subtext">1,208 / 1,236 แผ่น • คงเหลือ 28 แผ่น</div>
+        <div class="progress-bar-bg">
+          <div class="progress-bar-fill" style="width: 97.73%;"></div>
+        </div>
+      </div>
+
+      <div class="kpi-card">
+        <div class="kpi-title">
+          <span>🏢 อาคาร A (Building A)</span>
+          <span class="badge-page">สไลด์หน้า 27</span>
+        </div>
+        <div class="kpi-pct" style="color:#0a2540;">98.82%</div>
+        <div class="kpi-subtext">586 / 593 แผ่น • คงเหลือ 7 แผ่น (1.18%)</div>
+        <div class="progress-bar-bg">
+          <div class="progress-bar-fill" style="width: 98.82%;"></div>
+        </div>
+      </div>
+
+      <div class="kpi-card">
+        <div class="kpi-title">
+          <span>🏢 อาคาร B (Building B)</span>
+          <span class="badge-page">สไลด์หน้า 31</span>
+        </div>
+        <div class="kpi-pct" style="color:#0a2540;">98.65%</div>
+        <div class="kpi-subtext">585 / 593 แผ่น • คงเหลือ 8 แผ่น (1.35%)</div>
+        <div class="progress-bar-bg">
+          <div class="progress-bar-fill" style="width: 98.65%;"></div>
+        </div>
+      </div>
+
+      <div class="kpi-card">
+        <div class="kpi-title">
+          <span>🏡 อาคาร CH (Clubhouse)</span>
+          <span class="badge-page">สไลด์หน้า 35</span>
+        </div>
+        <div class="kpi-pct" style="color:#d97706;">34.00%</div>
+        <div class="kpi-subtext">17 / 50 แผ่น • คงเหลือ 33 แผ่น (66.00%)</div>
+        <div class="progress-bar-bg">
+          <div class="progress-bar-fill" style="width: 34%; background:#d97706;"></div>
+        </div>
+      </div>
+
+      <div class="kpi-card">
+        <div class="kpi-title">
+          <span>🏭 ยอดผลิตแผ่นผนัง Precast</span>
+          <span class="badge-success">ผลิตครบ 100%</span>
+        </div>
+        <div class="kpi-pct" style="color:#059669;">100.00%</div>
+        <div class="kpi-subtext">ผลิตครบแล้ว 1,236 / 1,236 แผ่น</div>
+        <div class="progress-bar-bg">
+          <div class="progress-bar-fill" style="width: 100%;"></div>
+        </div>
+      </div>
+    </section>
+
+    <!-- VIEW 1: Overview Summary Table (EXACT FORMAT FROM USER'S SCREENSHOT) -->
+    <div id="viewOverview">
+      <div class="content-card">
+        <div class="card-header-line">
+          <h2>
+            <span>3. งานผลิตและติดตั้งแผ่นผนัง Precast (3 ตาราง)</span>
+          </h2>
+          <span class="badge-accum">ภาพรวมติดตั้งสะสมทั้งโครงการ: 97.73%</span>
+        </div>
+        <div style="overflow-x: auto;">
+          <table class="wg-table" id="tableOverviewRender">
+            <thead>
+              <tr>
+                <th style="width:50px;">#</th>
+                <th style="width:100px;">สไลด์หน้า</th>
+                <th>โครงการ/อาคาร</th>
+                <th>จำนวนทั้งหมด</th>
+                <th>ผลิตสะสม</th>
+                <th>ติดตั้งสะสม</th>
+                <th>คงเหลือติดตั้ง</th>
+                <th>ความก้าวหน้า</th>
+                <th>สถานะการดำเนินงาน</th>
+              </tr>
+            </thead>
+            <tbody>
+              <!-- Rendered via JS -->
+            </tbody>
+          </table>
+        </div>
+      </div>
+    </div>
+
+    <!-- VIEW 2: 3 Official Well Graded Slide Tables -->
+    <div id="viewSlides" style="display: none;">
+      <!-- JS rendered 3 slide tables -->
+    </div>
+
+    <!-- VIEW 3: Floor Matrix Comparison -->
+    <div id="viewMatrix" style="display: none;">
+      <div class="content-card">
+        <div class="card-header-line">
+          <h2>📊 ตาราง Matrix เปรียบเทียบความก้าวหน้าติดตั้งแผ่น Precast แยกตามชั้น</h2>
+          <span class="badge-page">FL 1 – FL ดาดฟ้า</span>
+        </div>
+        <div style="overflow-x: auto;">
+          <table class="wg-table" id="tableMatrixRender">
+            <!-- Rendered via JS -->
+          </table>
+        </div>
+      </div>
+    </div>
+
+  </main>
+
+  <script>
+    const MASTER_PRECAST = {"report_title": "ตารางเช็คสถานะงานผลิตและติดตั้งผนัง Precast • โครงการเดอะ ออริจิ้น พัทยา", "contractor": "Well Graded", "report_date": "23 พ.ย. 69", "summary": {"total_qty": 1236, "total_prod": 1236, "total_prod_pct": 100.0, "total_inst": 1208, "total_inst_pct": 97.73, "total_rem": 28, "total_rem_pct": 2.27}, "overview_rows": [{"num": 26, "page": "หน้า 27", "name": "งานผนัง Precast อาคาร A", "total_qty": "593 แผ่น", "prod": "593 แผ่น (100%)", "inst": "586 แผ่น (98.82%)", "rem": "7 แผ่น (1.18%)", "inst_pct": 98.82, "status": "ใกล้เสร็จสมบูรณ์ (เหลือดาดฟ้า/FL8-FL2 ชั้นละ 1 แผ่น)", "link_id": "slide_pre_a"}, {"num": 27, "page": "หน้า 31", "name": "งานผนัง Precast อาคาร B", "total_qty": "593 แผ่น", "prod": "593 แผ่น (100%)", "inst": "585 แผ่น (98.65%)", "rem": "8 แผ่น (1.35%)", "inst_pct": 98.65, "status": "ใกล้เสร็จสมบูรณ์ (เหลือ FL8 2 แผ่น, FL7-FL2 ชั้นละ 1 แผ่น)", "link_id": "slide_pre_b"}, {"num": 28, "page": "หน้า 35", "name": "งานผนัง Precast อาคาร CH (Clubhouse)", "total_qty": "50 แผ่น", "prod": "50 แผ่น (100%)", "inst": "17 แผ่น (34.00%)", "rem": "33 แผ่น (66.00%)", "inst_pct": 34.0, "status": "กำลังติดตั้ง (ชั้น 1 เสร็จ 100%, ชั้น 2 ได้ 8 แผ่น, ดาดฟ้ายังไม่เริ่ม)", "link_id": "slide_pre_ch"}], "slides": [{"id": "slide_pre_a", "num": 26, "page": 27, "title": "งานผลิตและติดตั้งแผ่นผนัง Precast อาคาร A", "accum_pct": 98.82, "prod_pct": 100.0, "scope": "รวม 593 แผ่น (ผลิตครบ 593, ติดตั้งแล้ว 586 แผ่น, คงเหลือ 7 แผ่น)", "cols": ["รายการ", "จำนวนแผ่น", "ผลิตแล้ว", "คงเหลือผลิต", "แผนเริ่ม ผลิต", "แผนจบ ผลิต", "ติดตั้งสะสม", "คงเหลือติดตั้ง", "แผนเริ่ม ติดตั้ง", "แผนจบ ติดตั้ง", "% ติดตั้ง"], "rows": [{"item": "ผนัง Precast ชั้นดาดฟ้า", "qty": "76.00", "prod": "76.00", "p_rem": "-", "p_start": "24 ก.ย. 69", "p_end": "4 ต.ค. 69", "inst": "76.00", "i_rem": "-", "i_start": "8 ต.ค. 69", "i_end": "20 ต.ค. 69", "pct": "100%"}, {"item": "ผนัง Precast ชั้น 8", "qty": "71.00", "prod": "71.00", "p_rem": "-", "p_start": "13 ก.ย. 69", "p_end": "23 ก.ย. 69", "inst": "70.00", "i_rem": "1.00", "i_start": "28 ก.ย. 69", "i_end": "8 ต.ค. 69", "pct": "99%"}, {"item": "ผนัง Precast ชั้น 7", "qty": "70.00", "prod": "70.00", "p_rem": "-", "p_start": "31 ส.ค. 69", "p_end": "12 ก.ย. 69", "inst": "69.00", "i_rem": "1.00", "i_start": "18 ก.ย. 69", "i_end": "28 ก.ย. 69", "pct": "99%"}, {"item": "ผนัง Precast ชั้น 6", "qty": "70.00", "prod": "70.00", "p_rem": "-", "p_start": "22 ส.ค. 69", "p_end": "4 ก.ย. 69", "inst": "69.00", "i_rem": "1.00", "i_start": "8 ก.ย. 69", "i_end": "18 ก.ย. 69", "pct": "99%"}, {"item": "ผนัง Precast ชั้น 5", "qty": "70.00", "prod": "70.00", "p_rem": "-", "p_start": "14 ส.ค. 69", "p_end": "26 ส.ค. 69", "inst": "69.00", "i_rem": "1.00", "i_start": "28 ส.ค. 69", "i_end": "7 ก.ย. 69", "pct": "99%"}, {"item": "ผนัง Precast ชั้น 4", "qty": "70.00", "prod": "70.00", "p_rem": "-", "p_start": "5 ส.ค. 69", "p_end": "19 ส.ค. 69", "inst": "69.00", "i_rem": "1.00", "i_start": "18 ส.ค. 69", "i_end": "28 ส.ค. 69", "pct": "99%"}, {"item": "ผนัง Precast ชั้น 3", "qty": "70.00", "prod": "70.00", "p_rem": "-", "p_start": "28 ก.ค. 69", "p_end": "11 ส.ค. 69", "inst": "69.00", "i_rem": "1.00", "i_start": "8 ส.ค. 69", "i_end": "18 ส.ค. 69", "pct": "99%"}, {"item": "ผนัง Precast ชั้น 2", "qty": "90.00", "prod": "90.00", "p_rem": "-", "p_start": "17 ก.ค. 69", "p_end": "4 ส.ค. 69", "inst": "89.00", "i_rem": "1.00", "i_start": "25 ก.ค. 69", "i_end": "4 ส.ค. 69", "pct": "99%"}, {"item": "ผนัง Precast ชั้น 1", "qty": "6.00", "prod": "6.00", "p_rem": "-", "p_start": "18 ก.ค. 69", "p_end": "4 ส.ค. 69", "inst": "6.00", "i_rem": "-", "i_start": "28 ก.ค. 69", "i_end": "7 ส.ค. 69", "pct": "100%"}]}, {"id": "slide_pre_b", "num": 27, "page": 31, "title": "งานผลิตและติดตั้งแผ่นผนัง Precast อาคาร B", "accum_pct": 98.65, "prod_pct": 100.0, "scope": "รวม 593 แผ่น (ผลิตครบ 593, ติดตั้งแล้ว 585 แผ่น, คงเหลือ 8 แผ่น)", "cols": ["รายการ", "จำนวนแผ่น", "ผลิตแล้ว", "คงเหลือผลิต", "แผนเริ่ม ผลิต", "แผนจบ ผลิต", "ติดตั้งสะสม", "คงเหลือติดตั้ง", "แผนเริ่ม ติดตั้ง", "แผนจบ ติดตั้ง", "% ติดตั้ง"], "rows": [{"item": "ผนัง Precast ชั้นดาดฟ้า", "qty": "76.00", "prod": "76.00", "p_rem": "-", "p_start": "25 ก.ย. 69", "p_end": "5 ต.ค. 69", "inst": "76.00", "i_rem": "-", "i_start": "14 ต.ค. 69", "i_end": "23 ต.ค. 69", "pct": "100%"}, {"item": "ผนัง Precast ชั้น 8", "qty": "71.00", "prod": "71.00", "p_rem": "-", "p_start": "14 ก.ย. 69", "p_end": "24 ก.ย. 69", "inst": "69.00", "i_rem": "2.00", "i_start": "3 ต.ค. 69", "i_end": "12 ต.ค. 69", "pct": "97%"}, {"item": "ผนัง Precast ชั้น 7", "qty": "70.00", "prod": "70.00", "p_rem": "-", "p_start": "1 ก.ย. 69", "p_end": "13 ก.ย. 69", "inst": "69.00", "i_rem": "1.00", "i_start": "22 ก.ย. 69", "i_end": "1 ต.ค. 69", "pct": "99%"}, {"item": "ผนัง Precast ชั้น 6", "qty": "70.00", "prod": "70.00", "p_rem": "-", "p_start": "24 ส.ค. 69", "p_end": "6 ก.ย. 69", "inst": "69.00", "i_rem": "1.00", "i_start": "11 ก.ย. 69", "i_end": "20 ก.ย. 69", "pct": "99%"}, {"item": "ผนัง Precast ชั้น 5", "qty": "70.00", "prod": "70.00", "p_rem": "-", "p_start": "15 ส.ค. 69", "p_end": "7 ก.ย. 69", "inst": "69.00", "i_rem": "1.00", "i_start": "31 ส.ค. 69", "i_end": "9 ก.ย. 69", "pct": "99%"}, {"item": "ผนัง Precast ชั้น 4", "qty": "70.00", "prod": "70.00", "p_rem": "-", "p_start": "6 ส.ค. 69", "p_end": "20 ส.ค. 69", "inst": "69.00", "i_rem": "1.00", "i_start": "20 ส.ค. 69", "i_end": "29 ส.ค. 69", "pct": "99%"}, {"item": "ผนัง Precast ชั้น 3", "qty": "70.00", "prod": "70.00", "p_rem": "-", "p_start": "29 ก.ค. 69", "p_end": "12 ส.ค. 69", "inst": "69.00", "i_rem": "1.00", "i_start": "9 ส.ค. 69", "i_end": "18 ส.ค. 69", "pct": "99%"}, {"item": "ผนัง Precast ชั้น 2", "qty": "90.00", "prod": "90.00", "p_rem": "-", "p_start": "17 ก.ค. 69", "p_end": "4 ส.ค. 69", "inst": "89.00", "i_rem": "1.00", "i_start": "29 ก.ค. 69", "i_end": "7 ส.ค. 69", "pct": "99%"}, {"item": "ผนัง Precast ชั้น 1", "qty": "6.00", "prod": "6.00", "p_rem": "-", "p_start": "18 ก.ค. 69", "p_end": "4 ส.ค. 69", "inst": "6.00", "i_rem": "-", "i_start": "29 ก.ค. 69", "i_end": "7 ส.ค. 69", "pct": "100%"}]}, {"id": "slide_pre_ch", "num": 28, "page": 35, "title": "งานผลิตและติดตั้งแผ่นผนัง Precast อาคาร CH (Clubhouse)", "accum_pct": 34.0, "prod_pct": 100.0, "scope": "รวม 50 แผ่น (ผลิตครบ 50, ติดตั้งแล้ว 17 แผ่น, คงเหลือ 33 แผ่น)", "cols": ["รายการ", "จำนวนแผ่น", "ผลิตปกติ", "ผลิตพิเศษ", "ผลิตรวม", "แผนเริ่ม ผลิต", "แผนจบ ผลิต", "ติดตั้งสะสม", "% ติดตั้ง", "คงเหลือติดตั้ง", "แผนจบ ติดตั้ง"], "rows": [{"item": "ผนัง Precast ชั้นดาดฟ้า", "qty": "18.00", "norm": "17.00", "spec": "1.00", "prod": "18.00", "p_start": "29 ต.ค. 69", "p_end": "12 พ.ย. 69", "inst": "-", "pct": "0%", "i_rem": "18.00", "i_end": "26 พ.ย. 69"}, {"item": "ผนัง Precast ชั้น 2", "qty": "23.00", "norm": "13.00", "spec": "10.00", "prod": "23.00", "p_start": "25 ต.ค. 69", "p_end": "11 พ.ย. 69", "inst": "8.00", "pct": "35%", "i_rem": "15.00", "i_end": "24 พ.ย. 69"}, {"item": "ผนัง Precast ชั้น 1", "qty": "9.00", "norm": "2.00", "spec": "7.00", "prod": "9.00", "p_start": "24 ต.ค. 69", "p_end": "3 พ.ย. 69", "inst": "9.00", "pct": "100%", "i_rem": "-", "i_end": "20 พ.ย. 69"}]}]};
+    let currentData = null;
+
+    function initData() {
+      const saved = localStorage.getItem('pataya_precast_data_v1');
+      if (saved) {
+        try {
+          currentData = JSON.parse(saved);
+        } catch(e) {
+          currentData = JSON.parse(JSON.stringify(MASTER_PRECAST));
+        }
+      } else {
+        currentData = JSON.parse(JSON.stringify(MASTER_PRECAST));
+      }
+    }
+
+    function renderOverviewTable() {
+      const tbody = document.querySelector('#tableOverviewRender tbody');
+      let html = '';
+      currentData.overview_rows.forEach(r => {
+        html += `
+          <tr>
+            <td class="td-num">${r.num}</td>
+            <td class="td-page"><span class="badge-page">${r.page}</span></td>
+            <td class="td-bld">${r.name}</td>
+            <td class="td-center"><strong>${r.total_qty}</strong></td>
+            <td class="td-center" style="color:#059669;font-weight:600;">${r.prod}</td>
+            <td class="td-center" style="font-weight:700;font-size:17px;color:#000000;background:#fefce8;">${r.inst}</td>
+            <td class="td-center" style="color:#dc2626;font-weight:600;">${r.rem}</td>
+            <td class="td-center">
+              <span class="${r.inst_pct >= 90 ? 'badge-success' : 'badge-warn'}">${r.inst_pct.toFixed(2)}%</span>
+            </td>
+            <td>${r.status}</td>
+          </tr>
+        `;
+      });
+      tbody.innerHTML = html;
+      apply100GreenHighlights();
+    }
+
+    function renderSlideTables() {
+      const container = document.getElementById('viewSlides');
+      let html = '';
+
+      currentData.slides.forEach(slide => {
+        html += `
+          <div class="content-card" id="${slide.id}">
+            <div class="card-header-line">
+              <h2>
+                <span class="badge-page">สไลด์ ${slide.page}</span>
+                <span>${slide.title}</span>
+              </h2>
+              <div style="display:flex;gap:10px;align-items:center;">
+                <span style="font-size:14px;color:#475569;font-weight:500;">${slide.scope}</span>
+                <span class="badge-accum">ติดตั้งสะสม: ${slide.accum_pct.toFixed(2)}%</span>
+              </div>
+            </div>
+            <div style="overflow-x:auto;">
+              <table class="wg-table">
+                <thead>
+                  <tr>
+                    ${slide.cols.map(c => `<th>${c}</th>`).join('')}
+                  </tr>
+                </thead>
+                <tbody>
+        `;
+
+        slide.rows.forEach((row, rIdx) => {
+          html += '<tr>';
+          if (row.norm !== undefined) {
+            // Clubhouse CH format
+            html += `
+              <td style="font-weight:600;">${row.item}</td>
+              <td class="td-center">${row.qty}</td>
+              <td class="td-center">${row.norm}</td>
+              <td class="td-center">${row.spec}</td>
+              <td class="td-center" style="font-weight:600;color:#059669;">${row.prod}</td>
+              <td class="td-center">${row.p_start}</td>
+              <td class="td-center">${row.p_end}</td>
+              <td class="td-center" style="font-weight:700;font-size:17px;background:#fefce8;">${row.inst}</td>
+              <td class="td-center"><span class="${row.pct === '100%' ? 'badge-success' : 'badge-warn'}">${row.pct}</span></td>
+              <td class="td-center" style="color:#dc2626;font-weight:600;">${row.i_rem}</td>
+              <td class="td-center">${row.i_end}</td>
+            `;
+          } else {
+            // Building A and Building B format
+            html += `
+              <td style="font-weight:600;">${row.item}</td>
+              <td class="td-center">${row.qty}</td>
+              <td class="td-center" style="color:#059669;font-weight:600;">${row.prod}</td>
+              <td class="td-center">${row.p_rem}</td>
+              <td class="td-center">${row.p_start}</td>
+              <td class="td-center">${row.p_end}</td>
+              <td class="td-center" style="font-weight:700;font-size:17px;background:#fefce8;">${row.inst}</td>
+              <td class="td-center" style="color:#dc2626;font-weight:600;">${row.i_rem}</td>
+              <td class="td-center">${row.i_start}</td>
+              <td class="td-center">${row.i_end}</td>
+              <td class="td-center"><span class="${row.pct === '100%' ? 'badge-success' : 'badge-warn'}">${row.pct}</span></td>
+            `;
+          }
+          html += '</tr>';
+        });
+
+        html += `
+                </tbody>
+              </table>
+            </div>
+          </div>
+        `;
+      });
+
+      container.innerHTML = html;
+      apply100GreenHighlights();
+    }
+
+    function renderMatrixTable() {
+      const table = document.getElementById('tableMatrixRender');
+      const floors = ['ดาดฟ้า', 'ชั้น 8', 'ชั้น 7', 'ชั้น 6', 'ชั้น 5', 'ชั้น 4', 'ชั้น 3', 'ชั้น 2', 'ชั้น 1'];
+
+      let thead = '<thead><tr><th>อาคาร / โครงการ</th>';
+      floors.forEach(f => { thead += `<th>${f}</th>`; });
+      thead += '<th>รวมติดตั้งสะสม</th><th>คงเหลือ</th></tr></thead>';
+
+      let tbody = '<tbody>';
+
+      // Building A
+      const aSlide = currentData.slides.find(s => s.id === 'slide_pre_a');
+      tbody += `<tr><td class="td-bld">🏢 อาคาร A (593 แผ่น)</td>`;
+      floors.forEach(f => {
+        const r = aSlide.rows.find(x => x.item.includes(f));
+        const val = r ? `${r.inst} (${r.pct})` : '-';
+        const bg = r && r.pct === '100%' ? '#ecfdf5' : '#ffffff';
+        tbody += `<td class="td-center" style="background:${bg};font-weight:600;">${val}</td>`;
+      });
+      tbody += `<td class="td-center" style="background:#0a2540;color:#ffffff;font-weight:700;">586 แผ่น (98.82%)</td><td class="td-center" style="color:#dc2626;font-weight:600;">7 แผ่น</td></tr>`;
+
+      // Building B
+      const bSlide = currentData.slides.find(s => s.id === 'slide_pre_b');
+      tbody += `<tr><td class="td-bld">🏢 อาคาร B (593 แผ่น)</td>`;
+      floors.forEach(f => {
+        const r = bSlide.rows.find(x => x.item.includes(f));
+        const val = r ? `${r.inst} (${r.pct})` : '-';
+        const bg = r && r.pct === '100%' ? '#ecfdf5' : '#ffffff';
+        tbody += `<td class="td-center" style="background:${bg};font-weight:600;">${val}</td>`;
+      });
+      tbody += `<td class="td-center" style="background:#0a2540;color:#ffffff;font-weight:700;">585 แผ่น (98.65%)</td><td class="td-center" style="color:#dc2626;font-weight:600;">8 แผ่น</td></tr>`;
+
+      // Clubhouse CH
+      const chSlide = currentData.slides.find(s => s.id === 'slide_pre_ch');
+      tbody += `<tr><td class="td-bld">🏡 Clubhouse CH (50 แผ่น)</td>`;
+      floors.forEach(f => {
+        const r = chSlide.rows.find(x => x.item.includes(f));
+        const val = r ? `${r.inst} (${r.pct})` : '-';
+        const bg = r && r.pct === '100%' ? '#ecfdf5' : (r && r.inst !== '-' ? '#fefce8' : '#f8fafc');
+        tbody += `<td class="td-center" style="background:${bg};font-weight:600;">${val}</td>`;
+      });
+      tbody += `<td class="td-center" style="background:#d97706;color:#ffffff;font-weight:700;">17 แผ่น (34.00%)</td><td class="td-center" style="color:#dc2626;font-weight:600;">33 แผ่น</td></tr>`;
+
+      tbody += '</tbody>';
+      table.innerHTML = thead + tbody;
+    }
+
+    function switchMode(mode) {
+      document.getElementById('viewOverview').style.display = mode === 'overview' ? 'block' : 'none';
+      document.getElementById('viewSlides').style.display = mode === 'slides' ? 'block' : 'none';
+      document.getElementById('viewMatrix').style.display = mode === 'matrix' ? 'block' : 'none';
+
+      document.getElementById('tabOverview').classList.toggle('active', mode === 'overview');
+      document.getElementById('tabSlides').classList.toggle('active', mode === 'slides');
+      document.getElementById('tabMatrix').classList.toggle('active', mode === 'matrix');
+    }
+
+    function saveToStorage() {
+      localStorage.setItem('pataya_precast_data_v1', JSON.stringify(currentData));
+      alert('บันทึกข้อมูลสถานะ Precast สำเร็จ');
+    }
+
+    function resetToOfficial() {
+      if (confirm('คุณต้องการคืนค่าเป็นข้อมูลสไลด์ต้นฉบับ Well Graded ใช่หรือไม่?')) {
+        localStorage.removeItem('pataya_precast_data_v1');
+        initData();
+        renderOverviewTable();
+        renderSlideTables();
+        renderMatrixTable();
+      }
+    }
+
+    function copySummaryText() {
+      let text = `รายงานสถานะงานผลิตและติดตั้งผนัง Precast • โครงการ THE ORIGIN PATTAYA\n`;
+      text += `ภาพรวมติดตั้งสะสมทั้งโครงการ: 1,208 / 1,236 แผ่น (97.73%)\n`;
+      text += `------------------------------------------------\n`;
+      text += `1. อาคาร A (สไลด์หน้า 27): ผลิตครบ 593 แผ่น (100%) • ติดตั้งแล้ว 586 แผ่น (98.82%) • คงเหลือ 7 แผ่น\n`;
+      text += `2. อาคาร B (สไลด์หน้า 31): ผลิตครบ 593 แผ่น (100%) • ติดตั้งแล้ว 585 แผ่น (98.65%) • คงเหลือ 8 แผ่น\n`;
+      text += `3. Clubhouse CH (สไลด์หน้า 35): ผลิตครบ 50 แผ่น (100%) • ติดตั้งแล้ว 17 แผ่น (34.00%) • คงเหลือ 33 แผ่น\n`;
+      text += `------------------------------------------------\n`;
+      text += `THE ORIGIN PATTAYA • โทร: 081-449-9499 | LINE: \n`;
+      text += ``;
+      navigator.clipboard.writeText(text).then(() => {
+        alert('คัดลอกสรุปสถานะงาน Precast เรียบร้อยแล้ว พร้อมส่งต่อใน LINE');
+      });
+    }
+
+    function exportJSON() {
+      const blob = new Blob([JSON.stringify(currentData, null, 2)], { type: 'application/json' });
+      const url = URL.createObjectURL(blob);
+      const a = document.createElement('a');
+      a.href = url;
+      a.download = 'precast_pattaya_status.json';
+      a.click();
+    }
+
+    window.onload = function() {
+      initData();
+      renderOverviewTable();
+      renderSlideTables();
+      renderMatrixTable();
+    
+      apply100GreenHighlights();
+    };
+  
+    // ══════════════════════════════════════════════════════════════════
+    // AUTO-HIGHLIGHT: LIGHT GREEN (#dcfce7) FOR ALL 100% CELLS
+    // ══════════════════════════════════════════════════════════════════
+    function apply100GreenHighlights() {
+      document.querySelectorAll('td').forEach(td => {
+        const text = (td.innerText || '').trim();
+        const input = td.querySelector('input, .cell-editable-text');
+        const val = input ? (input.value || input.innerText || '').trim() : '';
+        
+        // Check if cell represents 100% completion
+        const is100 = text === '100%' || text === '100.00%' || text === '100.0%' || 
+                      val === '100%' || val === '100.00%' || val === '100.0%' ||
+                      (text.includes('100%') && !text.includes('แผน') && !text.includes('ผลิตครบ')) ||
+                      (val.includes('100%') && !val.includes('แผน'));
+                      
+        if (is100) {
+          td.style.setProperty('background-color', '#dcfce7', 'important');
+          td.style.setProperty('color', '#14532d', 'important');
+          if (input) {
+            input.style.setProperty('background-color', 'transparent', 'important');
+            input.style.setProperty('color', '#14532d', 'important');
+          }
+        }
+      });
+    }
+
+  </script>
+</body>
+</html>
