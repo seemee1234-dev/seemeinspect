@@ -51,8 +51,8 @@ body{background:#0f1117;color:#e2e8f0;margin:0;padding:12px;min-width:1100px;}
   .th-cat, .td-cat { width: 95px !important; }
   .th-name, .td-name { width: 240px !important; }
   .th-assign, .td-assign { width: 75px !important; }
-  .th-start, .td-start { width: 70px !important; }
-  .th-end, .td-end { width: 70px !important; }
+  .th-start, .td-start { width: 85px !important; min-width: 85px !important; text-align: center !important; }
+  .th-end, .td-end { width: 85px !important; min-width: 85px !important; text-align: center !important; }
   .th-status, .td-status { width: 34px !important; }
   .th-pct, .td-pct { width: 38px !important; }
   
@@ -181,17 +181,42 @@ th,td{border:1px solid #2d3748;padding:4px 6px;text-align:left;}
 th{background:#1e2535;color:#94a3b8;font-weight:400;}
 
 /* Column widths */
-.th-num{width:32px;text-align:center;}
-.th-cat{width:110px;}
-.th-name{min-width:320px;max-width:380px;white-space:normal;}
-.th-assign{width:80px;}
-.th-start,.th-end{width:85px;text-align:center;}
-.th-status{width:36px;text-align:center;}
-.th-pct{width:46px;text-align:center;}
+.th-num, .td-num{width:32px;min-width:32px;text-align:center;}
+.th-cat, .td-cat{width:110px;min-width:110px;}
+.th-name, .td-name{min-width:300px;max-width:380px;white-space:normal;}
+.th-assign, .td-assign{width:80px;min-width:80px;}
+.th-start, .td-start{width:96px !important;min-width:96px !important;max-width:96px !important;text-align:center;padding:4px 2px !important;}
+.th-end, .td-end{width:96px !important;min-width:96px !important;max-width:96px !important;text-align:center;padding:4px 2px !important;}
+.th-status, .td-status{width:120px;min-width:120px;text-align:center;}
+.th-pct, .td-pct{width:46px;min-width:46px;text-align:center;}
 .th-week{text-align:center;font-size:10px;}
-.th-day{text-align:center;width:24px;min-width:24px;font-size:9px;padding:2px 1px;}
-.th-day.sunday{background:rgba(239,68,68,0.15);color:#f87171;}
-.th-actions{width:40px;text-align:center;}
+.th-day, .td-day{text-align:center;width:24px;min-width:24px;font-size:9px;padding:2px 1px;}
+.th-day.sunday, .td-day.sunday{background:rgba(239,68,68,0.15);color:#f87171;}
+.th-actions, .td-actions{width:40px;min-width:40px;text-align:center;}
+
+/* Start & End Date Input Styling - Never Truncate */
+.td-start input, .td-end input {
+  width: 100% !important;
+  min-width: 88px !important;
+  font-size: 11px !important;
+  font-family: 'Kanit', sans-serif !important;
+  font-weight: 500 !important;
+  text-align: center !important;
+  padding: 3px 0 !important;
+  margin: 0 !important;
+  display: block !important;
+  border: none !important;
+  background: transparent !important;
+  outline: none !important;
+  white-space: nowrap !important;
+  letter-spacing: 0.2px !important;
+}
+.td-start input { color: #60a5fa !important; }
+.td-end input { color: #34d399 !important; }
+.td-start input:focus, .td-end input:focus {
+  background: rgba(59,130,246,0.18) !important;
+  border-radius: 4px !important;
+}
 
 /* Rows */
 .tr-section{background:#172033;font-weight:500;color:#60a5fa;}
@@ -516,8 +541,8 @@ function renderHeader(){
   r1 += `<th class="th-fixed th-cat" rowspan="2" style="width:110px;">ชั้น / โซนงาน</th>`;
   r1 += `<th class="th-fixed th-name" rowspan="2" style="width:360px;">หัวข้องาน</th>`;
   r1 += `<th class="th-fixed th-assign" rowspan="2" style="width:80px;">ผู้รับผิดชอบ</th>`;
-  r1 += `<th class="th-fixed th-start" rowspan="2" style="width:85px;">วันเริ่ม</th>`;
-  r1 += `<th class="th-fixed th-end" rowspan="2" style="width:85px;">วันจบ</th>`;
+  r1 += `<th class="th-fixed th-start" rowspan="2" style="width:96px;min-width:96px;">วันเริ่ม</th>`;
+  r1 += `<th class="th-fixed th-end" rowspan="2" style="width:96px;min-width:96px;">วันจบ</th>`;
   r1 += `<th class="th-fixed th-status" rowspan="2" style="width:36px;">สถานะ</th>`;
   r1 += `<th class="th-fixed th-pct" rowspan="2" style="width:46px;">%</th>`;
   
@@ -607,12 +632,12 @@ function renderBody(){
     
     // Start Date
     const dispStart = row.start ? formatShortDate(parseDate(row.start)) : '';
-    html += `<td class="td-start"><input type="text" class="inp" style="font-size:11px;text-align:center;color:#60a5fa;font-weight:500;" value="${dispStart}" placeholder="วว/ดด/26" 
+    html += `<td class="td-start" style="width:96px;min-width:96px;"><input type="text" class="inp" value="${dispStart}" placeholder="วว/ดด/26" 
       onchange="handleTextDateChange(${row.id},'start',this.value)"/></td>`;
     
     // End Date
     const dispEnd = row.end ? formatShortDate(parseDate(row.end)) : '';
-    html += `<td class="td-end"><input type="text" class="inp" style="font-size:11px;text-align:center;color:#34d399;font-weight:500;" value="${dispEnd}" placeholder="วว/ดด/26" 
+    html += `<td class="td-end" style="width:96px;min-width:96px;"><input type="text" class="inp" value="${dispEnd}" placeholder="วว/ดด/26" 
       onchange="handleTextDateChange(${row.id},'end',this.value)"/></td>`;
     
     // Status
