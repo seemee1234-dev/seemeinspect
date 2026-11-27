@@ -91,8 +91,8 @@ th{background:#1e2535;color:#94a3b8;font-weight:400;}
 /* Column widths */
 .th-num, .td-num{width:32px;min-width:32px;text-align:center;}
 .th-cat, .td-cat{width:110px;min-width:110px;}
-.th-name, .td-name{min-width:300px;max-width:380px;white-space:normal;}
-.th-assign, .td-assign{width:80px;min-width:80px;}
+.th-name, .td-name{min-width:380px;max-width:460px;white-space:normal;}
+/* th-assign removed */
 .th-start, .td-start{width:96px !important;min-width:96px !important;max-width:96px !important;text-align:center;padding:4px 2px !important;}
 .th-end, .td-end{width:96px !important;min-width:96px !important;max-width:96px !important;text-align:center;padding:4px 2px !important;}
 
@@ -401,8 +401,8 @@ th{background:#1e2535;color:#94a3b8;font-weight:400;}
   /* 5. Fixed column widths in print */
   .th-num, .td-num { width: 28px !important; min-width: 28px !important; max-width: 28px !important; text-align: center !important; }
   .th-cat, .td-cat { width: 95px !important; min-width: 95px !important; max-width: 95px !important; overflow: hidden !important; }
-  .th-name, .td-name { width: 230px !important; min-width: 230px !important; max-width: 230px !important; overflow: hidden !important; }
-  .th-assign, .td-assign { width: 65px !important; min-width: 65px !important; max-width: 65px !important; overflow: hidden !important; text-align: center !important; }
+  .th-name, .td-name { width: 295px !important; min-width: 295px !important; max-width: 295px !important; overflow: hidden !important; }
+  /* print th-assign removed */
   .th-start, .td-start { width: 75px !important; min-width: 75px !important; max-width: 75px !important; text-align: center !important; }
   .th-end, .td-end { width: 75px !important; min-width: 75px !important; max-width: 75px !important; text-align: center !important; }
   .th-status, .td-status { width: 34px !important; min-width: 34px !important; max-width: 34px !important; text-align: center !important; overflow: hidden !important; padding: 2px 0 !important; }
@@ -412,7 +412,7 @@ th{background:#1e2535;color:#94a3b8;font-weight:400;}
 
   /* 6. Formatting text inside cells */
   .td-num { color: #000000 !important; font-weight: 600 !important; text-align: center !important; }
-  .td-num, .td-cat, .td-name, .td-assign, .td-start, .td-end, .td-status, .td-pct, .td-day { 
+  .td-num, .td-cat, .td-name, .td-start, .td-end, .td-status, .td-pct, .td-day { 
     padding: 3px 2px !important; 
     color: #000000 !important; 
   }
@@ -718,7 +718,7 @@ function renderHeader(){
   r1 += `<th class="th-fixed th-num" rowspan="2" style="width:32px;">#</th>`;
   r1 += `<th class="th-fixed th-cat" rowspan="2" style="width:110px;">ชั้น / โซนงาน</th>`;
   r1 += `<th class="th-fixed th-name" rowspan="2" style="width:360px;">หัวข้องาน</th>`;
-  r1 += `<th class="th-fixed th-assign" rowspan="2" style="width:80px;">ผู้รับผิดชอบ</th>`;
+  
   r1 += `<th class="th-fixed th-start" rowspan="2" style="width:96px;min-width:96px;">วันเริ่ม</th>`;
   r1 += `<th class="th-fixed th-end" rowspan="2" style="width:96px;min-width:96px;">วันจบ</th>`;
   r1 += `<th class="th-fixed th-status" rowspan="2" style="width:115px;min-width:115px;">สถานะ</th>`;
@@ -804,13 +804,6 @@ function renderBody(){
         oninput="autoResizeTextarea(this);updateRow(${row.id},'name',this.value)" 
         onchange="updateRow(${row.id},'name',this.value)">${esc(row.name)}</textarea>
       <div class="print-only" style="font-size:10px;font-weight:500;color:#000;white-space:normal;line-height:1.35;word-break:break-word;overflow:hidden;">${esc(row.name)}</div>
-    </td>`;
-    
-    // Assignee
-    html += `<td class="td-assign">
-      <input class="inp no-print" value="${esc(row.assign)}" placeholder="ผู้รับผิดชอบ..." 
-        onchange="updateRow(${row.id},'assign',this.value)"/>
-      <div class="print-only" style="font-size:10px;color:#000;text-align:center;white-space:nowrap;">${esc(row.assign)}</div>
     </td>`;
     
     // Start Date
@@ -901,7 +894,7 @@ function renderBody(){
 }
 
 function renderSection(row){
-  const totalCols = 8 + (6 * 7) + 1;
+  const totalCols = 7 + (6 * 7) + 1;
   let secColor = '#3b82f6';
   let secBg = 'rgba(59,130,246,0.18)';
   let secBorder = '#2563eb';
@@ -1456,9 +1449,9 @@ function downloadSavedHTML(){
 
 function exportCSV(){
   const tasks = rows.filter(r => r.type === 'task');
-  const header = 'ลำดับ,ชั้น/โซนงาน,หัวข้องาน,ผู้รับผิดชอบ,วันเริ่ม,วันจบ,สถานะ,%ความคืบหน้า\n';
+  const header = 'ลำดับ,ชั้น/โซนงาน,หัวข้องาน,วันเริ่ม,วันจบ,สถานะ,%ความคืบหน้า\n';
   const csv = header + tasks.map((r, i) =>
-    `${i + 1},"${r.cat}","${r.name}","${r.assign}","${r.start}","${r.end}","${r.status}","${r.pct}%"`
+    `${i + 1},"${r.cat}","${r.name}","${r.start}","${r.end}","${r.status}","${r.pct}%"`
   ).join('\n');
   const blob = new Blob(['\uFEFF' + csv], {type: 'text/csv;charset=utf-8'});
   const url = URL.createObjectURL(blob);
