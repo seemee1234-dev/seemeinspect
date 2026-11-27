@@ -46,15 +46,21 @@ body{background:#0f1117;color:#e2e8f0;margin:0;padding:12px;min-width:1100px;}
   }
   thead { display: table-header-group; }
   
-  /* กำหนดความกว้างคอลัมน์คงที่เพื่อไม่ให้เส้นแหว่ง */
-  .th-num, .td-num { width: 28px !important; }
-  .th-cat, .td-cat { width: 95px !important; }
-  .th-name, .td-name { width: 240px !important; }
-  .th-assign, .td-assign { width: 75px !important; }
-  .th-start, .td-start { width: 85px !important; min-width: 85px !important; text-align: center !important; }
-  .th-end, .td-end { width: 85px !important; min-width: 85px !important; text-align: center !important; }
-  .th-status, .td-status { width: 34px !important; }
-  .th-pct, .td-pct { width: 38px !important; }
+  /* Print Visibility */
+  .print-only { display: block !important; }
+  .no-print { display: none !important; }
+  .table-scroll-toolbar { display: none !important; }
+
+  /* กำหนดความกว้างคอลัมน์คงที่ระดับพิกเซล - ป้องกันการล้นทับแท่งวัน 100% */
+  .th-num, .td-num { width: 26px !important; min-width: 26px !important; max-width: 26px !important; }
+  .th-cat, .td-cat { width: 90px !important; min-width: 90px !important; max-width: 90px !important; }
+  .th-name, .td-name { width: 220px !important; min-width: 220px !important; max-width: 220px !important; }
+  .th-assign, .td-assign { width: 70px !important; min-width: 70px !important; max-width: 70px !important; }
+  .th-start, .td-start { width: 80px !important; min-width: 80px !important; max-width: 80px !important; text-align: center !important; }
+  .th-end, .td-end { width: 80px !important; min-width: 80px !important; max-width: 80px !important; text-align: center !important; }
+  .th-status, .td-status { width: 34px !important; min-width: 34px !important; max-width: 34px !important; text-align: center !important; overflow: hidden !important; padding: 2px 0 !important; }
+  .th-pct, .td-pct { width: 36px !important; min-width: 36px !important; max-width: 36px !important; text-align: center !important; overflow: hidden !important; padding: 2px 0 !important; }
+  .th-day, .td-day { width: 20px !important; min-width: 20px !important; max-width: 20px !important; text-align: center !important; padding: 1px 0 !important; }
   
   /* หัวตารางตัวหนังสือดำเข้ม คมชัด เส้นกรอบเต็มทุกช่อง */
   .th-week { color: #000000 !important; border: 1.5px solid #000000 !important; padding: 4px 1px !important; font-weight: 700 !important; -webkit-print-color-adjust: exact !important; }
@@ -187,8 +193,9 @@ th{background:#1e2535;color:#94a3b8;font-weight:400;}
 .th-assign, .td-assign{width:80px;min-width:80px;}
 .th-start, .td-start{width:96px !important;min-width:96px !important;max-width:96px !important;text-align:center;padding:4px 2px !important;}
 .th-end, .td-end{width:96px !important;min-width:96px !important;max-width:96px !important;text-align:center;padding:4px 2px !important;}
-.th-status, .td-status{width:120px;min-width:120px;text-align:center;}
-.th-pct, .td-pct{width:46px;min-width:46px;text-align:center;}
+.print-only { display: none !important; }
+.th-status, .td-status{width:115px !important;min-width:115px !important;max-width:115px !important;text-align:center !important;padding:2px 2px !important;}
+.th-pct, .td-pct{width:46px !important;min-width:46px !important;max-width:46px !important;text-align:center !important;padding:2px 2px !important;}
 .th-week{text-align:center;font-size:10px;}
 .th-day, .td-day{text-align:center;width:24px;min-width:24px;font-size:9px;padding:2px 1px;}
 .th-day.sunday, .td-day.sunday{background:rgba(239,68,68,0.15);color:#f87171;}
@@ -661,7 +668,7 @@ function renderHeader(){
   r1 += `<th class="th-fixed th-assign" rowspan="2" style="width:80px;">ผู้รับผิดชอบ</th>`;
   r1 += `<th class="th-fixed th-start" rowspan="2" style="width:96px;min-width:96px;">วันเริ่ม</th>`;
   r1 += `<th class="th-fixed th-end" rowspan="2" style="width:96px;min-width:96px;">วันจบ</th>`;
-  r1 += `<th class="th-fixed th-status" rowspan="2" style="width:36px;">สถานะ</th>`;
+  r1 += `<th class="th-fixed th-status" rowspan="2" style="width:115px;min-width:115px;">สถานะ</th>`;
   r1 += `<th class="th-fixed th-pct" rowspan="2" style="width:46px;">%</th>`;
   
   for(let w = 0; w < 6; w++){
@@ -758,23 +765,25 @@ function renderBody(){
     html += `<td class="td-end" style="width:96px;min-width:96px;"><input type="text" class="inp" value="${dispEnd}" placeholder="วว/ดด/26" 
       onchange="handleTextDateChange(${row.id},'end',this.value)"/></td>`;
     
-    // Status
+    // Status (Screen: interactive dropdown, Print: compact icon to prevent overlap)
     html += `<td class="td-status">
-      <select class="inp-select" style="text-align:center;font-size:14px;" onchange="updateRow(${row.id},'status',this.value);renderAll()">
+      <select class="inp-select no-print" style="text-align:center;font-size:12px;width:100%;box-sizing:border-box;" onchange="updateRow(${row.id},'status',this.value);renderAll()">
         ${Object.keys(STATUS_CFG).map(s => `<option value="${s}" ${row.status === s ? 'selected' : ''}
           style="background:#1f2937;">${STATUS_CFG[s].icon} ${s}</option>`).join('')}
       </select>
+      <div class="print-only" style="text-align:center;font-size:14px;line-height:1;margin:auto;" title="${esc(row.status)}">${sCfg.icon}</div>
     </td>`;
     
-    // Pct
+    // Pct (Screen: input + progress bar, Print: clean text to prevent overlap)
     html += `<td class="td-pct">
-      <div class="pct-wrap">
+      <div class="pct-wrap no-print">
         <input class="inp-pct" type="number" min="0" max="100" value="${row.pct}" 
           onchange="updateRow(${row.id},'pct',this.value);renderAll()"/>
         <div class="pct-bar-bg" style="margin-top:2px;">
           <div class="pct-bar-fill" style="width:${pct}%;background:${pctColor};"></div>
         </div>
       </div>
+      <div class="print-only" style="text-align:center;font-size:10px;font-weight:700;color:#000;">${pct}%</div>
     </td>`;
     
     // Day cells
