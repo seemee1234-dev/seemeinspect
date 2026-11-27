@@ -19,20 +19,34 @@ body{background:#0f1117;color:#e2e8f0;margin:0;padding:12px;min-width:1100px;}
     color-adjust: exact !important; 
     box-sizing: border-box !important;
   }
-  body { background: #fff !important; color: #000000 !important; padding: 0 !important; margin: 0 !important; min-width: unset !important; font-weight: 400 !important; }
-  .no-print, .ctrl-row, #catFilterRow, .btn-add, .btn-add-sec, .btn-export, .btn-del, .btn-print-bar, .modal-overlay, .add-row-zone { display: none !important; }
+  body { 
+    background: #fff !important; 
+    color: #000000 !important; 
+    padding: 0 !important; 
+    margin: 0 !important; 
+    min-width: unset !important; 
+    font-weight: 400 !important; 
+  }
+  .no-print, .ctrl-row, #catFilterRow, .btn-add, .btn-add-sec, .btn-export, .btn-del, .btn-print-bar, .modal-overlay, .add-row-zone, .table-scroll-toolbar { 
+    display: none !important; 
+  }
+  .print-only { 
+    display: block !important; 
+  }
   
   /* แบนเนอร์หัวเอกสารกว้างเต็มหน้ากระดาษ */
   .banner { width: 100% !important; background: #f8fafc !important; border: 1.5px solid #000000 !important; border-radius: 4px; padding: 6px 12px; margin-bottom: 8px !important; }
   .banner-tag { background: #f59e0b !important; color: #000000 !important; font-weight: bold !important; -webkit-print-color-adjust: exact !important; }
   .banner-info { color: #000000 !important; font-weight: 600 !important; }
   
-  /* กรอบตารางและตัวตารางกว้างเต็มหน้า 100% ปิดเส้นขอบทุกด้านสมบูรณ์ 4 ด้าน */
+  /* กรอบตารางและตัวตาราง */
   .tbl-wrap { 
     width: 100% !important; 
     border: 2px solid #000000 !important; 
     border-radius: 0 !important; 
     overflow: visible !important; 
+    max-height: none !important;
+    position: static !important;
     background: #fff !important; 
     margin: 0 !important; 
     padding: 0 !important;
@@ -44,24 +58,37 @@ body{background:#0f1117;color:#e2e8f0;margin:0;padding:12px;min-width:1100px;}
     color: #000000 !important; 
     table-layout: fixed !important; 
   }
-  thead { display: table-header-group; }
+  thead { 
+    display: table-header-group !important; 
+  }
+  #tableHead th, thead th, th { 
+    position: static !important; 
+    top: auto !important; 
+    z-index: auto !important; 
+    background: #f1f5f9 !important;
+    color: #000000 !important;
+  }
+  tr { 
+    page-break-inside: avoid !important; 
+    break-inside: avoid !important; 
+  }
+  .tr-section { 
+    page-break-after: avoid !important; 
+    break-after: avoid !important; 
+  }
   
-  /* Print Visibility */
-  .print-only { display: block !important; }
-  .no-print { display: none !important; }
-  .table-scroll-toolbar { display: none !important; }
-
-  /* กำหนดความกว้างคอลัมน์คงที่ระดับพิกเซล - ป้องกันการล้นทับแท่งวัน 100% */
-  .th-num, .td-num { width: 26px !important; min-width: 26px !important; max-width: 26px !important; }
-  .th-cat, .td-cat { width: 90px !important; min-width: 90px !important; max-width: 90px !important; }
-  .th-name, .td-name { width: 220px !important; min-width: 220px !important; max-width: 220px !important; }
-  .th-assign, .td-assign { width: 70px !important; min-width: 70px !important; max-width: 70px !important; }
-  .th-start, .td-start { width: 80px !important; min-width: 80px !important; max-width: 80px !important; text-align: center !important; }
-  .th-end, .td-end { width: 80px !important; min-width: 80px !important; max-width: 80px !important; text-align: center !important; }
+  /* กำหนดความกว้างคอลัมน์คงที่เพื่อไม่ให้เส้นแหว่งและไม่ให้ตัวหนังสือซ้อนเด็ดขาด */
+  .th-num, .td-num { width: 28px !important; min-width: 28px !important; max-width: 28px !important; text-align: center !important; }
+  .th-cat, .td-cat { width: 95px !important; min-width: 95px !important; max-width: 95px !important; overflow: hidden !important; text-overflow: ellipsis !important; }
+  .th-name, .td-name { width: 230px !important; min-width: 230px !important; max-width: 230px !important; overflow: hidden !important; }
+  .th-assign, .td-assign { width: 65px !important; min-width: 65px !important; max-width: 65px !important; overflow: hidden !important; text-align: center !important; }
+  .th-start, .td-start { width: 75px !important; min-width: 75px !important; max-width: 75px !important; text-align: center !important; }
+  .th-end, .td-end { width: 75px !important; min-width: 75px !important; max-width: 75px !important; text-align: center !important; }
   .th-status, .td-status { width: 34px !important; min-width: 34px !important; max-width: 34px !important; text-align: center !important; overflow: hidden !important; padding: 2px 0 !important; }
   .th-pct, .td-pct { width: 36px !important; min-width: 36px !important; max-width: 36px !important; text-align: center !important; overflow: hidden !important; padding: 2px 0 !important; }
-  .th-day, .td-day { width: 20px !important; min-width: 20px !important; max-width: 20px !important; text-align: center !important; padding: 1px 0 !important; }
-  
+  .th-day, .td-day { width: 19px !important; min-width: 19px !important; max-width: 19px !important; text-align: center !important; padding: 1px 0 !important; }
+  .th-actions, .td-actions { display: none !important; }
+
   /* หัวตารางตัวหนังสือดำเข้ม คมชัด เส้นกรอบเต็มทุกช่อง */
   .th-week { color: #000000 !important; border: 1.5px solid #000000 !important; padding: 4px 1px !important; font-weight: 700 !important; -webkit-print-color-adjust: exact !important; }
   .th-week span { color: #000000 !important; font-weight: 600 !important; }
@@ -74,11 +101,11 @@ body{background:#0f1117;color:#e2e8f0;margin:0;padding:12px;min-width:1100px;}
   /* หัวข้อคั่นชั้นกว้างเต็มหน้ากระดาษ เส้นกรอบดำสนิทรอบด้าน */
   .tr-section { width: 100% !important; -webkit-print-color-adjust: exact !important; print-color-adjust: exact !important; }
   .tr-section td { border: 2px solid #000000 !important; padding: 6px 8px !important; -webkit-print-color-adjust: exact !important; }
-  .tr-section input { color: #000000 !important; font-weight: 800 !important; font-size: 12px !important; text-shadow: none !important; }
+  .tr-section input { display: none !important; }
 
   /* แถวงาน เส้นกรอบครบทั้ง 4 ด้าน ชัดเจน 100% ไม่มีเส้นแหว่ง */
   .tr-task { background: #fff !important; }
-  .tr-task td { border: 1px solid #000000 !important; color: #000000 !important; }
+  .tr-task td { border: 1px solid #000000 !important; color: #000000 !important; vertical-align: middle !important; }
   .td-num { color: #000000 !important; font-weight: 600 !important; text-align: center !important; }
   .td-num, .td-cat, .td-name, .td-assign, .td-start, .td-end, .td-status, .td-pct, .td-day { padding: 3px 2px !important; color: #000000 !important; }
   .td-day { border: 1px solid #000000 !important; text-align: center !important; }
@@ -92,29 +119,6 @@ body{background:#0f1117;color:#e2e8f0;margin:0;padding:12px;min-width:1100px;}
     -webkit-print-color-adjust: exact !important; 
     print-color-adjust: exact !important; 
   }
-
-  /* ซ่อน select ในช่องหมวดงานตอนพิมพ์ และแสดง text ธรรมดา */
-  .select-cat { 
-    display: block !important; 
-    appearance: none !important; 
-    -webkit-appearance: none !important; 
-    -moz-appearance: none !important; 
-    border: none !important; 
-    background: transparent !important; 
-    color: #000000 !important; 
-    font-size: 10px !important; 
-    font-weight: 700 !important; 
-    text-align: center !important; 
-  }
-  .inp-textarea {
-    color: #000000 !important;
-    font-weight: 500 !important;
-  }
-  .inp {
-    color: #000000 !important;
-    font-weight: 500 !important;
-  }
-  .th-actions, .td-actions { display: none !important; }
 }
 
 /* Print Preview Modal */
@@ -737,33 +741,44 @@ function renderBody(){
     
     // Category
     html += `<td class="td-cat">
-      <select class="inp-select select-cat" onchange="updateRow(${row.id},'cat',this.value);renderAll()">
+      <select class="inp-select select-cat no-print" onchange="updateRow(${row.id},'cat',this.value);renderAll()">
         ${Object.keys(CAT_COLORS).map(c => `<option value="${c}" ${row.cat === c ? 'selected' : ''}
           style="background:#1f2937;color:${CAT_COLORS[c]}">${c}</option>`).join('')}
         <option value="อื่นๆ" ${row.cat === 'อื่นๆ' ? 'selected' : ''}>อื่นๆ</option>
       </select>
+      <div class="print-only" style="font-size:10px;font-weight:600;text-align:center;color:#000;white-space:normal;line-height:1.2;">${esc(row.cat)}</div>
     </td>`;
     
-    // Name
+    // Name (Screen: interactive textarea, Print: clean self-contained text with strict word-wrap)
     html += `<td class="td-name">
-      <textarea class="inp-textarea" rows="2" placeholder="ระบุหัวข้องาน..." 
+      <textarea class="inp-textarea no-print" rows="2" placeholder="ระบุหัวข้องาน..." 
         oninput="autoResizeTextarea(this);updateRow(${row.id},'name',this.value)" 
         onchange="updateRow(${row.id},'name',this.value)">${esc(row.name)}</textarea>
+      <div class="print-only" style="font-size:10px;font-weight:500;color:#000;white-space:normal;line-height:1.35;word-break:break-word;overflow:hidden;">${esc(row.name)}</div>
     </td>`;
     
     // Assignee
-    html += `<td class="td-assign"><input class="inp" value="${esc(row.assign)}" placeholder="ผู้รับผิดชอบ..." 
-      onchange="updateRow(${row.id},'assign',this.value)"/></td>`;
+    html += `<td class="td-assign">
+      <input class="inp no-print" value="${esc(row.assign)}" placeholder="ผู้รับผิดชอบ..." 
+        onchange="updateRow(${row.id},'assign',this.value)"/>
+      <div class="print-only" style="font-size:10px;color:#000;text-align:center;white-space:nowrap;">${esc(row.assign)}</div>
+    </td>`;
     
     // Start Date
     const dispStart = row.start ? formatShortDate(parseDate(row.start)) : '';
-    html += `<td class="td-start" style="width:96px;min-width:96px;"><input type="text" class="inp" value="${dispStart}" placeholder="วว/ดด/26" 
-      onchange="handleTextDateChange(${row.id},'start',this.value)"/></td>`;
+    html += `<td class="td-start" style="width:96px;min-width:96px;">
+      <input type="text" class="inp no-print" value="${dispStart}" placeholder="วว/ดด/26" 
+        onchange="handleTextDateChange(${row.id},'start',this.value)"/>
+      <div class="print-only" style="font-size:10px;font-weight:600;color:#000;text-align:center;white-space:nowrap;">${dispStart}</div>
+    </td>`;
     
     // End Date
     const dispEnd = row.end ? formatShortDate(parseDate(row.end)) : '';
-    html += `<td class="td-end" style="width:96px;min-width:96px;"><input type="text" class="inp" value="${dispEnd}" placeholder="วว/ดด/26" 
-      onchange="handleTextDateChange(${row.id},'end',this.value)"/></td>`;
+    html += `<td class="td-end" style="width:96px;min-width:96px;">
+      <input type="text" class="inp no-print" value="${dispEnd}" placeholder="วว/ดด/26" 
+        onchange="handleTextDateChange(${row.id},'end',this.value)"/>
+      <div class="print-only" style="font-size:10px;font-weight:600;color:#000;text-align:center;white-space:nowrap;">${dispEnd}</div>
+    </td>`;
     
     // Status (Screen: interactive dropdown, Print: compact icon to prevent overlap)
     html += `<td class="td-status">
@@ -860,9 +875,10 @@ function renderSection(row){
     </td>
     <td colspan="${totalCols-2}" style="padding:6px 12px;">
       <div style="display:flex; align-items:center; gap:10px;">
-        <input class="inp" value="${esc(row.name)}" placeholder="ชื่อหมวดชั้น..." 
+        <input class="inp no-print" value="${esc(row.name)}" placeholder="ชื่อหมวดชั้น..." 
           style="font-size:14px; font-weight:600; color:${secColor}; width:100%; letter-spacing:0.3px; text-shadow:0 1px 2px rgba(0,0,0,0.8);"
           onchange="updateRow(${row.id},'name',this.value)"/>
+        <div class="print-only" style="font-size:12px;font-weight:800;color:#000;letter-spacing:0.2px;">${esc(row.name)}</div>
         <button class="btn-add no-print" style="margin-left:auto; padding:4px 14px; font-size:12px; font-weight:400; white-space:nowrap; background:${secBorder}; border-radius:6px; box-shadow:0 2px 6px rgba(0,0,0,0.3);" onclick="addRowAfter(${row.id})">➕ เพิ่มหัวข้องานในหมวดนี้</button>
         <button class="btn-del no-print" style="margin-left:6px; padding:4px 8px;" onclick="deleteRow(${row.id})">✕ ลบหมวด</button>
       </div>
