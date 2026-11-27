@@ -6,120 +6,18 @@
 <title>แผนงานก่อสร้าง Clubhouse 6 สัปดาห์ (Lookahead Schedule) | THE ORIGIN PATTAYA</title>
 <script src="https://www.gstatic.com/antigravity/web/dev/tailwindcss.min.js"></script>
 <style>
+/* Screen Visibility Utilities */
+.print-only { display: none !important; }
+.no-print { display: block; }
+select.no-print, input.no-print, textarea.no-print { display: block; }
+button.no-print, span.no-print { display: inline-flex; }
+
 @import url('https://fonts.googleapis.com/css2?family=Kanit:wght@300;400;500;600&display=swap');
 *{font-family:'Kanit',sans-serif;font-weight:300;box-sizing:border-box;}
 body{background:#0f1117;color:#e2e8f0;margin:0;padding:12px;min-width:1100px;}
 
 /* ===== PRINT STYLES ===== */
-@media print {
-  @page { size: A3 landscape; margin: 6mm 5mm; }
-  * { 
-    -webkit-print-color-adjust: exact !important; 
-    print-color-adjust: exact !important; 
-    color-adjust: exact !important; 
-    box-sizing: border-box !important;
-  }
-  body { 
-    background: #fff !important; 
-    color: #000000 !important; 
-    padding: 0 !important; 
-    margin: 0 !important; 
-    min-width: unset !important; 
-    font-weight: 400 !important; 
-  }
-  .no-print, .ctrl-row, #catFilterRow, .btn-add, .btn-add-sec, .btn-export, .btn-del, .btn-print-bar, .modal-overlay, .add-row-zone, .table-scroll-toolbar { 
-    display: none !important; 
-  }
-  .print-only { 
-    display: block !important; 
-  }
-  
-  /* แบนเนอร์หัวเอกสารกว้างเต็มหน้ากระดาษ */
-  .banner { width: 100% !important; background: #f8fafc !important; border: 1.5px solid #000000 !important; border-radius: 4px; padding: 6px 12px; margin-bottom: 8px !important; }
-  .banner-tag { background: #f59e0b !important; color: #000000 !important; font-weight: bold !important; -webkit-print-color-adjust: exact !important; }
-  .banner-info { color: #000000 !important; font-weight: 600 !important; }
-  
-  /* กรอบตารางและตัวตาราง */
-  .tbl-wrap { 
-    width: 100% !important; 
-    border: 2px solid #000000 !important; 
-    border-radius: 0 !important; 
-    overflow: visible !important; 
-    max-height: none !important;
-    position: static !important;
-    background: #fff !important; 
-    margin: 0 !important; 
-    padding: 0 !important;
-  }
-  table { 
-    font-size: 10px !important; 
-    width: 100% !important; 
-    border-collapse: collapse !important; 
-    color: #000000 !important; 
-    table-layout: fixed !important; 
-  }
-  thead { 
-    display: table-header-group !important; 
-  }
-  #tableHead th, thead th, th { 
-    position: static !important; 
-    top: auto !important; 
-    z-index: auto !important; 
-    background: #f1f5f9 !important;
-    color: #000000 !important;
-  }
-  tr { 
-    page-break-inside: avoid !important; 
-    break-inside: avoid !important; 
-  }
-  .tr-section { 
-    page-break-after: avoid !important; 
-    break-after: avoid !important; 
-  }
-  
-  /* กำหนดความกว้างคอลัมน์คงที่เพื่อไม่ให้เส้นแหว่งและไม่ให้ตัวหนังสือซ้อนเด็ดขาด */
-  .th-num, .td-num { width: 28px !important; min-width: 28px !important; max-width: 28px !important; text-align: center !important; }
-  .th-cat, .td-cat { width: 95px !important; min-width: 95px !important; max-width: 95px !important; overflow: hidden !important; text-overflow: ellipsis !important; }
-  .th-name, .td-name { width: 230px !important; min-width: 230px !important; max-width: 230px !important; overflow: hidden !important; }
-  .th-assign, .td-assign { width: 65px !important; min-width: 65px !important; max-width: 65px !important; overflow: hidden !important; text-align: center !important; }
-  .th-start, .td-start { width: 75px !important; min-width: 75px !important; max-width: 75px !important; text-align: center !important; }
-  .th-end, .td-end { width: 75px !important; min-width: 75px !important; max-width: 75px !important; text-align: center !important; }
-  .th-status, .td-status { width: 34px !important; min-width: 34px !important; max-width: 34px !important; text-align: center !important; overflow: hidden !important; padding: 2px 0 !important; }
-  .th-pct, .td-pct { width: 36px !important; min-width: 36px !important; max-width: 36px !important; text-align: center !important; overflow: hidden !important; padding: 2px 0 !important; }
-  .th-day, .td-day { width: 19px !important; min-width: 19px !important; max-width: 19px !important; text-align: center !important; padding: 1px 0 !important; }
-  .th-actions, .td-actions { display: none !important; }
 
-  /* หัวตารางตัวหนังสือดำเข้ม คมชัด เส้นกรอบเต็มทุกช่อง */
-  .th-week { color: #000000 !important; border: 1.5px solid #000000 !important; padding: 4px 1px !important; font-weight: 700 !important; -webkit-print-color-adjust: exact !important; }
-  .th-week span { color: #000000 !important; font-weight: 600 !important; }
-  .th-day { background: #f8fafc !important; color: #000000 !important; border: 1px solid #000000 !important; font-weight: 600 !important; text-align: center !important; }
-  .th-day div { color: #000000 !important; }
-  .th-day.sunday { background: #fee2e2 !important; color: #b91c1c !important; }
-  .th-day.sunday div { color: #b91c1c !important; }
-  .th-fixed { background: #f1f5f9 !important; color: #000000 !important; border: 1.5px solid #000000 !important; padding: 4px 4px !important; font-weight: 700 !important; }
-  
-  /* หัวข้อคั่นชั้นกว้างเต็มหน้ากระดาษ เส้นกรอบดำสนิทรอบด้าน */
-  .tr-section { width: 100% !important; -webkit-print-color-adjust: exact !important; print-color-adjust: exact !important; }
-  .tr-section td { border: 2px solid #000000 !important; padding: 6px 8px !important; -webkit-print-color-adjust: exact !important; }
-  .tr-section input { display: none !important; }
-
-  /* แถวงาน เส้นกรอบครบทั้ง 4 ด้าน ชัดเจน 100% ไม่มีเส้นแหว่ง */
-  .tr-task { background: #fff !important; }
-  .tr-task td { border: 1px solid #000000 !important; color: #000000 !important; vertical-align: middle !important; }
-  .td-num { color: #000000 !important; font-weight: 600 !important; text-align: center !important; }
-  .td-num, .td-cat, .td-name, .td-assign, .td-start, .td-end, .td-status, .td-pct, .td-day { padding: 3px 2px !important; color: #000000 !important; }
-  .td-day { border: 1px solid #000000 !important; text-align: center !important; }
-  
-  /* บังคับพิมพ์แท่งสี Gantt รายวัน คมชัดเต็มตา */
-  .day-bar { 
-    width: 100% !important; 
-    height: 14px !important; 
-    margin: auto !important;
-    border-radius: 2px !important; 
-    -webkit-print-color-adjust: exact !important; 
-    print-color-adjust: exact !important; 
-  }
-}
 
 /* Print Preview Modal */
 .modal-overlay {
@@ -197,7 +95,7 @@ th{background:#1e2535;color:#94a3b8;font-weight:400;}
 .th-assign, .td-assign{width:80px;min-width:80px;}
 .th-start, .td-start{width:96px !important;min-width:96px !important;max-width:96px !important;text-align:center;padding:4px 2px !important;}
 .th-end, .td-end{width:96px !important;min-width:96px !important;max-width:96px !important;text-align:center;padding:4px 2px !important;}
-.print-only { display: none !important; }
+
 .th-status, .td-status{width:115px !important;min-width:115px !important;max-width:115px !important;text-align:center !important;padding:2px 2px !important;}
 .th-pct, .td-pct{width:46px !important;min-width:46px !important;max-width:46px !important;text-align:center !important;padding:2px 2px !important;}
 .th-week{text-align:center;font-size:10px;}
@@ -377,6 +275,157 @@ th{background:#1e2535;color:#94a3b8;font-weight:400;}
 }
 .fit-screen-mode .th-fixed, .fit-screen-mode td {
   padding: 2px 2px !important;
+}
+
+/* ==========================================================================
+   PRINT STYLES (@media print) - PLACED AT THE BOTTOM FOR STRICT CASCADE PRIORITY
+   ========================================================================== */
+@media print {
+  @page { size: A3 landscape; margin: 6mm 5mm; }
+  * { 
+    -webkit-print-color-adjust: exact !important; 
+    print-color-adjust: exact !important; 
+    color-adjust: exact !important; 
+    box-sizing: border-box !important;
+  }
+  body { 
+    background: #fff !important; 
+    color: #000000 !important; 
+    padding: 0 !important; 
+    margin: 0 !important; 
+    min-width: unset !important; 
+    font-weight: 400 !important; 
+  }
+
+  /* 1. Hide interactive screen UI */
+  .no-print, .ctrl-row, #catFilterRow, .btn-add, .btn-add-sec, .btn-export, 
+  .btn-del, .btn-print-bar, .modal-overlay, .add-row-zone, .table-scroll-toolbar,
+  select.no-print, textarea.no-print, input.no-print, button.no-print { 
+    display: none !important; 
+  }
+
+  /* 2. Show print plain text blocks cleanly (Bold, Black, 100% Visible) */
+  .print-only { 
+    display: block !important; 
+    color: #000000 !important;
+  }
+  div.print-only { 
+    display: block !important; 
+    color: #000000 !important;
+  }
+  span.print-only { 
+    display: inline-block !important; 
+    color: #000000 !important;
+  }
+
+  /* 3. Banner formatting */
+  .banner { 
+    width: 100% !important; 
+    background: #f8fafc !important; 
+    border: 1.5px solid #000000 !important; 
+    border-radius: 4px; 
+    padding: 6px 12px; 
+    margin-bottom: 8px !important; 
+  }
+  .banner-tag { 
+    background: #f59e0b !important; 
+    color: #000000 !important; 
+    font-weight: bold !important; 
+    -webkit-print-color-adjust: exact !important; 
+  }
+  .banner-info { 
+    color: #000000 !important; 
+    font-weight: 600 !important; 
+  }
+
+  /* 4. Table container - No sticky, no clipping */
+  .tbl-wrap { 
+    width: 100% !important; 
+    border: 2px solid #000000 !important; 
+    border-radius: 0 !important; 
+    overflow: visible !important; 
+    max-height: none !important;
+    position: static !important;
+    background: #fff !important; 
+    margin: 0 !important; 
+    padding: 0 !important; 
+  }
+  table { 
+    font-size: 10px !important; 
+    width: 100% !important; 
+    border-collapse: collapse !important; 
+    color: #000000 !important; 
+    table-layout: fixed !important; 
+  }
+  thead { 
+    display: table-header-group !important; 
+  }
+  #tableHead th, thead th, th { 
+    position: static !important; 
+    top: auto !important; 
+    z-index: auto !important; 
+    background: #f1f5f9 !important; 
+    color: #000000 !important; 
+    border: 1px solid #000000 !important;
+    font-weight: 700 !important;
+    -webkit-print-color-adjust: exact !important; 
+  }
+  tr { 
+    page-break-inside: avoid !important; 
+    break-inside: avoid !important; 
+  }
+  .tr-section { 
+    page-break-after: avoid !important; 
+    break-after: avoid !important; 
+    width: 100% !important; 
+    background: #e2e8f0 !important;
+    -webkit-print-color-adjust: exact !important; 
+  }
+  .tr-section td { 
+    border: 2px solid #000000 !important; 
+    padding: 6px 8px !important; 
+  }
+  .tr-section input { 
+    display: none !important; 
+  }
+
+  .tr-task { 
+    background: #fff !important; 
+  }
+  .tr-task td { 
+    border: 1px solid #000000 !important; 
+    color: #000000 !important; 
+    vertical-align: middle !important; 
+  }
+
+  /* 5. Fixed column widths in print */
+  .th-num, .td-num { width: 28px !important; min-width: 28px !important; max-width: 28px !important; text-align: center !important; }
+  .th-cat, .td-cat { width: 95px !important; min-width: 95px !important; max-width: 95px !important; overflow: hidden !important; }
+  .th-name, .td-name { width: 230px !important; min-width: 230px !important; max-width: 230px !important; overflow: hidden !important; }
+  .th-assign, .td-assign { width: 65px !important; min-width: 65px !important; max-width: 65px !important; overflow: hidden !important; text-align: center !important; }
+  .th-start, .td-start { width: 75px !important; min-width: 75px !important; max-width: 75px !important; text-align: center !important; }
+  .th-end, .td-end { width: 75px !important; min-width: 75px !important; max-width: 75px !important; text-align: center !important; }
+  .th-status, .td-status { width: 34px !important; min-width: 34px !important; max-width: 34px !important; text-align: center !important; overflow: hidden !important; padding: 2px 0 !important; }
+  .th-pct, .td-pct { width: 36px !important; min-width: 36px !important; max-width: 36px !important; text-align: center !important; overflow: hidden !important; padding: 2px 0 !important; }
+  .th-day, .td-day { width: 19px !important; min-width: 19px !important; max-width: 19px !important; text-align: center !important; padding: 1px 0 !important; }
+  .th-actions, .td-actions { display: none !important; }
+
+  /* 6. Formatting text inside cells */
+  .td-num { color: #000000 !important; font-weight: 600 !important; text-align: center !important; }
+  .td-num, .td-cat, .td-name, .td-assign, .td-start, .td-end, .td-status, .td-pct, .td-day { 
+    padding: 3px 2px !important; 
+    color: #000000 !important; 
+  }
+  .td-day { border: 1px solid #000000 !important; text-align: center !important; }
+  
+  .day-bar { 
+    width: 100% !important; 
+    height: 14px !important; 
+    margin: auto !important; 
+    border-radius: 2px !important; 
+    -webkit-print-color-adjust: exact !important; 
+    print-color-adjust: exact !important; 
+  }
 }
 </style>
 </head>
